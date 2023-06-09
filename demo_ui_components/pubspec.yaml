@@ -1,0 +1,20 @@
+name: demo_ui_components
+description: Module to contain commonly shared ui components in example modules
+publish_to: "none"
+environment:
+  sdk: ">=2.19.2 <4.0.0"
+  flutter: ">=3.7.2"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+  collection: ^1.16.0
+  wolt_responsive_layout_grid: ^0.0.2
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  test: ^1.24.2
+
+flutter:
+  uses-material-design: true

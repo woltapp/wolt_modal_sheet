@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/demo_ui_components/lib/demo_ui_components.dart" beforeDir="false" afterPath="$PROJECT_DIR$/demo_ui_components/lib/demo_ui_components.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2RELifMhp1Cj0HUSvLwSD7r1OUi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cagatayulusoy/wolt/wolt_modal_sheet/example2/lib/home/widget&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example2/lib/home/widget" />
+      <recent name="$PROJECT_DIR$/example2/lib/home/pages" />
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/utils" />
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/selection_list" />
+      <recent name="$PROJECT_DIR$/example2/lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/button" />
+      <recent name="$PROJECT_DIR$/example2/lib" />
+      <recent name="$PROJECT_DIR$/lib/src/utils" />
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src" />
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/utils" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="playground" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/playground/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="" />
+      <created>1686810778491</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1686810778491</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

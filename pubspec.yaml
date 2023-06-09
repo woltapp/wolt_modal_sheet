@@ -1,0 +1,24 @@
+name: wolt_modal_sheet
+description: This package provides a responsive modal with multiple pages, motion animation for page transitions, and scrollable content within each page.
+version: 0.0.1
+repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ">=2.19.2 <4.0.0"
+  flutter: ">=3.7.2"
+
+dependencies:
+  wolt_responsive_layout_grid: ^0.0.2
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  # Flutter test tools
+  flutter_test:
+    sdk: flutter
+  # Test lib.
+  test:
