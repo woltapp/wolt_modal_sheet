@@ -53,6 +53,7 @@ class WoltModalSheet {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
       isDismissible: true,
       enableDrag: enabledDrag,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
