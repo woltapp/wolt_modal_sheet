@@ -61,19 +61,19 @@ class WoltModalSheetLayout extends StatelessWidget {
             child: topBar,
           ),
           PositionedDirectional(
-            top: page.padding.top,
-            end: page.padding.end,
+            top: 0,
+            end: 0,
             child: closeButton,
           ),
           PositionedDirectional(
-            top: page.padding.top,
-            start: page.padding.start,
+            top: 0,
+            start: 0,
             child: backButton,
           ),
           PositionedDirectional(
-            start: page.padding.start,
-            end: page.padding.end,
-            bottom: page.padding.bottom,
+            start: 0,
+            end: 0,
+            bottom: 0,
             child: footer,
           ),
           if (woltModalType == WoltModalType.bottomSheet)

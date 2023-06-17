@@ -13,6 +13,8 @@ class WoltElevatedButton extends StatelessWidget {
     required this.child,
   });
 
+  static const height = 56.0;
+
   final WoltColorName colorName;
   final WoltElevatedButtonTheme theme;
   final bool enabled;
@@ -46,7 +48,7 @@ class WoltElevatedButton extends StatelessWidget {
       // To disable, press action should be null
       onPressed: enabled ? onPressed : null,
       child: SizedBox(
-        height: 56,
+        height: height,
         width: double.infinity,
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),

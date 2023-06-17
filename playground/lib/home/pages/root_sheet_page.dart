@@ -1,6 +1,6 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:playground/home/pages/multi_page_path_name.dart';
-import 'package:playground/home/widget/sheet_title.dart';
+import 'package:demo_ui_components/src/text/modal_sheet_title.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -15,7 +15,7 @@ class RootSheetPage {
   }) {
     final ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     return WoltModalSheetPage(
-      padding: const EdgeInsetsDirectional.all(16),
+      mainContentPadding: const EdgeInsetsDirectional.all(16),
       footer: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, value, __) {
@@ -26,8 +26,8 @@ class RootSheetPage {
           );
         },
       ),
-      pageTitle: const SheetTitle('Choose a use case'),
-      closeButton: WoltCloseButton(onClosed: onClosed),
+      pageTitle: const ModalSheetTitle('Choose a use case'),
+      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       singleChildContent: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: WoltSelectionList<MultiPagePathName>.singleSelect(

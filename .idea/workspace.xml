@@ -5,7 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/src/wolt_modal_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/wolt_modal_sheet.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/baklava.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/banana_bread.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/blueberry_pie.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/brownie.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/cheesecake.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/cinnamon_roll.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/cohoco_cookie.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/crepe.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/croissant.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/donut.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/eclair.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/fudge.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/ice_cream.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/lemon_cake.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/macaroni.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/muffin.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/pancake.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/tiramisu.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/baklava.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/banana_bread.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/blueberry_pie.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/brownie.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/cheesecake.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/cinnamon_roll.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/cohoco_cookie.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/crepe.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/croissant.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/donut.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/eclair.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/fudge.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/ice_cream.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/lemon_cake.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/macaroni.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/muffin.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/pancake.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/tiramisu.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/home/online/modal_pages/ready/extra_recommendation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/home/online/modal_pages/ready/extra_recommendation.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,31 +74,39 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/cagatayulusoy/wolt/wolt_modal_sheet/example2/lib/home/widget&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cagatayulusoy/wolt/wolt_modal_sheet/example/lib/home/online/modal_pages/ready&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/lib/home/online/modal_pages/ready" />
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/text" />
+      <recent name="$PROJECT_DIR$/example/lib/home/online/modal_pages/add_water" />
+      <recent name="$PROJECT_DIR$/example/lib/home/online/modal_pages/grind" />
       <recent name="$PROJECT_DIR$/example2/lib/home/widget" />
-      <recent name="$PROJECT_DIR$/example2/lib/home/pages" />
-      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/utils" />
-      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/selection_list" />
-      <recent name="$PROJECT_DIR$/example2/lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/lib/assets/images" />
+      <recent name="$PROJECT_DIR$/example/lib/home/online/modal_pages/add_water/widgets" />
+      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/text" />
+      <recent name="$PROJECT_DIR$/example/lib/home/online/modal_pages/grind" />
       <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/button" />
-      <recent name="$PROJECT_DIR$/example2/lib" />
-      <recent name="$PROJECT_DIR$/lib/src/utils" />
-      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src" />
-      <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/utils" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Flutter.example">
+    <configuration name="example" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
+      <method v="2" />
+    </configuration>
     <configuration name="playground" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/playground/lib/main.dart" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Flutter.playground" />
+      <item itemvalue="Flutter.example" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -85,5 +129,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/demo_ui_components/lib/src/selection_list/wolt_selection_list_tile.dart</url>
+          <line>70</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

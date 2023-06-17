@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_hero_image.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 
 /// The main content widget within the scrollable modal sheet.
 ///
@@ -13,18 +14,22 @@ import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 ///
 /// [pageTitleKey] represents the global key for the page title widget, if present.
 ///
+/// [woltModalType] represents the type of the scrollable modal.
+///
 /// [page] represents the [WoltModalSheetPage] containing the configuration for the modal sheet.
 class WoltModalSheetMainContent extends StatefulWidget {
   final ValueNotifier<double> currentScrollPosition;
   final double topBarHeight;
   final GlobalKey pageTitleKey;
   final WoltModalSheetPage page;
+  final WoltModalType woltModalType;
 
   const WoltModalSheetMainContent({
     required this.currentScrollPosition,
     required this.topBarHeight,
     required this.pageTitleKey,
     required this.page,
+    required this.woltModalType,
     Key? key,
   }) : super(key: key);
 
@@ -44,7 +49,18 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
 
   static const _defaultTopBarHeight = 56.0;
 
-  EdgeInsetsDirectional get pagePadding => widget.page.padding;
+  EdgeInsetsDirectional get _mainContentPadding {
+    final mainContentPadding = widget.page.mainContentPadding;
+    if (mainContentPadding != null) {
+      return mainContentPadding;
+    }
+    switch (widget.woltModalType) {
+      case WoltModalType.bottomSheet:
+        return const EdgeInsetsDirectional.all(16);
+      case WoltModalType.dialog:
+        return const EdgeInsetsDirectional.all(32);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +89,8 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
                   final pageTitle = widget.page.pageTitle;
                   return Padding(
                     padding: EdgeInsetsDirectional.only(
-                      start: pagePadding.start,
-                      end: pagePadding.end,
+                      start: _mainContentPadding.start,
+                      end: _mainContentPadding.end,
                     ),
                     child: KeyedSubtree(
                       key: widget.pageTitleKey,
@@ -89,9 +105,9 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
         ),
         SliverPadding(
           padding: EdgeInsetsDirectional.only(
-            bottom: pagePadding.bottom,
-            start: pagePadding.start,
-            end: pagePadding.end,
+            bottom: _mainContentPadding.bottom,
+            start: _mainContentPadding.start,
+            end: _mainContentPadding.end,
           ),
           sliver: widget.page.singleChildContent != null
               ? SliverList(

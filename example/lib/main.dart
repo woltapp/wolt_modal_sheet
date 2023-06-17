@@ -36,7 +36,7 @@ class _DemoAppState extends State<DemoApp> {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: DemoAppColors.blue,
-        useMaterial3: true,
+        useMaterial3: false,
         fontFamily: 'Inter',
         textTheme: TextTheme(
           headlineMedium: TextStyle(

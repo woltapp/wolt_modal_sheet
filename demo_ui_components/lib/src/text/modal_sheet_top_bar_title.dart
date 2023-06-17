@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TopBarTitle extends StatelessWidget {
-  const TopBarTitle(this.text, {super.key});
+class ModalSheetTopBarTitle extends StatelessWidget {
+  const ModalSheetTopBarTitle(this.text, {super.key});
 
   final String text;
 

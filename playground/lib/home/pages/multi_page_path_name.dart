@@ -13,7 +13,7 @@ enum MultiPagePathName {
   textField,
   allPagesPath;
 
-  List<WoltModalSheetPage> Function(BuildContext context) pageListBuilder({
+  WoltModalSheetPageListBuilder pageListBuilder({
     required VoidCallback goToNextPage,
     required VoidCallback goToPreviousPage,
     required void Function(BuildContext) close,

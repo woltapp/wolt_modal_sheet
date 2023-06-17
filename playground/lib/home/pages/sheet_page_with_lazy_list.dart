@@ -1,6 +1,4 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:playground/home/widget/sheet_title.dart';
-import 'package:playground/home/widget/top_bar_title.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -25,16 +23,16 @@ class SheetPageWithLazyList {
       ),
       pageTitle: Padding(
         padding: const EdgeInsets.all(16) - const EdgeInsets.only(top: 16),
-        child: const SheetTitle(titleText),
+        child: const ModalSheetTitle(titleText),
       ),
-      topBarTitle: const TopBarTitle(titleText),
+      topBarTitle: const ModalSheetTopBarTitle(titleText),
       backButton: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: WoltBackButton(onBackPressed: onBackPressed),
+        child: WoltModalSheetBackButton(onBackPressed: onBackPressed),
       ),
       closeButton: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: WoltCloseButton(onClosed: onClosed),
+        child: WoltModalSheetCloseButton(onClosed: onClosed),
       ),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(

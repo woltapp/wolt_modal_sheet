@@ -260,6 +260,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
         currentScrollPosition: _currentScrollPosition,
         page: _page,
         topBarHeight: _topBarHeight,
+        woltModalType: widget.woltModalType,
       );
 
   WoltModalSheetTopBar _createTopBar() => WoltModalSheetTopBar(

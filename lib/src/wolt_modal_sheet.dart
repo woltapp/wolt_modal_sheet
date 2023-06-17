@@ -14,8 +14,6 @@ typedef WoltModalTypeBuilder = WoltModalType Function(BuildContext context);
 class WoltModalSheet {
   WoltModalSheet._();
 
-  static const woltScrollableModalRouteName = 'woltScrollableModalRouteName';
-
   /// Displays a Wolt modal sheet and returns the value from the modal.
   ///
   /// The [context] specifies the build context.
@@ -44,6 +42,7 @@ class WoltModalSheet {
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
     VoidCallback? onDismissed,
+    RouteSettings? routeSettings,
   }) {
     // TODO: This is a temporary solution to prevent the bottom sheet from being dragged
     // on large screens. This should be removed when the bottom sheet is redesigned to handle its
@@ -53,7 +52,6 @@ class WoltModalSheet {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.transparent,
       isDismissible: true,
       enableDrag: enabledDrag,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
@@ -67,7 +65,7 @@ class WoltModalSheet {
           modalTypeBuilder: modalTypeBuilder,
         );
       },
-      routeSettings: const RouteSettings(name: woltScrollableModalRouteName),
+      routeSettings: routeSettings,
       useRootNavigator: useRootNavigator,
       useSafeArea: true,
     );

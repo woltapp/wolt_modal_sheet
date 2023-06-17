@@ -42,8 +42,8 @@ class WoltModalSheetPage {
   /// A widget representing the footer attached to the action button.
   final Widget? footer;
 
-  /// The padding applied to the page content.
-  final EdgeInsetsDirectional padding;
+  /// The padding applied to the main content of the page.
+  final EdgeInsetsDirectional? mainContentPadding;
 
   /// A widget representing the back button.
   final Widget? backButton;
@@ -53,7 +53,6 @@ class WoltModalSheetPage {
 
   static const _defualtMaxPageHeight = 0.9;
   static const _defualtMinPageHeight = 0.0;
-  static const _defaultPadding = EdgeInsetsDirectional.zero;
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   ///
@@ -84,7 +83,7 @@ class WoltModalSheetPage {
   ///
   /// [footer] represents a widget attached to the action button as the footer.
   ///
-  /// [padding] represents the padding applied to the page content.
+  /// [mainContentPadding] represents the padding applied to the page content.
   ///
   /// [backButton] represents the widget representing the back button.
   ///
@@ -103,7 +102,7 @@ class WoltModalSheetPage {
     this.minPageHeight = _defualtMinPageHeight,
     this.scrollController,
     this.footer,
-    this.padding = _defaultPadding,
+    this.mainContentPadding,
     this.backButton,
     this.closeButton,
   })  : assert((heroImageHeight == null) == (heroImage == null)),
@@ -138,7 +137,7 @@ class WoltModalSheetPage {
       forceMaxHeight: forceMaxHeight,
       scrollController: scrollController,
       footer: footer,
-      padding: padding ?? _defaultPadding,
+      mainContentPadding: padding,
       backButton: backButton,
       closeButton: closeButton,
       maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,
@@ -175,7 +174,7 @@ class WoltModalSheetPage {
       forceMaxHeight: forceMaxHeight,
       scrollController: scrollController,
       footer: footer,
-      padding: padding ?? _defaultPadding,
+      mainContentPadding: padding,
       backButton: backButton,
       closeButton: closeButton,
       maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,

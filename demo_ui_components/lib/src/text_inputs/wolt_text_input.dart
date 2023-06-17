@@ -6,7 +6,7 @@ typedef FocusListener = void Function(bool hasFocus);
 
 class WoltTextInput extends StatefulWidget {
   const WoltTextInput({
-    required this.labelText,
+    this.labelText,
     this.obscureText = false,
     this.autocorrect = true,
     this.containsError = false,
@@ -37,7 +37,7 @@ class WoltTextInput extends StatefulWidget {
 
   final bool autocorrect;
   final FocusListener? focusListener;
-  final String labelText;
+  final String? labelText;
   final bool containsError;
   final bool obscureText;
   final TextInputAction? textInputAction;

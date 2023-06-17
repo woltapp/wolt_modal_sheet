@@ -10,6 +10,8 @@ class WoltSelectionListTile<T> extends StatefulWidget {
     required this.woltSelectionListItemData,
     required this.selectionListType,
     required this.onSelected,
+    required this.tilePadding,
+    this.tileCrossAxisAlignment,
     super.key,
   });
 
@@ -20,6 +22,10 @@ class WoltSelectionListTile<T> extends StatefulWidget {
   final WoltSelectionListType selectionListType;
 
   final ValueChanged<bool> onSelected;
+
+  final EdgeInsetsDirectional? tilePadding;
+
+  final CrossAxisAlignment? tileCrossAxisAlignment;
 
   @override
   State<WoltSelectionListTile<T>> createState() => _WoltSelectionListTileState<T>();
@@ -54,18 +60,48 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
   @override
   Widget build(BuildContext context) {
     final icon = _data.leadingIcon;
+    final subtitle = _data.subtitle;
+    final imageAssetPath = _data.leadingImageAssetPath;
 
     return InkWell(
       onTap: _onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: widget.tilePadding ?? const EdgeInsets.symmetric(vertical: 16),
         child: Row(
+          crossAxisAlignment: widget.tileCrossAxisAlignment ?? CrossAxisAlignment.start,
           children: [
-            if (icon != null) Icon(icon, color: WoltColors.black),
+            if (imageAssetPath != null) ...[
+              SizedBox(
+                width: 64,
+                height: 64,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.0),
+                  child: Image(
+                    image: AssetImage(imageAssetPath),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+            ],
+            if (icon != null) ...[
+              Icon(icon, color: WoltColors.black),
+              const SizedBox(width: 16),
+            ],
             Expanded(
-              child: Text(
-                _data.title,
-                style: Theme.of(context).textTheme.bodyMedium,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(_data.title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.w500)),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 4),
+                    Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
+                  ]
+                ],
               ),
             ),
             const SizedBox(width: 16),

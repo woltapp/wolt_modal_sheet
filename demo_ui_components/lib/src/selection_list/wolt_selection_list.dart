@@ -35,6 +35,8 @@ class WoltSelectionList<T> extends StatefulWidget {
     required this.itemTileDataGroup,
     required this.selectionListType,
     required _OnSelectionUpdateInWoltSelectionList<T> onSelectionUpdateInWoltSelectionList,
+    this.tilePadding,
+    this.tileCrossAxisAlignment = CrossAxisAlignment.start,
     super.key,
   }) : _onSelectionUpdateInWoltSelectionList = onSelectionUpdateInWoltSelectionList;
 
@@ -43,9 +45,13 @@ class WoltSelectionList<T> extends StatefulWidget {
 
   /// The type of selection (single or multiple) for the list.
   final WoltSelectionListType selectionListType;
+  
+  final CrossAxisAlignment? tileCrossAxisAlignment;
 
   /// Callback function that gets triggered when an item is selected in the list.
   final _OnSelectionUpdateInWoltSelectionList<T> _onSelectionUpdateInWoltSelectionList;
+
+  final EdgeInsetsDirectional? tilePadding;
 
   /// Creates a single-selection [WoltSelectionList] widget.
   ///
@@ -55,9 +61,13 @@ class WoltSelectionList<T> extends StatefulWidget {
   factory WoltSelectionList.singleSelect({
     required WoltSelectionListItemDataGroup<T> itemTileDataGroup,
     required OnSelectionUpdateInSingleSelectionList<T> onSelectionUpdateInSingleSelectionList,
+    EdgeInsetsDirectional? tilePadding,
+    CrossAxisAlignment? tileCrossAxisAlignment,
   }) {
     return WoltSelectionList._(
+      tilePadding: tilePadding,
       itemTileDataGroup: itemTileDataGroup,
+      tileCrossAxisAlignment: tileCrossAxisAlignment,
       selectionListType: WoltSelectionListType.singleSelect,
       onSelectionUpdateInWoltSelectionList: (selectedValues, updatedItemData) {
         onSelectionUpdateInSingleSelectionList.call(updatedItemData);
@@ -74,9 +84,13 @@ class WoltSelectionList<T> extends StatefulWidget {
   factory WoltSelectionList.multiSelect({
     required WoltSelectionListItemDataGroup<T> itemTileDataGroup,
     required OnSelectionUpdateInMultiSelectionList<T> onSelectionUpdateInMultiSelectionList,
+    CrossAxisAlignment? tileCrossAxisAlignment,
+    EdgeInsetsDirectional? tilePadding,
   }) {
     return WoltSelectionList._(
+      tilePadding: tilePadding,
       itemTileDataGroup: itemTileDataGroup,
+      tileCrossAxisAlignment: tileCrossAxisAlignment,
       selectionListType: WoltSelectionListType.multiSelect,
       onSelectionUpdateInWoltSelectionList: (selectedValues, updatedItemData) {
         onSelectionUpdateInMultiSelectionList.call(selectedValues, updatedItemData);
@@ -103,12 +117,15 @@ class _WoltSelectionListState<T> extends State<WoltSelectionList<T>> {
 
     return ListView.separated(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (_, index) {
         final listItemData = _itemTileDataGroup.group.elementAtOrNull(index);
 
         return listItemData == null
             ? const SizedBox.shrink()
             : WoltSelectionListTile(
+                tilePadding: widget.tilePadding,
+                tileCrossAxisAlignment: widget.tileCrossAxisAlignment,
                 woltSelectionListItemData: listItemData,
                 selectionListType: selectionListType,
                 onSelected: (isSelected) {

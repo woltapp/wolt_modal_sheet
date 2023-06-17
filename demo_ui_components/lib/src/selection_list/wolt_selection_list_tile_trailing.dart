@@ -32,9 +32,10 @@ class CheckboxTrailing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _TrailingDecoration(
+      trailingSize: 32,
       fillColor: (isSelected ? WoltColors.blue : WoltColors.white),
       child: isSelected
-          ? const Icon(Icons.check, size: 12, color: WoltColors.white)
+          ? const Icon(Icons.check, size: 24, color: WoltColors.white)
           : const SizedBox.expand(),
     );
   }
@@ -48,6 +49,7 @@ class RadioTrailing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _TrailingDecoration(
+      trailingSize: 20,
       fillColor: WoltColors.white,
       child: isSelected
           ? const Padding(
@@ -62,10 +64,15 @@ class RadioTrailing extends StatelessWidget {
 }
 
 class _TrailingDecoration extends StatelessWidget {
-  const _TrailingDecoration({required this.child, required this.fillColor});
+  const _TrailingDecoration({
+    required this.child,
+    required this.fillColor,
+    required this.trailingSize,
+  });
 
   final Widget child;
   final Color fillColor;
+  final double trailingSize;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +82,7 @@ class _TrailingDecoration extends StatelessWidget {
         border: const Border.fromBorderSide(BorderSide(color: WoltColors.blue, width: 2)),
         shape: BoxShape.circle,
       ),
-      child: SizedBox.fromSize(size: const Size.square(20), child: child),
+      child: SizedBox.fromSize(size: Size.square(trailingSize), child: child),
     );
   }
 }

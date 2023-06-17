@@ -5,14 +5,14 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Size handleSize = Size(32, 4);
+    const Size handleSize = Size(36, 4);
 
     return Semantics(
       label: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       container: true,
       child: SizedBox(
-        height: kMinInteractiveDimension,
-        width: kMinInteractiveDimension,
+        height: 24,
+        width: 48,
         child: Center(
           child: Container(
             height: handleSize.height,

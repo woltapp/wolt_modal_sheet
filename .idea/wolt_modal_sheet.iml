@@ -15,6 +15,9 @@
       <excludeFolder url="file://$MODULE_DIR$/playground/build" />
       <excludeFolder url="file://$MODULE_DIR$/playground/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/playground/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/demo_ui_components/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/demo_ui_components/build" />
+      <excludeFolder url="file://$MODULE_DIR$/demo_ui_components/.dart_tool" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

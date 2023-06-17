@@ -1,5 +1,4 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:playground/home/widget/sheet_title.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -23,9 +22,9 @@ class SheetPageWithHeroImage {
         onPressed: onFooterPressed,
         child: Text(isLastPage ? "Close" : "Next"),
       ),
-      pageTitle: const SheetTitle('Page with a hero image'),
-      backButton: WoltBackButton(onBackPressed: onBackPressed),
-      closeButton: WoltCloseButton(onClosed: onClosed),
+      pageTitle: const ModalSheetTitle('Page with a hero image'),
+      backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),
+      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 80, top: 16),
         child: Column(

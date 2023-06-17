@@ -1,5 +1,4 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:playground/home/widget/sheet_title.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -31,9 +30,9 @@ class SheetPageWithTextField {
           );
         },
       ),
-      pageTitle: const SheetTitle('Page with text field'),
-      backButton: WoltBackButton(onBackPressed: onBackPressed),
-      closeButton: WoltCloseButton(onClosed: onClosed),
+      pageTitle: const ModalSheetTitle('Page with text field'),
+      backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),
+      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 80, top: 16),
         child: Column(

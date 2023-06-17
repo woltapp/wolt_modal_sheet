@@ -8,7 +8,7 @@ environment:
   flutter: ">=3.7.2"
 
 dependencies:
-  wolt_responsive_layout_grid: ^0.0.2
+  wolt_responsive_layout_grid: ^0.0.3
   flutter:
     sdk: flutter
 

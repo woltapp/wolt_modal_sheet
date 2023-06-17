@@ -1,9 +1,14 @@
-export 'src/button/wolt_back_button.dart';
-export 'src/button/wolt_close_button.dart';
-export 'src/button/wolt_elevated_button.dart';
+export 'src/button/sticky_action_bar_wrapper.dart';
+export 'src/button/wolt_modal_sheet_back_button.dart';
 export 'src/button/wolt_circular_elevated_button.dart';
+export 'src/button/wolt_modal_sheet_close_button.dart';
+export 'src/button/wolt_elevated_button.dart';
 export 'src/colors/wolt_colors.dart';
 export 'src/extensions/build_context_extension.dart';
 export 'src/selection_list/wolt_selection_list.dart';
+export 'src/text/modal_sheet_content_text.dart';
+export 'src/text/modal_sheet_subtitle.dart';
+export 'src/text/modal_sheet_title.dart';
+export 'src/text/modal_sheet_top_bar_title.dart';
 export 'src/text_inputs/wolt_text_input.dart';
 export 'src/utils/drag_scroll_behavior.dart';
