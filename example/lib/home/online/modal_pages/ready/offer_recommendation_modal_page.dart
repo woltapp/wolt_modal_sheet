@@ -16,7 +16,7 @@ class OfferRecommendationModalPage {
     const pageTitle = 'Recommendations';
 
     return WoltModalSheetPage.withSingleChild(
-      footer: AnimatedBuilder(
+      stickyActionBar: AnimatedBuilder(
         animation: Listenable.merge([buttonEnabledListener, selectedItemCountListener]),
         builder: (_, __) {
           final count = selectedItemCountListener.value;

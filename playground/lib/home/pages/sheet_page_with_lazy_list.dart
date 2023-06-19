@@ -6,7 +6,7 @@ class SheetPageWithLazyList {
   SheetPageWithLazyList._();
 
   static WoltModalSheetPage build({
-    required VoidCallback onFooterPressed,
+    required VoidCallback onSabPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
     bool isLastPage = true,
@@ -15,12 +15,12 @@ class SheetPageWithLazyList {
     const titleText = 'Material Colors';
     return WoltModalSheetPage.withCustomSliverList(
       mainContentPadding: EdgeInsetsDirectional.zero,
-      footer: StickyActionBarWrapper(
+      stickyActionBar: StickyActionBarWrapper(
         padding: EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: WoltElevatedButton(
-            onPressed: onFooterPressed,
+            onPressed: onSabPressed,
             child: Text(isLastPage ? "Close" : "Next"),
           ),
         ),

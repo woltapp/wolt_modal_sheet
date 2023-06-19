@@ -16,7 +16,7 @@ class WaterSettingsModalPage {
     const pageTitle = 'Water settings';
 
     return WoltModalSheetPage.withSingleChild(
-      footer: ValueListenableBuilder(
+      stickyActionBar: ValueListenableBuilder(
         valueListenable: buttonEnabledListener,
         builder: (_, enabled, __) {
           return StickyActionBarWrapper(

@@ -39,8 +39,8 @@ class WoltModalSheetPage {
   /// A [ScrollController] that controls the scrolling behavior of the page.
   final ScrollController? scrollController;
 
-  /// A widget representing the footer attached to the action button.
-  final Widget? footer;
+  /// A widget representing the action widgets located at the bottom of the page.
+  final Widget? stickyActionBar;
 
   /// The padding applied to the main content of the page.
   final EdgeInsetsDirectional? mainContentPadding;
@@ -81,7 +81,7 @@ class WoltModalSheetPage {
   ///
   /// [scrollController] is a [ScrollController] that controls the scrolling behavior of the page.
   ///
-  /// [footer] represents a widget attached to the action button as the footer.
+  /// [stickyActionBar] represents the action widget located in the bottom of the modal sheet
   ///
   /// [mainContentPadding] represents the padding applied to the page content.
   ///
@@ -101,7 +101,7 @@ class WoltModalSheetPage {
     this.maxPageHeight = _defualtMaxPageHeight,
     this.minPageHeight = _defualtMinPageHeight,
     this.scrollController,
-    this.footer,
+    this.stickyActionBar,
     this.mainContentPadding,
     this.backButton,
     this.closeButton,
@@ -121,7 +121,7 @@ class WoltModalSheetPage {
     bool isTopBarVisibleWhenScrolled = true,
     bool forceMaxHeight = false,
     ScrollController? scrollController,
-    Widget? footer,
+    Widget? stickyActionBar,
     EdgeInsetsDirectional? mainContentPadding,
     Widget? backButton,
     Widget? closeButton,
@@ -136,7 +136,7 @@ class WoltModalSheetPage {
       isTopBarVisibleWhenScrolled: isTopBarVisibleWhenScrolled,
       forceMaxHeight: forceMaxHeight,
       scrollController: scrollController,
-      footer: footer,
+      stickyActionBar: stickyActionBar,
       mainContentPadding: mainContentPadding,
       backButton: backButton,
       closeButton: closeButton,
@@ -156,7 +156,7 @@ class WoltModalSheetPage {
     bool isTopBarVisibleWhenScrolled = true,
     bool forceMaxHeight = false,
     ScrollController? scrollController,
-    Widget? footer,
+    Widget? stickyActionBar,
     EdgeInsetsDirectional? mainContentPadding,
     Widget? backButton,
     Widget? closeButton,
@@ -173,7 +173,7 @@ class WoltModalSheetPage {
       isTopBarVisibleWhenScrolled: isTopBarVisibleWhenScrolled,
       forceMaxHeight: forceMaxHeight,
       scrollController: scrollController,
-      footer: footer,
+      stickyActionBar: stickyActionBar,
       mainContentPadding: mainContentPadding,
       backButton: backButton,
       closeButton: closeButton,

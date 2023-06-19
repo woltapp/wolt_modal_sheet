@@ -21,7 +21,6 @@ class WoltModalCustomLayout extends StatelessWidget {
     required this.pages,
     required this.pageIndex,
     required this.woltModalType,
-    required this.goToPreviousPage,
     this.onModalDismissedWithBarrierTap,
     super.key,
   }) : assert(pageIndex >= 0 && pageIndex < pages.length, 'Invalid pageIndex');
@@ -30,7 +29,6 @@ class WoltModalCustomLayout extends StatelessWidget {
   final WoltModalType woltModalType;
   final int pageIndex;
   final VoidCallback? onModalDismissedWithBarrierTap;
-  final VoidCallback goToPreviousPage;
 
   @visibleForTesting
   static const barrierLayoutId = 'barrierLayoutId';
@@ -75,7 +73,6 @@ class WoltModalCustomLayout extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 child: WoltModalSheetAnimatedLayoutBuilder(
                   woltModalType: woltModalType,
-                  onBackButtonPressed: goToPreviousPage,
                   pageIndex: pageIndex,
                   pages: pages,
                 ),

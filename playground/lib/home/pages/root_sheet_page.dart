@@ -9,19 +9,19 @@ class RootSheetPage {
 
   static WoltModalSheetPage build(
     BuildContext context, {
-    required VoidCallback onFooterPressed,
+    required VoidCallback onSabPressed,
     required VoidCallback onClosed,
     required Function(MultiPagePathName flowName) onPathSelectedFromList,
   }) {
     final ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     return WoltModalSheetPage(
-      footer: ValueListenableBuilder<bool>(
+      stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, value, __) {
           return Padding(
             padding: const EdgeInsets.all(16),
             child: WoltElevatedButton(
-              onPressed: onFooterPressed,
+              onPressed: onSabPressed,
               enabled: value,
               child: const Text("Let's start!"),
             ),

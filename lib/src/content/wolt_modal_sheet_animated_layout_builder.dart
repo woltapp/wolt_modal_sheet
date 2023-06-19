@@ -7,13 +7,11 @@ import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltModalSheetAnimatedLayoutBuilder extends StatefulWidget {
-  final VoidCallback onBackButtonPressed;
   final List<WoltModalSheetPage> pages;
   final int pageIndex;
   final WoltModalType woltModalType;
 
   const WoltModalSheetAnimatedLayoutBuilder({
-    required this.onBackButtonPressed,
     required this.pages,
     required this.pageIndex,
     required this.woltModalType,
@@ -114,10 +112,10 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
             currentPageWidgets: currentWidgets?.backButtonButtonAnimatedBuilder,
             outgoingChild: outgoingWidgets?.backButtonButtonAnimatedBuilder,
           ),
-          footer: _page.footer != null
+          stickyActionBar: _page.stickyActionBar != null
               ? _SwitcherLayout(
-                  currentPageWidgets: currentWidgets?.footerAnimatedBuilder,
-                  outgoingChild: outgoingWidgets?.footerAnimatedBuilder,
+                  currentPageWidgets: currentWidgets?.sabAnimatedBuilder,
+                  outgoingChild: outgoingWidgets?.sabAnimatedBuilder,
                 )
               : const SizedBox.shrink(),
           topBarHeight: _topBarHeight,
@@ -212,8 +210,8 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
         controller: animationController,
         child: _pageIndex == 0 ? const SizedBox.shrink() : _createBackButton(),
       ),
-      footerAnimatedBuilder: CurrentFooterAnimatedBuilder(
-        primaryButton: _page.footer == null ? const SizedBox.shrink() : _createFooter(),
+      sabAnimatedBuilder: CurrentSabAnimatedBuilder(
+        primaryButton: _page.stickyActionBar == null ? const SizedBox.shrink() : _createSab(),
         controller: animationController,
       ),
     );
@@ -248,9 +246,9 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
         controller: animationController,
         child: currentWidgetsToBeOutgoing.backButtonButtonAnimatedBuilder.child,
       ),
-      footerAnimatedBuilder: OutgoingFooterAnimatedBuilder(
+      sabAnimatedBuilder: OutgoingSabAnimatedBuilder(
         controller: animationController,
-        footer: currentWidgetsToBeOutgoing.footerAnimatedBuilder.primaryButton,
+        sab: currentWidgetsToBeOutgoing.sabAnimatedBuilder.primaryButton,
       ),
     );
   }
@@ -275,7 +273,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
 
   Widget _createBackButton() => _page.backButton ?? const SizedBox.shrink();
 
-  Widget _createFooter() => _page.footer ?? const SizedBox.shrink();
+  Widget _createSab() => _page.stickyActionBar ?? const SizedBox.shrink();
 }
 
 class _SwitcherLayout extends StatelessWidget {

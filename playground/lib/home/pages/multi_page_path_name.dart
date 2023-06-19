@@ -21,34 +21,34 @@ enum MultiPagePathName {
   }) {
     WoltModalSheetPage root(BuildContext context) => RootSheetPage.build(
           context,
-          onFooterPressed: goToNextPage,
+          onSabPressed: goToNextPage,
           onPathSelectedFromList: onMultiPagePathSelected,
           onClosed: () => close(context),
         );
     WoltModalSheetPage forcedMaxHeight(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithForcedMaxHeight.build(
-          onFooterPressed: () => isLastPage ? close(context) : goToNextPage(),
+          onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
     WoltModalSheetPage heroImage(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithHeroImage.build(
-          onFooterPressed: () => isLastPage ? close(context) : goToNextPage(),
+          onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
     WoltModalSheetPage lazyList(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithLazyList.build(
-          onFooterPressed: () => isLastPage ? close(context) : goToNextPage(),
+          onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
     WoltModalSheetPage textField(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithTextField.build(
-          onFooterPressed: () => isLastPage ? close(context) : goToNextPage(),
+          onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: true,

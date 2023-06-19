@@ -6,7 +6,7 @@ class SheetPageWithForcedMaxHeight {
   SheetPageWithForcedMaxHeight._();
 
   static WoltModalSheetPage build({
-    required VoidCallback onFooterPressed,
+    required VoidCallback onSabPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
     bool isLastPage = true,
@@ -15,10 +15,10 @@ class SheetPageWithForcedMaxHeight {
       backgroundColor: WoltColors.green8,
       mainContentPadding: const EdgeInsetsDirectional.all(16),
       forceMaxHeight: true,
-      footer: Padding(
+      stickyActionBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: WoltElevatedButton(
-          onPressed: onFooterPressed,
+          onPressed: onSabPressed,
           colorName: WoltColorName.green,
           child: Text(isLastPage ? "Close" : "Next"),
         ),

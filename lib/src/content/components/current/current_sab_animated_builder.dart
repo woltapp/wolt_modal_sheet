@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class OutgoingFooterAnimatedBuilder extends StatelessWidget {
+class CurrentSabAnimatedBuilder extends StatelessWidget {
   final AnimationController controller;
   final Animation<double> _opacity;
-  final Widget footer;
+  final Widget primaryButton;
 
-  OutgoingFooterAnimatedBuilder({
+  CurrentSabAnimatedBuilder({
     required this.controller,
-    required this.footer,
+    required this.primaryButton,
     super.key,
-  }) : _opacity = Tween<double>(begin: 1.0, end: 0.0).animate(
+  }) : _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: controller,
             curve: const Interval(
-              0,
               100 / 350,
+              300 / 350,
             ),
           ),
         );
@@ -24,7 +24,7 @@ class OutgoingFooterAnimatedBuilder extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext _, Widget? __) {
-        return Opacity(opacity: _opacity.value, child: footer);
+        return Opacity(opacity: _opacity.value, child: primaryButton);
       },
     );
   }

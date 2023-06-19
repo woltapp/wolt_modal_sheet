@@ -6,7 +6,7 @@ class SheetPageWithHeroImage {
   SheetPageWithHeroImage._();
 
   static WoltModalSheetPage build({
-    required VoidCallback onFooterPressed,
+    required VoidCallback onSabPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
     bool isLastPage = true,
@@ -18,10 +18,10 @@ class SheetPageWithHeroImage {
         image: AssetImage('lib/assets/images/hero_image.jpg'),
         fit: BoxFit.cover,
       ),
-      footer: Padding(
+      stickyActionBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: WoltElevatedButton(
-          onPressed: onFooterPressed,
+          onPressed: onSabPressed,
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),

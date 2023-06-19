@@ -14,7 +14,7 @@ class RejectOrderModalPage {
     final buttonEnabledListener = ValueNotifier(false);
 
     return WoltModalSheetPage.withSingleChild(
-      footer: ValueListenableBuilder(
+      stickyActionBar: ValueListenableBuilder(
         valueListenable: buttonEnabledListener,
         builder: (_, enabled, __) {
           return StickyActionBarWrapper(

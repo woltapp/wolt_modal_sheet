@@ -18,7 +18,7 @@ class WoltModalSheetLayout extends StatelessWidget {
   ///
   /// [backButton] represents the back button widget of the modal sheet.
   ///
-  /// [footer] represents the footer widget of the modal sheet.
+  /// [stickyActionBar] represents the action widget located in the bottom of the modal sheet.
   ///
   /// [woltModalType] represents the type of the modal sheet.
   const WoltModalSheetLayout({
@@ -27,7 +27,7 @@ class WoltModalSheetLayout extends StatelessWidget {
     required this.topBar,
     required this.closeButton,
     required this.backButton,
-    required this.footer,
+    required this.stickyActionBar,
     required this.woltModalType,
     required this.topBarHeight,
     required this.topBarTranslationY,
@@ -39,7 +39,7 @@ class WoltModalSheetLayout extends StatelessWidget {
   final Widget topBar;
   final Widget closeButton;
   final Widget backButton;
-  final Widget footer;
+  final Widget stickyActionBar;
   final WoltModalType woltModalType;
   final double topBarHeight;
   final double topBarTranslationY;
@@ -72,7 +72,7 @@ class WoltModalSheetLayout extends StatelessWidget {
             start: 0,
             end: 0,
             bottom: 0,
-            child: footer,
+            child: stickyActionBar,
           ),
           if (woltModalType == WoltModalType.bottomSheet)
             const Positioned(

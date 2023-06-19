@@ -6,7 +6,7 @@ class SheetPageWithTextField {
   SheetPageWithTextField._();
 
   static WoltModalSheetPage build({
-    required VoidCallback onFooterPressed,
+    required VoidCallback onSabPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
     bool isLastPage = true,
@@ -18,13 +18,13 @@ class SheetPageWithTextField {
     });
     return WoltModalSheetPage.withSingleChild(
       mainContentPadding: const EdgeInsetsDirectional.all(16),
-      footer: ValueListenableBuilder<bool>(
+      stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: WoltElevatedButton(
-              onPressed: onFooterPressed,
+              onPressed: onSabPressed,
               enabled: isEnabled,
               child: Text(
                 !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
