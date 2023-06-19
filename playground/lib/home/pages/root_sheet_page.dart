@@ -15,7 +15,6 @@ class RootSheetPage {
   }) {
     final ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     return WoltModalSheetPage(
-      mainContentPadding: const EdgeInsetsDirectional.all(16),
       footer: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, value, __) {

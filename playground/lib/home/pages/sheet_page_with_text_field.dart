@@ -17,7 +17,7 @@ class SheetPageWithTextField {
       isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
     });
     return WoltModalSheetPage.withSingleChild(
-      padding: const EdgeInsetsDirectional.all(16),
+      mainContentPadding: const EdgeInsetsDirectional.all(16),
       footer: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {

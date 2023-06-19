@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/src/content/components/main_content/wolt_modal_sheet_main_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/components/main_content/wolt_modal_sheet_main_content.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_ui_components/lib/src/button/sticky_action_bar_wrapper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/demo_ui_components/lib/src/button/sticky_action_bar_wrapper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/modal_page/wolt_modal_sheet_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modal_page/wolt_modal_sheet_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/multi_page_path_name.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/multi_page_path_name.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/root_sheet_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/root_sheet_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_forced_max_height.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_forced_max_height.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_hero_image.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_hero_image.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_lazy_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_lazy_list.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_text_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_text_field.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/main.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

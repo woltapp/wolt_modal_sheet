@@ -5,18 +5,20 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 class StickyActionBarWrapper extends StatelessWidget {
   const StickyActionBarWrapper({
     required this.child,
+    this.padding,
     this.backgroundColor = Colors.white,
     super.key,
   });
 
   final Widget child;
   final Color backgroundColor;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
-    final paddingSize = context.screenSize == WoltScreenSize.small ? 16.0 : 32.0;
+    final defaultPaddingSize = context.screenSize == WoltScreenSize.small ? 16.0 : 32.0;
     return Padding(
-      padding: EdgeInsets.fromLTRB(paddingSize, 0, paddingSize, 0),
+      padding: padding ?? EdgeInsets.fromLTRB(defaultPaddingSize, 0, defaultPaddingSize, 0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -38,7 +40,7 @@ class StickyActionBarWrapper extends StatelessWidget {
           ColoredBox(
             color: backgroundColor,
             child: SizedBox(
-              height: paddingSize,
+              height: defaultPaddingSize,
               width: double.infinity,
             ),
           ),

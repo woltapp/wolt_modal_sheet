@@ -66,10 +66,6 @@ class _WoltModalBuilderState extends State<WoltModalBuilder> {
     );
   }
 
-  void _closeModal(BuildContext context) {
-
-  }
-
 // Future<void> _closeDescendantFocusNodes() async {
 //   final currentFocus = FocusScope.of(context);
 //   final FocusNode? focusedDescendant =

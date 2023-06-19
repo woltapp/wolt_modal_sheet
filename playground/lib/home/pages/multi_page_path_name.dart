@@ -1,9 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
 import 'package:playground/home/pages/sheet_page_with_lazy_list.dart';
 import 'package:playground/home/pages/sheet_page_with_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 enum MultiPagePathName {
@@ -46,8 +46,9 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage textField(BuildContext context) => SheetPageWithTextField.build(
-          onFooterPressed: () => close(context),
+    WoltModalSheetPage textField(BuildContext context, {bool isLastPage = true}) =>
+        SheetPageWithTextField.build(
+          onFooterPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: true,
@@ -66,8 +67,8 @@ enum MultiPagePathName {
               root(context),
               heroImage(context, isLastPage: false),
               lazyList(context, isLastPage: false),
-              forcedMaxHeight(context, isLastPage: false),
-              textField(context),
+              textField(context, isLastPage: false),
+              forcedMaxHeight(context, isLastPage: true),
             ];
     }
   }

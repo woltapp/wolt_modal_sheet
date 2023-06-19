@@ -14,15 +14,20 @@ class SheetPageWithLazyList {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
     return WoltModalSheetPage.withCustomSliverList(
+      mainContentPadding: EdgeInsetsDirectional.zero,
       footer: StickyActionBarWrapper(
-        child: WoltElevatedButton(
-          onPressed: onFooterPressed,
-          child: Text(isLastPage ? "Close" : "Next"),
+        padding: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: WoltElevatedButton(
+            onPressed: onFooterPressed,
+            child: Text(isLastPage ? "Close" : "Next"),
+          ),
         ),
       ),
-      pageTitle: Padding(
-        padding: const EdgeInsets.all(16) - const EdgeInsets.only(top: 16),
-        child: const ModalSheetTitle(titleText),
+      pageTitle: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: ModalSheetTitle(titleText),
       ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),

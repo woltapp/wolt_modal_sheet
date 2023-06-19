@@ -13,7 +13,7 @@ class SheetPageWithForcedMaxHeight {
   }) {
     return WoltModalSheetPage.withSingleChild(
       backgroundColor: WoltColors.green8,
-      padding: const EdgeInsetsDirectional.all(16),
+      mainContentPadding: const EdgeInsetsDirectional.all(16),
       forceMaxHeight: true,
       footer: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,7 +23,7 @@ class SheetPageWithForcedMaxHeight {
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
-      pageTitle: const ModalSheetTitle('Page with forced max height'),
+      pageTitle: const ModalSheetTitle('Page with forced max height and background color'),
       backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Text('''
