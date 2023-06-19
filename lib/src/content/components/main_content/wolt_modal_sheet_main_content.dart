@@ -118,6 +118,11 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
                 )
               : widget.page.sliverList,
         ),
+        if (widget.page.forceMaxHeight)
+          const SliverFillRemaining(
+            hasScrollBody: false,
+            child: Spacer(),
+          ),
       ],
     );
     return NotificationListener<ScrollNotification>(

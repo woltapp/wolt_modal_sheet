@@ -21,11 +21,14 @@ class SheetPageWithTextField {
       footer: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {
-          return WoltElevatedButton(
-            onPressed: onFooterPressed,
-            enabled: isEnabled,
-            child: Text(
-              !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: WoltElevatedButton(
+              onPressed: onFooterPressed,
+              enabled: isEnabled,
+              child: Text(
+                !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
+              ),
             ),
           );
         },
@@ -37,7 +40,7 @@ class SheetPageWithTextField {
         padding: const EdgeInsets.only(bottom: 80, top: 16),
         child: Column(
           children: [
-            const Text('''
+            const ModalSheetContentText('''
 This page has a text field. We wait for the keyboard closing before starting pagination. Don't forget to add a scroll padding to your text field to avoid the keyboard hiding the text field.
 '''),
             Padding(

@@ -19,10 +19,13 @@ class RootSheetPage {
       footer: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, value, __) {
-          return WoltElevatedButton(
-            onPressed: onFooterPressed,
-            enabled: value,
-            child: const Text("Let's start!"),
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: WoltElevatedButton(
+              onPressed: onFooterPressed,
+              enabled: value,
+              child: const Text("Let's start!"),
+            ),
           );
         },
       ),

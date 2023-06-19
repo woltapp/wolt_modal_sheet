@@ -5,43 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/baklava.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/banana_bread.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/blueberry_pie.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/brownie.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/cheesecake.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/cinnamon_roll.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/cohoco_cookie.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/crepe.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/croissant.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/donut.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/eclair.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/fudge.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/ice_cream.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/lemon_cake.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/macaroni.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/muffin.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/pancake.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/assets/images/tiramisu.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/baklava.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/banana_bread.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/blueberry_pie.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/brownie.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/cheesecake.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/cinnamon_roll.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/cohoco_cookie.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/crepe.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/croissant.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/donut.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/eclair.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/fudge.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/ice_cream.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/lemon_cake.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/macaroni.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/muffin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/pancake.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/assets/images/tiramisu.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/home/online/modal_pages/ready/extra_recommendation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/home/online/modal_pages/ready/extra_recommendation.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/content/components/main_content/wolt_modal_sheet_main_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/components/main_content/wolt_modal_sheet_main_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/root_sheet_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/root_sheet_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_forced_max_height.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_forced_max_height.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_hero_image.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_hero_image.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_lazy_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_lazy_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_text_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_text_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/main.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +66,7 @@
       <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/button" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.example">
+  <component name="RunManager" selected="Flutter.playground">
     <configuration name="example" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
       <method v="2" />
@@ -129,16 +101,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/demo_ui_components/lib/src/selection_list/wolt_selection_list_tile.dart</url>
-          <line>70</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

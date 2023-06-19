@@ -55,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wolt Modal Sheet Playground'),
-
         actions: [
           WoltCircularElevatedButton(
             onPressed: () {

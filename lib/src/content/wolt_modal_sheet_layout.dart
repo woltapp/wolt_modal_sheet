@@ -50,9 +50,7 @@ class WoltModalSheetLayout extends StatelessWidget {
       behavior: const DragScrollBehavior(),
       child: Stack(
         children: [
-          page.forceMaxHeight
-              ? Align(alignment: AlignmentDirectional.topStart, child: mainContent)
-              : mainContent,
+          mainContent,
           Positioned(
             left: 0,
             right: 0,
