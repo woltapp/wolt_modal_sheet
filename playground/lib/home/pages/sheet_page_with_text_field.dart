@@ -44,12 +44,12 @@ class SheetPageWithTextField {
 This page has a text field. We wait for the keyboard closing before starting pagination. Don't forget to add a scroll padding to your text field to avoid the keyboard hiding the text field.
 '''),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: WoltTextInput(
-                labelText: 'This is a label',
-                maxLines: 4,
+              padding: const EdgeInsets.only(top: 16),
+              child: TextFormField(
+                autofocus: true,
+                maxLines: 3,
                 controller: textEditingController,
-                scrollPadding: const EdgeInsets.only(top: WoltTextInput.woltTextInputHeight * 2),
+                scrollPadding: const EdgeInsets.only(top: 300),
               ),
             ),
           ],

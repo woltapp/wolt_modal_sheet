@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_custom_layout.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -31,6 +33,15 @@ class _WoltModalBuilderState extends State<WoltModalBuilder> {
       widget.pageListBuilderNotifier;
 
   Widget Function(Widget)? get decorator => widget.decorator;
+
+  @override
+  void initState() {
+    super.initState();
+    pageIndexNotifier.addListener(() {
+      final currentPageIndexValue = pageIndexNotifier.value;
+      pageIndexNotifier.value = max(currentPageIndexValue, 0);
+    });
+  }
 
   @override
   void didChangeDependencies() {

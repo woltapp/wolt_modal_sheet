@@ -32,6 +32,25 @@ class _DemoAppState extends State<DemoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        inputDecorationTheme: const InputDecorationTheme(
+          suffixStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: WoltColors.black64,
+          ),
+          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
+          border: UnderlineInputBorder(borderSide: BorderSide.none),
+          constraints: BoxConstraints(minHeight: 64),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: WoltColors.blue),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: WoltColors.black16),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          focusColor: WoltColors.blue,
+        ),
         primaryColor: WoltColors.blue,
         useMaterial3: false,
         fontFamily: 'Inter',

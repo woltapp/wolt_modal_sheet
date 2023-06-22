@@ -92,11 +92,7 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(_data.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(fontWeight: FontWeight.w500)),
+                  Text(_data.title, style: Theme.of(context).textTheme.bodyLarge!),
                   if (subtitle != null) ...[
                     const SizedBox(height: 4),
                     Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),

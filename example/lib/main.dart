@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:demo_ui_components/demo_ui_components.dart';
+import 'package:example/entities/grouped_coffee_orders.dart';
+import 'package:example/entities/mock_coffee_orders.dart';
+import 'package:example/home/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:example/entities/grouped_coffee_orders.dart';
-import 'package:example/home/home_screen.dart';
-import 'package:example/entities/mock_coffee_orders.dart';
+
 import 'constants/demo_app_colors.dart';
 
 void main() => runApp(const DemoApp());
@@ -38,6 +39,25 @@ class _DemoAppState extends State<DemoApp> {
         primaryColor: DemoAppColors.blue,
         useMaterial3: false,
         fontFamily: 'Inter',
+        inputDecorationTheme: const InputDecorationTheme(
+          suffixStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: DemoAppColors.black64,
+          ),
+          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
+          border: UnderlineInputBorder(borderSide: BorderSide.none),
+          constraints: BoxConstraints(minHeight: 64),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: WoltColors.blue),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: WoltColors.black16),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          focusColor: WoltColors.blue,
+        ),
         textTheme: TextTheme(
           headlineMedium: TextStyle(
             fontSize: 28,

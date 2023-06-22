@@ -1,5 +1,6 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:example/home/online/modal_pages/ready/extra_recommendation.dart';
+import 'package:example/home/online/modal_pages/ready/extra_recommendation_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -11,15 +12,16 @@ class OfferRecommendationModalPage {
     required VoidCallback onBackButtonPressed,
     required VoidCallback onClosed,
   }) {
-    final buttonEnabledListener = ValueNotifier(false);
     final selectedItemCountListener = ValueNotifier(0);
     const pageTitle = 'Recommendations';
+    const allRecommendations = ExtraRecommendation.values;
+    final tileCount = allRecommendations.length + 1;
+    final Set<ExtraRecommendation> selectedRecommendations = {};
 
-    return WoltModalSheetPage.withSingleChild(
-      stickyActionBar: AnimatedBuilder(
-        animation: Listenable.merge([buttonEnabledListener, selectedItemCountListener]),
-        builder: (_, __) {
-          final count = selectedItemCountListener.value;
+    return WoltModalSheetPage.withCustomSliverList(
+      stickyActionBar: ValueListenableBuilder(
+        valueListenable: selectedItemCountListener,
+        builder: (_, count, __) {
           final String buttonText;
           if (count == 0) {
             buttonText = 'Select recommendations';
@@ -31,7 +33,7 @@ class OfferRecommendationModalPage {
           return StickyActionBarWrapper(
             child: WoltElevatedButton(
               onPressed: onCoffeeOrderServed,
-              enabled: buttonEnabledListener.value,
+              enabled: count > 0,
               child: Text(buttonText),
             ),
           );
@@ -41,36 +43,32 @@ class OfferRecommendationModalPage {
       pageTitle: const ModalSheetTitle(pageTitle),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       backButton: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 120),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ModalSheetContentText(
-              'Please select any extras the customer would be interested in purchasing',
-            ),
-            WoltSelectionList<ExtraRecommendation>.multiSelect(
-              tileCrossAxisAlignment: CrossAxisAlignment.center,
-              itemTileDataGroup: WoltSelectionListItemDataGroup(
-                group: ExtraRecommendation.values
-                    .map(
-                      (e) => WoltSelectionListItemData(
-                        title: e.label,
-                        subtitle: e.price,
-                        leadingImageAssetPath: e.imageAssetPath,
-                        value: e,
-                        isSelected: false,
-                      ),
-                    )
-                    .toList(),
-              ),
-              onSelectionUpdateInMultiSelectionList: (List<ExtraRecommendation> selectedValues,
-                  WoltSelectionListItemData<ExtraRecommendation> updatedItemData) {
-                buttonEnabledListener.value = selectedValues.isNotEmpty;
-                selectedItemCountListener.value = selectedValues.length;
-              },
-            ),
-          ],
+      sliverList: SliverList(
+        delegate: SliverChildBuilderDelegate(
+              (_, index) {
+            if (index == 0) {
+              return const ModalSheetContentText(
+                'Please select any extras the customer would be interested in purchasing',
+              );
+            } else {
+              final recommendation = allRecommendations[index - 1];
+              return Padding(
+                padding: EdgeInsets.only(
+                  bottom: index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
+                ),
+                child: ExtraRecommendationTile(
+                  recommendation: recommendation,
+                  onPressed: (isSelected) {
+                    isSelected ? selectedRecommendations.add(recommendation) :
+                    selectedRecommendations.remove(recommendation);
+                    selectedItemCountListener.value = selectedRecommendations.length;
+                  },
+                  isSelected: selectedRecommendations.contains(recommendation),
+                ),
+              );
+            }
+          },
+          childCount: tileCount,
         ),
       ),
     );

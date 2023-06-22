@@ -1,5 +1,3 @@
-import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:example/constants/demo_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,21 +15,15 @@ class WaterQuantityTemperatureInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WoltTextInput(
-      scrollPadding: scrollPadding,
+    return TextFormField(
       controller: controller,
+      scrollPadding: scrollPadding ?? const EdgeInsets.all(16),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [
         /* Don't allow minus or space */
         FilteringTextInputFormatter.deny(RegExp(r'(\s|-+)')),
       ],
-      suffix: Text(
-        suffixText,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: DemoAppColors.black64,
-        ),
-      ),
+      decoration: InputDecoration(suffix: Text(suffixText)),
     );
   }
 }
