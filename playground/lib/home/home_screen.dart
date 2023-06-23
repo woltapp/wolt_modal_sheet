@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   context: context,
                   pageListBuilderNotifier: pageListBuilderNotifier,
                   modalTypeBuilder: _modalTypeBuilder,
-                  onDismissed: () => pageIndexNotifier.value = 0,
+                  onModalDismissedWithBarrierTap: () => pageIndexNotifier.value = 0,
                 );
               },
               child: const Text('Show Modal Sheet'),

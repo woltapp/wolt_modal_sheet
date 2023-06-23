@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/content/wolt_bottom_sheet_drag_handle.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_bottom_sheet_drag_handle.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 import 'package:wolt_modal_sheet/src/utils/drag_scroll_behavior.dart';

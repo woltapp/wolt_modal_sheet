@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 
 /// A custom [MultiChildLayoutDelegate] that handles the layout of the modal and barrier content within [WoltScrollableModalSheet].
-class WoltModalSheetMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
+class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
+  final double animationProgress;
+
   /// The maximum height percentage of the content relative to the available size.
   final double maxPageHeight;
 
@@ -16,9 +18,9 @@ class WoltModalSheetMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   final String barrierLayoutId;
 
   /// The type of the scrollable modal.
-  final WoltModalType scrollableModalType;
+  final WoltModalType modalType;
 
-  /// Creates a [WoltModalSheetMultiChildLayoutDelegate].
+  /// Creates a [WoltModalMultiChildLayoutDelegate].
   ///
   /// [maxPageHeight] represents the maximum page height in the range of [0, 1] relative to the available size.
   ///
@@ -28,18 +30,19 @@ class WoltModalSheetMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   ///
   /// [barrierLayoutId] represents the layout identifier for the barrier.
   ///
-  /// [scrollableModalType] represents the type of the scrollable modal.
-  WoltModalSheetMultiChildLayoutDelegate({
+  /// [modalType] represents the type of the scrollable modal.
+  WoltModalMultiChildLayoutDelegate({
     required this.maxPageHeight,
     required this.minPageHeight,
     required this.contentLayoutId,
     required this.barrierLayoutId,
-    required this.scrollableModalType,
+    required this.modalType,
+    required this.animationProgress,
   });
 
   @override
   void performLayout(Size size) {
-    final modalWidth = scrollableModalType.modalContentWidth(size.width);
+    final modalWidth = size.width;
     layoutChild(
       barrierLayoutId,
       BoxConstraints(maxWidth: size.width, maxHeight: size.height),
@@ -57,19 +60,16 @@ class WoltModalSheetMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     /// Position Modal Content
     positionChild(
       contentLayoutId,
-      Offset(
-        scrollableModalType.xOffsetOfModalContent(size.width),
-        scrollableModalType.yOffsetOfModalContent(size.height, modalHeight),
-      ),
+      Offset(0, modalType.yOffsetOfModalContent(size.height, modalHeight)),
     );
 
     /// Position Barrier
     positionChild(barrierLayoutId, Offset.zero);
   }
 
-  /// Determines whether the delegate should re-layout the children based on changes in [scrollableModalType].
+  /// Determines whether the delegate should re-layout the children based on changes in [modalType].
   @override
-  bool shouldRelayout(covariant WoltModalSheetMultiChildLayoutDelegate oldDelegate) {
-    return oldDelegate.scrollableModalType != scrollableModalType;
+  bool shouldRelayout(covariant WoltModalMultiChildLayoutDelegate oldDelegate) {
+    return oldDelegate.modalType != modalType && oldDelegate.animationProgress != animationProgress;
   }
 }

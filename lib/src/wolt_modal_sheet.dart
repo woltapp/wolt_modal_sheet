@@ -1,6 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/wolt_modal_builder.dart';
+import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_layout_builder.dart';
+import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_barrier_child.dart';
+import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
+import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_dialog_child.dart';
+import 'package:wolt_modal_sheet/src/wolt_modal_sheet_route.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+
+import 'multi_child_layout/wolt_modal_multi_child_layout_sheet_child_bottom_sheet.dart';
 
 const int defaultWoltModalTransitionAnimationDuration = 350;
 
@@ -10,30 +18,35 @@ typedef WoltModalSheetPageListBuilder = List<WoltModalSheetPage> Function(BuildC
 /// Signature for a function that returns the [WoltModalType] based on the given [BuildContext].
 typedef WoltModalTypeBuilder = WoltModalType Function(BuildContext context);
 
-/// A utility class for displaying a Wolt modal sheet.
-class WoltModalSheet {
-  WoltModalSheet._();
+class WoltModalSheet<T> extends StatefulWidget {
+  const WoltModalSheet({
+    required this.pageListBuilderNotifier,
+    required this.pageIndexNotifier,
+    required this.onModalDismissedWithBarrierTap,
+    required this.decorator,
+    required this.modalTypeBuilder,
+    required this.animationController,
+    required this.route,
+    required this.enableDragForBottomSheet,
+    required this.useSafeArea,
+    super.key,
+  });
 
-  /// Displays a Wolt modal sheet and returns the value from the modal.
-  ///
-  /// The [context] specifies the build context.
-  ///
-  /// The [pageListBuilderNotifier] is a [ValueNotifier] that holds a [WoltModalSheetPageListBuilder] function.
-  /// It provides the pages to be displayed in the modal.
-  ///
-  /// The [modalTypeBuilder] is a [WoltModalTypeBuilder] function that determines the type of the modal.
-  ///
-  /// The [pageIndexNotifier] is an optional [ValueNotifier] that holds the initial page index to be displayed.
-  /// If the modal has multiple pages, the [pageIndexNotifier] can be used to control the page index.
-  /// If the modal has only one page, the [pageIndexNotifier] can be omitted.
-  ///
-  /// The [decorator] is an optional function that decorates the content widget of the modal.
-  /// This is useful to decorate the modal content with provider ancestor for state management.
-  ///
-  /// The [useRootNavigator] specifies whether to use the root navigator.
-  ///
-  /// The [onDismissed] is a callback that will be invoked when the modal is closed. If the modal
-  /// has [pageIndexNotifier], the [onDismissed] will be invoked when the index is smaller than 0.
+  final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
+  final ValueNotifier<int> pageIndexNotifier;
+  final VoidCallback? onModalDismissedWithBarrierTap;
+  final Widget Function(Widget)? decorator;
+  final WoltModalType Function(BuildContext context) modalTypeBuilder;
+  final AnimationController? animationController;
+  final WoltModalSheetRoute<T> route;
+  final bool enableDragForBottomSheet;
+  final bool useSafeArea;
+
+  static const ParametricCurve<double> animationCurve = decelerateEasing;
+
+  @override
+  State<WoltModalSheet> createState() => _WoltModalSheetState();
+
   static Future<T?> show<T>({
     required BuildContext context,
     required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
@@ -41,33 +54,142 @@ class WoltModalSheet {
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
-    VoidCallback? onDismissed,
+    bool barrierDismissible = true,
+    bool enableDragForBottomSheet = true,
     RouteSettings? routeSettings,
+    Duration? transitionDuration,
+    VoidCallback? onModalDismissedWithBarrierTap,
+    AnimationController? transitionAnimationController,
+    bool useSafeArea = false,
   }) {
-    // TODO: This is a temporary solution to prevent the bottom sheet from being dragged
-    // on large screens. This should be removed when the bottom sheet is redesigned to handle its
-    // own drag gestures. The current behavior causes incorrect behavior when the screen size changes due to orientation change.
-    final enabledDrag = modalTypeBuilder(context) == WoltModalType.bottomSheet;
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      isDismissible: true,
-      enableDrag: enabledDrag,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      builder: (context) {
-        return WoltModalBuilder(
-          decorator: decorator,
-          onModalDismissedWithBarrierTap: onDismissed,
-          pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
-          pageListBuilderNotifier: pageListBuilderNotifier,
-          modalTypeBuilder: modalTypeBuilder,
+    final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
+
+    return navigator.push<T>(
+      WoltModalSheetRoute<T>(
+        decorator: decorator,
+        pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
+        pageListBuilderNotifier: pageListBuilderNotifier,
+        modalTypeBuilder: modalTypeBuilder,
+        barrierDismissible: barrierDismissible,
+        routeSettings: routeSettings,
+        transitionDuration: transitionDuration,
+        enableDragForBottomSheet: enableDragForBottomSheet,
+        onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
+        transitionAnimationController: transitionAnimationController,
+        onDismissed: onModalDismissedWithBarrierTap,
+        useSafeArea: useSafeArea,
+      ),
+    );
+  }
+}
+
+class _WoltModalSheetState extends State<WoltModalSheet> {
+  late WoltModalType modalType;
+
+  ValueNotifier<int> get pageIndexNotifier => widget.pageIndexNotifier;
+
+  ValueNotifier<WoltModalSheetPageListBuilder> get pagesListBuilderNotifier =>
+      widget.pageListBuilderNotifier;
+
+  Widget Function(Widget) get _decorator =>
+      widget.decorator ?? (widget) => Builder(builder: (_) => widget);
+
+  static const barrierLayoutId = 'barrierLayoutId';
+
+  static const contentLayoutId = 'contentLayoutId';
+
+  @override
+  void initState() {
+    super.initState();
+    pageIndexNotifier.addListener(() {
+      final currentPageIndexValue = pageIndexNotifier.value;
+      pageIndexNotifier.value = max(currentPageIndexValue, 0);
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    modalType = widget.modalTypeBuilder(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final content = AnimatedBuilder(
+      animation: Listenable.merge([
+        pageIndexNotifier,
+        pagesListBuilderNotifier,
+        widget.route.animation,
+      ]),
+      builder: (BuildContext context, Widget? child) {
+        // Disable the initial animation when accessible navigation is on so
+        // that the semantics are added to the tree at the correct time.
+        final double animationValue = WoltModalSheet.animationCurve.transform(
+          MediaQuery.of(context).accessibleNavigation ? 1.0 : widget.route.animation!.value,
+        );
+        final pageIndex = pageIndexNotifier.value;
+        final pages = pagesListBuilderNotifier.value(context);
+        final page = pages[pageIndex];
+        return _decorator(
+          CustomMultiChildLayout(
+            delegate: WoltModalMultiChildLayoutDelegate(
+              contentLayoutId: contentLayoutId,
+              barrierLayoutId: barrierLayoutId,
+              modalType: modalType,
+              maxPageHeight: page.maxPageHeight,
+              minPageHeight: page.minPageHeight,
+              animationProgress: animationValue,
+            ),
+            children: [
+              LayoutId(
+                id: barrierLayoutId,
+                child: WoltModalMultiChildLayoutBarrierChild(
+                    onTap: widget.onModalDismissedWithBarrierTap),
+              ),
+              LayoutId(
+                id: contentLayoutId,
+                child: Builder(
+                  builder: (BuildContext context) {
+                    final layout = WoltModalSheetAnimatedLayoutBuilder(
+                      woltModalType: modalType,
+                      pageIndex: pageIndex,
+                      pages: pages,
+                    );
+                    switch (modalType) {
+                      case WoltModalType.bottomSheet:
+                        return WoltModalMultiChildLayoutBottomSheetChild(
+                          pageBackgroundColor: page.backgroundColor,
+                          animationController: widget.route.animationController!,
+                          enableDrag: widget.enableDragForBottomSheet,
+                          route: widget.route,
+                          child: layout,
+                        );
+                      case WoltModalType.dialog:
+                        return WoltModalMultiChildLayoutDialogChild(
+                          pageBackgroundColor: page.backgroundColor,
+                          child: layout,
+                        );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
-      routeSettings: routeSettings,
-      useRootNavigator: useRootNavigator,
-      useSafeArea: true,
     );
+
+    // If useSafeArea is true, a SafeArea is inserted.
+    // If useSafeArea is false, the bottom sheet is aligned to the bottom of the page
+    // and isn't exposed to the top padding of the MediaQuery.
+    final Widget modal = widget.useSafeArea
+        ? SafeArea(child: content)
+        : MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: content,
+          );
+
+    return Scaffold(backgroundColor: Colors.transparent, body: modal);
   }
 }

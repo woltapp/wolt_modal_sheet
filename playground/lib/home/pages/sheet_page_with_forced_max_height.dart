@@ -27,8 +27,7 @@ class SheetPageWithForcedMaxHeight {
       backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Text('''
-This page height is forced to be the max height according to the provided max height ratio 
-regardless of the intrinsic height of the child widget.. 
+This page height is forced to be the max height according to the provided max height ratio regardless of the intrinsic height of the child widget. 
 '''),
     );
   }

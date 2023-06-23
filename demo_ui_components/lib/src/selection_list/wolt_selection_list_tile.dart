@@ -63,49 +63,52 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
     final subtitle = _data.subtitle;
     final imageAssetPath = _data.leadingImageAssetPath;
 
-    return InkWell(
-      onTap: _onTap,
-      child: Padding(
-        padding: widget.tilePadding ?? const EdgeInsets.symmetric(vertical: 16),
-        child: Row(
-          crossAxisAlignment: widget.tileCrossAxisAlignment ?? CrossAxisAlignment.start,
-          children: [
-            if (imageAssetPath != null) ...[
-              SizedBox(
-                width: 64,
-                height: 64,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Image(
-                    image: AssetImage(imageAssetPath),
-                    fit: BoxFit.cover,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: _onTap,
+        child: Padding(
+          padding: widget.tilePadding ?? const EdgeInsets.symmetric(vertical: 16),
+          child: Row(
+            crossAxisAlignment: widget.tileCrossAxisAlignment ?? CrossAxisAlignment.start,
+            children: [
+              if (imageAssetPath != null) ...[
+                SizedBox(
+                  width: 64,
+                  height: 64,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: Image(
+                      image: AssetImage(imageAssetPath),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
+                const SizedBox(width: 12),
+              ],
+              if (icon != null) ...[
+                Icon(icon, color: WoltColors.black),
+                const SizedBox(width: 16),
+              ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_data.title, style: Theme.of(context).textTheme.bodyLarge!),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 4),
+                      Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
+                    ]
+                  ],
+                ),
               ),
-              const SizedBox(width: 12),
-            ],
-            if (icon != null) ...[
-              Icon(icon, color: WoltColors.black),
               const SizedBox(width: 16),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(_data.title, style: Theme.of(context).textTheme.bodyLarge!),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: 4),
-                    Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
-                  ]
-                ],
+              WoltSelectionListTileTrailing(
+                groupType: widget.selectionListType,
+                isSelected: _isSelected,
               ),
-            ),
-            const SizedBox(width: 16),
-            WoltSelectionListTileTrailing(
-              groupType: widget.selectionListType,
-              isSelected: _isSelected,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
