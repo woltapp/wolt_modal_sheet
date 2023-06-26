@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/src/multi_child_layout/wolt_modal_multi_child_layout_barrier_child.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/multi_child_layout/wolt_modal_multi_child_layout_sheet_child_bottom_sheet.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/utils/bottom_sheet_suspended_curve.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/wolt_modal_sheet_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_ui_components/lib/src/selection_list/wolt_selection_list_tile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/demo_ui_components/lib/src/selection_list/wolt_selection_list_tile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_bottom_sheet_drag_handle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/widgets/wolt_bottom_sheet_drag_handle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_custom_layout.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_multi_child_layout_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/modal_type/wolt_modal_type.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modal_type/wolt_modal_type.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/wolt_modal_builder.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/wolt_modal_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/wolt_modal_sheet.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_forced_max_height.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/home/pages/sheet_page_with_forced_max_height.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/playground/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_animated_layout_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_animated_layout_builder.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,16 +36,16 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "/Users/cagatayulusoy/wolt/wolt_modal_sheet/lib/src/multi_child_layout",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cagatayulusoy/wolt/wolt_modal_sheet/lib/src/multi_child_layout&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/src/multi_child_layout" />

@@ -171,29 +171,47 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
       [for (int i = 0; i < widget.pages.length; i++) GlobalKey()];
 
   void _addPage({required bool animate}) {
+    // We set the _shouldAnimatePagination to animate, which dictates whether the new page transition will be animated.
     _shouldAnimatePagination = animate;
+
+    // An AnimationController is created and attached to this State object (with 'this' as the vsync).
     _animationController = AnimationController(
       duration: const Duration(milliseconds: defaultWoltModalTransitionAnimationDuration),
       vsync: this,
-    )..addStatusListener((status) {
+    )
+      // We also attach a status listener to the animation controller. When the animation is completed, it will trigger a state change.
+      ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           setState(() {
             _shouldAnimatePagination = null;
+            // We clear the _outgoingPageWidgets, which was storing the "outgoing" page (the page we're transitioning from)
             _outgoingPageWidgets = null;
+            // We ensure that the animation controller's value is set to its upper bound (which should be 1.0)
             _animationController?.value = _animationController?.upperBound ?? 1.0;
+            // We dispose of the animation controller to free up resources as we're done with this animation
             _animationController?.dispose();
+            // We also set the animation controller reference to null as it's no longer needed.
             _animationController = null;
           });
         }
       });
+
+    // We store the current widgets in currentWidgetsToBeOutgoing, as we're about to replace them.
     final currentWidgetsToBeOutgoing = _currentPageWidgets;
+
+    // If there were any current widgets, we create a new set of outgoing widgets from them.
     if (currentWidgetsToBeOutgoing != null) {
       _outgoingPageWidgets = _createOutgoingWidgets(
         _animationController!,
         currentWidgetsToBeOutgoing,
       );
     }
+
+    // We then create the new set of current widgets with the new page
     _currentPageWidgets = _createCurrentWidgets(_animationController!);
+
+    // If we're supposed to animate the transition, we start the animation with forward().
+    // Otherwise, we just set the animation controller's value to 1.0, effectively skipping the animation.
     if (animate) {
       _animationController?.forward();
     } else {
