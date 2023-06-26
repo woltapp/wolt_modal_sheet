@@ -13,6 +13,8 @@ enum MultiPagePathName {
   textField,
   allPagesPath;
 
+  static const defaultPath = MultiPagePathName.allPagesPath;
+
   WoltModalSheetPageListBuilder pageListBuilder({
     required VoidCallback goToNextPage,
     required VoidCallback goToPreviousPage,

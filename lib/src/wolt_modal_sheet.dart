@@ -129,75 +129,82 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: Listenable.merge([
-        pageIndexNotifier,
-        pagesListBuilderNotifier,
-        widget.route.animation,
-      ]),
-      builder: (BuildContext context, Widget? child) {
-        // Disable the initial animation when accessible navigation is on so
-        // that the semantics are added to the tree at the correct time.
-        final double animationValue = animationCurve.transform(
-          MediaQuery.of(context).accessibleNavigation ? 1.0 : widget.route.animation!.value,
-        );
-        final pageIndex = pageIndexNotifier.value;
-        final pages = pagesListBuilderNotifier.value(context);
-        final page = pages[pageIndex];
-        final enableDrag =
-            modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
-        return _decorator(
-          CustomMultiChildLayout(
-            delegate: WoltModalMultiChildLayoutDelegate(
-              contentLayoutId: contentLayoutId,
-              barrierLayoutId: barrierLayoutId,
-              modalType: modalType,
-              maxPageHeight: page.maxPageHeight,
-              minPageHeight: page.minPageHeight,
-              animationProgress: animationValue,
-            ),
-            children: [
-              LayoutId(
-                id: barrierLayoutId,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    widget.onModalDismissedWithBarrierTap?.call();
-                    Navigator.of(context).pop();
-                  },
-                  child: const SizedBox.expand(),
-                ),
-              ),
-              LayoutId(
-                id: contentLayoutId,
-                child: KeyedSubtree(
-                  key: _childKey,
-                  child: GestureDetector(
-                    onVerticalDragStart: enableDrag ? _handleDragStart : null,
-                    onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
-                    onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
-                    child: Material(
-                      color: page.backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: modalType.borderRadiusGeometry(
-                          /// TODO: Make this configurable through theme extension
-                          _containerRadiusAmount,
+    return _decorator(
+      // The order of the notifier builders matter because we want to use the same instance of
+      // the page list whenever page index is updated.
+      ValueListenableBuilder<WoltModalSheetPageListBuilder>(
+        valueListenable: pagesListBuilderNotifier,
+        builder: (_, pagesBuilder, __) {
+          final pages = pagesBuilder(context);
+          return ValueListenableBuilder<int>(
+            valueListenable: pageIndexNotifier,
+            builder: (_, int pageIndex, __) {
+              final page = pages[pageIndex];
+              return AnimatedBuilder(
+                animation: widget.route.animation!,
+                builder: (BuildContext context, Widget? child) {
+                  // Disable the initial animation when accessible navigation is on so
+                  // that the semantics are added to the tree at the correct time.
+                  final double animationValue = animationCurve.transform(
+                    MediaQuery.of(context).accessibleNavigation ? 1.0 : widget.route.animation!.value,
+                  );
+                  final enableDrag =
+                      modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
+                  return CustomMultiChildLayout(
+                    delegate: WoltModalMultiChildLayoutDelegate(
+                      contentLayoutId: contentLayoutId,
+                      barrierLayoutId: barrierLayoutId,
+                      modalType: modalType,
+                      maxPageHeight: page.maxPageHeight,
+                      minPageHeight: page.minPageHeight,
+                      animationProgress: animationValue,
+                    ),
+                    children: [
+                      LayoutId(
+                        id: barrierLayoutId,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            widget.onModalDismissedWithBarrierTap?.call();
+                            Navigator.of(context).pop();
+                          },
+                          child: const SizedBox.expand(),
                         ),
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      child: WoltModalSheetAnimatedLayoutBuilder(
-                        woltModalType: modalType,
-                        pageIndex: pageIndex,
-                        pages: pages,
+                      LayoutId(
+                        id: contentLayoutId,
+                        child: KeyedSubtree(
+                          key: _childKey,
+                          child: GestureDetector(
+                            onVerticalDragStart: enableDrag ? _handleDragStart : null,
+                            onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
+                            onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                            child: Material(
+                              color: page.backgroundColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: modalType.borderRadiusGeometry(
+                                  /// TODO: Make this configurable through theme extension
+                                  _containerRadiusAmount,
+                                ),
+                              ),
+                              clipBehavior: Clip.antiAlias,
+                              child: WoltModalSheetAnimatedLayoutBuilder(
+                                woltModalType: modalType,
+                                pageIndex: pageIndex,
+                                pages: pages,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+                    ],
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

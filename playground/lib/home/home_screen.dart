@@ -41,13 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     pageListBuilderNotifier = ValueNotifier<WoltModalSheetPageListBuilder>(
-      MultiPagePathName.allPagesPath.pageListBuilder(
+      MultiPagePathName.defaultPath.pageListBuilder(
         goToNextPage: goToNextPage,
         goToPreviousPage: goToPreviousPage,
         close: close,
         onMultiPagePathSelected: (newFlowName) => onPathSelected(newFlowName),
       ),
-    );
+    )..addListener(() {
+      // Reset page index when page list changes.
+      pageIndexNotifier.value = 0;
+    });
   }
 
   @override

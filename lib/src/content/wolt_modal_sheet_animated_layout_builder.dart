@@ -47,7 +47,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
 
   AnimationController? _animationController;
 
-  late List<ValueNotifier<double>> _scrollPositions;
+  List<ValueNotifier<double>> _scrollPositions = [];
 
   ValueNotifier<double> get _currentScrollPosition => _scrollPositions[_pageIndex];
 
@@ -58,11 +58,20 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
   @override
   void initState() {
     super.initState();
+    _resetGlobalKeys();
+    _resetScrollPositions();
+  }
+
+  void _resetGlobalKeys() {
     _offstagedTitleKeys = _createGlobalKeys();
     _titleKeys = _createGlobalKeys();
     _currentOffstagedMainContentKeys = _createGlobalKeys();
     _outgoingOffstagedMainContentKeys = _createGlobalKeys();
-    _scrollPositions = [for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)];
+  }
+
+  void _resetScrollPositions() {
+    _scrollPositions.clear();
+    _scrollPositions =  [for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)];
   }
 
   @override
@@ -79,6 +88,10 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
     _isForwardMove = oldWidget.pageIndex < widget.pageIndex;
     if (oldWidget.pageIndex != widget.pageIndex) {
       _addPage(animate: true);
+    }
+    if (oldWidget.pages != widget.pages) {
+      _resetScrollPositions();
+      _resetGlobalKeys();
     }
   }
 
@@ -211,7 +224,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
         child: _pageIndex == 0 ? const SizedBox.shrink() : _createBackButton(),
       ),
       sabAnimatedBuilder: CurrentSabAnimatedBuilder(
-        primaryButton: _page.stickyActionBar == null ? const SizedBox.shrink() : _createSab(),
+        stickyActionBar: _page.stickyActionBar == null ? const SizedBox.shrink() : _createSab(),
         controller: animationController,
       ),
     );
@@ -248,7 +261,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
       ),
       sabAnimatedBuilder: OutgoingSabAnimatedBuilder(
         controller: animationController,
-        sab: currentWidgetsToBeOutgoing.sabAnimatedBuilder.primaryButton,
+        sab: currentWidgetsToBeOutgoing.sabAnimatedBuilder.stickyActionBar,
       ),
     );
   }
