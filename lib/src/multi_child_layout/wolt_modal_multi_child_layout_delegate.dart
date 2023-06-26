@@ -42,7 +42,7 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
 
   @override
   void performLayout(Size size) {
-    final modalWidth = size.width;
+    final modalWidth = modalType.modalContentWidth(size.width);
     layoutChild(
       barrierLayoutId,
       BoxConstraints(maxWidth: size.width, maxHeight: size.height),
@@ -60,7 +60,10 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     /// Position Modal Content
     positionChild(
       contentLayoutId,
-      Offset(0, modalType.yOffsetOfModalContent(size.height, modalHeight)),
+      Offset(
+        modalType.xOffsetOfModalContent(size.width),
+        modalType.yOffsetOfModalContent(size.height, modalHeight),
+      ),
     );
 
     /// Position Barrier

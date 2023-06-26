@@ -8,6 +8,47 @@ enum WoltModalType {
 
   const WoltModalType();
 
+  /// Returns the [BorderRadiusGeometry] based on the specified [radiusAmount].
+  ///
+  /// The [radiusAmount] determines the amount of radius to be applied to the border.
+  BorderRadiusGeometry borderRadiusGeometry(double radiusAmount) {
+    final radius = Radius.circular(radiusAmount);
+    switch (this) {
+      case WoltModalType.bottomSheet:
+        return BorderRadius.only(topLeft: radius, topRight: radius);
+      case WoltModalType.dialog:
+        return BorderRadius.all(radius);
+    }
+  }
+
+  /// Returns the width of the modal content based on the total [totalWidth].
+  ///
+  /// The [totalWidth] represents the total available width for the modal.
+  double modalContentWidth(double totalWidth) {
+    switch (this) {
+      case WoltModalType.bottomSheet:
+        return totalWidth;
+      case WoltModalType.dialog:
+        return totalWidth - (2 * xOffsetOfModalContent(totalWidth));
+    }
+  }
+
+  /// Returns the x offset of the modal content based on the total [totalWidth].
+  ///
+  /// The [totalWidth] represents the total available width for the modal.
+  double xOffsetOfModalContent(double totalWidth) {
+    switch (this) {
+      case WoltModalType.bottomSheet:
+        return 0;
+      case WoltModalType.dialog:
+        return WoltResponsiveLayoutGrid.centered(
+          centerWidgetColumnCount: 2,
+          paddedColumnCountPerSide: 1,
+          child: const SizedBox.expand(),
+        ).columnWidth(totalWidth);
+    }
+  }
+
   /// Returns the y offset of the modal content based on the total [totalHeight] and [modalHeight].
   ///
   /// The [totalHeight] represents the total available height for the modal.

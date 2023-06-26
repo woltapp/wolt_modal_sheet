@@ -1,7 +1,6 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:playground/home/pages/multi_page_path_name.dart';
-import 'package:demo_ui_components/src/text/modal_sheet_title.dart';
 import 'package:flutter/material.dart';
+import 'package:playground/home/pages/multi_page_path_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class RootSheetPage {
@@ -14,6 +13,7 @@ class RootSheetPage {
     required Function(MultiPagePathName flowName) onPathSelectedFromList,
   }) {
     final ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
+    const title = 'Choose a use case';
     return WoltModalSheetPage(
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
@@ -28,7 +28,8 @@ class RootSheetPage {
           );
         },
       ),
-      pageTitle: const ModalSheetTitle('Choose a use case'),
+      pageTitle: const ModalSheetTitle(title),
+      topBarTitle: const ModalSheetTopBarTitle(title),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       singleChildContent: Padding(
         padding: const EdgeInsets.only(bottom: 120),

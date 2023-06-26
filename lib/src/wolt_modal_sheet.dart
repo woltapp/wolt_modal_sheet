@@ -2,13 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_layout_builder.dart';
-import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_barrier_child.dart';
 import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
-import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_dialog_child.dart';
+import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet_route.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-import 'multi_child_layout/wolt_modal_multi_child_layout_sheet_child_bottom_sheet.dart';
+const double _minFlingVelocity = 700.0;
+
+const double _closeProgressThreshold = 0.5;
 
 const int defaultWoltModalTransitionAnimationDuration = 350;
 
@@ -86,6 +87,8 @@ class WoltModalSheet<T> extends StatefulWidget {
 class _WoltModalSheetState extends State<WoltModalSheet> {
   late WoltModalType modalType;
 
+  ParametricCurve<double> animationCurve = decelerateEasing;
+
   ValueNotifier<int> get pageIndexNotifier => widget.pageIndexNotifier;
 
   ValueNotifier<WoltModalSheetPageListBuilder> get pagesListBuilderNotifier =>
@@ -94,9 +97,20 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
   Widget Function(Widget) get _decorator =>
       widget.decorator ?? (widget) => Builder(builder: (_) => widget);
 
+  bool get _dismissUnderway => widget.animationController!.status == AnimationStatus.reverse;
+
+  final GlobalKey _childKey = GlobalKey(debugLabel: 'BottomSheet child');
+
+  double get _childHeight {
+    final RenderBox renderBox = _childKey.currentContext!.findRenderObject()! as RenderBox;
+    return renderBox.size.height;
+  }
+
   static const barrierLayoutId = 'barrierLayoutId';
 
   static const contentLayoutId = 'contentLayoutId';
+
+  static const double _containerRadiusAmount = 24;
 
   @override
   void initState() {
@@ -115,7 +129,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final content = AnimatedBuilder(
+    return AnimatedBuilder(
       animation: Listenable.merge([
         pageIndexNotifier,
         pagesListBuilderNotifier,
@@ -124,12 +138,14 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
       builder: (BuildContext context, Widget? child) {
         // Disable the initial animation when accessible navigation is on so
         // that the semantics are added to the tree at the correct time.
-        final double animationValue = WoltModalSheet.animationCurve.transform(
+        final double animationValue = animationCurve.transform(
           MediaQuery.of(context).accessibleNavigation ? 1.0 : widget.route.animation!.value,
         );
         final pageIndex = pageIndexNotifier.value;
         final pages = pagesListBuilderNotifier.value(context);
         final page = pages[pageIndex];
+        final enableDrag =
+            modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
         return _decorator(
           CustomMultiChildLayout(
             delegate: WoltModalMultiChildLayoutDelegate(
@@ -143,34 +159,39 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
             children: [
               LayoutId(
                 id: barrierLayoutId,
-                child: WoltModalMultiChildLayoutBarrierChild(
-                    onTap: widget.onModalDismissedWithBarrierTap),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    widget.onModalDismissedWithBarrierTap?.call();
+                    Navigator.of(context).pop();
+                  },
+                  child: const SizedBox.expand(),
+                ),
               ),
               LayoutId(
                 id: contentLayoutId,
-                child: Builder(
-                  builder: (BuildContext context) {
-                    final layout = WoltModalSheetAnimatedLayoutBuilder(
-                      woltModalType: modalType,
-                      pageIndex: pageIndex,
-                      pages: pages,
-                    );
-                    switch (modalType) {
-                      case WoltModalType.bottomSheet:
-                        return WoltModalMultiChildLayoutBottomSheetChild(
-                          pageBackgroundColor: page.backgroundColor,
-                          animationController: widget.route.animationController!,
-                          enableDrag: widget.enableDragForBottomSheet,
-                          route: widget.route,
-                          child: layout,
-                        );
-                      case WoltModalType.dialog:
-                        return WoltModalMultiChildLayoutDialogChild(
-                          pageBackgroundColor: page.backgroundColor,
-                          child: layout,
-                        );
-                    }
-                  },
+                child: KeyedSubtree(
+                  key: _childKey,
+                  child: GestureDetector(
+                    onVerticalDragStart: enableDrag ? _handleDragStart : null,
+                    onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
+                    onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                    child: Material(
+                      color: page.backgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: modalType.borderRadiusGeometry(
+                          /// TODO: Make this configurable through theme extension
+                          _containerRadiusAmount,
+                        ),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: WoltModalSheetAnimatedLayoutBuilder(
+                        woltModalType: modalType,
+                        pageIndex: pageIndex,
+                        pages: pages,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -178,18 +199,50 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
         );
       },
     );
+  }
 
-    // If useSafeArea is true, a SafeArea is inserted.
-    // If useSafeArea is false, the bottom sheet is aligned to the bottom of the page
-    // and isn't exposed to the top padding of the MediaQuery.
-    final Widget modal = widget.useSafeArea
-        ? SafeArea(child: content)
-        : MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: content,
-          );
+  void _handleDragUpdate(DragUpdateDetails details) {
+    if (_dismissUnderway) {
+      return;
+    }
+    widget.animationController!.value -= details.primaryDelta! / _childHeight;
+  }
 
-    return Scaffold(backgroundColor: Colors.transparent, body: modal);
+  void _handleDragStart(DragStartDetails details) {
+    // Allow the bottom sheet to track the user's finger accurately.
+    animationCurve = Curves.linear;
+  }
+
+  void _handleDragEnd(DragEndDetails details) {
+    if (_dismissUnderway) {
+      return;
+    }
+    bool isClosing = false;
+    if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
+      final double flingVelocity = -details.velocity.pixelsPerSecond.dy / _childHeight;
+      if (widget.animationController!.value > 0.0) {
+        widget.animationController!.fling(velocity: flingVelocity);
+      }
+      if (flingVelocity < 0.0) {
+        isClosing = true;
+      }
+    } else if (widget.animationController!.value < _closeProgressThreshold) {
+      if (widget.animationController!.value > 0.0) {
+        widget.animationController!.fling(velocity: -1.0);
+      }
+      isClosing = true;
+    } else {
+      widget.animationController!.forward();
+    }
+
+    // Allow the bottom sheet to animate smoothly from its current position.
+    animationCurve = BottomSheetSuspendedCurve(
+      widget.route.animation!.value,
+      curve: animationCurve,
+    );
+
+    if (isClosing && widget.route.isCurrent) {
+      Navigator.pop(context);
+    }
   }
 }
