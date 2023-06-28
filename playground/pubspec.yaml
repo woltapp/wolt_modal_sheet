@@ -1,5 +1,5 @@
 name: playground
-description: A playground to test various use cases with the wolt modal sheet
+description: A playground to test various use cases with the wolt modal sheet with imperative navigation
 publish_to: "none"
 environment:
   sdk: ">=2.19.2 <4.0.0"
@@ -11,6 +11,7 @@ dependencies:
   equatable: ^2.0.5
   wolt_modal_sheet:
     path: ..
+  wolt_responsive_layout_grid: ^0.0.3
   demo_ui_components:
     path: ../demo_ui_components
 
