@@ -41,6 +41,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
   double get _topBarTranslationY => _page.isTopBarVisibleWhenScrolled ? 4 : 0;
 
   late List<GlobalKey> _titleKeys;
+  late List<GlobalKey> _mainContentKeys;
   late List<GlobalKey> _offstagedTitleKeys;
   late List<GlobalKey> _currentOffstagedMainContentKeys;
   late List<GlobalKey> _outgoingOffstagedMainContentKeys;
@@ -65,13 +66,14 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
   void _resetGlobalKeys() {
     _offstagedTitleKeys = _createGlobalKeys();
     _titleKeys = _createGlobalKeys();
+    _mainContentKeys = _createGlobalKeys();
     _currentOffstagedMainContentKeys = _createGlobalKeys();
     _outgoingOffstagedMainContentKeys = _createGlobalKeys();
   }
 
   void _resetScrollPositions() {
     _scrollPositions.clear();
-    _scrollPositions =  [for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)];
+    _scrollPositions = [for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)];
   }
 
   @override
@@ -222,13 +224,16 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
   CurrentPageWidgets _createCurrentWidgets(AnimationController animationController) {
     return CurrentPageWidgets(
       mainContentAnimatedBuilder: CurrentMainContentAnimatedBuilder(
-        mainContent: _createMainContent(_titleKeys[_pageIndex]),
+        mainContent: _createMainContent(
+          mainContentKey: _mainContentKeys[_pageIndex],
+          titleKey: _titleKeys[_pageIndex],
+        ),
         controller: animationController,
         currentOffstagedMainContentKey: _currentOffstagedMainContentKeys[_pageIndex],
         outgoingOffstagedMainContentKey: _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
       ),
-      offstagedMainContent: _createMainContent(_offstagedTitleKeys[_pageIndex]),
+      offstagedMainContent: _createMainContent(titleKey: _offstagedTitleKeys[_pageIndex]),
       topBarAnimatedBuilder: CurrentTopBarWidgetsAnimatedBuilder(
         controller: animationController,
         child: _page.isTopBarVisibleWhenScrolled ? _createTopBar() : const SizedBox.shrink(),
@@ -284,7 +289,12 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
     );
   }
 
-  WoltModalSheetMainContent _createMainContent(GlobalKey titleKey) => WoltModalSheetMainContent(
+  WoltModalSheetMainContent _createMainContent({
+    required GlobalKey titleKey,
+    GlobalKey? mainContentKey,
+  }) =>
+      WoltModalSheetMainContent(
+        key: mainContentKey,
         pageTitleKey: titleKey,
         currentScrollPosition: _currentScrollPosition,
         page: _page,
