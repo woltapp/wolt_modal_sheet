@@ -129,7 +129,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return _decorator(
+    final decoratedCustomLayout = _decorator(
       // The order of the notifier builders matter because we want to use the same instance of
       // the page list whenever page index is updated.
       ValueListenableBuilder<WoltModalSheetPageListBuilder>(
@@ -146,7 +146,9 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   // Disable the initial animation when accessible navigation is on so
                   // that the semantics are added to the tree at the correct time.
                   final double animationValue = animationCurve.transform(
-                    MediaQuery.of(context).accessibleNavigation ? 1.0 : widget.route.animation!.value,
+                    MediaQuery.of(context).accessibleNavigation
+                        ? 1.0
+                        : widget.route.animation!.value,
                   );
                   final enableDrag =
                       modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
@@ -205,6 +207,10 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
           );
         },
       ),
+    );
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: widget.useSafeArea ? SafeArea(child: decoratedCustomLayout) : decoratedCustomLayout,
     );
   }
 
