@@ -93,7 +93,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           },
         ),
       ),
-      modalTypeBuilder: (context) => _modalTypeBuilder(context),
+      modalTypeBuilder: _modalTypeBuilder,
     );
   }
 
@@ -104,22 +104,20 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
+      decorator: (child) {
+        return ChangeNotifierProvider<StoreOnlineViewModel>.value(
+          value: model,
+          builder: (_, __) => child,
+        );
+      },
       pageListBuilderNotifier: ValueNotifier(
         AddWaterModalPageBuilder.build(
           coffeeOrderId: coffeeOrderId,
           goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
           goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-          onWaterAdded: () {
-            model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.ready);
-            Navigator.pop(context);
-          },
-          onCoffeeOrderCancelled: () {
-            model.onCoffeeOrderStatusChange(coffeeOrderId);
-            Navigator.pop(context);
-          },
         ),
       ),
-      modalTypeBuilder: (context) => _modalTypeBuilder(context),
+      modalTypeBuilder: _modalTypeBuilder,
     );
   }
 
@@ -141,7 +139,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           },
         ),
       ),
-      modalTypeBuilder: (context) => _modalTypeBuilder(context),
+      modalTypeBuilder: _modalTypeBuilder,
     );
   }
 
