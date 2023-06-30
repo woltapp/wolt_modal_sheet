@@ -1,14 +1,15 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:example/entities/coffee_maker_step.dart';
-import 'package:example/entities/coffee_order.dart';
 import 'package:example/entities/grouped_coffee_orders.dart';
 import 'package:example/home/online/large_screen/large_screen_online_content.dart';
 import 'package:example/home/online/modal_pages/add_water/add_water_modal_page_builder.dart';
 import 'package:example/home/online/modal_pages/grind/grind_modal_page_builder.dart';
 import 'package:example/home/online/modal_pages/ready/ready_modal_page_builder.dart';
 import 'package:example/home/online/small_screen/small_screen_online_content.dart';
+import 'package:example/home/online/view_model/store_online_view_model.dart';
 import 'package:example/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
@@ -27,47 +28,53 @@ class StoreOnlineContent extends StatefulWidget {
 }
 
 class _StoreOnlineContentState extends State<StoreOnlineContent> {
-  late GroupedCoffeeOrders _orders;
+  Map<CoffeeMakerStep, CoffeeOrderListWidget> _getCoffeeMakerStepListWidgets(BuildContext context) {
+    final model = context.read<StoreOnlineViewModel>();
 
-  @override
-  initState() {
-    super.initState();
-    _orders = widget._groupedCoffeeOrders;
+    return {
+      CoffeeMakerStep.grind: CoffeeOrderListWidget(
+        coffeeOrders: model.groupedCoffeeOrders.grindStateOrders,
+        coffeeMakerStep: CoffeeMakerStep.grind,
+        onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInGrindState(context, id),
+      ),
+      CoffeeMakerStep.addWater: CoffeeOrderListWidget(
+        coffeeOrders: model.groupedCoffeeOrders.addWaterStateOrders,
+        coffeeMakerStep: CoffeeMakerStep.addWater,
+        onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInAddWaterState(context, id),
+      ),
+      CoffeeMakerStep.ready: CoffeeOrderListWidget(
+        coffeeOrders: model.groupedCoffeeOrders.readyStateOrders,
+        coffeeMakerStep: CoffeeMakerStep.ready,
+        onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInReadyState(context, id),
+      ),
+    };
   }
-
-  Map<CoffeeMakerStep, CoffeeOrderListWidget> get _coffeeMakerStepListWidgets => {
-        CoffeeMakerStep.grind: CoffeeOrderListWidget(
-          coffeeOrders: _orders.grindStateOrders,
-          coffeeMakerStep: CoffeeMakerStep.grind,
-          onCoffeeOrderSelected: _onCoffeeOrderSelectedInGrindState,
-        ),
-        CoffeeMakerStep.addWater: CoffeeOrderListWidget(
-          coffeeOrders: _orders.addWaterStateOrders,
-          coffeeMakerStep: CoffeeMakerStep.addWater,
-          onCoffeeOrderSelected: _onCoffeeOrderSelectedInAddWaterState,
-        ),
-        CoffeeMakerStep.ready: CoffeeOrderListWidget(
-          coffeeOrders: _orders.readyStateOrders,
-          coffeeMakerStep: CoffeeMakerStep.ready,
-          onCoffeeOrderSelected: _onCoffeeOrderSelectedInReadyState,
-        ),
-      };
 
   @override
   Widget build(BuildContext context) {
-    return WoltScreenWidthAdaptiveWidget(
-      smallScreenWidthChild: SmallScreenOnlineContent(
-        coffeeMakerStepListWidgets: _coffeeMakerStepListWidgets,
-        groupedCoffeeOrders: _orders,
-      ),
-      largeScreenWidthChild: LargeScreenOnlineContent(
-        coffeeMakerStepListWidgets: _coffeeMakerStepListWidgets,
+    return ChangeNotifierProvider<StoreOnlineViewModel>(
+      create: (context) =>
+          StoreOnlineViewModel()..onInit(groupedCoffeeOrders: widget._groupedCoffeeOrders),
+      child: Consumer<StoreOnlineViewModel>(
+        builder: (context, model, _) {
+          return WoltScreenWidthAdaptiveWidget(
+            smallScreenWidthChild: SmallScreenOnlineContent(
+              coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
+              groupedCoffeeOrders: model.groupedCoffeeOrders,
+            ),
+            largeScreenWidthChild: LargeScreenOnlineContent(
+              coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
+            ),
+          );
+        },
       ),
     );
   }
 
-  void _onCoffeeOrderSelectedInGrindState(coffeeOrderId) {
+  void _onCoffeeOrderSelectedInGrindState(BuildContext context, String coffeeOrderId) {
+    final model = context.read<StoreOnlineViewModel>();
     final pageIndexNotifier = ValueNotifier(0);
+
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
@@ -77,11 +84,11 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
           goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
           onStartGrinding: () {
-            _onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.addWater);
+            model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.addWater);
             Navigator.pop(context);
           },
           onCoffeeOrderRejected: () {
-            _onCoffeeOrderStatusChange(coffeeOrderId);
+            model.onCoffeeOrderStatusChange(coffeeOrderId);
             Navigator.pop(context);
           },
         ),
@@ -90,8 +97,10 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     );
   }
 
-  void _onCoffeeOrderSelectedInAddWaterState(coffeeOrderId) {
+  void _onCoffeeOrderSelectedInAddWaterState(BuildContext context, String coffeeOrderId) {
+    final model = context.read<StoreOnlineViewModel>();
     final pageIndexNotifier = ValueNotifier(0);
+
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
@@ -101,11 +110,11 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
           goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
           onWaterAdded: () {
-            _onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.ready);
+            model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.ready);
             Navigator.pop(context);
           },
           onCoffeeOrderCancelled: () {
-            _onCoffeeOrderStatusChange(coffeeOrderId);
+            model.onCoffeeOrderStatusChange(coffeeOrderId);
             Navigator.pop(context);
           },
         ),
@@ -114,7 +123,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     );
   }
 
-  void _onCoffeeOrderSelectedInReadyState(coffeeOrderId) {
+  void _onCoffeeOrderSelectedInReadyState(BuildContext context, String coffeeOrderId) {
+    final model = context.read<StoreOnlineViewModel>();
+
     final pageIndexNotifier = ValueNotifier(0);
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
@@ -125,35 +136,13 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
           goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
           onCoffeeOrderServed: () {
-            _onCoffeeOrderStatusChange(coffeeOrderId);
+            model.onCoffeeOrderStatusChange(coffeeOrderId);
             Navigator.pop(context);
           },
         ),
       ),
       modalTypeBuilder: (context) => _modalTypeBuilder(context),
     );
-  }
-
-  /// Callback method invoked when the status of a coffee order changes.
-  ///
-  /// The [coffeeOrderId] is the ID of the coffee order that had its status changed.
-  /// The optional [newStep] parameter represents the new status of the coffee order.
-  /// If [newStep] is provided and is either [CoffeeMakerStep.addWater] or [CoffeeMakerStep.ready],
-  /// the method updates the status of the coffee order in the current list of orders.
-  /// If [newStep] is not provided the method removes the coffee order from the current list of
-  /// orders.
-  /// Finally, the method triggers a state update to reflect the changes in the UI.
-  void _onCoffeeOrderStatusChange(String coffeeOrderId, [CoffeeMakerStep? newStep]) {
-    final currentList = List<CoffeeOrder>.from(_orders.allOrders);
-    final updateIndex = currentList.indexWhere((o) => o.id == coffeeOrderId);
-    if ([CoffeeMakerStep.addWater, CoffeeMakerStep.ready].contains(newStep)) {
-      currentList[updateIndex] = currentList[updateIndex].copyWith(coffeeMakerStep: newStep);
-    } else {
-      currentList.removeAt(updateIndex);
-    }
-    setState(() {
-      _orders = GroupedCoffeeOrders.fromCoffeeOrders(currentList);
-    });
   }
 
   WoltModalType _modalTypeBuilder(BuildContext context) {

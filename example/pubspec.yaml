@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^2.0.5
+  provider: ^6.0.5
   wolt_responsive_layout_grid: ^0.0.3
   wolt_modal_sheet:
     path: ..
