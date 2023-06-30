@@ -5,19 +5,20 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
     required this.pageListBuilderNotifier,
     required this.modalTypeBuilder,
-    required this.enableDragForBottomSheet,
-    required this.useSafeArea,
-    required bool barrierDismissible,
     this.pageIndexNotifier,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
+    bool? enableDragForBottomSheet,
+    bool? useSafeArea,
+    bool? barrierDismissible,
     AnimationController? transitionAnimationController,
-    VoidCallback? onDismissed,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
-  })  : _transitionAnimationController = transitionAnimationController,
+  })  : _enableDragForBottomSheet = enableDragForBottomSheet ?? true,
+        _useSafeArea = useSafeArea ?? true,
+        _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
-        _barrierDismissible = barrierDismissible,
+        _barrierDismissible = barrierDismissible ?? true,
         super(settings: routeSettings);
 
   Widget Function(Widget)? decorator;
@@ -34,9 +35,9 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final VoidCallback? onModalDismissedWithBarrierTap;
 
-  final bool enableDragForBottomSheet;
+  final bool _enableDragForBottomSheet;
 
-  final bool useSafeArea;
+  final bool _useSafeArea;
 
   /// The animation controller that controls the bottom sheet's entrance and
   /// exit animations.
@@ -76,8 +77,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       modalTypeBuilder: modalTypeBuilder,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       animationController: animationController,
-      enableDragForBottomSheet: enableDragForBottomSheet,
-      useSafeArea: useSafeArea,
+      enableDragForBottomSheet: _enableDragForBottomSheet,
+      useSafeArea: _useSafeArea,
     );
   }
 
@@ -101,13 +102,14 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
           ),
           child: child,
         );
-        break;
       case WoltModalType.dialog:
         return ScaleTransition(
-          scale: animation.drive(Tween(begin: 0.9, end: 1.0).chain(CurveTween(curve: easeCurve))),
+          scale: animation.drive(Tween(
+            begin: 0.9,
+            end: 1.0,
+          ).chain(CurveTween(curve: easeCurve))),
           child: child,
         );
-        break;
     }
   }
 

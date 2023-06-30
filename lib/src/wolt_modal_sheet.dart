@@ -55,13 +55,13 @@ class WoltModalSheet<T> extends StatefulWidget {
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
-    bool barrierDismissible = true,
-    bool enableDragForBottomSheet = true,
+    bool? useSafeArea,
+    bool? barrierDismissible,
+    bool? enableDragForBottomSheet,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     AnimationController? transitionAnimationController,
-    bool useSafeArea = false,
   }) {
     final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
@@ -71,13 +71,12 @@ class WoltModalSheet<T> extends StatefulWidget {
         pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
         pageListBuilderNotifier: pageListBuilderNotifier,
         modalTypeBuilder: modalTypeBuilder,
-        barrierDismissible: barrierDismissible,
         routeSettings: routeSettings,
         transitionDuration: transitionDuration,
+        barrierDismissible: barrierDismissible,
         enableDragForBottomSheet: enableDragForBottomSheet,
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
         transitionAnimationController: transitionAnimationController,
-        onDismissed: onModalDismissedWithBarrierTap,
         useSafeArea: useSafeArea,
       ),
     );
