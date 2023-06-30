@@ -36,7 +36,8 @@ class WoltModalSheetTopBar extends StatelessWidget {
   }) : super(key: key);
 
   // TODO: get this information from ThemeData extensions
-  static const _elevation = 4.0;
+  static const _elevation = 1.0;
+  static const _topBarTitleTranslationYAmount = 8.0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class WoltModalSheetTopBar extends StatelessWidget {
         heroImageHeight: page.heroImageHeight ?? 0,
         currentScrollPositionListenable: currentScrollPositionListenable,
         titleKey: titleKey,
-        pageTitleTopPadding: 12,
+        pageTitlePaddingTop: page.pageTitlePaddingTop,
         topBarTranslationYAmountInPx: topBarTranslationYAmountInPx,
         buildContext: context,
       ),
@@ -55,13 +56,14 @@ class WoltModalSheetTopBar extends StatelessWidget {
           elevation: _elevation,
           child: Container(height: topBarHeight - _elevation, color: page.backgroundColor),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 28.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: page.topBarTitle ?? const SizedBox.shrink(),
-          ),
-        ),
+        Center(child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            page.topBarTitle ?? const SizedBox.shrink(),
+            const SizedBox(height: _topBarTitleTranslationYAmount),
+          ],
+        )),
       ],
     );
   }
@@ -72,7 +74,7 @@ class _TopBarFlowDelegate extends FlowDelegate {
   final double heroImageHeight;
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
-  final double pageTitleTopPadding;
+  final double pageTitlePaddingTop;
   final double topBarTranslationYAmountInPx;
   final BuildContext buildContext;
 
@@ -81,37 +83,36 @@ class _TopBarFlowDelegate extends FlowDelegate {
     required this.heroImageHeight,
     required this.currentScrollPositionListenable,
     required this.titleKey,
-    required this.pageTitleTopPadding,
+    required this.pageTitlePaddingTop,
     required this.topBarTranslationYAmountInPx,
     required this.buildContext,
   }) : super(repaint: currentScrollPositionListenable);
 
+  double get currentScrollPosition => currentScrollPositionListenable.value;
+
   @override
   void paintChildren(FlowPaintingContext context) {
-    final currentScrollPosition = currentScrollPositionListenable.value;
     double pageTitleHeight = titleKey.currentContext!.size!.height;
 
     const topBarTranslationYStart = 0.0;
     final topBarTranslationYEnd = topBarTranslationYAmountInPx;
-    final totalTopBarTranslationYAmount = topBarTranslationYEnd - topBarTranslationYStart;
     final topBarTranslationYAndOpacityStartPoint =
-        heroImageHeight == 0 ? 0 : heroImageHeight - totalTopBarTranslationYAmount - topBarHeight;
+    heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight;
 
     const topBarTitleTranslationYStart = 0.0;
-    const topBarTitleTranslationYEnd = 8.0;
-    const totalTopBarTitleTranslationYAmount =
-        topBarTitleTranslationYEnd - topBarTitleTranslationYStart;
+    const topBarTitleTranslationYAmount = WoltModalSheetTopBar._topBarTitleTranslationYAmount;
+    const topBarTitleTranslationYEnd =
+        topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
-    pageTitleHeight = pageTitleHeight == 0 ? 12.0 : pageTitleHeight;
+    pageTitleHeight = pageTitleHeight == 0 ? pageTitlePaddingTop : pageTitleHeight;
 
     final topBarTitleTranslationYAndOpacityStartPoint = heroImageHeight == 0
-        ? totalTopBarTranslationYAmount + pageTitleTopPadding
-        : heroImageHeight - topBarHeight + pageTitleTopPadding;
+        ? pageTitlePaddingTop
+        : heroImageHeight - topBarHeight + pageTitlePaddingTop;
 
     /// Top bar translation Y
     final topBarTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx:
-          totalTopBarTranslationYAmount + totalTopBarTitleTranslationYAmount + pageTitleHeight,
+      rangeInPx: pageTitlePaddingTop + pageTitleHeight,
       progressInRangeInPx: currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
       startValue: topBarTranslationYStart,
       endValue: topBarTranslationYEnd,
@@ -119,7 +120,7 @@ class _TopBarFlowDelegate extends FlowDelegate {
 
     /// Top bar opacity
     final topBarOpacity = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: totalTopBarTranslationYAmount + pageTitleTopPadding,
+      rangeInPx: pageTitlePaddingTop,
       progressInRangeInPx: currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
@@ -134,7 +135,7 @@ class _TopBarFlowDelegate extends FlowDelegate {
 
     /// Top Bar Title translation Y
     final topBarTitleTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: totalTopBarTitleTranslationYAmount + pageTitleHeight - pageTitleTopPadding,
+      rangeInPx: pageTitleHeight,
       progressInRangeInPx: currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
       startValue: topBarTitleTranslationYStart,
       endValue: topBarTitleTranslationYEnd,
@@ -142,12 +143,13 @@ class _TopBarFlowDelegate extends FlowDelegate {
 
     /// Top Bar Title Opacity
     final topBarTitleOpacity = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: pageTitleHeight * 0.75,
+      rangeInPx: topBarHeight / 2,
       progressInRangeInPx: currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
     );
 
+    /// Paint Top Bar Title
     context.paintChild(
       1,
       transform: Matrix4.translationValues(0.0, topBarTitleTranslationY, 0.0),
@@ -159,8 +161,8 @@ class _TopBarFlowDelegate extends FlowDelegate {
   bool shouldRepaint(covariant _TopBarFlowDelegate oldDelegate) {
     return heroImageHeight != oldDelegate.heroImageHeight ||
         titleKey != oldDelegate.titleKey ||
-        currentScrollPositionListenable != oldDelegate.currentScrollPositionListenable ||
-        pageTitleTopPadding != oldDelegate.pageTitleTopPadding ||
+        currentScrollPosition != oldDelegate.currentScrollPosition ||
+        pageTitlePaddingTop != oldDelegate.pageTitlePaddingTop ||
         topBarTranslationYAmountInPx != oldDelegate.topBarTranslationYAmountInPx ||
         topBarHeight != oldDelegate.topBarHeight;
   }

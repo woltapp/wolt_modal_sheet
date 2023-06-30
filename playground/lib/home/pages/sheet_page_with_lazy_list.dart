@@ -29,6 +29,11 @@ class SheetPageWithLazyList {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ModalSheetTitle(titleText),
       ),
+      heroImageHeight: 200,
+      heroImage: const Image(
+        image: AssetImage('lib/assets/images/material_colors_hero.webp'),
+        fit: BoxFit.cover,
+      ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),

@@ -5,6 +5,9 @@ class WoltModalSheetPage {
   /// Represents the widget that stands for the page title.
   final Widget? pageTitle;
 
+  /// distance between image and page title or top bar and main title (in case of no image)
+  final double pageTitlePaddingTop;
+
   /// A [Widget] that represents the main content displayed in the page.
   final Widget? sliverList;
 
@@ -53,6 +56,7 @@ class WoltModalSheetPage {
 
   static const _defualtMaxPageHeight = 0.9;
   static const _defualtMinPageHeight = 0.0;
+  static const _defaultPageTitlePaddingTop = 16.0;
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   ///
@@ -90,6 +94,7 @@ class WoltModalSheetPage {
   /// [closeButton] represents the widget representing the close button.
   const WoltModalSheetPage({
     this.pageTitle,
+    this.pageTitlePaddingTop = _defaultPageTitlePaddingTop,
     this.sliverList,
     this.singleChildContent,
     this.topBarTitle,
@@ -112,6 +117,7 @@ class WoltModalSheetPage {
   factory WoltModalSheetPage.withSingleChild({
     required Widget child,
     Widget? pageTitle,
+    double? pageTitlePaddingTop,
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
@@ -142,6 +148,7 @@ class WoltModalSheetPage {
       closeButton: closeButton,
       maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,
       minPageHeight: minPageHeight ?? _defualtMinPageHeight,
+      pageTitlePaddingTop: pageTitlePaddingTop ?? _defaultPageTitlePaddingTop,
     );
   }
 
@@ -149,6 +156,7 @@ class WoltModalSheetPage {
   factory WoltModalSheetPage.withCustomSliverList({
     required Widget sliverList,
     Widget? pageTitle,
+    double? pageTitlePaddingTop,
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
@@ -166,6 +174,7 @@ class WoltModalSheetPage {
     return WoltModalSheetPage(
       sliverList: sliverList,
       pageTitle: pageTitle,
+      pageTitlePaddingTop: pageTitlePaddingTop ?? _defaultPageTitlePaddingTop,
       topBarTitle: topBarTitle,
       heroImage: heroImage,
       heroImageHeight: heroImageHeight,

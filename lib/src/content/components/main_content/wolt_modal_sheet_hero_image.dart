@@ -96,7 +96,7 @@ class _HeroImageFlowDelegate extends FlowDelegate {
     /// Calculate the opacity
     final double opacity = WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: heroImageHeight / 2,
-      progressInRangeInPx: currentScrollPosition - ((heroImageHeight / 2) - topBarHeight),
+      progressInRangeInPx: currentScrollPosition - ((heroImageHeight - topBarHeight) / 2),
       startValue: 1.0,
       endValue: 0.0,
     );
