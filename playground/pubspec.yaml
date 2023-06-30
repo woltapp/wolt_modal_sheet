@@ -13,6 +13,7 @@ dependencies:
     path: ..
   demo_ui_components:
     path: ../demo_ui_components
+  wolt_responsive_layout_grid: ^0.0.3
 
 dev_dependencies:
   flutter_lints: ^2.0.1

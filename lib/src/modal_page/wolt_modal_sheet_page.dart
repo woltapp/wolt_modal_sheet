@@ -54,6 +54,9 @@ class WoltModalSheetPage {
   /// A widget representing the close button.
   final Widget? closeButton;
 
+  final double? minDialogWidth;
+  final double? maxDialogWidth;
+
   static const _defualtMaxPageHeight = 0.9;
   static const _defualtMinPageHeight = 0.0;
   static const _defaultPageTitlePaddingTop = 16.0;
@@ -110,6 +113,8 @@ class WoltModalSheetPage {
     this.mainContentPadding,
     this.backButton,
     this.closeButton,
+    this.minDialogWidth,
+    this.maxDialogWidth,
   })  : assert((heroImageHeight == null) == (heroImage == null)),
         assert((singleChildContent != null) == (sliverList == null));
 
@@ -131,6 +136,8 @@ class WoltModalSheetPage {
     EdgeInsetsDirectional? mainContentPadding,
     Widget? backButton,
     Widget? closeButton,
+    double? minimumDialogWidth,
+    double? maximumDialogWidth,
   }) {
     return WoltModalSheetPage(
       singleChildContent: child,
@@ -149,6 +156,8 @@ class WoltModalSheetPage {
       maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,
       minPageHeight: minPageHeight ?? _defualtMinPageHeight,
       pageTitlePaddingTop: pageTitlePaddingTop ?? _defaultPageTitlePaddingTop,
+      minDialogWidth: minimumDialogWidth,
+      maxDialogWidth: maximumDialogWidth,
     );
   }
 
@@ -170,6 +179,8 @@ class WoltModalSheetPage {
     Widget? closeButton,
     double? maxPageHeight,
     double? minPageHeight,
+    double? minimumDialogWidth,
+    double? maximumDialogWidth,
   }) {
     return WoltModalSheetPage(
       sliverList: sliverList,
@@ -186,6 +197,8 @@ class WoltModalSheetPage {
       mainContentPadding: mainContentPadding,
       backButton: backButton,
       closeButton: closeButton,
+      maxDialogWidth: maximumDialogWidth,
+      minDialogWidth: minimumDialogWidth,
       maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,
       minPageHeight: minPageHeight ?? _defualtMinPageHeight,
     );

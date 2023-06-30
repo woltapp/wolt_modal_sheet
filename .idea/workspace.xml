@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_animated_layout_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_animated_layout_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/home/online/store_online_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/home/online/store_online_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/modal_page/wolt_modal_sheet_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modal_page/wolt_modal_sheet_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/modal_type/wolt_modal_type.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/modal_type/wolt_modal_type.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/wolt_modal_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/wolt_modal_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/wolt_modal_sheet_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/wolt_modal_sheet_route.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playground/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/playground/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +68,7 @@
       <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/text" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.playground">
+  <component name="RunManager" selected="Flutter.example">
     <configuration name="example" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
       <method v="2" />
@@ -103,7 +109,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart</url>
-          <line>60</line>
+          <line>70</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>

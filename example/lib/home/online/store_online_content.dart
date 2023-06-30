@@ -76,6 +76,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
+      defaultMaxDialogWidth: 560,
       pageListBuilderNotifier: ValueNotifier(
         GrindModalPageBuilder.build(
           coffeeOrderId: coffeeOrderId,

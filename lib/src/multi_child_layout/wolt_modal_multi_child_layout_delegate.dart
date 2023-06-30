@@ -20,6 +20,10 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   /// The type of the scrollable modal.
   final WoltModalType modalType;
 
+  final double? minDialogWidth;
+
+  final double? maxDialogWidth;
+
   /// Creates a [WoltModalMultiChildLayoutDelegate].
   ///
   /// [maxPageHeight] represents the maximum page height in the range of [0, 1] relative to the available size.
@@ -38,11 +42,17 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     required this.barrierLayoutId,
     required this.modalType,
     required this.animationProgress,
+    required this.minDialogWidth,
+    required this.maxDialogWidth,
   });
 
   @override
   void performLayout(Size size) {
-    final modalWidth = modalType.modalContentWidth(size.width);
+    final modalWidth = modalType.modalContentWidth(
+      totalWidth: size.width,
+      minDialogWidth: minDialogWidth,
+      maxDialogWidth: maxDialogWidth,
+    );
     layoutChild(
       barrierLayoutId,
       BoxConstraints(maxWidth: size.width, maxHeight: size.height),
@@ -61,7 +71,11 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     positionChild(
       contentLayoutId,
       Offset(
-        modalType.xOffsetOfModalContent(size.width),
+        modalType.xOffsetOfModalContent(
+          totalWidth: size.width,
+          maxDialogWidth: maxDialogWidth,
+          minDialogWidth: minDialogWidth,
+        ),
         modalType.yOffsetOfModalContent(size.height, modalHeight),
       ),
     );

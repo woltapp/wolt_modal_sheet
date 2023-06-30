@@ -30,6 +30,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.route,
     required this.enableDragForBottomSheet,
     required this.useSafeArea,
+    this.defaultMinDialogWidth,
+    this.defaultMaxDialogWidth,
     super.key,
   });
 
@@ -42,6 +44,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   final WoltModalSheetRoute<T> route;
   final bool enableDragForBottomSheet;
   final bool useSafeArea;
+  final double? defaultMinDialogWidth;
+  final double? defaultMaxDialogWidth;
 
   static const ParametricCurve<double> animationCurve = decelerateEasing;
 
@@ -62,6 +66,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     VoidCallback? onModalDismissedWithBarrierTap,
     AnimationController? transitionAnimationController,
     bool useSafeArea = false,
+    double? defaultMinDialogWidth,
+    double? defaultMaxDialogWidth,
   }) {
     final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
@@ -79,6 +85,8 @@ class WoltModalSheet<T> extends StatefulWidget {
         transitionAnimationController: transitionAnimationController,
         onDismissed: onModalDismissedWithBarrierTap,
         useSafeArea: useSafeArea,
+        defaultMinDialogWidth: defaultMinDialogWidth,
+        defaultMaxDialogWidth: defaultMaxDialogWidth,
       ),
     );
   }
@@ -159,6 +167,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       maxPageHeight: page.maxPageHeight,
                       minPageHeight: page.minPageHeight,
                       animationProgress: animationValue,
+                      maxDialogWidth: page.maxDialogWidth ?? widget.defaultMaxDialogWidth,
+                      minDialogWidth: page.minDialogWidth ?? widget.defaultMinDialogWidth,
                     ),
                     children: [
                       LayoutId(
