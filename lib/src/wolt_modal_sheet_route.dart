@@ -14,11 +14,15 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     AnimationController? transitionAnimationController,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
+    AnimatedWidget? bottomSheetTransitionAnimation,
+    AnimatedWidget? dialogTransitionAnimation,
   })  : _enableDragForBottomSheet = enableDragForBottomSheet ?? true,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
         _barrierDismissible = barrierDismissible ?? true,
+        _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
+        _dialogTransitionAnimation = dialogTransitionAnimation,
         super(settings: routeSettings);
 
   Widget Function(Widget)? decorator;
@@ -38,6 +42,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final bool _enableDragForBottomSheet;
 
   final bool _useSafeArea;
+
+  final AnimatedWidget? _bottomSheetTransitionAnimation;
+
+  final AnimatedWidget? _dialogTransitionAnimation;
 
   /// The animation controller that controls the bottom sheet's entrance and
   /// exit animations.
@@ -93,23 +101,25 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     const easeCurve = Curves.ease;
     switch (modalType) {
       case WoltModalType.bottomSheet:
-        return SlideTransition(
-          position: animation.drive(
-            Tween(
-              begin: const Offset(0.0, 1.0),
-              end: Offset.zero,
-            ).chain(CurveTween(curve: easeCurve)),
-          ),
-          child: child,
-        );
+        return _bottomSheetTransitionAnimation ??
+            SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(0.0, 1.0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: easeCurve)),
+              ),
+              child: child,
+            );
       case WoltModalType.dialog:
-        return ScaleTransition(
-          scale: animation.drive(Tween(
-            begin: 0.9,
-            end: 1.0,
-          ).chain(CurveTween(curve: easeCurve))),
-          child: child,
-        );
+        return _dialogTransitionAnimation ??
+            ScaleTransition(
+              scale: animation.drive(Tween(
+                begin: 0.9,
+                end: 1.0,
+              ).chain(CurveTween(curve: easeCurve))),
+              child: child,
+            );
     }
   }
 

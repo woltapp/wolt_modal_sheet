@@ -62,6 +62,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     AnimationController? transitionAnimationController,
+    AnimatedWidget? bottomSheetTransitionAnimation,
+    AnimatedWidget? dialogTransitionAnimation,
   }) {
     final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
@@ -78,6 +80,8 @@ class WoltModalSheet<T> extends StatefulWidget {
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
         transitionAnimationController: transitionAnimationController,
         useSafeArea: useSafeArea,
+        bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
+        dialogTransitionAnimation: dialogTransitionAnimation,
       ),
     );
   }
