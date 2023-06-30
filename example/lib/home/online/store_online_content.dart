@@ -60,12 +60,10 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   Widget build(BuildContext context) {
     return WoltScreenWidthAdaptiveWidget(
       smallScreenWidthChild: SmallScreenOnlineContent(
-        isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
         coffeeMakerStepListWidgets: _coffeeMakerStepListWidgets,
         groupedCoffeeOrders: _orders,
       ),
       largeScreenWidthChild: LargeScreenOnlineContent(
-        isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
         coffeeMakerStepListWidgets: _coffeeMakerStepListWidgets,
       ),
     );
