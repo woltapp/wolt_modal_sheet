@@ -129,7 +129,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final decoratedCustomLayout = _decorator(
+    return _decorator(
       // The order of the notifier builders matter because we want to use the same instance of
       // the page list whenever page index is updated.
       ValueListenableBuilder<WoltModalSheetPageListBuilder>(
@@ -145,14 +145,13 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                 builder: (BuildContext context, Widget? child) {
                   // Disable the initial animation when accessible navigation is on so
                   // that the semantics are added to the tree at the correct time.
+                  final mediaQueryData = MediaQuery.of(context);
                   final double animationValue = animationCurve.transform(
-                    MediaQuery.of(context).accessibleNavigation
-                        ? 1.0
-                        : widget.route.animation!.value,
+                    mediaQueryData.accessibleNavigation ? 1.0 : widget.route.animation!.value,
                   );
                   final enableDrag =
                       modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
-                  return CustomMultiChildLayout(
+                  final multiChildLayout = CustomMultiChildLayout(
                     delegate: WoltModalMultiChildLayoutDelegate(
                       contentLayoutId: contentLayoutId,
                       barrierLayoutId: barrierLayoutId,
@@ -192,7 +191,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                               clipBehavior: Clip.antiAlias,
                               child: LayoutBuilder(
                                 builder: (_, constraints) {
-                                  return  WoltModalSheetAnimatedSwitcher(
+                                  return WoltModalSheetAnimatedSwitcher(
                                     woltModalType: modalType,
                                     pageIndex: pageIndex,
                                     pages: pages,
@@ -206,16 +205,35 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       ),
                     ],
                   );
+                  return Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: widget.useSafeArea && modalType == WoltModalType.bottomSheet
+                        ? Stack(
+                            children: [
+                              SafeArea(child: multiChildLayout),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: ColoredBox(
+                                  color: page.backgroundColor,
+                                  child: SizedBox(
+                                    height: mediaQueryData.padding.bottom,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : multiChildLayout,
+                  );
+                  return multiChildLayout;
                 },
               );
             },
           );
         },
       ),
-    );
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: widget.useSafeArea ? SafeArea(child: decoratedCustomLayout) : decoratedCustomLayout,
     );
   }
 
