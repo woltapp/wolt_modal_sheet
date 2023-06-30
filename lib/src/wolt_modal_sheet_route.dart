@@ -101,13 +101,11 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
           ),
           child: child,
         );
-        break;
       case WoltModalType.dialog:
         return ScaleTransition(
           scale: animation.drive(Tween(begin: 0.9, end: 1.0).chain(CurveTween(curve: easeCurve))),
           child: child,
         );
-        break;
     }
   }
 

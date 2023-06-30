@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:example/entities/grouped_coffee_orders.dart';
 import 'package:example/home/offline/store_offline_content.dart';
 import 'package:example/home/online/store_online_content.dart';
+import 'package:flutter/material.dart';
 
 /// The home screen of the CoffeeMaker demo app.
 class HomeScreen extends StatefulWidget {
@@ -36,14 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _isStoreOnlineNotifier,
-      builder: (_, bool isStoreOnline, __) {
+      builder: (_, isStoreOnline, __) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: isStoreOnline
-              ? StoreOnlineContent(
-                  groupedCoffeeOrders: widget._groupedCoffeeOrders,
-                  isStoreOnlineNotifier: _isStoreOnlineNotifier,
-                )
+              ? StoreOnlineContent(groupedCoffeeOrders: widget._groupedCoffeeOrders)
               : StoreOfflineContent(isStoreOnlineNotifier: _isStoreOnlineNotifier),
         );
       },

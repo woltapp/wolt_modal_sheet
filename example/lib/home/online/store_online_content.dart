@@ -17,13 +17,10 @@ typedef OnCoffeeOrderStatusChange = Function(String coffeeOrderId, [CoffeeMakerS
 class StoreOnlineContent extends StatefulWidget {
   const StoreOnlineContent({
     required GroupedCoffeeOrders groupedCoffeeOrders,
-    required ValueNotifier<bool> isStoreOnlineNotifier,
     super.key,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _groupedCoffeeOrders = groupedCoffeeOrders;
+  }) : _groupedCoffeeOrders = groupedCoffeeOrders;
 
   final GroupedCoffeeOrders _groupedCoffeeOrders;
-  final ValueNotifier<bool> _isStoreOnlineNotifier;
 
   @override
   State<StoreOnlineContent> createState() => _StoreOnlineContentState();
