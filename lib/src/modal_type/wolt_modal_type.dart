@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// Enum representing the type of the modal.
 enum WoltModalType {
@@ -41,11 +40,9 @@ enum WoltModalType {
       case WoltModalType.bottomSheet:
         return 0;
       case WoltModalType.dialog:
-        return WoltResponsiveLayoutGrid.centered(
-          centerWidgetColumnCount: 2,
-          paddedColumnCountPerSide: 1,
-          child: const SizedBox.expand(),
-        ).columnWidth(totalWidth);
+        const totalColumnCount = 5;
+        final columnWidth = totalWidth / totalColumnCount;
+        return columnWidth;
     }
   }
 

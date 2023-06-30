@@ -207,22 +207,23 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   );
                   return Scaffold(
                     backgroundColor: Colors.transparent,
-                    body: widget.useSafeArea && modalType == WoltModalType.bottomSheet
+                    body: widget.useSafeArea
                         ? Stack(
                             children: [
                               SafeArea(child: multiChildLayout),
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: ColoredBox(
-                                  color: page.backgroundColor,
-                                  child: SizedBox(
-                                    height: mediaQueryData.padding.bottom,
-                                    width: double.infinity,
+                              if (modalType == WoltModalType.bottomSheet)
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: ColoredBox(
+                                    color: page.backgroundColor,
+                                    child: SizedBox(
+                                      height: mediaQueryData.padding.bottom,
+                                      width: double.infinity,
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           )
                         : multiChildLayout,
