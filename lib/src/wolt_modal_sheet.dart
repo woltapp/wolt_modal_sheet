@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_layout_builder.dart';
+import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet_route.dart';
@@ -190,10 +190,15 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                                 ),
                               ),
                               clipBehavior: Clip.antiAlias,
-                              child: WoltModalSheetAnimatedLayoutBuilder(
-                                woltModalType: modalType,
-                                pageIndex: pageIndex,
-                                pages: pages,
+                              child: LayoutBuilder(
+                                builder: (_, constraints) {
+                                  return  WoltModalSheetAnimatedSwitcher(
+                                    woltModalType: modalType,
+                                    pageIndex: pageIndex,
+                                    pages: pages,
+                                    sheetWidth: constraints.maxWidth,
+                                  );
+                                },
                               ),
                             ),
                           ),
