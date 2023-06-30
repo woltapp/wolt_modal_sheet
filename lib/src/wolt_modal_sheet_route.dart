@@ -11,13 +11,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.pageIndexNotifier,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
-    this.defaultMinDialogWidth,
-    this.defaultMaxDialogWidth,
     AnimationController? transitionAnimationController,
     VoidCallback? onDismissed,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
-
   })  : _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
         _barrierDismissible = barrierDismissible,
@@ -40,10 +37,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final bool enableDragForBottomSheet;
 
   final bool useSafeArea;
-
-  final double? defaultMinDialogWidth;
-
-  final double? defaultMaxDialogWidth;
 
   /// The animation controller that controls the bottom sheet's entrance and
   /// exit animations.
@@ -85,8 +78,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       animationController: animationController,
       enableDragForBottomSheet: enableDragForBottomSheet,
       useSafeArea: useSafeArea,
-      defaultMinDialogWidth: defaultMinDialogWidth,
-      defaultMaxDialogWidth: defaultMaxDialogWidth,
     );
   }
 
