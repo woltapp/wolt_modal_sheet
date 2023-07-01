@@ -83,6 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   pageListBuilderNotifier: pageListBuilderNotifier,
                   modalTypeBuilder: _modalTypeBuilder,
                   onModalDismissedWithBarrierTap: () => pageIndexNotifier.value = 0,
+                  maxDialogWidth: 560,
+                  minDialogWidth: 400,
+                  minPageHeight: 0.4,
+                  maxPageHeight: 0.9,
                 );
               },
               child: const Text('Show Modal Sheet'),

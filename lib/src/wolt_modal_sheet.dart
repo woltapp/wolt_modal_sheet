@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
-import 'package:wolt_modal_sheet/src/wolt_modal_sheet_route.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const double _minFlingVelocity = 700.0;
@@ -30,6 +29,10 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.route,
     required this.enableDragForBottomSheet,
     required this.useSafeArea,
+    this.minDialogWidth,
+    this.maxDialogWidth,
+    this.minPageHeight,
+    this.maxPageHeight,
     super.key,
   });
 
@@ -42,6 +45,10 @@ class WoltModalSheet<T> extends StatefulWidget {
   final WoltModalSheetRoute<T> route;
   final bool enableDragForBottomSheet;
   final bool useSafeArea;
+  final double? minDialogWidth;
+  final double? maxDialogWidth;
+  final double? minPageHeight;
+  final double? maxPageHeight;
 
   static const ParametricCurve<double> animationCurve = decelerateEasing;
 
@@ -64,6 +71,10 @@ class WoltModalSheet<T> extends StatefulWidget {
     AnimationController? transitionAnimationController,
     AnimatedWidget? bottomSheetTransitionAnimation,
     AnimatedWidget? dialogTransitionAnimation,
+    double? minDialogWidth,
+    double? maxDialogWidth,
+    double? minPageHeight,
+    double? maxPageHeight,
   }) {
     final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
@@ -82,6 +93,10 @@ class WoltModalSheet<T> extends StatefulWidget {
         useSafeArea: useSafeArea,
         bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
         dialogTransitionAnimation: dialogTransitionAnimation,
+        maxDialogWidth: maxDialogWidth,
+        minDialogWidth: minDialogWidth,
+        maxPageHeight: maxPageHeight,
+        minPageHeight: minPageHeight,
       ),
     );
   }
@@ -159,9 +174,11 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       contentLayoutId: contentLayoutId,
                       barrierLayoutId: barrierLayoutId,
                       modalType: modalType,
-                      maxPageHeight: page.maxPageHeight,
-                      minPageHeight: page.minPageHeight,
+                      minPageHeight: widget.minPageHeight ?? 0,
+                      maxPageHeight: widget.maxPageHeight ?? 0.9,
                       animationProgress: animationValue,
+                      maxDialogWidth: widget.maxDialogWidth ?? 0,
+                      minDialogWidth: widget.minDialogWidth ?? double.infinity,
                     ),
                     children: [
                       LayoutId(

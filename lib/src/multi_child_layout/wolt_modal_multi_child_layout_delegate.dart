@@ -11,6 +11,10 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   /// The minimum height percentage of the content relative to the available size.
   final double minPageHeight;
 
+  final double minDialogWidth;
+
+  final double maxDialogWidth;
+
   /// The layout identifier for the content.
   final String contentLayoutId;
 
@@ -38,11 +42,17 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     required this.barrierLayoutId,
     required this.modalType,
     required this.animationProgress,
+    required this.minDialogWidth,
+    required this.maxDialogWidth,
   });
 
   @override
   void performLayout(Size size) {
-    final modalWidth = modalType.modalContentWidth(size.width);
+    final modalWidth = modalType.modalContentWidth(
+      size.width,
+      minDialogWidth: minDialogWidth,
+      maxDialogWidth: maxDialogWidth,
+    );
     layoutChild(
       barrierLayoutId,
       BoxConstraints(maxWidth: size.width, maxHeight: size.height),
@@ -50,8 +60,8 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     final modalHeight = layoutChild(
       contentLayoutId,
       BoxConstraints(
-        maxHeight: size.height * maxPageHeight,
         minHeight: size.height * minPageHeight,
+        maxHeight: size.height * maxPageHeight,
         maxWidth: modalWidth,
         minWidth: modalWidth,
       ),
@@ -61,7 +71,11 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     positionChild(
       contentLayoutId,
       Offset(
-        modalType.xOffsetOfModalContent(size.width),
+        modalType.xOffsetOfModalContent(
+          size.width,
+          maxDialogWidth: maxDialogWidth,
+          minDialogWidth: minDialogWidth,
+        ),
         modalType.yOffsetOfModalContent(size.height, modalHeight),
       ),
     );
@@ -73,6 +87,11 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   /// Determines whether the delegate should re-layout the children based on changes in [modalType].
   @override
   bool shouldRelayout(covariant WoltModalMultiChildLayoutDelegate oldDelegate) {
-    return oldDelegate.modalType != modalType && oldDelegate.animationProgress != animationProgress;
+    return oldDelegate.modalType != modalType ||
+        oldDelegate.animationProgress != animationProgress ||
+        oldDelegate.minDialogWidth != minDialogWidth ||
+        oldDelegate.maxDialogWidth != maxDialogWidth ||
+        oldDelegate.maxPageHeight != maxPageHeight ||
+        oldDelegate.minPageHeight != minPageHeight;
   }
 }

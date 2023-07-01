@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 /// Enum representing the type of the modal.
@@ -23,26 +25,42 @@ enum WoltModalType {
   /// Returns the width of the modal content based on the total [totalWidth].
   ///
   /// The [totalWidth] represents the total available width for the modal.
-  double modalContentWidth(double totalWidth) {
+  double modalContentWidth(
+    double totalWidth, {
+    required double minDialogWidth,
+    required double maxDialogWidth,
+  }) {
+    double calculatedWidth;
     switch (this) {
       case WoltModalType.bottomSheet:
         return totalWidth;
       case WoltModalType.dialog:
-        return totalWidth - (2 * xOffsetOfModalContent(totalWidth));
+        const totalColumnCount = 5;
+        final columnWidth = totalWidth / totalColumnCount;
+        calculatedWidth = 2 * columnWidth;
+        return min(max(calculatedWidth, minDialogWidth), maxDialogWidth);
     }
   }
 
   /// Returns the x offset of the modal content based on the total [totalWidth].
   ///
   /// The [totalWidth] represents the total available width for the modal.
-  double xOffsetOfModalContent(double totalWidth) {
+  double xOffsetOfModalContent(
+    double totalWidth, {
+    required double minDialogWidth,
+    required double maxDialogWidth,
+  }) {
     switch (this) {
       case WoltModalType.bottomSheet:
         return 0;
       case WoltModalType.dialog:
-        const totalColumnCount = 5;
-        final columnWidth = totalWidth / totalColumnCount;
-        return columnWidth;
+        return (totalWidth -
+                modalContentWidth(
+                  totalWidth,
+                  minDialogWidth: minDialogWidth,
+                  maxDialogWidth: maxDialogWidth,
+                )) /
+            2;
     }
   }
 

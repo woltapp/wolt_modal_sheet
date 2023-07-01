@@ -16,6 +16,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Duration? transitionDuration,
     AnimatedWidget? bottomSheetTransitionAnimation,
     AnimatedWidget? dialogTransitionAnimation,
+    double? minDialogWidth,
+    double? maxDialogWidth,
+    double? minPageHeight,
+    double? maxPageHeight,
   })  : _enableDragForBottomSheet = enableDragForBottomSheet ?? true,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
@@ -23,6 +27,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
         _barrierDismissible = barrierDismissible ?? true,
         _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
         _dialogTransitionAnimation = dialogTransitionAnimation,
+        _minDialogWidth = minDialogWidth,
+        _maxDialogWidth = maxDialogWidth,
+        _minPageHeight = minPageHeight,
+        _maxPageHeight = maxPageHeight,
         super(settings: routeSettings);
 
   Widget Function(Widget)? decorator;
@@ -46,6 +54,14 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final AnimatedWidget? _bottomSheetTransitionAnimation;
 
   final AnimatedWidget? _dialogTransitionAnimation;
+
+  final double? _minDialogWidth;
+
+  final double? _maxDialogWidth;
+
+  final double? _minPageHeight;
+
+  final double? _maxPageHeight;
 
   /// The animation controller that controls the bottom sheet's entrance and
   /// exit animations.
@@ -87,6 +103,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       animationController: animationController,
       enableDragForBottomSheet: _enableDragForBottomSheet,
       useSafeArea: _useSafeArea,
+      minDialogWidth: _minDialogWidth,
+      maxDialogWidth: _maxDialogWidth,
+      minPageHeight: _minPageHeight,
+      maxPageHeight: _maxPageHeight,
     );
   }
 
