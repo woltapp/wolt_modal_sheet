@@ -7,13 +7,18 @@ import 'package:playground/home/pages/sheet_page_with_text_field.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 enum MultiPagePathName {
-  forcedMaxHeight,
-  heroImage,
-  lazyLoadingList,
-  textField,
-  allPagesPath;
+  forcedMaxHeight(pageCount: 2, queryParamName: "forcedMaxHeight"),
+  heroImage(pageCount: 2, queryParamName: "heroImage"),
+  lazyLoadingList(pageCount: 2, queryParamName: "lazyList"),
+  textField(pageCount: 2, queryParamName: "textField"),
+  allPagesPath(pageCount: 6, queryParamName: "all");
 
   static const defaultPath = MultiPagePathName.allPagesPath;
+
+  final int pageCount;
+  final String queryParamName;
+
+  const MultiPagePathName({required this.pageCount, required this.queryParamName});
 
   WoltModalSheetPageListBuilder pageListBuilder({
     required VoidCallback goToNextPage,
@@ -73,5 +78,12 @@ enum MultiPagePathName {
               forcedMaxHeight(context, isLastPage: true),
             ];
     }
+  }
+
+  static bool isValidQueryParam(String path, int pageIndex) {
+    return MultiPagePathName.values.any(
+      (element) =>
+          element.queryParamName == path && element.pageCount > pageIndex && pageIndex >= 0,
+    );
   }
 }
