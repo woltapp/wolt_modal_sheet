@@ -22,7 +22,6 @@ class SheetPage extends Page<void> {
       modalTypeBuilder: modalTypeBuilder,
       pageListBuilderNotifier: pageListBuilderNotifier,
       routeSettings: this,
-      useSafeArea: false,
     );
   }
 

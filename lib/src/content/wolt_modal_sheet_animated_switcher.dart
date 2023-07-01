@@ -93,7 +93,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     if (oldWidget.pageIndex != widget.pageIndex) {
       _addPage(animate: true);
     }
-    if (oldWidget.pages != widget.pages) {
+    if (oldWidget.pages != widget.pages && oldWidget.pageIndex == widget.pageIndex) {
       _resetScrollPositions();
       _resetGlobalKeys();
     }

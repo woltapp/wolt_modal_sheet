@@ -177,8 +177,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       minPageHeight: widget.minPageHeight ?? 0,
                       maxPageHeight: widget.maxPageHeight ?? 0.9,
                       animationProgress: animationValue,
-                      maxDialogWidth: widget.maxDialogWidth ?? 0,
-                      minDialogWidth: widget.minDialogWidth ?? double.infinity,
+                      minDialogWidth: widget.minDialogWidth ?? 0,
+                      maxDialogWidth: widget.maxDialogWidth ?? double.infinity,
                     ),
                     children: [
                       LayoutId(

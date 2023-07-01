@@ -42,9 +42,13 @@ class _OutgoingMainContentAnimatedBuilderState extends State<OutgoingMainContent
   void initState() {
     super.initState();
     widget.controller.addListener(() {
-      if (_sizeFactor == null) {
-        final currentHeight = widget.currentOffstagedMainContentKey.currentContext!.size!.height;
-        final outgoingHeight = widget.outgoingOffstagedMainContentKey.currentContext!.size!.height;
+      BuildContext? currentContext = widget.currentOffstagedMainContentKey.currentContext;
+      BuildContext? outgoingContext = widget.outgoingOffstagedMainContentKey.currentContext;
+      if (_sizeFactor == null &&
+          currentContext?.mounted == true &&
+          outgoingContext?.mounted == true) {
+        final currentHeight = currentContext!.size!.height;
+        final outgoingHeight = outgoingContext!.size!.height;
         _sizeFactor = Tween<double>(begin: 1.0, end: currentHeight / outgoingHeight).animate(
           CurvedAnimation(
             parent: widget.controller,
