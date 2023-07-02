@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 200,
             child: WoltElevatedButton(
               onPressed: () {
-                WoltModalSheet.show(
+                WoltModalSheet.showWithDynamicPath(
                   pageIndexNotifier: pageIndexNotifier,
                   context: context,
                   pageListBuilderNotifier: pageListBuilderNotifier,
