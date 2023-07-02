@@ -35,7 +35,7 @@ class PlaygroundRouteInformationParser
               MultiPagePathName.isValidQueryParam(path, pageIndex)) {
             return PlaygroundRouterConfiguration.modalSheet(
               multiPagePathName: MultiPagePathName.defaultPath,
-              index: 0,
+              index: pageIndex,
             );
           } else {
             return PlaygroundRouterConfiguration.modalSheet(

@@ -1,25 +1,44 @@
 import 'dart:async';
 
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:playground_navigator2/bloc/playground_cubit.dart';
-import 'package:playground_navigator2/bloc/playground_state.dart';
+import 'package:playground_navigator2/bloc/router_state.dart';
+import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:playground_navigator2/router/playground_router_configuration.dart';
 import 'package:playground_navigator2/router/router_pages/home_page.dart';
 import 'package:playground_navigator2/router/router_pages/sheet_page.dart';
 import 'package:playground_navigator2/router/router_pages/unknown_page.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
+
 class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PlaygroundRouterConfiguration> {
-
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-
-  PlaygroundRouterDelegate(this._cubit) {
+  PlaygroundRouterDelegate({
+    required RouterCubit cubit,
+    required ValueNotifier<int> pageIndexNotifier,
+    required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
+  })  : _cubit = cubit,
+        _pageIndexNotifier = pageIndexNotifier,
+        _pageListBuilderNotifier = pageListBuilderNotifier {
     _cubitSubscription = _cubit.stream.listen((state) {
       notifyListeners(); // Notify router that configuration has changed whenever the state updates
     });
   }
 
-  final PlaygroundCubit _cubit;
-  late final StreamSubscription<PlaygroundState> _cubitSubscription;
+  final RouterCubit _cubit;
+  late final StreamSubscription<RouterState> _cubitSubscription;
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
+  final ValueNotifier<int> _pageIndexNotifier;
+  final ValueNotifier<WoltModalSheetPageListBuilder> _pageListBuilderNotifier;
+
+  WoltModalType modalTypeBuilder(BuildContext context) {
+    switch (context.screenSize) {
+      case WoltScreenSize.small:
+        return WoltModalType.bottomSheet;
+      case WoltScreenSize.large:
+        return WoltModalType.dialog;
+    }
+  }
 
   @override
   GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
@@ -28,16 +47,18 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
   Widget build(BuildContext context) {
     final state = _cubit.state;
     List<Page> pages = [const HomePage()];
-    if (state is PlaygroundSheetVisibleState) {
+    if (state is ModalSheetVisibleState) {
+      _pageIndexNotifier.value = state.pageIndex;
+      _pageListBuilderNotifier.value = state.pathName.pageListBuilder;
       pages = [
         const HomePage(),
         SheetPage(
-          pageIndexNotifier: _cubit.pageIndexNotifier,
-          pageListBuilderNotifier: _cubit.pageListBuilderNotifier,
-          modalTypeBuilder: _cubit.modalTypeBuilder,
+          pageIndexNotifier: _pageIndexNotifier,
+          pageListBuilderNotifier: _pageListBuilderNotifier,
+          modalTypeBuilder: modalTypeBuilder,
         ),
       ];
-    } else if (state is PlaygroundUnknownScreenState) {
+    } else if (state is UnknownScreenVisibleState) {
       pages = [const UnknownPage()];
     }
     return Navigator(
@@ -65,9 +86,11 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
   @override
   PlaygroundRouterConfiguration get currentConfiguration {
     final state = _cubit.state;
-    if (state is PlaygroundUnknownScreenState) {
+    if (state is UnknownScreenVisibleState) {
       return PlaygroundRouterConfiguration.unknown();
-    } else if (state is PlaygroundSheetVisibleState) {
+    } else if (state is ModalSheetVisibleState) {
+      _pageIndexNotifier.value = state.pageIndex;
+      _pageListBuilderNotifier.value = state.pathName.pageListBuilder;
       return PlaygroundRouterConfiguration.modalSheet(
         multiPagePathName: state.pathName,
         index: state.pageIndex,
@@ -80,19 +103,17 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
   @override
   Future<void> setNewRoutePath(PlaygroundRouterConfiguration configuration) async {
     if (configuration.isUnknown) {
-      // Handle unknown route
+      _cubit.showOnUnknownScreen();
     } else if (configuration.isHomePage) {
       _cubit.closeSheet();
     } else if (configuration.isSheetPage) {
-      _cubit.onPathUpdated(configuration.multiPagePathName!);
+      _cubit.onPathAndPageIndexUpdated(configuration.multiPagePathName!, configuration.pageIndex);
     }
   }
 
   @override
   void dispose() {
     _cubitSubscription.cancel();
-    // _cubit.close();  // Don't close the cubit here
     super.dispose();
   }
 }
-

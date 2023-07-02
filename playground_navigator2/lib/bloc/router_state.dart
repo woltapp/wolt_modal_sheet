@@ -1,29 +1,29 @@
 import 'package:equatable/equatable.dart';
 import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 
-abstract class PlaygroundState extends Equatable {
-  const PlaygroundState();
+abstract class RouterState extends Equatable {
+  const RouterState();
 
   @override
   List<Object?> get props => [];
 }
 
-class PlaygroundUnknownScreenState extends PlaygroundState {
-  const PlaygroundUnknownScreenState();
+class UnknownScreenVisibleState extends RouterState {
+  const UnknownScreenVisibleState();
 
   @override
   List<Object?> get props => [];
 }
 
-class PlaygroundHomeScreenState extends PlaygroundState {
-  const PlaygroundHomeScreenState();
+class HomeScreenVisibleState extends RouterState {
+  const HomeScreenVisibleState();
 
   @override
   List<Object?> get props => [];
 }
 
-class PlaygroundSheetVisibleState extends PlaygroundState {
-  const PlaygroundSheetVisibleState({
+class ModalSheetVisibleState extends RouterState {
+  const ModalSheetVisibleState({
     required this.pageIndex,
     required this.pathName,
   });

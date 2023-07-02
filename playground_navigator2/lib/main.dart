@@ -5,9 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:playground_navigator2/bloc/playground_cubit.dart';
+import 'package:playground_navigator2/bloc/router_cubit.dart';
+import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 import 'package:playground_navigator2/router/playground_route_information_parser.dart';
 import 'package:playground_navigator2/router/playground_router_delegate.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 void main() => runApp(const DemoApp());
 
@@ -19,12 +22,24 @@ class DemoApp extends StatefulWidget {
 }
 
 class _DemoAppState extends State<DemoApp> {
-  late PlaygroundCubit playgroundCubit;
+  late RouterCubit routerCubit;
+  final ValueNotifier<int> pageIndexNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier =
+      ValueNotifier(MultiPagePathName.defaultPath.pageListBuilder);
+
+  WoltModalType modalTypeBuilder(BuildContext context) {
+    switch (context.screenSize) {
+      case WoltScreenSize.small:
+        return WoltModalType.bottomSheet;
+      case WoltScreenSize.large:
+        return WoltModalType.dialog;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    playgroundCubit = PlaygroundCubit();
+    routerCubit = RouterCubit();
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         systemNavigationBarIconBrightness: Brightness.dark,
@@ -39,11 +54,15 @@ class _DemoAppState extends State<DemoApp> {
     return ScrollConfiguration(
       behavior: const DragScrollBehavior(),
       child: BlocProvider(
-        create: (context) => playgroundCubit,
+        create: (context) => routerCubit,
         child: MaterialApp.router(
           routeInformationParser: const PlaygroundRouteInformationParser(),
           backButtonDispatcher: RootBackButtonDispatcher(),
-          routerDelegate: PlaygroundRouterDelegate(playgroundCubit),
+          routerDelegate: PlaygroundRouterDelegate(
+            cubit: routerCubit,
+            pageIndexNotifier: pageIndexNotifier,
+            pageListBuilderNotifier: pageListBuilderNotifier,
+          ),
           theme: ThemeData(
             inputDecorationTheme: const InputDecorationTheme(
               suffixStyle: TextStyle(

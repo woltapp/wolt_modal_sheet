@@ -1,7 +1,7 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:playground_navigator2/bloc/playground_cubit.dart';
+import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -18,7 +18,7 @@ class RootSheetPage {
           return Padding(
             padding: const EdgeInsets.all(16),
             child: WoltElevatedButton(
-              onPressed: context.read<PlaygroundCubit>().goToNextPage,
+              onPressed: () => context.read<RouterCubit>().goToPage(1),
               enabled: value,
               child: const Text("Let's start!"),
             ),
@@ -27,7 +27,7 @@ class RootSheetPage {
       ),
       pageTitle: const ModalSheetTitle(title),
       topBarTitle: const ModalSheetTopBarTitle(title),
-      closeButton: WoltModalSheetCloseButton(onClosed: context.read<PlaygroundCubit>().close),
+      closeButton: WoltModalSheetCloseButton(onClosed: context.read<RouterCubit>().closeSheet),
       singleChildContent: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: WoltSelectionList<MultiPagePathName>.singleSelect(
@@ -61,7 +61,7 @@ class RootSheetPage {
             ],
           ),
           onSelectionUpdateInSingleSelectionList: (selectedItemData) {
-            context.read<PlaygroundCubit>().onPathUpdated(selectedItemData.value);
+            context.read<RouterCubit>().onPathUpdated(selectedItemData.value);
             isButtonEnabledNotifier.value = selectedItemData.isSelected;
           },
         ),

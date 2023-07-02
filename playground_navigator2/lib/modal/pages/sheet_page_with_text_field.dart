@@ -1,19 +1,23 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:playground_navigator2/bloc/playground_cubit.dart';
+import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithTextField {
   SheetPageWithTextField._();
 
-  static WoltModalSheetPage build(BuildContext context, {bool isLastPage = true}) {
+  static WoltModalSheetPage build(
+    BuildContext context, {
+    required int currentPage,
+    bool isLastPage = true,
+  }) {
     ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     final textEditingController = TextEditingController();
     textEditingController.addListener(() {
       isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
     });
-    final cubit = context.read<PlaygroundCubit>();
+    final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withSingleChild(
       mainContentPadding: const EdgeInsetsDirectional.all(16),
       stickyActionBar: ValueListenableBuilder<bool>(
@@ -22,7 +26,7 @@ class SheetPageWithTextField {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: WoltElevatedButton(
-              onPressed: isLastPage ? cubit.close : cubit.goToNextPage,
+              onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
               enabled: isEnabled,
               child: Text(
                 !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
@@ -32,8 +36,8 @@ class SheetPageWithTextField {
         },
       ),
       pageTitle: const ModalSheetTitle('Page with text field'),
-      backButton: WoltModalSheetBackButton(onBackPressed: cubit.goToPreviousPage),
-      closeButton: WoltModalSheetCloseButton(onClosed: cubit.close),
+      backButton: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      closeButton: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 80, top: 16),
         child: Column(

@@ -1,16 +1,20 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:playground_navigator2/bloc/playground_cubit.dart';
+import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithLazyList {
   SheetPageWithLazyList._();
 
-  static WoltModalSheetPage build(BuildContext context, {bool isLastPage = true}) {
+  static WoltModalSheetPage build(
+    BuildContext context, {
+    required int currentPage,
+    bool isLastPage = true,
+  }) {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
-    final cubit = context.read<PlaygroundCubit>();
+    final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withCustomSliverList(
       mainContentPadding: EdgeInsetsDirectional.zero,
       stickyActionBar: StickyActionBarWrapper(
@@ -18,18 +22,23 @@ class SheetPageWithLazyList {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: WoltElevatedButton(
-            onPressed: isLastPage ? cubit.close : cubit.goToNextPage,
+            onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
             child: Text(isLastPage ? "Close" : "Next"),
           ),
         ),
+      ),
+      heroImageHeight: 200,
+      heroImage: const Image(
+        image: AssetImage('lib/assets/images/material_colors_hero.webp'),
+        fit: BoxFit.cover,
       ),
       pageTitle: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ModalSheetTitle(titleText),
       ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
-      backButton: WoltModalSheetBackButton(onBackPressed: cubit.goToPreviousPage),
-      closeButton: WoltModalSheetCloseButton(onClosed: cubit.close),
+      backButton: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      closeButton: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(
           (_, index) => ColorTile(color: colors[index]),
