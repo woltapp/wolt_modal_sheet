@@ -77,12 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 200,
             child: WoltElevatedButton(
               onPressed: () {
-                WoltModalSheet.show(
+                WoltModalSheet.showWithDynamicPath(
                   pageIndexNotifier: pageIndexNotifier,
                   context: context,
                   pageListBuilderNotifier: pageListBuilderNotifier,
                   modalTypeBuilder: _modalTypeBuilder,
                   onModalDismissedWithBarrierTap: () => pageIndexNotifier.value = 0,
+                  maxDialogWidth: 560,
+                  minDialogWidth: 400,
+                  minPageHeight: 0.4,
+                  maxPageHeight: 0.9,
                 );
               },
               child: const Text('Show Modal Sheet'),

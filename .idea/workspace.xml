@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_animated_layout_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/wolt_modal_sheet_animated_layout_builder.dart" afterDir="false" />
-    </list>
+    <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +60,7 @@
       <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/text" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.playground">
+  <component name="RunManager" selected="Flutter.playground_nav2">
     <configuration name="example" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
       <method v="2" />
@@ -71,8 +69,13 @@
       <option name="filePath" value="$PROJECT_DIR$/playground/lib/main.dart" />
       <method v="2" />
     </configuration>
+    <configuration name="playground_nav2" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/playground_navigator2/lib/main.dart" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Flutter.playground" />
+      <item itemvalue="Flutter.playground_nav2" />
       <item itemvalue="Flutter.example" />
     </list>
   </component>

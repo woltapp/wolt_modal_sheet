@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum RejectOrderReason {
   runOutOfCoffee(
-    title: 'Run our of coffee',
+    title: 'Run out of coffee',
     subtitle: 'One or more items are out of stock',
     leadingIcon: Icons.search_off,
   ),

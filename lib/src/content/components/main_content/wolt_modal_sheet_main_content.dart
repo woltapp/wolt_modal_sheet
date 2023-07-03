@@ -89,6 +89,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
                   final pageTitle = widget.page.pageTitle;
                   return Padding(
                     padding: EdgeInsetsDirectional.only(
+                      top: widget.page.pageTitlePaddingTop,
                       start: _mainContentPadding.start,
                       end: _mainContentPadding.end,
                     ),

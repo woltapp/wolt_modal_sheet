@@ -6,25 +6,27 @@ import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_page_w
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class WoltModalSheetAnimatedLayoutBuilder extends StatefulWidget {
+class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
   final List<WoltModalSheetPage> pages;
   final int pageIndex;
   final WoltModalType woltModalType;
+  final double sheetWidth;
 
-  const WoltModalSheetAnimatedLayoutBuilder({
+  const WoltModalSheetAnimatedSwitcher({
     required this.pages,
     required this.pageIndex,
     required this.woltModalType,
+    required this.sheetWidth,
     Key? key,
   })  : assert(pageIndex >= 0 && pageIndex < pages.length),
         super(key: key);
 
   @override
-  State<WoltModalSheetAnimatedLayoutBuilder> createState() =>
-      _WoltModalSheetAnimatedLayoutBuilderState();
+  State<WoltModalSheetAnimatedSwitcher> createState() =>
+      _WoltModalSheetAnimatedSwitcherState();
 }
 
-class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnimatedLayoutBuilder>
+class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedSwitcher>
     with TickerProviderStateMixin {
   CurrentPageWidgets? _currentPageWidgets;
   OutgoingPageWidgets? _outgoingPageWidgets;
@@ -85,13 +87,13 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
   }
 
   @override
-  void didUpdateWidget(covariant WoltModalSheetAnimatedLayoutBuilder oldWidget) {
+  void didUpdateWidget(covariant WoltModalSheetAnimatedSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
     _isForwardMove = oldWidget.pageIndex < widget.pageIndex;
     if (oldWidget.pageIndex != widget.pageIndex) {
       _addPage(animate: true);
     }
-    if (oldWidget.pages != widget.pages) {
+    if (oldWidget.pages != widget.pages && oldWidget.pageIndex == widget.pageIndex) {
       _resetScrollPositions();
       _resetGlobalKeys();
     }
@@ -232,6 +234,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
         currentOffstagedMainContentKey: _currentOffstagedMainContentKeys[_pageIndex],
         outgoingOffstagedMainContentKey: _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
+        sheetWidth: widget.sheetWidth,
       ),
       offstagedMainContent: _createMainContent(titleKey: _offstagedTitleKeys[_pageIndex]),
       topBarAnimatedBuilder: CurrentTopBarWidgetsAnimatedBuilder(
@@ -266,6 +269,7 @@ class _WoltModalSheetAnimatedLayoutBuilderState extends State<WoltModalSheetAnim
         currentOffstagedMainContentKey: _currentOffstagedMainContentKeys[_pageIndex],
         outgoingOffstagedMainContentKey: _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
+        sheetWidth: widget.sheetWidth,
       ),
       offstagedMainContent: ExcludeFocus(
         child: currentWidgetsToBeOutgoing.offstagedMainContent,

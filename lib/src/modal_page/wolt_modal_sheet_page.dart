@@ -5,6 +5,9 @@ class WoltModalSheetPage {
   /// Represents the widget that stands for the page title.
   final Widget? pageTitle;
 
+  /// distance between image and page title or top bar and main title (in case of no image)
+  final double pageTitlePaddingTop;
+
   /// A [Widget] that represents the main content displayed in the page.
   final Widget? sliverList;
 
@@ -30,12 +33,6 @@ class WoltModalSheetPage {
   /// Indicates whether the page height should be at maximum even if the content size is smaller.
   final bool forceMaxHeight;
 
-  /// The maximum height of the page relative to the device height. The value should be in range [0, 1].
-  final double maxPageHeight;
-
-  /// The minimum height of the page relative to the device height. The value should be in range [0, 1].
-  final double minPageHeight;
-
   /// A [ScrollController] that controls the scrolling behavior of the page.
   final ScrollController? scrollController;
 
@@ -51,8 +48,7 @@ class WoltModalSheetPage {
   /// A widget representing the close button.
   final Widget? closeButton;
 
-  static const _defualtMaxPageHeight = 0.9;
-  static const _defualtMinPageHeight = 0.0;
+  static const _defaultPageTitlePaddingTop = 16.0;
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   ///
@@ -75,10 +71,6 @@ class WoltModalSheetPage {
   ///
   /// [forceMaxHeight] indicates whether the page height should be at maximum even if the content size is smaller.
   ///
-  /// [maxPageHeight] represents the maximum height percentage of the page relative to the device height in the range of [0, 1].
-  ///
-  /// [minPageHeight] represents the minimum height percentage of the page relative to the device height in the range of [0, 1].
-  ///
   /// [scrollController] is a [ScrollController] that controls the scrolling behavior of the page.
   ///
   /// [stickyActionBar] represents the action widget located in the bottom of the modal sheet
@@ -90,6 +82,7 @@ class WoltModalSheetPage {
   /// [closeButton] represents the widget representing the close button.
   const WoltModalSheetPage({
     this.pageTitle,
+    this.pageTitlePaddingTop = _defaultPageTitlePaddingTop,
     this.sliverList,
     this.singleChildContent,
     this.topBarTitle,
@@ -98,8 +91,6 @@ class WoltModalSheetPage {
     this.backgroundColor = Colors.white,
     this.isTopBarVisibleWhenScrolled = true,
     this.forceMaxHeight = false,
-    this.maxPageHeight = _defualtMaxPageHeight,
-    this.minPageHeight = _defualtMinPageHeight,
     this.scrollController,
     this.stickyActionBar,
     this.mainContentPadding,
@@ -112,11 +103,10 @@ class WoltModalSheetPage {
   factory WoltModalSheetPage.withSingleChild({
     required Widget child,
     Widget? pageTitle,
+    double? pageTitlePaddingTop,
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
-    double? maxPageHeight,
-    double? minPageHeight,
     Color backgroundColor = Colors.white,
     bool isTopBarVisibleWhenScrolled = true,
     bool forceMaxHeight = false,
@@ -140,8 +130,7 @@ class WoltModalSheetPage {
       mainContentPadding: mainContentPadding,
       backButton: backButton,
       closeButton: closeButton,
-      maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,
-      minPageHeight: minPageHeight ?? _defualtMinPageHeight,
+      pageTitlePaddingTop: pageTitlePaddingTop ?? _defaultPageTitlePaddingTop,
     );
   }
 
@@ -149,6 +138,7 @@ class WoltModalSheetPage {
   factory WoltModalSheetPage.withCustomSliverList({
     required Widget sliverList,
     Widget? pageTitle,
+    double? pageTitlePaddingTop,
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
@@ -160,12 +150,11 @@ class WoltModalSheetPage {
     EdgeInsetsDirectional? mainContentPadding,
     Widget? backButton,
     Widget? closeButton,
-    double? maxPageHeight,
-    double? minPageHeight,
   }) {
     return WoltModalSheetPage(
       sliverList: sliverList,
       pageTitle: pageTitle,
+      pageTitlePaddingTop: pageTitlePaddingTop ?? _defaultPageTitlePaddingTop,
       topBarTitle: topBarTitle,
       heroImage: heroImage,
       heroImageHeight: heroImageHeight,
@@ -177,8 +166,6 @@ class WoltModalSheetPage {
       mainContentPadding: mainContentPadding,
       backButton: backButton,
       closeButton: closeButton,
-      maxPageHeight: maxPageHeight ?? _defualtMaxPageHeight,
-      minPageHeight: minPageHeight ?? _defualtMinPageHeight,
     );
   }
 }

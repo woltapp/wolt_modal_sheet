@@ -5,19 +5,32 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
     required this.pageListBuilderNotifier,
     required this.modalTypeBuilder,
-    required this.enableDragForBottomSheet,
-    required this.useSafeArea,
-    required bool barrierDismissible,
     this.pageIndexNotifier,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
+    bool? enableDragForBottomSheet,
+    bool? useSafeArea,
+    bool? barrierDismissible,
     AnimationController? transitionAnimationController,
-    VoidCallback? onDismissed,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
-  })  : _transitionAnimationController = transitionAnimationController,
+    AnimatedWidget? bottomSheetTransitionAnimation,
+    AnimatedWidget? dialogTransitionAnimation,
+    double? minDialogWidth,
+    double? maxDialogWidth,
+    double? minPageHeight,
+    double? maxPageHeight,
+  })  : _enableDragForBottomSheet = enableDragForBottomSheet ?? true,
+        _useSafeArea = useSafeArea ?? true,
+        _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
-        _barrierDismissible = barrierDismissible,
+        _barrierDismissible = barrierDismissible ?? true,
+        _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
+        _dialogTransitionAnimation = dialogTransitionAnimation,
+        _minDialogWidth = minDialogWidth,
+        _maxDialogWidth = maxDialogWidth,
+        _minPageHeight = minPageHeight,
+        _maxPageHeight = maxPageHeight,
         super(settings: routeSettings);
 
   Widget Function(Widget)? decorator;
@@ -34,9 +47,21 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final VoidCallback? onModalDismissedWithBarrierTap;
 
-  final bool enableDragForBottomSheet;
+  final bool _enableDragForBottomSheet;
 
-  final bool useSafeArea;
+  final bool _useSafeArea;
+
+  final AnimatedWidget? _bottomSheetTransitionAnimation;
+
+  final AnimatedWidget? _dialogTransitionAnimation;
+
+  final double? _minDialogWidth;
+
+  final double? _maxDialogWidth;
+
+  final double? _minPageHeight;
+
+  final double? _maxPageHeight;
 
   /// The animation controller that controls the bottom sheet's entrance and
   /// exit animations.
@@ -76,8 +101,12 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       modalTypeBuilder: modalTypeBuilder,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       animationController: animationController,
-      enableDragForBottomSheet: enableDragForBottomSheet,
-      useSafeArea: useSafeArea,
+      enableDragForBottomSheet: _enableDragForBottomSheet,
+      useSafeArea: _useSafeArea,
+      minDialogWidth: _minDialogWidth,
+      maxDialogWidth: _maxDialogWidth,
+      minPageHeight: _minPageHeight,
+      maxPageHeight: _maxPageHeight,
     );
   }
 
@@ -92,20 +121,25 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     const easeCurve = Curves.ease;
     switch (modalType) {
       case WoltModalType.bottomSheet:
-        return SlideTransition(
-          position: animation.drive(
-            Tween(
-              begin: const Offset(0.0, 1.0),
-              end: Offset.zero,
-            ).chain(CurveTween(curve: easeCurve)),
-          ),
-          child: child,
-        );
+        return _bottomSheetTransitionAnimation ??
+            SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(0.0, 1.0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: easeCurve)),
+              ),
+              child: child,
+            );
       case WoltModalType.dialog:
-        return ScaleTransition(
-          scale: animation.drive(Tween(begin: 0.9, end: 1.0).chain(CurveTween(curve: easeCurve))),
-          child: child,
-        );
+        return _dialogTransitionAnimation ??
+            ScaleTransition(
+              scale: animation.drive(Tween(
+                begin: 0.9,
+                end: 1.0,
+              ).chain(CurveTween(curve: easeCurve))),
+              child: child,
+            );
     }
   }
 

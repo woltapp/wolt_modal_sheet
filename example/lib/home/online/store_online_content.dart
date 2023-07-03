@@ -78,20 +78,18 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
-      pageListBuilderNotifier: ValueNotifier(
-        GrindModalPageBuilder.build(
-          coffeeOrderId: coffeeOrderId,
-          goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-          goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-          onStartGrinding: () {
-            model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.addWater);
-            Navigator.pop(context);
-          },
-          onCoffeeOrderRejected: () {
-            model.onCoffeeOrderStatusChange(coffeeOrderId);
-            Navigator.pop(context);
-          },
-        ),
+      pageListBuilderNotifier: GrindModalPageBuilder.build(
+        coffeeOrderId: coffeeOrderId,
+        goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+        onStartGrinding: () {
+          model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.addWater);
+          Navigator.pop(context);
+        },
+        onCoffeeOrderRejected: () {
+          model.onCoffeeOrderStatusChange(coffeeOrderId);
+          Navigator.pop(context);
+        },
       ),
       modalTypeBuilder: _modalTypeBuilder,
     );
@@ -110,12 +108,10 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           builder: (_, __) => child,
         );
       },
-      pageListBuilderNotifier: ValueNotifier(
-        AddWaterModalPageBuilder.build(
-          coffeeOrderId: coffeeOrderId,
-          goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-          goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-        ),
+      pageListBuilderNotifier: AddWaterModalPageBuilder.build(
+        coffeeOrderId: coffeeOrderId,
+        goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
       ),
       modalTypeBuilder: _modalTypeBuilder,
     );
@@ -128,16 +124,14 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
-      pageListBuilderNotifier: ValueNotifier(
-        ReadyModalPageBuilder.build(
-          coffeeOrderId: coffeeOrderId,
-          goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-          goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-          onCoffeeOrderServed: () {
-            model.onCoffeeOrderStatusChange(coffeeOrderId);
-            Navigator.pop(context);
-          },
-        ),
+      pageListBuilderNotifier: ReadyModalPageBuilder.build(
+        coffeeOrderId: coffeeOrderId,
+        goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+        onCoffeeOrderServed: () {
+          model.onCoffeeOrderStatusChange(coffeeOrderId);
+          Navigator.pop(context);
+        },
       ),
       modalTypeBuilder: _modalTypeBuilder,
     );

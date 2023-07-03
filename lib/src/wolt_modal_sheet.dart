@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_layout_builder.dart';
+import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
-import 'package:wolt_modal_sheet/src/wolt_modal_sheet_route.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const double _minFlingVelocity = 700.0;
@@ -30,6 +29,10 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.route,
     required this.enableDragForBottomSheet,
     required this.useSafeArea,
+    this.minDialogWidth,
+    this.maxDialogWidth,
+    this.minPageHeight,
+    this.maxPageHeight,
     super.key,
   });
 
@@ -42,6 +45,10 @@ class WoltModalSheet<T> extends StatefulWidget {
   final WoltModalSheetRoute<T> route;
   final bool enableDragForBottomSheet;
   final bool useSafeArea;
+  final double? minDialogWidth;
+  final double? maxDialogWidth;
+  final double? minPageHeight;
+  final double? maxPageHeight;
 
   static const ParametricCurve<double> animationCurve = decelerateEasing;
 
@@ -50,18 +57,68 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   static Future<T?> show<T>({
     required BuildContext context,
+    required WoltModalSheetPageListBuilder pageListBuilderNotifier,
+    required WoltModalTypeBuilder modalTypeBuilder,
+    ValueNotifier<int>? pageIndexNotifier,
+    Widget Function(Widget)? decorator,
+    bool useRootNavigator = false,
+    bool? useSafeArea,
+    bool? barrierDismissible,
+    bool? enableDragForBottomSheet,
+    RouteSettings? routeSettings,
+    Duration? transitionDuration,
+    VoidCallback? onModalDismissedWithBarrierTap,
+    AnimationController? transitionAnimationController,
+    AnimatedWidget? bottomSheetTransitionAnimation,
+    AnimatedWidget? dialogTransitionAnimation,
+    double? minDialogWidth,
+    double? maxDialogWidth,
+    double? minPageHeight,
+    double? maxPageHeight,
+  }) {
+    return WoltModalSheet.showWithDynamicPath(
+      context: context,
+      pageListBuilderNotifier: ValueNotifier(pageListBuilderNotifier),
+      modalTypeBuilder: modalTypeBuilder,
+      pageIndexNotifier: pageIndexNotifier,
+      decorator: decorator,
+      useRootNavigator: useRootNavigator,
+      useSafeArea: useSafeArea,
+      barrierDismissible: barrierDismissible,
+      enableDragForBottomSheet: enableDragForBottomSheet,
+      routeSettings: routeSettings,
+      transitionDuration: transitionDuration,
+      onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
+      transitionAnimationController: transitionAnimationController,
+      bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
+      dialogTransitionAnimation: dialogTransitionAnimation,
+      minDialogWidth: minDialogWidth,
+      maxDialogWidth: maxDialogWidth,
+      minPageHeight: minPageHeight,
+      maxPageHeight: maxPageHeight,
+    );
+  }
+
+  static Future<T?> showWithDynamicPath<T>({
+    required BuildContext context,
     required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
     required WoltModalTypeBuilder modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
-    bool barrierDismissible = true,
-    bool enableDragForBottomSheet = true,
+    bool? useSafeArea,
+    bool? barrierDismissible,
+    bool? enableDragForBottomSheet,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     AnimationController? transitionAnimationController,
-    bool useSafeArea = false,
+    AnimatedWidget? bottomSheetTransitionAnimation,
+    AnimatedWidget? dialogTransitionAnimation,
+    double? minDialogWidth,
+    double? maxDialogWidth,
+    double? minPageHeight,
+    double? maxPageHeight,
   }) {
     final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
@@ -71,14 +128,19 @@ class WoltModalSheet<T> extends StatefulWidget {
         pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
         pageListBuilderNotifier: pageListBuilderNotifier,
         modalTypeBuilder: modalTypeBuilder,
-        barrierDismissible: barrierDismissible,
         routeSettings: routeSettings,
         transitionDuration: transitionDuration,
+        barrierDismissible: barrierDismissible,
         enableDragForBottomSheet: enableDragForBottomSheet,
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
         transitionAnimationController: transitionAnimationController,
-        onDismissed: onModalDismissedWithBarrierTap,
         useSafeArea: useSafeArea,
+        bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
+        dialogTransitionAnimation: dialogTransitionAnimation,
+        maxDialogWidth: maxDialogWidth,
+        minDialogWidth: minDialogWidth,
+        maxPageHeight: maxPageHeight,
+        minPageHeight: minPageHeight,
       ),
     );
   }
@@ -129,13 +191,14 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final decoratedCustomLayout = _decorator(
+    return _decorator(
       // The order of the notifier builders matter because we want to use the same instance of
       // the page list whenever page index is updated.
       ValueListenableBuilder<WoltModalSheetPageListBuilder>(
         valueListenable: pagesListBuilderNotifier,
-        builder: (_, pagesBuilder, __) {
+        builder: (context, pagesBuilder, _) {
           final pages = pagesBuilder(context);
+
           return ValueListenableBuilder<int>(
             valueListenable: pageIndexNotifier,
             builder: (_, int pageIndex, __) {
@@ -145,21 +208,22 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                 builder: (BuildContext context, Widget? child) {
                   // Disable the initial animation when accessible navigation is on so
                   // that the semantics are added to the tree at the correct time.
+                  final mediaQueryData = MediaQuery.of(context);
                   final double animationValue = animationCurve.transform(
-                    MediaQuery.of(context).accessibleNavigation
-                        ? 1.0
-                        : widget.route.animation!.value,
+                    mediaQueryData.accessibleNavigation ? 1.0 : widget.route.animation!.value,
                   );
                   final enableDrag =
                       modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
-                  return CustomMultiChildLayout(
+                  final multiChildLayout = CustomMultiChildLayout(
                     delegate: WoltModalMultiChildLayoutDelegate(
                       contentLayoutId: contentLayoutId,
                       barrierLayoutId: barrierLayoutId,
                       modalType: modalType,
-                      maxPageHeight: page.maxPageHeight,
-                      minPageHeight: page.minPageHeight,
+                      minPageHeight: widget.minPageHeight ?? 0,
+                      maxPageHeight: widget.maxPageHeight ?? 0.9,
                       animationProgress: animationValue,
+                      minDialogWidth: widget.minDialogWidth ?? 0,
+                      maxDialogWidth: widget.maxDialogWidth ?? double.infinity,
                     ),
                     children: [
                       LayoutId(
@@ -190,10 +254,15 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                                 ),
                               ),
                               clipBehavior: Clip.antiAlias,
-                              child: WoltModalSheetAnimatedLayoutBuilder(
-                                woltModalType: modalType,
-                                pageIndex: pageIndex,
-                                pages: pages,
+                              child: LayoutBuilder(
+                                builder: (_, constraints) {
+                                  return WoltModalSheetAnimatedSwitcher(
+                                    woltModalType: modalType,
+                                    pageIndex: pageIndex,
+                                    pages: pages,
+                                    sheetWidth: constraints.maxWidth,
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -201,16 +270,35 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       ),
                     ],
                   );
+                  return Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: widget.useSafeArea
+                        ? Stack(
+                            children: [
+                              SafeArea(child: multiChildLayout),
+                              if (modalType == WoltModalType.bottomSheet)
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: ColoredBox(
+                                    color: page.backgroundColor,
+                                    child: SizedBox(
+                                      height: mediaQueryData.padding.bottom,
+                                      width: double.infinity,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          )
+                        : multiChildLayout,
+                  );
                 },
               );
             },
           );
         },
       ),
-    );
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: widget.useSafeArea ? SafeArea(child: decoratedCustomLayout) : decoratedCustomLayout,
     );
   }
 

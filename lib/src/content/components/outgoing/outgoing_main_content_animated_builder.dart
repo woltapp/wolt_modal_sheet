@@ -7,6 +7,7 @@ class OutgoingMainContentAnimatedBuilder extends StatefulWidget {
   final GlobalKey currentOffstagedMainContentKey;
   final Widget mainContent;
   final bool forwardMove;
+  final double sheetWidth;
 
   OutgoingMainContentAnimatedBuilder({
     required this.controller,
@@ -14,8 +15,9 @@ class OutgoingMainContentAnimatedBuilder extends StatefulWidget {
     required this.outgoingOffstagedMainContentKey,
     required this.currentOffstagedMainContentKey,
     required this.forwardMove,
+    required this.sheetWidth,
     super.key,
-  })  : _opacity = Tween<double>(
+  }) : _opacity = Tween<double>(
           begin: 1.0,
           end: 0.0,
         ).animate(
@@ -40,9 +42,13 @@ class _OutgoingMainContentAnimatedBuilderState extends State<OutgoingMainContent
   void initState() {
     super.initState();
     widget.controller.addListener(() {
-      if (_sizeFactor == null) {
-        final currentHeight = widget.currentOffstagedMainContentKey.currentContext!.size!.height;
-        final outgoingHeight = widget.outgoingOffstagedMainContentKey.currentContext!.size!.height;
+      BuildContext? currentContext = widget.currentOffstagedMainContentKey.currentContext;
+      BuildContext? outgoingContext = widget.outgoingOffstagedMainContentKey.currentContext;
+      if (_sizeFactor == null &&
+          currentContext?.mounted == true &&
+          outgoingContext?.mounted == true) {
+        final currentHeight = currentContext!.size!.height;
+        final outgoingHeight = outgoingContext!.size!.height;
         _sizeFactor = Tween<double>(begin: 1.0, end: currentHeight / outgoingHeight).animate(
           CurvedAnimation(
             parent: widget.controller,
@@ -67,7 +73,10 @@ class _OutgoingMainContentAnimatedBuilderState extends State<OutgoingMainContent
             child: SlideTransition(
               position: Tween<Offset>(
                 begin: Offset.zero,
-                end: Offset(80 * (widget.forwardMove ? -1 : 1) / screenWidth, 0),
+                end: Offset(
+                  widget.sheetWidth * 0.3 * (widget.forwardMove ? -1 : 1) / screenWidth,
+                  0,
+                ),
               ).animate(
                 CurvedAnimation(
                   parent: widget.controller,
