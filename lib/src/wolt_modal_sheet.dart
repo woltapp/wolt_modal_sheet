@@ -203,97 +203,85 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
             valueListenable: pageIndexNotifier,
             builder: (_, int pageIndex, __) {
               final page = pages[pageIndex];
-              return AnimatedBuilder(
-                animation: widget.route.animation!,
-                builder: (BuildContext context, Widget? child) {
-                  // Disable the initial animation when accessible navigation is on so
-                  // that the semantics are added to the tree at the correct time.
-                  final mediaQueryData = MediaQuery.of(context);
-                  final double animationValue = animationCurve.transform(
-                    mediaQueryData.accessibleNavigation ? 1.0 : widget.route.animation!.value,
-                  );
-                  final enableDrag =
-                      modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
-                  final multiChildLayout = CustomMultiChildLayout(
-                    delegate: WoltModalMultiChildLayoutDelegate(
-                      contentLayoutId: contentLayoutId,
-                      barrierLayoutId: barrierLayoutId,
-                      modalType: modalType,
-                      minPageHeight: widget.minPageHeight ?? 0,
-                      maxPageHeight: widget.maxPageHeight ?? 0.9,
-                      animationProgress: animationValue,
-                      minDialogWidth: widget.minDialogWidth ?? 0,
-                      maxDialogWidth: widget.maxDialogWidth ?? double.infinity,
+              final enableDrag =
+                  modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
+              final multiChildLayout = CustomMultiChildLayout(
+                delegate: WoltModalMultiChildLayoutDelegate(
+                  contentLayoutId: contentLayoutId,
+                  barrierLayoutId: barrierLayoutId,
+                  modalType: modalType,
+                  minPageHeight: widget.minPageHeight ?? 0,
+                  maxPageHeight: widget.maxPageHeight ?? 0.9,
+                  minDialogWidth: widget.minDialogWidth ?? 0,
+                  maxDialogWidth: widget.maxDialogWidth ?? double.infinity,
+                ),
+                children: [
+                  LayoutId(
+                    id: barrierLayoutId,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        widget.onModalDismissedWithBarrierTap?.call();
+                        Navigator.of(context).pop();
+                      },
+                      child: const SizedBox.expand(),
                     ),
-                    children: [
-                      LayoutId(
-                        id: barrierLayoutId,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            widget.onModalDismissedWithBarrierTap?.call();
-                            Navigator.of(context).pop();
-                          },
-                          child: const SizedBox.expand(),
-                        ),
-                      ),
-                      LayoutId(
-                        id: contentLayoutId,
-                        child: KeyedSubtree(
-                          key: _childKey,
-                          child: GestureDetector(
-                            onVerticalDragStart: enableDrag ? _handleDragStart : null,
-                            onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
-                            onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
-                            child: Material(
-                              color: page.backgroundColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: modalType.borderRadiusGeometry(
-                                  /// TODO: Make this configurable through theme extension
-                                  _containerRadiusAmount,
-                                ),
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              child: LayoutBuilder(
-                                builder: (_, constraints) {
-                                  return WoltModalSheetAnimatedSwitcher(
-                                    woltModalType: modalType,
-                                    pageIndex: pageIndex,
-                                    pages: pages,
-                                    sheetWidth: constraints.maxWidth,
-                                  );
-                                },
-                              ),
+                  ),
+                  LayoutId(
+                    id: contentLayoutId,
+                    child: KeyedSubtree(
+                      key: _childKey,
+                      child: GestureDetector(
+                        onVerticalDragStart: enableDrag ? _handleDragStart : null,
+                        onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
+                        onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                        child: Material(
+                          color: page.backgroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: modalType.borderRadiusGeometry(
+                              /// TODO: Make this configurable through theme extension
+                              _containerRadiusAmount,
                             ),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: LayoutBuilder(
+                            builder: (_, constraints) {
+                              return WoltModalSheetAnimatedSwitcher(
+                                woltModalType: modalType,
+                                pageIndex: pageIndex,
+                                pages: pages,
+                                sheetWidth: constraints.maxWidth,
+                              );
+                            },
                           ),
                         ),
                       ),
-                    ],
-                  );
-                  return Scaffold(
-                    backgroundColor: Colors.transparent,
-                    body: widget.useSafeArea
-                        ? Stack(
-                            children: [
-                              SafeArea(child: multiChildLayout),
-                              if (modalType == WoltModalType.bottomSheet)
-                                Positioned(
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: ColoredBox(
-                                    color: page.backgroundColor,
-                                    child: SizedBox(
-                                      height: mediaQueryData.padding.bottom,
-                                      width: double.infinity,
-                                    ),
-                                  ),
+                    ),
+                  ),
+                ],
+              );
+              return Scaffold(
+                backgroundColor: Colors.transparent,
+                body: widget.useSafeArea
+                    ? Stack(
+                        children: [
+                          SafeArea(child: multiChildLayout),
+                          if (modalType == WoltModalType.bottomSheet)
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: ColoredBox(
+                                color: page.backgroundColor,
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).padding.bottom,
+                                  width: double.infinity,
                                 ),
-                            ],
-                          )
-                        : multiChildLayout,
-                  );
-                },
+                              ),
+                            ),
+                        ],
+                      )
+                    : multiChildLayout,
               );
             },
           );

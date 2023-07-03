@@ -3,8 +3,6 @@ import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 
 /// A custom [MultiChildLayoutDelegate] that handles the layout of the modal and barrier content within [WoltScrollableModalSheet].
 class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
-  final double animationProgress;
-
   /// The maximum height percentage of the content relative to the available size.
   final double maxPageHeight;
 
@@ -41,7 +39,6 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     required this.contentLayoutId,
     required this.barrierLayoutId,
     required this.modalType,
-    required this.animationProgress,
     required this.minDialogWidth,
     required this.maxDialogWidth,
   });
@@ -88,7 +85,6 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   bool shouldRelayout(covariant WoltModalMultiChildLayoutDelegate oldDelegate) {
     return oldDelegate.modalType != modalType ||
-        oldDelegate.animationProgress != animationProgress ||
         oldDelegate.minDialogWidth != minDialogWidth ||
         oldDelegate.maxDialogWidth != maxDialogWidth ||
         oldDelegate.maxPageHeight != maxPageHeight ||
