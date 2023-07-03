@@ -196,8 +196,9 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
       // the page list whenever page index is updated.
       ValueListenableBuilder<WoltModalSheetPageListBuilder>(
         valueListenable: pagesListBuilderNotifier,
-        builder: (_, pagesBuilder, __) {
+        builder: (context, pagesBuilder, _) {
           final pages = pagesBuilder(context);
+
           return ValueListenableBuilder<int>(
             valueListenable: pageIndexNotifier,
             builder: (_, int pageIndex, __) {
@@ -292,7 +293,6 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                           )
                         : multiChildLayout,
                   );
-                  return multiChildLayout;
                 },
               );
             },
