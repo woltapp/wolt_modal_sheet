@@ -48,9 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onMultiPagePathSelected: (newFlowName) => onPathSelected(newFlowName),
       ),
     )..addListener(() {
-      // Reset page index when page list changes.
-      pageIndexNotifier.value = 0;
-    });
+        // Reset page index when page list changes.
+        pageIndexNotifier.value = 0;
+      });
   }
 
   @override

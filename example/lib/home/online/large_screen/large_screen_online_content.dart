@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 import 'package:example/entities/coffee_maker_step.dart';
 import 'package:example/home/online/large_screen/large_screen_coffee_order_list_section.dart';
 import 'package:example/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:example/home/widgets/top_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// A widget that represents the online content for large screens.
 ///
@@ -12,14 +12,11 @@ import 'package:example/home/widgets/top_bar.dart';
 /// The [isStoreOnlineNotifier] is a [ValueNotifier] that notifies the widget of changes in the store's online status.
 class LargeScreenOnlineContent extends StatefulWidget {
   const LargeScreenOnlineContent({
-    super.key,
     required Map<CoffeeMakerStep, CoffeeOrderListWidget> coffeeMakerStepListWidgets,
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets;
+    super.key,
+  }) : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets;
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
-  final ValueNotifier<bool> _isStoreOnlineNotifier;
 
   @override
   State<LargeScreenOnlineContent> createState() => _LargeScreenOnlineContentState();
@@ -34,11 +31,22 @@ class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                setState(() => _isOverlayVisible = !_isOverlayVisible);
-              },
-              child: TopBar(isStoreOnlineNotifier: widget._isStoreOnlineNotifier),
+            Row(
+              children: [
+                Expanded(child: TopBar(isStoreOnlineNotifier: ValueNotifier(true))),
+                const SizedBox(width: 16),
+                OutlinedButton(
+                  onPressed: () => setState(() => _isOverlayVisible = !_isOverlayVisible),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      'Toggle Grid Overlay: ${_isOverlayVisible ? 'ON' : 'OFF'}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Expanded(
               child: WoltResponsiveLayoutGrid(
