@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 import 'package:wolt_modal_sheet/src/utils/drag_scroll_behavior.dart';
@@ -23,11 +24,7 @@ class WoltModalSheetLayout extends StatelessWidget {
   /// [woltModalType] represents the type of the modal sheet.
   const WoltModalSheetLayout({
     required this.page,
-    required this.mainContent,
-    required this.topBar,
-    required this.closeButton,
-    required this.backButton,
-    required this.stickyActionBar,
+    required this.paginatingWidgetsGroup,
     required this.woltModalType,
     required this.topBarHeight,
     required this.topBarTranslationY,
@@ -35,11 +32,7 @@ class WoltModalSheetLayout extends StatelessWidget {
   }) : super(key: key);
 
   final WoltModalSheetPage page;
-  final Widget mainContent;
-  final Widget topBar;
-  final Widget closeButton;
-  final Widget backButton;
-  final Widget stickyActionBar;
+  final PaginatingWidgetsGroup paginatingWidgetsGroup;
   final WoltModalType woltModalType;
   final double topBarHeight;
   final double topBarTranslationY;
@@ -50,29 +43,29 @@ class WoltModalSheetLayout extends StatelessWidget {
       behavior: const DragScrollBehavior(),
       child: Stack(
         children: [
-          mainContent,
+          paginatingWidgetsGroup.mainContentAnimatedBuilder,
           Positioned(
             left: 0,
             right: 0,
             top: -1 * topBarTranslationY,
             height: topBarHeight + topBarTranslationY,
-            child: topBar,
+            child: paginatingWidgetsGroup.topBarAnimatedBuilder,
           ),
           PositionedDirectional(
             top: 0,
             end: 0,
-            child: closeButton,
+            child: paginatingWidgetsGroup.closeButtonAnimatedBuilder,
           ),
           PositionedDirectional(
             top: 0,
             start: 0,
-            child: backButton,
+            child: paginatingWidgetsGroup.backButtonButtonAnimatedBuilder,
           ),
           PositionedDirectional(
             start: 0,
             end: 0,
             bottom: 0,
-            child: stickyActionBar,
+            child: paginatingWidgetsGroup.sabAnimatedBuilder,
           ),
           if (woltModalType == WoltModalType.bottomSheet)
             const Positioned(

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/content/components/current/current_page_widgets.dart';
 import 'package:wolt_modal_sheet/src/content/components/current/current_top_bar_controls_animated_builder.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_main_content.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
-import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_page_widgets.dart';
 import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_top_bar_controls_animated_builder.dart';
+import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -24,8 +23,7 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
         super(key: key);
 
   @override
-  State<WoltModalSheetAnimatedSwitcher> createState() =>
-      _WoltModalSheetAnimatedSwitcherState();
+  State<WoltModalSheetAnimatedSwitcher> createState() => _WoltModalSheetAnimatedSwitcherState();
 }
 
 class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedSwitcher>
@@ -108,44 +106,30 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     final animationController = _animationController;
     final animatePagination = _shouldAnimatePagination;
     return Stack(
-      fit: StackFit.passthrough,
+      alignment: Alignment.bottomCenter,
       children: [
-        WoltModalSheetLayout(
-          key: ValueKey('_Skeleton$_pageIndex'),
-          page: _page,
-          woltModalType: widget.woltModalType,
-          topBarTranslationY: _topBarTranslationY,
-          mainContent: _SwitcherLayout(
-            currentPageWidgets: currentWidgets?.mainContentAnimatedBuilder,
-            outgoingChild: outgoingWidgets?.mainContentAnimatedBuilder,
+        if (outgoingWidgets != null)
+          WoltModalSheetLayout(
+            paginatingWidgetsGroup: outgoingWidgets,
+            page: _page,
+            woltModalType: widget.woltModalType,
+            topBarTranslationY: _topBarTranslationY,
+            topBarHeight: _topBarHeight,
           ),
-          topBar: _SwitcherLayout(
-            currentPageWidgets: currentWidgets?.topBarAnimatedBuilder,
-            outgoingChild: outgoingWidgets?.topBarAnimatedBuilder,
+        if (currentWidgets != null)
+          WoltModalSheetLayout(
+            paginatingWidgetsGroup: currentWidgets,
+            page: _page,
+            woltModalType: widget.woltModalType,
+            topBarTranslationY: _topBarTranslationY,
+            topBarHeight: _topBarHeight,
           ),
-          closeButton: _SwitcherLayout(
-            currentPageWidgets: currentWidgets?.closeButtonAnimatedBuilder,
-            outgoingChild: outgoingWidgets?.closeButtonAnimatedBuilder,
-          ),
-          backButton: _SwitcherLayout(
-            currentPageWidgets: currentWidgets?.backButtonButtonAnimatedBuilder,
-            outgoingChild: outgoingWidgets?.backButtonButtonAnimatedBuilder,
-          ),
-          stickyActionBar: _page.stickyActionBar != null
-              ? _SwitcherLayout(
-                  currentPageWidgets: currentWidgets?.sabAnimatedBuilder,
-                  outgoingChild: outgoingWidgets?.sabAnimatedBuilder,
-                )
-              : const SizedBox.shrink(),
-          topBarHeight: _topBarHeight,
-        ),
         if (currentWidgets != null &&
             animationController != null &&
             animatePagination != null &&
             animatePagination &&
             animationController.value != 1.0)
           Offstage(
-            key: ValueKey('CurrentOffstage$_pageIndex'),
             child: KeyedSubtree(
               key: _currentOffstagedMainContentKeys[_pageIndex],
               child: currentWidgets.offstagedMainContent,
@@ -157,7 +141,6 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             animatePagination &&
             animationController.value != 1.0)
           Offstage(
-            key: ValueKey('_OutgoingOffstage$_pageIndex'),
             child: KeyedSubtree(
               key: _outgoingOffstagedMainContentKeys[_pageIndex],
               child: outgoingWidgets.offstagedMainContent,
@@ -241,18 +224,26 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       offstagedMainContent: _createMainContent(titleKey: _offstagedTitleKeys[_pageIndex]),
       topBarAnimatedBuilder: CurrentTopBarAnimatedBuilder(
         controller: animationController,
-        child: _page.isTopBarVisibleWhenScrolled ? _createTopBar() : const SizedBox.shrink(),
+        child: _page.isTopBarVisibleWhenScrolled
+            ? WoltModalSheetTopBar(
+                page: _page,
+                currentScrollPositionListenable: _currentScrollPosition,
+                topBarTranslationYAmountInPx: _topBarTranslationY,
+                topBarHeight: _topBarHeight,
+                titleKey: _titleKeys[_pageIndex],
+              )
+            : const SizedBox.shrink(),
       ),
       closeButtonAnimatedBuilder: CurrentTopBarControlsAnimatedBuilder(
         controller: animationController,
-        child: _createCloseButton(),
+        child: _page.closeButton ?? const SizedBox.shrink(),
       ),
       backButtonButtonAnimatedBuilder: CurrentTopBarControlsAnimatedBuilder(
         controller: animationController,
-        child: _pageIndex == 0 ? const SizedBox.shrink() : _createBackButton(),
+        child: _page.backButton ?? const SizedBox.shrink(),
       ),
       sabAnimatedBuilder: CurrentSabAnimatedBuilder(
-        stickyActionBar: _page.stickyActionBar == null ? const SizedBox.shrink() : _createSab(),
+        stickyActionBar: _page.stickyActionBar ?? const SizedBox.shrink(),
         controller: animationController,
       ),
     );
@@ -266,7 +257,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       mainContentAnimatedBuilder: OutgoingMainContentAnimatedBuilder(
         controller: animationController,
         mainContent: ExcludeFocus(
-          child: currentWidgetsToBeOutgoing.mainContentAnimatedBuilder.mainContent,
+          child: (currentWidgetsToBeOutgoing.mainContentAnimatedBuilder
+                  as CurrentMainContentAnimatedBuilder)
+              .mainContent,
         ),
         currentOffstagedMainContentKey: _currentOffstagedMainContentKeys[_pageIndex],
         outgoingOffstagedMainContentKey: _outgoingOffstagedMainContentKeys[_pageIndex],
@@ -278,19 +271,25 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       ),
       topBarAnimatedBuilder: OutgoingTopBarAnimatedBuilder(
         controller: animationController,
-        child: currentWidgetsToBeOutgoing.topBarAnimatedBuilder.child,
+        child: (currentWidgetsToBeOutgoing.topBarAnimatedBuilder as CurrentTopBarAnimatedBuilder)
+            .child,
       ),
       closeButtonAnimatedBuilder: OutgoingTopBarControlsAnimatedBuilder(
         controller: animationController,
-        child: currentWidgetsToBeOutgoing.closeButtonAnimatedBuilder.child,
+        child: (currentWidgetsToBeOutgoing.closeButtonAnimatedBuilder
+                as CurrentTopBarControlsAnimatedBuilder)
+            .child,
       ),
       backButtonButtonAnimatedBuilder: OutgoingTopBarControlsAnimatedBuilder(
         controller: animationController,
-        child: currentWidgetsToBeOutgoing.backButtonButtonAnimatedBuilder.child,
+        child: (currentWidgetsToBeOutgoing.backButtonButtonAnimatedBuilder
+                as CurrentTopBarControlsAnimatedBuilder)
+            .child,
       ),
       sabAnimatedBuilder: OutgoingSabAnimatedBuilder(
         controller: animationController,
-        sab: currentWidgetsToBeOutgoing.sabAnimatedBuilder.stickyActionBar,
+        sab: (currentWidgetsToBeOutgoing.sabAnimatedBuilder as CurrentSabAnimatedBuilder)
+            .stickyActionBar,
       ),
     );
   }
@@ -298,50 +297,14 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   WoltModalSheetMainContent _createMainContent({
     required GlobalKey titleKey,
     GlobalKey? mainContentKey,
-  }) =>
-      WoltModalSheetMainContent(
-        key: mainContentKey,
-        pageTitleKey: titleKey,
-        currentScrollPosition: _currentScrollPosition,
-        page: _page,
-        topBarHeight: _topBarHeight,
-        woltModalType: widget.woltModalType,
-      );
-
-  WoltModalSheetTopBar _createTopBar() => WoltModalSheetTopBar(
-        page: _page,
-        currentScrollPositionListenable: _currentScrollPosition,
-        topBarTranslationYAmountInPx: _topBarTranslationY,
-        topBarHeight: _topBarHeight,
-        titleKey: _titleKeys[_pageIndex],
-      );
-
-  Widget _createCloseButton() => _page.closeButton ?? const SizedBox.shrink();
-
-  Widget _createBackButton() => _page.backButton ?? const SizedBox.shrink();
-
-  Widget _createSab() => _page.stickyActionBar ?? const SizedBox.shrink();
-}
-
-class _SwitcherLayout extends StatelessWidget {
-  final Widget? currentPageWidgets;
-  final Widget? outgoingChild;
-
-  const _SwitcherLayout({
-    required this.currentPageWidgets,
-    required this.outgoingChild,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final currentChild = currentPageWidgets;
-    final outgoingChild = this.outgoingChild;
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        if (outgoingChild != null) outgoingChild,
-        if (currentChild != null) currentChild,
-      ],
+  }) {
+    return WoltModalSheetMainContent(
+      key: mainContentKey,
+      pageTitleKey: titleKey,
+      currentScrollPosition: _currentScrollPosition,
+      page: _page,
+      topBarHeight: _topBarHeight,
+      woltModalType: widget.woltModalType,
     );
   }
 }
