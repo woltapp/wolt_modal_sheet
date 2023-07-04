@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class OutgoingTopBarWidgetsAnimatedBuilder extends StatelessWidget {
+class OutgoingTopBarAnimatedBuilder extends StatelessWidget {
   final AnimationController controller;
   final Animation<double> _opacity;
   final Widget child;
 
-  OutgoingTopBarWidgetsAnimatedBuilder({
+  OutgoingTopBarAnimatedBuilder({
     required this.controller,
     required this.child,
     super.key,
@@ -17,7 +17,8 @@ class OutgoingTopBarWidgetsAnimatedBuilder extends StatelessWidget {
             parent: controller,
             curve: const Interval(
               0,
-              100 / 350,
+              150 / 350,
+              curve: Curves.linear,
             ),
           ),
         );

@@ -23,10 +23,7 @@ class OutgoingMainContentAnimatedBuilder extends StatefulWidget {
         ).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(
-              50 / 350,
-              150 / 350,
-            ),
+            curve: const Interval(50 / 350, 150 / 350, curve: Curves.linear),
           ),
         );
 
@@ -38,9 +35,12 @@ class OutgoingMainContentAnimatedBuilder extends StatefulWidget {
 class _OutgoingMainContentAnimatedBuilderState extends State<OutgoingMainContentAnimatedBuilder> {
   Animation<double>? _sizeFactor;
 
+  late Animation<double> _defaultSizeFactor;
+
   @override
   void initState() {
     super.initState();
+    _defaultSizeFactor = Tween<double>(begin: 1.0, end: 0.0).animate(widget.controller);
     widget.controller.addListener(() {
       BuildContext? currentContext = widget.currentOffstagedMainContentKey.currentContext;
       BuildContext? outgoingContext = widget.outgoingOffstagedMainContentKey.currentContext;
@@ -67,7 +67,7 @@ class _OutgoingMainContentAnimatedBuilderState extends State<OutgoingMainContent
       builder: (BuildContext context, Widget? _) {
         return SizeTransition(
           axisAlignment: -1,
-          sizeFactor: _sizeFactor ?? Tween<double>(begin: 1.0, end: 0.0).animate(widget.controller),
+          sizeFactor: _sizeFactor ?? _defaultSizeFactor,
           child: Opacity(
             opacity: widget._opacity.value,
             child: SlideTransition(

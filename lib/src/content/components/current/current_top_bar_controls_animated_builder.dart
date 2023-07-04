@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CurrentSabAnimatedBuilder extends StatelessWidget {
+class CurrentTopBarControlsAnimatedBuilder extends StatelessWidget {
   final AnimationController controller;
   final Animation<double> _opacity;
-  final Widget stickyActionBar;
+  final Widget child;
 
-  CurrentSabAnimatedBuilder({
+  CurrentTopBarControlsAnimatedBuilder({
     required this.controller,
-    required this.stickyActionBar,
+    required this.child,
     super.key,
   }) : _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
@@ -21,7 +21,7 @@ class CurrentSabAnimatedBuilder extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext _, Widget? __) {
-        return Opacity(opacity: _opacity.value, child: stickyActionBar);
+        return Opacity(opacity: _opacity.value, child: child);
       },
     );
   }

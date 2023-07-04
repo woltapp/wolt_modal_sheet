@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/current/current_page_widgets.dart';
+import 'package:wolt_modal_sheet/src/content/components/current/current_top_bar_controls_animated_builder.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_main_content.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_page_widgets.dart';
+import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_top_bar_controls_animated_builder.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -237,15 +239,15 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         sheetWidth: widget.sheetWidth,
       ),
       offstagedMainContent: _createMainContent(titleKey: _offstagedTitleKeys[_pageIndex]),
-      topBarAnimatedBuilder: CurrentTopBarWidgetsAnimatedBuilder(
+      topBarAnimatedBuilder: CurrentTopBarAnimatedBuilder(
         controller: animationController,
         child: _page.isTopBarVisibleWhenScrolled ? _createTopBar() : const SizedBox.shrink(),
       ),
-      closeButtonAnimatedBuilder: CurrentTopBarWidgetsAnimatedBuilder(
+      closeButtonAnimatedBuilder: CurrentTopBarControlsAnimatedBuilder(
         controller: animationController,
         child: _createCloseButton(),
       ),
-      backButtonButtonAnimatedBuilder: CurrentTopBarWidgetsAnimatedBuilder(
+      backButtonButtonAnimatedBuilder: CurrentTopBarControlsAnimatedBuilder(
         controller: animationController,
         child: _pageIndex == 0 ? const SizedBox.shrink() : _createBackButton(),
       ),
@@ -274,15 +276,15 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       offstagedMainContent: ExcludeFocus(
         child: currentWidgetsToBeOutgoing.offstagedMainContent,
       ),
-      topBarAnimatedBuilder: OutgoingTopBarWidgetsAnimatedBuilder(
+      topBarAnimatedBuilder: OutgoingTopBarAnimatedBuilder(
         controller: animationController,
         child: currentWidgetsToBeOutgoing.topBarAnimatedBuilder.child,
       ),
-      closeButtonAnimatedBuilder: OutgoingTopBarWidgetsAnimatedBuilder(
+      closeButtonAnimatedBuilder: OutgoingTopBarControlsAnimatedBuilder(
         controller: animationController,
         child: currentWidgetsToBeOutgoing.closeButtonAnimatedBuilder.child,
       ),
-      backButtonButtonAnimatedBuilder: OutgoingTopBarWidgetsAnimatedBuilder(
+      backButtonButtonAnimatedBuilder: OutgoingTopBarControlsAnimatedBuilder(
         controller: animationController,
         child: currentWidgetsToBeOutgoing.backButtonButtonAnimatedBuilder.child,
       ),
