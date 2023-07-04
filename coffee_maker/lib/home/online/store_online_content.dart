@@ -19,12 +19,15 @@ class StoreOnlineContent extends StatefulWidget {
   const StoreOnlineContent({
     required GroupedCoffeeOrders groupedCoffeeOrders,
     required ValueNotifier<bool> isStoreOnlineNotifier,
+    required ValueNotifier<bool> isGridOverlayVisibleNotifier,
     super.key,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _groupedCoffeeOrders = groupedCoffeeOrders;
+  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
+        _isStoreOnlineNotifier = isStoreOnlineNotifier,
+        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier;
 
-  final ValueNotifier<bool> _isStoreOnlineNotifier;
   final GroupedCoffeeOrders _groupedCoffeeOrders;
+  final ValueNotifier<bool> _isStoreOnlineNotifier;
+  final ValueNotifier<bool> _isGridOverlayVisibleNotifier;
 
   @override
   State<StoreOnlineContent> createState() => _StoreOnlineContentState();
@@ -69,6 +72,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
             largeScreenWidthChild: LargeScreenOnlineContent(
               coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
+              isGridOverlayVisibleNotifier: widget._isGridOverlayVisibleNotifier,
             ),
           );
         },

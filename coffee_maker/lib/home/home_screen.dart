@@ -13,11 +13,14 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required GroupedCoffeeOrders groupedCoffeeOrders,
     required bool isStoreOnline,
+    required bool isGridOverlayVisible,
   })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _isStoreOnline = isStoreOnline;
+        _isStoreOnline = isStoreOnline,
+        _isGridOverlayVisible = isGridOverlayVisible;
 
   final GroupedCoffeeOrders _groupedCoffeeOrders;
   final bool _isStoreOnline;
+  final bool _isGridOverlayVisible;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,26 +28,39 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late ValueNotifier<bool> _isStoreOnlineNotifier;
+  late ValueNotifier<bool> _isGridOverlayVisibleNotifier;
 
   @override
   void initState() {
     super.initState();
     _isStoreOnlineNotifier = ValueNotifier(widget._isStoreOnline);
+    _isGridOverlayVisibleNotifier = ValueNotifier(widget._isGridOverlayVisible);
+  }
+
+  @override
+  void dispose() {
+    _isStoreOnlineNotifier.dispose();
+    _isGridOverlayVisibleNotifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _isStoreOnlineNotifier,
-      builder: (_, isStoreOnline, __) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([_isStoreOnlineNotifier, _isGridOverlayVisibleNotifier]),
+      builder: (_, __) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          child: isStoreOnline
+          child: _isStoreOnlineNotifier.value
               ? StoreOnlineContent(
                   groupedCoffeeOrders: widget._groupedCoffeeOrders,
                   isStoreOnlineNotifier: _isStoreOnlineNotifier,
+                  isGridOverlayVisibleNotifier: _isGridOverlayVisibleNotifier,
                 )
-              : StoreOfflineContent(isStoreOnlineNotifier: _isStoreOnlineNotifier),
+              : StoreOfflineContent(
+                  isStoreOnlineNotifier: _isStoreOnlineNotifier,
+                  isGridOverlayVisibleNotifier: _isGridOverlayVisibleNotifier,
+                ),
         );
       },
     );

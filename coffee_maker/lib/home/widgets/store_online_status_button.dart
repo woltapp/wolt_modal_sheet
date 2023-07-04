@@ -6,8 +6,8 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// It is a toggle button that allows the user to switch the store between online and offline states.
 class StoreOnlineStatusButton extends StatelessWidget {
   const StoreOnlineStatusButton({
-    super.key,
     required ValueNotifier<bool> isStoreOnlineNotifier,
+    super.key,
   }) : _isStoreOnlineNotifier = isStoreOnlineNotifier;
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
@@ -16,7 +16,7 @@ class StoreOnlineStatusButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _isStoreOnlineNotifier,
-      builder: (__, isOnline, _) {
+      builder: (_, isOnline, __) {
         return OutlinedButton(
           style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
                 side:
@@ -37,8 +37,11 @@ class StoreOnlineStatusButton extends StatelessWidget {
                   )),
               const SizedBox(width: 8),
               WoltScreenWidthAdaptiveWidget(
-                smallScreenWidthChild:
-                    const Icon(Icons.store, size: 16, color: DemoAppColors.black),
+                smallScreenWidthChild: const Icon(
+                  Icons.store,
+                  size: 16,
+                  color: DemoAppColors.black,
+                ),
                 largeScreenWidthChild: Text(isOnline ? 'Online' : 'Offline'),
               ),
             ],

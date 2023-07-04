@@ -14,48 +14,36 @@ class LargeScreenOnlineContent extends StatefulWidget {
   const LargeScreenOnlineContent({
     required Map<CoffeeMakerStep, CoffeeOrderListWidget> coffeeMakerStepListWidgets,
     required ValueNotifier<bool> isStoreOnlineNotifier,
+    required ValueNotifier<bool> isGridOverlayVisibleNotifier,
     super.key,
   })  : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets,
-        _isStoreOnlineNotifier = isStoreOnlineNotifier;
+        _isStoreOnlineNotifier = isStoreOnlineNotifier,
+        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier;
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
   final ValueNotifier<bool> _isStoreOnlineNotifier;
+  final ValueNotifier<bool> _isGridOverlayVisibleNotifier;
 
   @override
   State<LargeScreenOnlineContent> createState() => _LargeScreenOnlineContentState();
 }
 
 class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
-  bool _isOverlayVisible = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Row(
-              children: [
-                Expanded(child: TopBar(isStoreOnlineNotifier: widget._isStoreOnlineNotifier)),
-                const SizedBox(width: 16),
-                OutlinedButton(
-                  onPressed: () => setState(() => _isOverlayVisible = !_isOverlayVisible),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Text(
-                      'Toggle Grid Overlay: ${_isOverlayVisible ? 'ON' : 'OFF'}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
+            TopBar(
+              isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
+              isGridOverlayVisibleNotifier: widget._isGridOverlayVisibleNotifier,
             ),
             Expanded(
               child: WoltResponsiveLayoutGrid(
                 margin: 8,
                 gutter: 8,
-                isOverlayVisible: _isOverlayVisible,
+                isOverlayVisible: widget._isGridOverlayVisibleNotifier.value,
                 columnSpanCells: [
                   WoltColumnSpanCell(
                     columnSpan: 3,

@@ -115,6 +115,7 @@ class _DemoAppState extends State<DemoApp> {
         child: HomeScreen(
           groupedCoffeeOrders: GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
           isStoreOnline: true,
+          isGridOverlayVisible: false,
         ),
       ),
     );
