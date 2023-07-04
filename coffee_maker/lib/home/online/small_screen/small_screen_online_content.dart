@@ -16,12 +16,15 @@ class SmallScreenOnlineContent extends StatefulWidget {
   const SmallScreenOnlineContent({
     required Map<CoffeeMakerStep, CoffeeOrderListWidget> coffeeMakerStepListWidgets,
     required GroupedCoffeeOrders groupedCoffeeOrders,
+    required ValueNotifier<bool> isStoreOnlineNotifier,
     super.key,
-  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets;
+  })  : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets,
+        _groupedCoffeeOrders = groupedCoffeeOrders,
+        _isStoreOnlineNotifier = isStoreOnlineNotifier;
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
   final GroupedCoffeeOrders _groupedCoffeeOrders;
+  final ValueNotifier<bool> _isStoreOnlineNotifier;
 
   @override
   State<SmallScreenOnlineContent> createState() => _SmallScreenOnlineContentState();
@@ -38,7 +41,7 @@ class _SmallScreenOnlineContentState extends State<SmallScreenOnlineContent> {
           children: [
             TopBar(
               selectedStepForBottomNavigationBar: _selectedStepForBottomNavigationBar,
-              isStoreOnlineNotifier: ValueNotifier(true),
+              isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
             ),
             Expanded(
               child: Container(

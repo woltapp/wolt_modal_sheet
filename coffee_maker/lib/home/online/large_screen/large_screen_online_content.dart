@@ -13,10 +13,13 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 class LargeScreenOnlineContent extends StatefulWidget {
   const LargeScreenOnlineContent({
     required Map<CoffeeMakerStep, CoffeeOrderListWidget> coffeeMakerStepListWidgets,
+    required ValueNotifier<bool> isStoreOnlineNotifier,
     super.key,
-  }) : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets;
+  })  : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets,
+        _isStoreOnlineNotifier = isStoreOnlineNotifier;
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
+  final ValueNotifier<bool> _isStoreOnlineNotifier;
 
   @override
   State<LargeScreenOnlineContent> createState() => _LargeScreenOnlineContentState();
@@ -33,7 +36,7 @@ class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
           children: <Widget>[
             Row(
               children: [
-                Expanded(child: TopBar(isStoreOnlineNotifier: ValueNotifier(true))),
+                Expanded(child: TopBar(isStoreOnlineNotifier: widget._isStoreOnlineNotifier)),
                 const SizedBox(width: 16),
                 OutlinedButton(
                   onPressed: () => setState(() => _isOverlayVisible = !_isOverlayVisible),

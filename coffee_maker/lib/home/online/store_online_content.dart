@@ -18,9 +18,12 @@ typedef OnCoffeeOrderStatusChange = Function(String coffeeOrderId, [CoffeeMakerS
 class StoreOnlineContent extends StatefulWidget {
   const StoreOnlineContent({
     required GroupedCoffeeOrders groupedCoffeeOrders,
+    required ValueNotifier<bool> isStoreOnlineNotifier,
     super.key,
-  }) : _groupedCoffeeOrders = groupedCoffeeOrders;
+  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
+        _groupedCoffeeOrders = groupedCoffeeOrders;
 
+  final ValueNotifier<bool> _isStoreOnlineNotifier;
   final GroupedCoffeeOrders _groupedCoffeeOrders;
 
   @override
@@ -61,9 +64,11 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
             smallScreenWidthChild: SmallScreenOnlineContent(
               coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
               groupedCoffeeOrders: model.groupedCoffeeOrders,
+              isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
             ),
             largeScreenWidthChild: LargeScreenOnlineContent(
               coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
+              isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
             ),
           );
         },

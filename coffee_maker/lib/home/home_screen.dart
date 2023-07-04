@@ -40,7 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: isStoreOnline
-              ? StoreOnlineContent(groupedCoffeeOrders: widget._groupedCoffeeOrders)
+              ? StoreOnlineContent(
+                  groupedCoffeeOrders: widget._groupedCoffeeOrders,
+                  isStoreOnlineNotifier: _isStoreOnlineNotifier,
+                )
               : StoreOfflineContent(isStoreOnlineNotifier: _isStoreOnlineNotifier),
         );
       },
