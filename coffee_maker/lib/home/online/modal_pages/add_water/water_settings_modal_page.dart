@@ -16,13 +16,13 @@ class WaterSettingsModalPage {
     const pageTitle = 'Water settings';
 
     return WoltModalSheetPage.withSingleChild(
-      stickyActionBar: ValueListenableBuilder(
+      stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: buttonEnabledListener,
-        builder: (_, enabled, __) {
+        builder: (_, isEnabled, __) {
           return StickyActionBarWrapper(
             child: WoltElevatedButton(
               onPressed: onWaterAdded,
-              enabled: enabled,
+              enabled: isEnabled,
               child: const Text('Finish adding water'),
             ),
           );

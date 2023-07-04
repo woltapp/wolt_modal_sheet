@@ -14,7 +14,7 @@ class StoreOnlineStatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<bool>(
       valueListenable: _isStoreOnlineNotifier,
       builder: (_, isOnline, __) {
         return OutlinedButton(

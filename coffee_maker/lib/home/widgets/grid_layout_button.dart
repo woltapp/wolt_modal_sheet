@@ -13,7 +13,7 @@ class GridLayoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<bool>(
       valueListenable: _isGridOverlayVisible,
       builder: (_, isVisible, __) {
         return OutlinedButton(

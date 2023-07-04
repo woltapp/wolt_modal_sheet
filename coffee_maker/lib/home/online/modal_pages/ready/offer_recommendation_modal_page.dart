@@ -19,7 +19,7 @@ class OfferRecommendationModalPage {
     final Set<ExtraRecommendation> selectedRecommendations = {};
 
     return WoltModalSheetPage.withCustomSliverList(
-      stickyActionBar: ValueListenableBuilder(
+      stickyActionBar: ValueListenableBuilder<int>(
         valueListenable: selectedItemCountListener,
         builder: (_, count, __) {
           final String buttonText;

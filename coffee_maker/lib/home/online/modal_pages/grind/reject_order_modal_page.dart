@@ -14,15 +14,15 @@ class RejectOrderModalPage {
     final buttonEnabledListener = ValueNotifier(false);
 
     return WoltModalSheetPage.withSingleChild(
-      stickyActionBar: ValueListenableBuilder(
+      stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: buttonEnabledListener,
-        builder: (_, enabled, __) {
+        builder: (_, isEnabled, __) {
           return StickyActionBarWrapper(
             child: WoltElevatedButton(
               onPressed: onCoffeeOrderRejected,
               theme: WoltElevatedButtonTheme.secondary,
               colorName: WoltColorName.red,
-              enabled: enabled,
+              enabled: isEnabled,
               child: const Text('Reject'),
             ),
           );
