@@ -12,6 +12,9 @@ const double _closeProgressThreshold = 0.5;
 
 const int defaultWoltModalTransitionAnimationDuration = 350;
 
+/// By default, the `widthBreakPoint` is set to 768, which corresponds to the common breakpoint between small and large screens.
+const _defaultWidthBreakPoint = 768;
+
 /// Signature for a function that builds a list of [WoltModalSheetPage] based on the given [BuildContext].
 typedef WoltModalSheetPageListBuilder = List<WoltModalSheetPage> Function(BuildContext context);
 
@@ -24,11 +27,11 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.pageIndexNotifier,
     required this.onModalDismissedWithBarrierTap,
     required this.decorator,
-    required this.modalTypeBuilder,
     required this.animationController,
     required this.route,
     required this.enableDragForBottomSheet,
     required this.useSafeArea,
+    this.modalTypeBuilder,
     this.minDialogWidth,
     this.maxDialogWidth,
     this.minPageHeight,
@@ -40,7 +43,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   final ValueNotifier<int> pageIndexNotifier;
   final VoidCallback? onModalDismissedWithBarrierTap;
   final Widget Function(Widget)? decorator;
-  final WoltModalType Function(BuildContext context) modalTypeBuilder;
+  final WoltModalType Function(BuildContext context)? modalTypeBuilder;
   final AnimationController? animationController;
   final WoltModalSheetRoute<T> route;
   final bool enableDragForBottomSheet;
@@ -58,7 +61,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   static Future<T?> show<T>({
     required BuildContext context,
     required WoltModalSheetPageListBuilder pageListBuilderNotifier,
-    required WoltModalTypeBuilder modalTypeBuilder,
+    WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
@@ -102,7 +105,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   static Future<T?> showWithDynamicPath<T>({
     required BuildContext context,
     required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
-    required WoltModalTypeBuilder modalTypeBuilder,
+    WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,

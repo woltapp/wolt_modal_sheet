@@ -4,10 +4,10 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
     required this.pageListBuilderNotifier,
-    required this.modalTypeBuilder,
     this.pageIndexNotifier,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
+    WoltModalTypeBuilder? modalTypeBuilder,
     bool? enableDragForBottomSheet,
     bool? useSafeArea,
     bool? barrierDismissible,
@@ -31,7 +31,9 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
         _maxDialogWidth = maxDialogWidth,
         _minPageHeight = minPageHeight,
         _maxPageHeight = maxPageHeight,
-        super(settings: routeSettings);
+        _modalTypeBuilder = modalTypeBuilder ?? (context) => WoltModalType.bottomSheet,
+        
+        super(settings  = routeSettings);
 
   Widget Function(Widget)? decorator;
 
@@ -39,7 +41,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final ValueNotifier<int>? pageIndexNotifier;
 
-  final WoltModalTypeBuilder modalTypeBuilder;
+  final WoltModalTypeBuilder? _modalTypeBuilder;
 
   late final Duration _transitionDuration;
 
@@ -85,7 +87,11 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   @override
   String? get barrierLabel => 'Modal barrier';
 
+
+
   AnimationController? animationController;
+
+  
 
   @override
   Widget buildPage(
