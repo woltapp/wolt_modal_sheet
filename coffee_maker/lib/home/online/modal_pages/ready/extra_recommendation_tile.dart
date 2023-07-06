@@ -37,63 +37,67 @@ class _ExtraRecommendationTileState extends State<ExtraRecommendationTile> {
           widget.onPressed(_isSelected);
         });
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
               children: [
-                SizedBox(
-                  width: 64,
-                  height: 64,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.0),
-                    child: Image(
-                        image: AssetImage(widget.recommendation.imageAssetPath), fit: BoxFit.cover),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 64,
+                      height: 64,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image(
+                            image: AssetImage(widget.recommendation.imageAssetPath), fit: BoxFit.cover),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(widget.recommendation.label,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 1),
-                                Text(widget.recommendation.price,
-                                    style: Theme.of(context).textTheme.bodyMedium),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          WoltSelectionListTileTrailing(
-                            groupType: WoltSelectionListType.multiSelect,
-                            isSelected: _isSelected,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(widget.recommendation.label,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 1),
+                                    Text(widget.recommendation.price,
+                                        style: Theme.of(context).textTheme.bodyMedium),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              WoltSelectionListTileTrailing(
+                                groupType: WoltSelectionListType.multiSelect,
+                                isSelected: _isSelected,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 80),
-              child: CoffeeMakerCustomDivider(),
-            ),
-          ],
-        ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 80),
+            child: CoffeeMakerCustomDivider(),
+          ),
+        ],
       ),
     );
   }

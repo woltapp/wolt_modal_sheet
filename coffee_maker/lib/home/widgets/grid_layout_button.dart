@@ -28,20 +28,7 @@ class GridLayoutButton extends StatelessWidget {
           onPressed: () {
             _isGridOverlayVisible.value = !_isGridOverlayVisible.value;
           },
-          child: Row(
-            children: <Widget>[
-              SizedBox.square(
-                  dimension: 12,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      shape: const CircleBorder(),
-                      color: isVisible ? DemoAppColors.green : DemoAppColors.red,
-                    ),
-                  )),
-              const SizedBox(width: 8),
-              Text(isVisible ? 'Visible' : 'Hidden'),
-            ],
-          ),
+          child: Icon(_isGridOverlayVisible.value ? Icons.grid_off : Icons.grid_on, size: 16),
         );
       },
     );
