@@ -37,6 +37,7 @@ class WoltModalSheetTopBar extends StatelessWidget {
 
   // TODO: get this information from ThemeData extensions
   static const _elevation = 1.0;
+  static const _elevationColor = Color(0xFFE4E4E4);
   static const _topBarTitleTranslationYAmount = 8.0;
 
   @override
@@ -52,9 +53,14 @@ class WoltModalSheetTopBar extends StatelessWidget {
         buildContext: context,
       ),
       children: [
-        Material(
-          elevation: _elevation,
-          child: Container(height: topBarHeight - _elevation, color: page.backgroundColor),
+        Column(
+          children: [
+            Container(height: topBarHeight - _elevation, color: page.backgroundColor),
+            const ColoredBox(
+              color: _elevationColor,
+              child: SizedBox(height: _elevation, width: double.infinity),
+            ),
+          ],
         ),
         Center(child: Column(
           mainAxisSize: MainAxisSize.min,

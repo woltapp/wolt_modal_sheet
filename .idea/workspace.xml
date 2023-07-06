@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="" />
+    <list default="true" id="3ba53e3e-23f8-4f84-912d-b521781af7e3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/lib/src/content/components/main_content/wolt_modal_sheet_top_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/content/components/main_content/wolt_modal_sheet_top_bar.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,7 +62,11 @@
       <recent name="$PROJECT_DIR$/demo_ui_components/lib/src/text" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.playground_nav2">
+  <component name="RunManager" selected="Flutter.playground">
+    <configuration name="coffee_maker" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/coffee_maker/lib/main.dart" />
+      <method v="2" />
+    </configuration>
     <configuration name="example" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
       <method v="2" />
@@ -73,10 +79,18 @@
       <option name="filePath" value="$PROJECT_DIR$/playground_navigator2/lib/main.dart" />
       <method v="2" />
     </configuration>
+    <configuration name="tests in /" type="FlutterTestConfigType" factoryName="Flutter Test" nameIsGenerated="true">
+      <option name="testFile" value="" />
+      <option name="useRegexp" value="false" />
+      <option name="additionalArgs" value="" />
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Flutter.coffee_maker" />
       <item itemvalue="Flutter.playground" />
       <item itemvalue="Flutter.playground_nav2" />
       <item itemvalue="Flutter.example" />
+      <item itemvalue="Flutter Test.tests in /" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -89,6 +103,16 @@
       <updated>1686810778491</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
