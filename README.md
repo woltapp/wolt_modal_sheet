@@ -6,60 +6,40 @@ WoltModalSheet is designed to revolutionize the use of Flutter modal sheets. Bui
 
 Traverse through numerous pages within a single sheet.
 
-<p align="center">
-  <img src="./doc/ss_multi.gif" width="215" height="384">
-  <br>
-  <i>Experience multi-page navigation in WoltModalSheet</i>
-</p>
+![Experience multi-page navigation in WoltModalSheet](./doc/ss_multi.gif)
 
 ### Scrollable Content
 
 Greater flexibility with scrollable content per page, accommodating large content effortlessly.
 
-<p align="center">
-  <img src="./doc/ss_scrolling.gif" width="417" height="337">
-  <br>
-  <i>Scroll with ease in WoltModalSheet</i>
-</p>
+![Scroll with ease in WoltModalSheet](./doc/ss_scrolling.gif)
 
 ### Responsive Design
 
 The modal sheet adjusts to fit all screen sizes, appearing as a dialog on larger screens and as a bottom sheet on smaller screens, guided by user-specified conditions.
 
-<p align="center">
-  <img src="./doc/ss_responsive.gif" width="438" height="230">
-  <br>
-  <i>Adaptability to different screen sizes in WoltModalSheet</i>
-</p>
+![Adaptability to different screen sizes in WoltModalSheet](ss_responsive.gif)
 
 ### Motion Animation
 
 Engage users with dynamic motion animation for page transitions and scrolling.
 
-|                             Pagination                              |                            Scrolling                            |
-|:-------------------------------------------------------------------:|:---------------------------------------------------------------:|
-| <img src="./doc/ss_motion_pagination.gif" width="324" height="614"> | <img src="./doc/ss_scroll_motion.gif" width="324" height="614"> |
-</br>
+Pagination | Scrolling
+--- | ---
+![Pagination](./doc/ss_motion_pagination.gif) | ![Scrolling](./doc/ss_scroll_motion.gif)
+
 
 ### Imperative and Declarative Navigation
 
 The library showcases examples of both imperative and declarative navigation patterns to display modal sheet on screen.
 
-<p align="center">
-  <img src="./doc/ss_navigator_2.gif" width="534" height="620">
-  <br>
-  <i>Illustration of imperative and declarative navigation in WoltModalSheet</i>
-</p>
+![Illustration of imperative and declarative navigation in WoltModalSheet](./doc/ss_navigator_2.gif)
 
 ### Dynamic Pagination
 
 User input can dynamically shape the modal sheet's page list.
 
-<p align="center">
-  <img src="./doc/ss_dynamic_pagination.gif" width="695" height="507">
-  <br>
-  <i>Dynamic pagination in action in WoltModalSheet</i>
-</p>
+![Dynamic pagination in action in WoltModalSheet](./doc/ss_dynamic_pagination.gif)
 
 ### State Management Integration
 
@@ -214,12 +194,9 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 }
 ```
 The code snippet above produces the following:
-<p align="center">
-  <img src="./doc/ss_onboarding.gif" width="232" height="470">
-</p>
 </br>
 </br>
-</br>
+![Dynamic pagination in action in WoltModalSheet](./doc/ss_onboarding.gif)
 
 ### Playground app with imperative navigation
 
@@ -259,11 +236,8 @@ The code snippet demonstrates how to decorate the modal sheet with a change noti
   );
 }
 ```
-
-<p align="center">
-  <img src="./doc/ss_coffee_maker.gif" width="731" height="495">
-</p>
+![Dynamic pagination in action in WoltModalSheet](./doc/ss_coffee_maker.gif)
 
 ## Additional information
-In [this blog post](https://app.contentful.com/spaces/et5i6t44yqqw/environments/master/entries/38hsB07cZj1xUsYSEAFkeI), we explore the foundational design decisions that guide the WoltModalSheet's functionality.
+In [this blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design), we explore the foundational design decisions that guide the WoltModalSheet's functionality.
 
