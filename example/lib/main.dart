@@ -12,6 +12,86 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pageIndexNotifier = ValueNotifier(0);
+
+    WoltModalSheetPage page1(BuildContext modalSheetContext) {
+      return WoltModalSheetPage.withSingleChild(
+        stickyActionBar: StickyActionBarWrapper(
+          child: Column(
+            children: [
+              WoltElevatedButton(
+                onPressed: () => Navigator.of(modalSheetContext).pop(),
+                theme: WoltElevatedButtonTheme.secondary,
+                child: const Text('Cancel'),
+              ),
+              const SizedBox(height: 8),
+              WoltElevatedButton(
+                onPressed: () {
+                  pageIndexNotifier.value = pageIndexNotifier.value + 1;
+                },
+                child: const Text('Next page'),
+              ),
+            ],
+          ),
+        ),
+        pageTitle: const ModalSheetTitle('Pagination'),
+        topBarTitle: const ModalSheetTopBarTitle('Pagination'),
+        closeButton: WoltModalSheetCloseButton(onClosed: Navigator.of(modalSheetContext).pop),
+        mainContentPadding: const EdgeInsetsDirectional.all(16),
+        child: const Padding(
+            padding: EdgeInsets.only(bottom: 120, top: 16),
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Text(
+                '''
+Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
+''',
+              ),
+            )),
+      );
+    }
+
+    WoltModalSheetPage page2(BuildContext modalSheetContext) {
+      return WoltModalSheetPage.withCustomSliverList(
+        mainContentPadding: EdgeInsetsDirectional.zero,
+        stickyActionBar: StickyActionBarWrapper(
+          padding: EdgeInsets.zero,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: WoltElevatedButton(
+              onPressed: () {
+                Navigator.of(modalSheetContext).pop();
+                pageIndexNotifier.value = 0;
+              },
+              child: const Text('Close'),
+            ),
+          ),
+        ),
+        pageTitle: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ModalSheetTitle('Material Colors'),
+        ),
+        heroImageHeight: 200,
+        heroImage: const Image(
+          image: AssetImage('lib/assets/images/material_colors_hero.png'),
+          fit: BoxFit.cover,
+        ),
+        topBarTitle: const ModalSheetTopBarTitle('Material Colors'),
+        backButton: WoltModalSheetBackButton(onBackPressed: () {
+          pageIndexNotifier.value = pageIndexNotifier.value - 1;
+        }),
+        closeButton: WoltModalSheetCloseButton(onClosed: () {
+          Navigator.of(modalSheetContext).pop();
+          pageIndexNotifier.value = 0;
+        }),
+        sliverList: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, index) => ColorTile(color: allMaterialColors[index]),
+            childCount: allMaterialColors.length,
+          ),
+        ),
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: Builder(
@@ -24,82 +104,10 @@ class MainApp extends StatelessWidget {
                     WoltModalSheet.show<void>(
                       pageIndexNotifier: pageIndexNotifier,
                       context: context,
-                      pageListBuilderNotifier: (context) {
+                      pageListBuilderNotifier: (modalSheetContext) {
                         return [
-                          WoltModalSheetPage.withSingleChild(
-                            stickyActionBar: StickyActionBarWrapper(
-                              child: Column(
-                                children: [
-                                  WoltElevatedButton(
-                                    onPressed: () => Navigator.of(context).pop(),
-                                    theme: WoltElevatedButtonTheme.secondary,
-                                    child: const Text('Cancel'),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  WoltElevatedButton(
-                                    onPressed: () {
-                                      pageIndexNotifier.value = pageIndexNotifier.value + 1;
-                                    },
-                                    child: const Text('Next page'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            pageTitle: const ModalSheetTitle('Pagination'),
-                            topBarTitle: const ModalSheetTopBarTitle('Pagination'),
-                            closeButton:
-                                WoltModalSheetCloseButton(onClosed: Navigator.of(context).pop),
-                            mainContentPadding: const EdgeInsetsDirectional.all(16),
-                            child: const Padding(
-                                padding: EdgeInsets.only(bottom: 120, top: 16),
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 16),
-                                  child: Text(
-                                    '''
-Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
-''',
-                                  ),
-                                )),
-                          ),
-                          WoltModalSheetPage.withCustomSliverList(
-                            mainContentPadding: EdgeInsetsDirectional.zero,
-                            stickyActionBar: StickyActionBarWrapper(
-                              padding: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                child: WoltElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    pageIndexNotifier.value = 0;
-                                  },
-                                  child: const Text('Close'),
-                                ),
-                              ),
-                            ),
-                            pageTitle: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: ModalSheetTitle('Material Colors'),
-                            ),
-                            heroImageHeight: 200,
-                            heroImage: const Image(
-                              image: AssetImage('lib/assets/images/material_colors_hero.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            topBarTitle: const ModalSheetTopBarTitle('Material Colors'),
-                            backButton: WoltModalSheetBackButton(onBackPressed: () {
-                              pageIndexNotifier.value = pageIndexNotifier.value - 1;
-                            }),
-                            closeButton: WoltModalSheetCloseButton(onClosed: () {
-                              Navigator.of(context).pop();
-                              pageIndexNotifier.value = 0;
-                            }),
-                            sliverList: SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (_, index) => ColorTile(color: allMaterialColors[index]),
-                                childCount: allMaterialColors.length,
-                              ),
-                            ),
-                          )
+                          page1(modalSheetContext),
+                          page2(modalSheetContext),
                         ];
                       },
                       modalTypeBuilder: (context) {
