@@ -1,3 +1,9 @@
+[![pub package](https://img.shields.io/pub/v/wolt_modal_sheet.svg)](https://pub.dev/packages/wolt_modal_sheet)
+[![package publisher](https://img.shields.io/pub/publisher/wolt_modal_sheet.svg)](https://pub.dev/packages/wolt_modal_sheet/publisher)
+
+
+# WoltModalSheet
+
 WoltModalSheet is designed to revolutionize the use of Flutter modal sheets. Built with Wolt-grade design quality and used extensively in [Wolt](https://wolt.com/) products, this UI component offers a visually appealing and user-friendly modal sheet with multiple pages, motion animation for page transitions, and scrollable content within each page.
 
 ## Features
@@ -56,7 +62,7 @@ This package has 4 example projects.
 
 ### Example app
 
-The `example` app demonstrates how to display a two-page modal sheet.
+The [example](./example/) app demonstrates how to display a two-page modal sheet.
 
 ```dart
 
@@ -200,7 +206,7 @@ The code snippet above produces the following:
 
 ### Playground app with imperative navigation
 
-The `playground` app demonstrates how to imperatively show the modal sheet. The purpose of this module is to play and experiment with various use cases. These use cases include:
+The [playground](./playground/) app demonstrates how to imperatively show the modal sheet. The purpose of this module is to play and experiment with various use cases. These use cases include:
 It demonstrates
 - A page with forced max height independent of its content.
 - A page with a hero image
@@ -208,9 +214,9 @@ It demonstrates
 - A page with a text field.
 
 ### Playground app with declarative navigation
-The `playground_navigator2` has the same content with the `playground` app but the modal sheet is shown using Navigator 2.0 (Router API) in a declarative way.
+The [playground_navigator2](./playground_navigator2/) has the same content with the [playground](./playground/) app but the modal sheet is shown using Navigator 2.0 (Router API) in a declarative way.
 ### Coffee maker app for state management example
-Finally, the `coffee_maker` app demonstrates how to manage the state among the page components with an opinionated use of the Provider state management library.
+Finally, the [coffee_maker](./coffee_maker/) app demonstrates how to manage the state among the page components with an opinionated use of the Provider state management library.
 
 The code snippet demonstrates how to decorate the modal sheet with a change notifier provider so that the page components can be rebuilt according to the current state:
 ```dart
