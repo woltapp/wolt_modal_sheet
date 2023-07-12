@@ -82,7 +82,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   context: context,
                   pageListBuilderNotifier: pageListBuilderNotifier,
                   modalTypeBuilder: _modalTypeBuilder,
-                  onModalDismissedWithBarrierTap: () => pageIndexNotifier.value = 0,
+                  onModalDismissedWithDrag: () {
+                    debugPrint('Bottom sheet is dismissed with drag.');
+                    Navigator.of(context).pop();
+                    pageIndexNotifier.value = 0;
+                  },
+                  onModalDismissedWithBarrierTap: () {
+                    debugPrint('Modal is dismissed with barrier tap.');
+                    Navigator.of(context).pop();
+                    pageIndexNotifier.value = 0;
+                  },
                   maxDialogWidth: 560,
                   minDialogWidth: 400,
                   minPageHeight: 0.4,
