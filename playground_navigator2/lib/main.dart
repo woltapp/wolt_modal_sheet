@@ -10,7 +10,6 @@ import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 import 'package:playground_navigator2/router/playground_route_information_parser.dart';
 import 'package:playground_navigator2/router/playground_router_delegate.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
-import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 void main() => runApp(const DemoApp());
 
@@ -26,15 +25,6 @@ class _DemoAppState extends State<DemoApp> {
   final ValueNotifier<int> pageIndexNotifier = ValueNotifier<int>(0);
   final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier =
       ValueNotifier(MultiPagePathName.defaultPath.pageListBuilder);
-
-  WoltModalType modalTypeBuilder(BuildContext context) {
-    switch (context.screenSize) {
-      case WoltScreenSize.small:
-        return WoltModalType.bottomSheet;
-      case WoltScreenSize.large:
-        return WoltModalType.dialog;
-    }
-  }
 
   @override
   void initState() {

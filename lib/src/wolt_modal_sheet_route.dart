@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+double _defaultModalTypeBreakPoint = 768.0;
+
+WoltModalTypeBuilder _defaultModalTypeBuilder = (context) {
+  return MediaQuery.of(context).size.width < _defaultModalTypeBreakPoint
+      ? WoltModalType.bottomSheet
+      : WoltModalType.dialog;
+};
+
 class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
     required this.pageListBuilderNotifier,
-    required this.modalTypeBuilder,
     this.pageIndexNotifier,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
+    WoltModalTypeBuilder? modalTypeBuilder,
     bool? enableDragForBottomSheet,
     bool? useSafeArea,
     bool? barrierDismissible,
@@ -26,6 +34,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
         _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
         _barrierDismissible = barrierDismissible ?? true,
+        _modalTypeBuilder = modalTypeBuilder ?? _defaultModalTypeBuilder,
         _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
         _dialogTransitionAnimation = dialogTransitionAnimation,
         _minDialogWidth = minDialogWidth,
@@ -40,7 +49,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final ValueNotifier<int>? pageIndexNotifier;
 
-  final WoltModalTypeBuilder modalTypeBuilder;
+  final WoltModalTypeBuilder _modalTypeBuilder;
 
   late final Duration _transitionDuration;
 
@@ -101,7 +110,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       decorator: decorator,
       pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
       pageListBuilderNotifier: pageListBuilderNotifier,
-      modalTypeBuilder: modalTypeBuilder,
+      modalTypeBuilder: _modalTypeBuilder,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       animationController: animationController,
@@ -121,7 +130,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final modalType = modalTypeBuilder(context);
+    final modalType = _modalTypeBuilder(context);
     const easeCurve = Curves.ease;
     switch (modalType) {
       case WoltModalType.bottomSheet:

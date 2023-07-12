@@ -8,12 +8,10 @@ class SheetPage extends Page<void> {
   const SheetPage({
     required this.pageIndexNotifier,
     required this.pageListBuilderNotifier,
-    required this.modalTypeBuilder,
   }) : super(key: const ValueKey('SheetPage'));
 
   final ValueNotifier<int> pageIndexNotifier;
   final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
-  final WoltModalType Function(BuildContext context) modalTypeBuilder;
 
   static const String routeName = 'Modal Sheet';
 
@@ -21,7 +19,6 @@ class SheetPage extends Page<void> {
   Route<void> createRoute(BuildContext context) {
     return WoltModalSheetRoute<void>(
       pageIndexNotifier: pageIndexNotifier,
-      modalTypeBuilder: modalTypeBuilder,
       pageListBuilderNotifier: pageListBuilderNotifier,
       onModalDismissedWithDrag: () {
         context.read<RouterCubit>().closeSheet();
