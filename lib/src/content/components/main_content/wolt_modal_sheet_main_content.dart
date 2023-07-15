@@ -128,7 +128,9 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     );
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {
-        if (scrollNotification is ScrollUpdateNotification) {
+        final isVerticalScrollNotification = scrollNotification is ScrollUpdateNotification &&
+            scrollNotification.metrics.axis == Axis.vertical;
+        if (isVerticalScrollNotification) {
           widget.currentScrollPosition.value = scrollNotification.metrics.pixels;
         }
         return false;

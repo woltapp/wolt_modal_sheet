@@ -39,9 +39,31 @@ class SheetPageWithLazyList {
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => ColorTile(color: colors[index]),
-          childCount: colors.length,
+          (_, index) {
+            if (index == 0) {
+              return const _HorizontalPrimaryColorList();
+            }
+            return ColorTile(color: colors[index]);
+          },
+          childCount: colors.length + 1,
         ),
+      ),
+    );
+  }
+}
+
+class _HorizontalPrimaryColorList extends StatelessWidget {
+  const _HorizontalPrimaryColorList();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          for (Color color in Colors.primaries) Container(color: color, height: 100, width: 33),
+        ],
       ),
     );
   }
