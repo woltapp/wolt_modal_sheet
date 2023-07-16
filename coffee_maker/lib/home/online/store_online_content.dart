@@ -87,7 +87,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
-      pageListBuilderNotifier: GrindModalPageBuilder.build(
+      pageListBuilder: GrindModalPageBuilder.build(
         coffeeOrderId: coffeeOrderId,
         goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
         goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
@@ -117,7 +117,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           builder: (_, __) => child,
         );
       },
-      pageListBuilderNotifier: AddWaterModalPageBuilder.build(
+      pageListBuilder: AddWaterModalPageBuilder.build(
         coffeeOrderId: coffeeOrderId,
         goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
         goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
@@ -133,7 +133,7 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     WoltModalSheet.show(
       pageIndexNotifier: pageIndexNotifier,
       context: context,
-      pageListBuilderNotifier: ReadyModalPageBuilder.build(
+      pageListBuilder: ReadyModalPageBuilder.build(
         coffeeOrderId: coffeeOrderId,
         goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
         goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,

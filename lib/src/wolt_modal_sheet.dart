@@ -57,7 +57,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   static Future<T?> show<T>({
     required BuildContext context,
-    required WoltModalSheetPageListBuilder pageListBuilderNotifier,
+    required WoltModalSheetPageListBuilder pageListBuilder,
     required WoltModalTypeBuilder modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
@@ -78,7 +78,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   }) {
     return WoltModalSheet.showWithDynamicPath(
       context: context,
-      pageListBuilderNotifier: ValueNotifier(pageListBuilderNotifier),
+      pageListBuilderNotifier: ValueNotifier(pageListBuilder),
       modalTypeBuilder: modalTypeBuilder,
       pageIndexNotifier: pageIndexNotifier,
       decorator: decorator,
