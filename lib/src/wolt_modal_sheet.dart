@@ -42,7 +42,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   final VoidCallback? onModalDismissedWithBarrierTap;
   final VoidCallback? onModalDismissedWithDrag;
   final Widget Function(Widget)? decorator;
-  final WoltModalType Function(BuildContext context) modalTypeBuilder;
+  final WoltModalTypeBuilder modalTypeBuilder;
   final AnimationController? animationController;
   final WoltModalSheetRoute<T> route;
   final bool enableDragForBottomSheet;
@@ -60,7 +60,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   static Future<T?> show<T>({
     required BuildContext context,
     required WoltModalSheetPageListBuilder pageListBuilder,
-    required WoltModalTypeBuilder modalTypeBuilder,
+    WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
@@ -105,7 +105,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   static Future<T?> showWithDynamicPath<T>({
     required BuildContext context,
     required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
-    required WoltModalTypeBuilder modalTypeBuilder,
+    WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
     bool useRootNavigator = false,
@@ -152,7 +152,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 }
 
 class _WoltModalSheetState extends State<WoltModalSheet> {
-  late WoltModalType modalType;
+  late WoltModalType _modalType;
 
   ParametricCurve<double> animationCurve = decelerateEasing;
 
@@ -191,7 +191,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    modalType = widget.modalTypeBuilder(context);
+    _modalType = widget.modalTypeBuilder(context);
   }
 
   @override
@@ -209,12 +209,12 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
             builder: (_, int pageIndex, __) {
               final page = pages[pageIndex];
               final enableDrag =
-                  modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
+                  _modalType == WoltModalType.bottomSheet && widget.enableDragForBottomSheet;
               final multiChildLayout = CustomMultiChildLayout(
                 delegate: WoltModalMultiChildLayoutDelegate(
                   contentLayoutId: contentLayoutId,
                   barrierLayoutId: barrierLayoutId,
-                  modalType: modalType,
+                  modalType: _modalType,
                   minPageHeight: widget.minPageHeight ?? 0,
                   maxPageHeight: widget.maxPageHeight ?? 0.9,
                   minDialogWidth: widget.minDialogWidth ?? 0,
@@ -240,7 +240,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                         child: Material(
                           color: page.backgroundColor,
                           shape: RoundedRectangleBorder(
-                            borderRadius: modalType.borderRadiusGeometry(
+                            borderRadius: _modalType.borderRadiusGeometry(
                               /// TODO: Make this configurable through theme extension
                               _containerRadiusAmount,
                             ),
@@ -249,7 +249,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                           child: LayoutBuilder(
                             builder: (_, constraints) {
                               return WoltModalSheetAnimatedSwitcher(
-                                woltModalType: modalType,
+                                woltModalType: _modalType,
                                 pageIndex: pageIndex,
                                 pages: pages,
                                 sheetWidth: constraints.maxWidth,
@@ -268,7 +268,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                     ? Stack(
                         children: [
                           SafeArea(child: multiChildLayout),
-                          if (modalType == WoltModalType.bottomSheet)
+                          if (_modalType == WoltModalType.bottomSheet)
                             Positioned(
                               bottom: 0,
                               left: 0,

@@ -31,15 +31,6 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
   final ValueNotifier<int> _pageIndexNotifier;
   final ValueNotifier<WoltModalSheetPageListBuilder> _pageListBuilderNotifier;
 
-  WoltModalType modalTypeBuilder(BuildContext context) {
-    switch (context.screenSize) {
-      case WoltScreenSize.small:
-        return WoltModalType.bottomSheet;
-      case WoltScreenSize.large:
-        return WoltModalType.dialog;
-    }
-  }
-
   @override
   GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
 
@@ -55,7 +46,6 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
         SheetPage(
           pageIndexNotifier: _pageIndexNotifier,
           pageListBuilderNotifier: _pageListBuilderNotifier,
-          modalTypeBuilder: modalTypeBuilder,
         ),
       ];
     } else if (state is UnknownScreenVisibleState) {
