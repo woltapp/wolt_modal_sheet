@@ -51,6 +51,33 @@ User input can dynamically shape the modal sheet's page list.
 
 Pages in the Wolt Modal Sheet offer a customizable look and the page components are supplied with the WoltModalSheetPage class instance. The API provides a way to manage the state among the page components to be used with popular libraries such as Bloc and Provider
 
+## Understanding the page elements
+
+Each element within the WoltModalSheet has a role to play, offering
+context, navigational assistance, and explicit action prompts to the user.
+By understanding these elements and their roles, you can fully harness the
+power of WoltModalSheet and create an intuitive and engaging user experience.
+
+![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.webp)
+
+### Top bar, navigation icons, and top bar title
+Top Bar acts as the anchor of the sheet. It houses critical navigation actions, allowing the user to close the sheet or navigate back to previous pages. The Top Bar also features an optional title that provides context to the main goal of the flow. For sheets with longer content necessitating scrolling, the Top Bar remains 'sticky' at the top, ensuring users always have access to these actions.
+
+### Sticky action bar (SAB)
+The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to the bottom of the view, the SAB elevates above the content with a gentle gradient. This position guarantees that the action remains visible, subtly hinting to the user that there is more content to be explored below the fold.
+
+### Hero image
+An optional Hero Image can be positioned at the top of the main content. This element immediately grabs the user's attention, effectively conveying the primary theme or message of the content.
+
+### Main content
+The main content delivers information according to user need. It can be scrollable to handle larger content. The content is built lazily to improve the performance.
+
+Here is an example that shows all the modal sheet elements in use:
+
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.webp)
+
+### Page Title
+An optional page title above the main content provides users with a quick understanding of what to expect from the page. As the user scrolls, this title becomes hidden, at which point the top bar title continues to serve this context-providing purpose.
 
 ## Getting started
 
@@ -165,7 +192,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                     WoltModalSheet.show<void>(
                       pageIndexNotifier: pageIndexNotifier,
                       context: context,
-                      pageListBuilderNotifier: (modalSheetContext) {
+                      pageListBuilder: (modalSheetContext) {
                         return [
                           page1(modalSheetContext),
                           page2(modalSheetContext),
