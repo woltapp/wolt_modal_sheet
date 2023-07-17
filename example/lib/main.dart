@@ -104,7 +104,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                     WoltModalSheet.show<void>(
                       pageIndexNotifier: pageIndexNotifier,
                       context: context,
-                      pageListBuilderNotifier: (modalSheetContext) {
+                      pageListBuilder: (modalSheetContext) {
                         return [
                           page1(modalSheetContext),
                           page2(modalSheetContext),
