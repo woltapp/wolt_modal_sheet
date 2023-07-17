@@ -85,7 +85,7 @@ class _HeroImageFlowDelegate extends FlowDelegate {
   void paintChildren(FlowPaintingContext flowPaintingContext) {
     final currentScrollPosition = scrollPosition.pixels;
 
-    /// Calculate the scale
+    // Calculate scale
     final double scale = WoltLayoutTransformationUtils.calculateTransformationValue(
       startValue: 1.1,
       endValue: 1.0,
@@ -93,17 +93,28 @@ class _HeroImageFlowDelegate extends FlowDelegate {
       progressInRangeInPx: currentScrollPosition,
     );
 
-    /// Calculate the opacity
+    // Calculate opacity
     final double opacity = WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: heroImageHeight / 2,
-      progressInRangeInPx: currentScrollPosition - ((heroImageHeight - topBarHeight) / 2),
+      progressInRangeInPx: currentScrollPosition - ((heroImageHeight / 2) - topBarHeight),
       startValue: 1.0,
       endValue: 0.0,
     );
 
+    // Calculate the translation to center the image
+    final double translationX = (flowPaintingContext.size.width -
+            (flowPaintingContext.getChildSize(0)?.width ?? 0) * scale) /
+        2;
+    final double translationY = (flowPaintingContext.size.height -
+            (flowPaintingContext.getChildSize(0)?.height ?? 0) * scale) /
+        2;
+    // Create the transformation matrix
+    final Matrix4 transformMatrix = Matrix4.identity()
+      ..scale(scale, scale)
+      ..translate(translationX, translationY);
     flowPaintingContext.paintChild(
       0,
-      transform: Matrix4.diagonal3Values(scale, scale, 1.0),
+      transform: transformMatrix,
       opacity: opacity,
     );
   }
