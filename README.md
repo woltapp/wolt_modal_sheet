@@ -69,15 +69,15 @@ The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to t
 ### Hero image
 An optional Hero Image can be positioned at the top of the main content. This element immediately grabs the user's attention, effectively conveying the primary theme or message of the content.
 
+### Page Title
+An optional page title above the main content provides users with a quick understanding of what to expect from the page. As the user scrolls, this title becomes hidden, at which point the top bar title continues to serve this context-providing purpose.
+
 ### Main content
 The main content delivers information according to user need. It can be scrollable to handle larger content. The content is built lazily to improve the performance.
 
 Here is an example that shows all the modal sheet elements in use:
 
 ![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.webp)
-
-### Page Title
-An optional page title above the main content provides users with a quick understanding of what to expect from the page. As the user scrolls, this title becomes hidden, at which point the top bar title continues to serve this context-providing purpose.
 
 ## Getting started
 
