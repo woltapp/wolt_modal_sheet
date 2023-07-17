@@ -66,9 +66,6 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
       pages: pages,
       onPopPage: (route, result) {
         if (!route.didPop(result)) return false;
-        if (route.settings.name == SheetPage.routeName) {
-          _cubit.closeSheet();
-        }
         return true;
       },
     );

@@ -23,6 +23,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.pageListBuilderNotifier,
     required this.pageIndexNotifier,
     required this.onModalDismissedWithBarrierTap,
+    required this.onModalDismissedWithDrag,
     required this.decorator,
     required this.modalTypeBuilder,
     required this.animationController,
@@ -39,6 +40,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
   final ValueNotifier<int> pageIndexNotifier;
   final VoidCallback? onModalDismissedWithBarrierTap;
+  final VoidCallback? onModalDismissedWithDrag;
   final Widget Function(Widget)? decorator;
   final WoltModalType Function(BuildContext context) modalTypeBuilder;
   final AnimationController? animationController;
@@ -68,6 +70,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     RouteSettings? routeSettings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
+    VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
     AnimatedWidget? bottomSheetTransitionAnimation,
     AnimatedWidget? dialogTransitionAnimation,
@@ -112,6 +115,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     RouteSettings? routeSettings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
+    VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
     AnimatedWidget? bottomSheetTransitionAnimation,
     AnimatedWidget? dialogTransitionAnimation,
@@ -133,6 +137,7 @@ class WoltModalSheet<T> extends StatefulWidget {
         barrierDismissible: barrierDismissible,
         enableDragForBottomSheet: enableDragForBottomSheet,
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
+        onModalDismissedWithDrag: onModalDismissedWithDrag,
         transitionAnimationController: transitionAnimationController,
         useSafeArea: useSafeArea,
         bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
@@ -220,10 +225,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                     id: barrierLayoutId,
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        widget.onModalDismissedWithBarrierTap?.call();
-                        Navigator.of(context).pop();
-                      },
+                      onTap: widget.onModalDismissedWithBarrierTap ?? Navigator.of(context).pop,
                       child: const SizedBox.expand(),
                     ),
                   ),
@@ -331,7 +333,12 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
     );
 
     if (isClosing && widget.route.isCurrent) {
-      Navigator.pop(context);
+      final onModalDismissedWithDrag = widget.onModalDismissedWithDrag;
+      if (onModalDismissedWithDrag != null) {
+        onModalDismissedWithDrag();
+      } else {
+        Navigator.pop(context);
+      }
     }
   }
 }

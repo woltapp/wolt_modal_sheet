@@ -8,6 +8,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.pageIndexNotifier,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
+    this.onModalDismissedWithDrag,
     bool? enableDragForBottomSheet,
     bool? useSafeArea,
     bool? barrierDismissible,
@@ -46,6 +47,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   late final bool _barrierDismissible;
 
   final VoidCallback? onModalDismissedWithBarrierTap;
+
+  final VoidCallback? onModalDismissedWithDrag;
 
   final bool _enableDragForBottomSheet;
 
@@ -100,6 +103,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       pageListBuilderNotifier: pageListBuilderNotifier,
       modalTypeBuilder: modalTypeBuilder,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
+      onModalDismissedWithDrag: onModalDismissedWithDrag,
       animationController: animationController,
       enableDragForBottomSheet: _enableDragForBottomSheet,
       useSafeArea: _useSafeArea,
