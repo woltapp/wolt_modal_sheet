@@ -92,6 +92,7 @@ class WoltModalSheet<T> extends StatefulWidget {
       routeSettings: routeSettings,
       transitionDuration: transitionDuration,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
+      onModalDismissedWithDrag: onModalDismissedWithDrag,
       transitionAnimationController: transitionAnimationController,
       bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
       dialogTransitionAnimation: dialogTransitionAnimation,
