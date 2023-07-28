@@ -34,7 +34,6 @@ class SheetPageWithLazyList {
         image: AssetImage('lib/assets/images/material_colors_hero.png'),
         fit: BoxFit.cover,
       ),
-      topBarTitle: const ModalSheetTopBarTitle(titleText),
       backButton: WoltModalSheetBackButton(onBackPressed: onBackPressed),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       sliverList: SliverList(

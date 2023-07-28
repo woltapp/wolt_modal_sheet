@@ -29,7 +29,6 @@ class RootSheetPage {
         },
       ),
       pageTitle: const ModalSheetTitle(title),
-      topBarTitle: const ModalSheetTopBarTitle(title),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       singleChildContent: Padding(
         padding: const EdgeInsets.only(bottom: 120),

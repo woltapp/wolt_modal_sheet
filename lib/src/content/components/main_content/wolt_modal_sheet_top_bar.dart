@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar_title.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 
@@ -62,14 +63,16 @@ class WoltModalSheetTopBar extends StatelessWidget {
             ),
           ],
         ),
-        Center(child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            page.topBarTitle ?? const SizedBox.shrink(),
-            const SizedBox(height: _topBarTitleTranslationYAmount),
-          ],
-        )),
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              WoltModalSheetTopBarTitle(page: page, pageTitleKey: titleKey),
+              const SizedBox(height: _topBarTitleTranslationYAmount),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -103,12 +106,11 @@ class _TopBarFlowDelegate extends FlowDelegate {
     const topBarTranslationYStart = 0.0;
     final topBarTranslationYEnd = topBarTranslationYAmountInPx;
     final topBarTranslationYAndOpacityStartPoint =
-    heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight;
+        heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight;
 
     const topBarTitleTranslationYStart = 0.0;
     const topBarTitleTranslationYAmount = WoltModalSheetTopBar._topBarTitleTranslationYAmount;
-    const topBarTitleTranslationYEnd =
-        topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
+    const topBarTitleTranslationYEnd = topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
     pageTitleHeight = pageTitleHeight == 0 ? pageTitlePaddingTop : pageTitleHeight;
 
