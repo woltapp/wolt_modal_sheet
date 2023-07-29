@@ -16,7 +16,8 @@ class ServeOrOfferModalPage {
         image: AssetImage('lib/assets/images/coffee_is_ready.png'),
         fit: BoxFit.cover,
       ),
-      stickyActionBar: StickyActionBarWrapper(
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Column(
           children: [
             WoltElevatedButton(

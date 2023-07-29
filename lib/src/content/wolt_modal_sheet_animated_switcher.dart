@@ -7,6 +7,7 @@ import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar_title_flow.dart';
 import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_navigation_toolbar_animated_builder.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_navigation_toolbar.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -270,7 +271,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         ),
       ),
       sabAnimatedBuilder: CurrentSabAnimatedBuilder(
-        stickyActionBar: _page.stickyActionBar ?? const SizedBox.shrink(),
+        stickyActionBarWrapper: WoltStickyActionBarWrapper(page: _page),
         controller: animationController,
       ),
     );
@@ -309,8 +310,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       ),
       sabAnimatedBuilder: OutgoingSabAnimatedBuilder(
         controller: animationController,
-        sab: (currentWidgetsToBeOutgoing.sabAnimatedBuilder as CurrentSabAnimatedBuilder)
-            .stickyActionBar,
+        stickyActionBarWrapper: (currentWidgetsToBeOutgoing.sabAnimatedBuilder as CurrentSabAnimatedBuilder)
+            .stickyActionBarWrapper,
       ),
     );
   }

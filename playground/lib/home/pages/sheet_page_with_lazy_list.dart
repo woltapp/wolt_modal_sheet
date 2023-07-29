@@ -15,14 +15,11 @@ class SheetPageWithLazyList {
     const titleText = 'Material Colors';
     return WoltModalSheetPage.withCustomSliverList(
       mainContentPadding: EdgeInsetsDirectional.zero,
-      stickyActionBar: StickyActionBarWrapper(
-        padding: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: WoltElevatedButton(
-            onPressed: onSabPressed,
-            child: Text(isLastPage ? "Close" : "Next"),
-          ),
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: WoltElevatedButton(
+          onPressed: onSabPressed,
+          child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
       pageTitle: const Padding(

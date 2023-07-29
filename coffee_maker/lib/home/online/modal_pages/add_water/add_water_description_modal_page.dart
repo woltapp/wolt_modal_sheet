@@ -16,7 +16,8 @@ class AddWaterDescriptionModalPage {
         image: AssetImage('lib/assets/images/add_water_description.png'),
         fit: BoxFit.cover,
       ),
-      stickyActionBar: StickyActionBarWrapper(
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Column(
           children: [
             WoltElevatedButton(

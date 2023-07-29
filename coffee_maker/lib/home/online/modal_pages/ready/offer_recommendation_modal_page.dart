@@ -30,7 +30,8 @@ class OfferRecommendationModalPage {
           } else {
             buttonText = 'Serve with $count suggestions';
           }
-          return StickyActionBarWrapper(
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
               onPressed: onCoffeeOrderServed,
               enabled: count > 0,

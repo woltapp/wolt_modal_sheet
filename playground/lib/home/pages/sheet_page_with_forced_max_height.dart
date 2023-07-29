@@ -16,7 +16,7 @@ class SheetPageWithForcedMaxHeight {
       mainContentPadding: const EdgeInsetsDirectional.all(16),
       forceMaxHeight: true,
       stickyActionBar: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
           onPressed: onSabPressed,
           colorName: WoltColorName.green,

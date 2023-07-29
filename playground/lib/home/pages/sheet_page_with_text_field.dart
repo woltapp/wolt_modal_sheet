@@ -22,7 +22,7 @@ class SheetPageWithTextField {
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
               onPressed: onSabPressed,
               enabled: isEnabled,

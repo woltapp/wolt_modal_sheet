@@ -16,7 +16,7 @@ class RootSheetPage {
         valueListenable: isButtonEnabledNotifier,
         builder: (_, value, __) {
           return Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
               onPressed: () => context.read<RouterCubit>().goToPage(1),
               enabled: value,

@@ -17,14 +17,11 @@ class SheetPageWithLazyList {
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withCustomSliverList(
       mainContentPadding: EdgeInsetsDirectional.zero,
-      stickyActionBar: StickyActionBarWrapper(
-        padding: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: WoltElevatedButton(
-            onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
-            child: Text(isLastPage ? "Close" : "Next"),
-          ),
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: WoltElevatedButton(
+          onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
+          child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
       heroImageHeight: 200,
