@@ -28,7 +28,6 @@ class WaterSettingsModalPage {
           );
         },
       ),
-      topBarTitle: const ModalSheetTopBarTitle(pageTitle),
       pageTitle: const ModalSheetTitle(pageTitle),
       closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
       backButton: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),

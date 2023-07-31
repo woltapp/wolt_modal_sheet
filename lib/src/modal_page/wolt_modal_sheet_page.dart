@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 /// A description for a page to be built within [WoltScrollableModalSheet].
 class WoltModalSheetPage {
-  /// Represents the widget that stands for the page title.
+  /// Represents the widget that stands for the page title. In many cases the text content for the
+  /// [topBarTitle] is the same as the text content in [pageTitle]. Hence, the text data of this
+  /// widget will be used as the source for the text data of [topBarTitle], when not provided.
+  ///
+  /// A deeply nested text in the [pageTitle] widget can cause performance issues during the title
+  /// retrieval process. Hence, it's recommended to keep the title text structure as simple as
+  /// possible or explicitly provide the [topBarTitle] widget.
   final Widget? pageTitle;
 
   /// distance between image and page title or top bar and main title (in case of no image)
@@ -16,6 +22,14 @@ class WoltModalSheetPage {
   final Widget? singleChildContent;
 
   /// A [Widget] representing the title displayed in the top bar.
+  ///
+  /// When not provided, the data of the first "Text" direct child of the [pageTitle] widget will
+  /// be used as the data for topBarTitle Text widget. If you want to avoid using the pageTitle's
+  /// text data, you should explicitly provide topBarTitle widget or set it as SizedBox.shrink().
+  ///
+  /// A deeply nested text in the [pageTitle] widget can cause performance issues during the title
+  /// retrieval process. Hence, it's recommended to keep the title text structure as simple as
+  /// possible or explicitly provide the [topBarTitle] widget.
   final Widget? topBarTitle;
 
   /// A [Widget] representing the hero image displayed on top of the main content.
