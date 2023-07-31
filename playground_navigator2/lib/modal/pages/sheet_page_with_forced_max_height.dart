@@ -26,8 +26,8 @@ class SheetPageWithForcedMaxHeight {
         ),
       ),
       pageTitle: const ModalSheetTitle('Page with forced max height and background color'),
-      backButton: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      closeButton: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: const Text('''
 This page height is forced to be the max height according to the provided max height ratio regardless of the intrinsic height of the child widget. 
 '''),

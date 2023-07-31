@@ -1,10 +1,13 @@
 [![pub package](https://img.shields.io/pub/v/wolt_modal_sheet.svg)](https://pub.dev/packages/wolt_modal_sheet)
 [![package publisher](https://img.shields.io/pub/publisher/wolt_modal_sheet.svg)](https://pub.dev/packages/wolt_modal_sheet/publisher)
 
-
 # WoltModalSheet
 
-WoltModalSheet is designed to revolutionize the use of Flutter modal sheets. Built with Wolt-grade design quality and used extensively in [Wolt](https://wolt.com/) products, this UI component offers a visually appealing and user-friendly modal sheet with multiple pages, motion animation for page transitions, and scrollable content within each page.
+WoltModalSheet is designed to revolutionize the use of Flutter modal sheets.
+Built with Wolt-grade design quality and used extensively
+in [Wolt](https://wolt.com/) products, this UI component offers a visually
+appealing and user-friendly modal sheet with multiple pages, motion animation
+for page transitions, and scrollable content within each page.
 
 ## Features
 
@@ -16,13 +19,16 @@ Traverse through numerous pages within a single sheet.
 
 ### Scrollable Content
 
-Greater flexibility with scrollable content per page, accommodating large content effortlessly.
+Greater flexibility with scrollable content per page, accommodating large
+content effortlessly.
 
 ![Scroll with ease in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_scrolling.gif?raw=true)
 
 ### Responsive Design
 
-The modal sheet adjusts to fit all screen sizes, appearing as a dialog on larger screens and as a bottom sheet on smaller screens, guided by user-specified conditions.
+The modal sheet adjusts to fit all screen sizes, appearing as a dialog on larger
+screens and as a bottom sheet on smaller screens, guided by user-specified
+conditions.
 
 ![Adaptability to different screen sizes in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_responsive.gif?raw=true)
 
@@ -34,10 +40,10 @@ Engage users with dynamic motion animation for page transitions and scrolling.
 | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | ![Pagination](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_motion_pagination.gif?raw=true) | ![Scrolling](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_scroll_motion.gif?raw=true) |
 
-
 ### Imperative and Declarative Navigation
 
-The library showcases examples of both imperative and declarative navigation patterns to display modal sheet on screen.
+The library showcases examples of both imperative and declarative navigation
+patterns to display modal sheet on screen.
 
 ![Illustration of imperative and declarative navigation in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_navigator_2.gif?raw=true)
 
@@ -49,39 +55,101 @@ User input can dynamically shape the modal sheet's page list.
 
 ### State Management Integration
 
-Pages in the Wolt Modal Sheet offer a customizable look and the page components are supplied with the WoltModalSheetPage class instance. The API provides a way to manage the state among the page components to be used with popular libraries such as Bloc and Provider
+Pages in the Wolt Modal Sheet offer a customizable look and the page components
+are provided with an instance of WoltModalSheetPage class. The API provides a
+way
+to manage the state among the page components to be used with popular libraries
+such as Bloc and Provider
 
 ## Understanding the page elements
 
-Each element within the WoltModalSheet has a role to play, offering
-context, navigational assistance, and explicit action prompts to the user.
-By understanding these elements and their roles, you can fully harness the
-power of WoltModalSheet and create an intuitive and engaging user experience.
+Each element within the WoltModalSheet has a role to play, offering context,
+navigational assistance, and explicit action prompts to the user. By
+understanding these elements and their roles, you can fully harness the power of
+WoltModalSheet and create an intuitive and engaging user experience.
 
-![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.webp)
+The structure is organized across layers on the z-axis:
 
-### Top bar, navigation icons, and top bar title
-Top Bar acts as the anchor of the sheet. It houses critical navigation actions, allowing the user to close the sheet or navigate back to previous pages. The Top Bar also features an optional title that provides context to the main goal of the flow. For sheets with longer content necessitating scrolling, the Top Bar remains 'sticky' at the top, ensuring users always have access to these actions.
+<li><b>Main Content Layer</b>: The fundamental content of the page, 
+including the 
+page title, hero image, and the main content, which may be scrollable.</li>
+<li><b>Sticky Action Bar Layer</b>: Positioned above the main content layer, 
+this layer guides the user towards the next step.</li>
+<li><b>Top Bar Layer</b>: Above the main content layer, this layer includes the top 
+bar title and may become hidden or sticky based on scroll position and 
+specific properties.</li>
+<li><b>Navigation Bar Layer</b>: Sits at the top of the z-axis, above the top bar 
+layer, this layer contains navigational widgets for the interface, such as 
+back or close buttons.</li>
+</br>
+By employing these various layers, you can create an interactive and visually
+appealing interface that resonates with users. Each layer contributes to the
+overall coherence of the page, serving a specific purpose and enhancing the
+overall user experience.
+</br>
+</br>
+
+![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.jpeg)
+
+![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.jpeg)
+
+### Navigation bar widgets
+
+The navigation bar has a transparent background, and resides at the top of
+the sheet, situated directly above the top bar on the z-axis. It includes
+two specific widgets: the leading and the trailing. The leading widget
+usually functions as the back button, enabling users to navigate to the
+previous page. The trailing widget often serves as the close button, utilized to
+close the modal sheet. Together, these widgets provide clear and intuitive
+navigational control, differentiating themselves from the top bar by focusing
+specifically on directional navigation within the interface.
+
+### Top bar and top bar title
+
+The Top Bar sits above the main content layer and below the navigation
+bar layer. It aids users in grasping the context by displaying an optional
+title. In scenarios where sheets are filled with content requiring scrolling,
+the top bar becomes visible as the user scrolls, causing the page title
+replaced. At this point, the top bar adopts a 'sticky' position at the top,
+guaranteeing consistent visibility. Its design is flexible, with an option
+to remain hidden or always visible regardless of the scroll position. The
+navigation bar widgets overlay above the top bar, and the top bar title is
+symmetrically framed between the leading and trailing navigation bar widgets.
 
 ### Sticky action bar (SAB)
-The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to the bottom of the view, the SAB elevates above the content with a gentle gradient. This position guarantees that the action remains visible, subtly hinting to the user that there is more content to be explored below the fold.
+
+The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to
+the bottom of the view, the SAB elevates above the content with a gentle
+gradient. This position guarantees that the action remains visible, subtly
+hinting to the user that there is more content to be explored below the fold.
 
 ### Hero image
-An optional Hero Image can be positioned at the top of the main content. This element immediately grabs the user's attention, effectively conveying the primary theme or message of the content.
+
+An optional Hero Image can be positioned at the top of the main content. This
+element immediately grabs the user's attention, effectively conveying the
+primary theme or message of the content.
 
 ### Page Title
-An optional page title above the main content provides users with a quick understanding of what to expect from the page. As the user scrolls, this title becomes hidden, at which point the top bar title continues to serve this context-providing purpose.
+
+An optional page title above the main content provides users with a quick
+understanding of what to expect from the page. As the user scrolls, this title
+becomes hidden, at which point the top bar title continues to serve this
+context-providing purpose.
 
 ### Main content
-The main content delivers information according to user need. It can be scrollable to handle larger content. The content is built lazily to improve the performance.
+
+The main content delivers information according to user need. It can be
+scrollable to handle larger content. The content is built lazily to improve the
+performance.
 
 Here is an example that shows all the modal sheet elements in use:
 
-![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.webp)
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg)
 
 ## Getting started
 
-To use this plugin, add wolt_modal_sheet as a dependency in your pubspec.yaml file.
+To use this plugin, add wolt_modal_sheet as a dependency in your pubspec.yaml
+file.
 
 ## Usage
 
@@ -89,10 +157,10 @@ This package has 4 example projects.
 
 ### Example app
 
-The [example](./example/) app demonstrates how to display a two-page modal sheet.
+The [example](./example/) app demonstrates how to display a two-page modal
+sheet.
 
 ```dart
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -120,19 +188,18 @@ class MainApp extends StatelessWidget {
             ],
           ),
         ),
-        pageTitle: const ModalSheetTitle('Pagination'),
+        isTopBarLayerAlwaysVisible: true,
         topBarTitle: const ModalSheetTopBarTitle('Pagination'),
-        closeButton: WoltModalSheetCloseButton(onClosed: Navigator.of(modalSheetContext).pop),
-        mainContentPadding: const EdgeInsetsDirectional.all(16),
+        trailingNavBarWidget:
+        WoltModalSheetCloseButton(onClosed: Navigator
+            .of(modalSheetContext)
+            .pop),
         child: const Padding(
-            padding: EdgeInsets.only(bottom: 120, top: 16),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 16),
-              child: Text(
-                '''
+            padding: EdgeInsets.only(bottom: 120),
+            child: Text(
+              '''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
 ''',
-              ),
             )),
       );
     }
@@ -162,11 +229,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           image: AssetImage('lib/assets/images/material_colors_hero.png'),
           fit: BoxFit.cover,
         ),
-        topBarTitle: const ModalSheetTopBarTitle('Material Colors'),
-        backButton: WoltModalSheetBackButton(onBackPressed: () {
+        leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () {
           pageIndexNotifier.value = pageIndexNotifier.value - 1;
         }),
-        closeButton: WoltModalSheetCloseButton(onClosed: () {
+        trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: () {
           Navigator.of(modalSheetContext).pop();
           pageIndexNotifier.value = 0;
         }),
@@ -187,7 +253,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
               child: SizedBox(
                 width: 200,
                 child: WoltElevatedButton(
-                  child: const Text('Show Wolt Modal Sheet'),
                   onPressed: () {
                     WoltModalSheet.show<void>(
                       pageIndexNotifier: pageIndexNotifier,
@@ -199,7 +264,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                         ];
                       },
                       modalTypeBuilder: (context) {
-                        final size = MediaQuery.of(context).size.width;
+                        final size = MediaQuery
+                            .of(context)
+                            .size
+                            .width;
                         if (size < 768) {
                           return WoltModalType.bottomSheet;
                         } else {
@@ -208,6 +276,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       },
                       onModalDismissedWithBarrierTap: () {
                         debugPrint('Closed modal sheet with barrier tap');
+                        Navigator.of(context).pop();
                         pageIndexNotifier.value = 0;
                       },
                       maxDialogWidth: 560,
@@ -216,6 +285,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       maxPageHeight: 0.9,
                     );
                   },
+                  child: const Text('Show Wolt Modal Sheet'),
                 ),
               ),
             );
@@ -226,28 +296,43 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
   }
 }
 ```
+
 The code snippet above produces the following:
 </br>
 </br>
-![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_onboarding.gif?raw=true)
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app.gif?raw=true)
 
 ### Playground app with imperative navigation
 
-The [playground](./playground/) app demonstrates how to imperatively show the modal sheet. The purpose of this module is to play and experiment with various use cases. These use cases include:
+The [playground](./playground/) app demonstrates how to imperatively show the
+modal sheet. The purpose of this module is to play and experiment with various
+use cases. These use cases include:
 It demonstrates
+
 - A page with forced max height independent of its content.
 - A page with a hero image
 - A page with a list whose items are lazily built.
 - A page with a text field.
 
 ### Playground app with declarative navigation
-The [playground_navigator2](./playground_navigator2/) has the same content with the [playground](./playground/) app but the modal sheet is shown using Navigator 2.0 (Router API) in a declarative way.
-### Coffee maker app for state management example
-Finally, the [coffee_maker](./coffee_maker/) app demonstrates how to manage the state among the page components with an opinionated use of the Provider state management library.
 
-The code snippet demonstrates how to decorate the modal sheet with a change notifier provider so that the page components can be rebuilt according to the current state:
+The [playground_navigator2](./playground_navigator2/) has the same content with
+the [playground](./playground/) app but the modal sheet is shown using Navigator
+2.0 (Router API) in a declarative way.
+
+### Coffee maker app for state management example
+
+Finally, the [coffee_maker](./coffee_maker/) app demonstrates how to manage the
+state among the page components with an opinionated use of the Provider state
+management library.
+
+The code snippet demonstrates how to decorate the modal sheet with a change
+notifier provider so that the page components can be rebuilt according to the
+current state:
+
 ```dart
-  void _onCoffeeOrderSelectedInAddWaterState(BuildContext context, String coffeeOrderId) {
+  void _onCoffeeOrderSelectedInAddWaterState(BuildContext context,
+    String coffeeOrderId) {
   final model = context.read<StoreOnlineViewModel>();
   final pageIndexNotifier = ValueNotifier(0);
 
@@ -262,15 +347,20 @@ The code snippet demonstrates how to decorate the modal sheet with a change noti
     },
     pageListBuilderNotifier: AddWaterModalPageBuilder.build(
       coffeeOrderId: coffeeOrderId,
-      goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+      goToPreviousPage: () =>
+      pageIndexNotifier.value = pageIndexNotifier.value - 1,
       goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
     ),
     modalTypeBuilder: _modalTypeBuilder,
   );
 }
 ```
+
 ![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_coffee_maker.gif?raw=true)
 
 ## Additional information
-In [this blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design), we explore the foundational design decisions that guide the WoltModalSheet's functionality.
+
+In [this blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design)
+, we explore the foundational design decisions that guide the WoltModalSheet's
+functionality.
 

@@ -28,8 +28,8 @@ class SheetPageWithHeroImage {
         ),
       ),
       pageTitle: const ModalSheetTitle('Page with a hero image'),
-      backButton: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      closeButton: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: const Padding(
         padding: EdgeInsets.only(bottom: 80, top: 16),
         child: ModalSheetContentText('''

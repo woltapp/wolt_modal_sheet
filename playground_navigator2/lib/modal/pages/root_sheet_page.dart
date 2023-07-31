@@ -26,7 +26,8 @@ class RootSheetPage {
         },
       ),
       pageTitle: const ModalSheetTitle(title),
-      closeButton: WoltModalSheetCloseButton(onClosed: context.read<RouterCubit>().closeSheet),
+      hasTopBarLayer: false,
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: context.read<RouterCubit>().closeSheet),
       singleChildContent: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: WoltSelectionList<MultiPagePathName>.singleSelect(

@@ -36,8 +36,8 @@ class SheetPageWithLazyList {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ModalSheetTitle(titleText),
       ),
-      backButton: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      closeButton: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(
               (_, index) {

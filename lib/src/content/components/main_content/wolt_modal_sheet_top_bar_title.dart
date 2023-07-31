@@ -55,20 +55,12 @@ class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
     if (topBarTitle != null) {
       return topBarTitle;
     } else if (pageTitleText != null) {
-      return Row(
-        children: [
-          const SizedBox(width: 72),
-          Expanded(
-            child: Text(
-              pageTitleText,
-              style: Theme.of(context).textTheme.titleSmall,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-          const SizedBox(width: 72),
-        ],
+      return Text(
+        pageTitleText,
+        style: Theme.of(context).textTheme.titleSmall,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
       );
     }
     return const SizedBox.shrink();

@@ -36,7 +36,7 @@ class AddWaterDescriptionModalPage {
         'Adding water for coffee',
         textAlign: TextAlign.center,
       ),
-      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Padding(
         padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 8),
         child: ModalSheetContentText(

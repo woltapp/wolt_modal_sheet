@@ -33,19 +33,16 @@ class MainApp extends StatelessWidget {
             ],
           ),
         ),
-        pageTitle: const ModalSheetTitle('Pagination'),
+        isTopBarLayerAlwaysVisible: true,
         topBarTitle: const ModalSheetTopBarTitle('Pagination'),
-        closeButton: WoltModalSheetCloseButton(onClosed: Navigator.of(modalSheetContext).pop),
-        mainContentPadding: const EdgeInsetsDirectional.all(16),
+        trailingNavBarWidget:
+            WoltModalSheetCloseButton(onClosed: Navigator.of(modalSheetContext).pop),
         child: const Padding(
-            padding: EdgeInsets.only(bottom: 120, top: 16),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 16),
-              child: Text(
-                '''
+            padding: EdgeInsets.only(bottom: 120),
+            child: Text(
+              '''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
 ''',
-              ),
             )),
       );
     }
@@ -75,11 +72,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           image: AssetImage('lib/assets/images/material_colors_hero.png'),
           fit: BoxFit.cover,
         ),
-        topBarTitle: const ModalSheetTopBarTitle('Material Colors'),
-        backButton: WoltModalSheetBackButton(onBackPressed: () {
+        leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () {
           pageIndexNotifier.value = pageIndexNotifier.value - 1;
         }),
-        closeButton: WoltModalSheetCloseButton(onClosed: () {
+        trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: () {
           Navigator.of(modalSheetContext).pop();
           pageIndexNotifier.value = 0;
         }),
@@ -120,6 +116,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       },
                       onModalDismissedWithBarrierTap: () {
                         debugPrint('Closed modal sheet with barrier tap');
+                        Navigator.of(context).pop();
                         pageIndexNotifier.value = 0;
                       },
                       maxDialogWidth: 560,
