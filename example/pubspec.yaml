@@ -16,9 +16,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   wolt_modal_sheet:
     path: ..
-  wolt_responsive_layout_grid: ^0.0.3
-  demo_ui_components:
-    path: ../demo_ui_components
 
 flutter:
   uses-material-design: true
