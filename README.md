@@ -60,6 +60,8 @@ are provided with an instance of WoltModalSheetPage class. The API provides a
 way
 to manage the state among the page components to be used with popular libraries
 such as Bloc and Provider
+</br>
+</br>
 
 ## Understanding the page elements
 
@@ -82,16 +84,17 @@ specific properties.</li>
 layer, this layer contains navigational widgets for the interface, such as 
 back or close buttons.</li>
 </br>
+
+![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.png)
+</br>
+
 By employing these various layers, you can create an interactive and visually
 appealing interface that resonates with users. Each layer contributes to the
 overall coherence of the page, serving a specific purpose and enhancing the
 overall user experience.
 </br>
-</br>
 
 ![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.jpeg)
-
-![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.jpeg)
 
 ### Navigation bar widgets
 
@@ -170,30 +173,37 @@ class MainApp extends StatelessWidget {
 
     WoltModalSheetPage page1(BuildContext modalSheetContext) {
       return WoltModalSheetPage.withSingleChild(
-        stickyActionBar: StickyActionBarWrapper(
+        stickyActionBar: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              WoltElevatedButton(
+              ElevatedButton(
                 onPressed: () => Navigator.of(modalSheetContext).pop(),
-                theme: WoltElevatedButtonTheme.secondary,
-                child: const Text('Cancel'),
+                child: const SizedBox(
+                  height: 56.0,
+                  width: double.infinity,
+                  child: Center(child: Text('Cancel')),
+                ),
               ),
               const SizedBox(height: 8),
-              WoltElevatedButton(
-                onPressed: () {
-                  pageIndexNotifier.value = pageIndexNotifier.value + 1;
-                },
-                child: const Text('Next page'),
+              ElevatedButton(
+                onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+                child: const SizedBox(
+                  height: 56.0,
+                  width: double.infinity,
+                  child: Center(child: Text('Next page')),
+                ),
               ),
             ],
           ),
         ),
         isTopBarLayerAlwaysVisible: true,
-        topBarTitle: const ModalSheetTopBarTitle('Pagination'),
-        trailingNavBarWidget:
-        WoltModalSheetCloseButton(onClosed: Navigator
-            .of(modalSheetContext)
-            .pop),
+        topBarTitle: Text('Pagination', style: Theme.of(context).textTheme.titleSmall),
+        trailingNavBarWidget: IconButton(
+          padding: const EdgeInsets.all(16),
+          icon: const Icon(Icons.close),
+          onPressed: Navigator.of(modalSheetContext).pop,
+        ),
         child: const Padding(
             padding: EdgeInsets.only(bottom: 120),
             child: Text(
@@ -207,35 +217,45 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
     WoltModalSheetPage page2(BuildContext modalSheetContext) {
       return WoltModalSheetPage.withCustomSliverList(
         mainContentPadding: EdgeInsetsDirectional.zero,
-        stickyActionBar: StickyActionBarWrapper(
-          padding: EdgeInsets.zero,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: WoltElevatedButton(
-              onPressed: () {
-                Navigator.of(modalSheetContext).pop();
-                pageIndexNotifier.value = 0;
-              },
-              child: const Text('Close'),
+        stickyActionBar: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(modalSheetContext).pop();
+              pageIndexNotifier.value = 0;
+            },
+            child: const SizedBox(
+              height: 56.0,
+              width: double.infinity,
+              child: Center(child: Text('Close')),
             ),
           ),
         ),
-        pageTitle: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: ModalSheetTitle('Material Colors'),
+        pageTitle: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Material Colors',
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
         heroImageHeight: 200,
         heroImage: const Image(
           image: AssetImage('lib/assets/images/material_colors_hero.png'),
           fit: BoxFit.cover,
         ),
-        leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () {
-          pageIndexNotifier.value = pageIndexNotifier.value - 1;
-        }),
-        trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: () {
-          Navigator.of(modalSheetContext).pop();
-          pageIndexNotifier.value = 0;
-        }),
+        leadingNavBarWidget: IconButton(
+          padding: const EdgeInsets.all(16),
+          icon: const Icon(Icons.arrow_back_rounded),
+          onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        ),
+        trailingNavBarWidget: IconButton(
+          padding: const EdgeInsets.all(16),
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            Navigator.of(modalSheetContext).pop();
+            pageIndexNotifier.value = 0;
+          },
+        ),
         sliverList: SliverList(
           delegate: SliverChildBuilderDelegate(
                 (_, index) => ColorTile(color: allMaterialColors[index]),
@@ -246,13 +266,14 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
     }
 
     return MaterialApp(
+      theme: ThemeData(colorSchemeSeed: const Color(0xFF009DE0), useMaterial3: true),
       home: Scaffold(
         body: Builder(
           builder: (context) {
             return Center(
               child: SizedBox(
                 width: 200,
-                child: WoltElevatedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     WoltModalSheet.show<void>(
                       pageIndexNotifier: pageIndexNotifier,
@@ -264,10 +285,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                         ];
                       },
                       modalTypeBuilder: (context) {
-                        final size = MediaQuery
-                            .of(context)
-                            .size
-                            .width;
+                        final size = MediaQuery.of(context).size.width;
                         if (size < 768) {
                           return WoltModalType.bottomSheet;
                         } else {
@@ -285,7 +303,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       maxPageHeight: 0.9,
                     );
                   },
-                  child: const Text('Show Wolt Modal Sheet'),
+                  child: const SizedBox(
+                    height: 56.0,
+                    child: Center(child: Text('Show Modal Sheet')),
+                  ),
                 ),
               ),
             );
@@ -300,7 +321,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 The code snippet above produces the following:
 </br>
 </br>
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app.gif?raw=true)
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app_recording.gif?raw=true)
 
 ### Playground app with imperative navigation
 
