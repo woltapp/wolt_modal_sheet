@@ -35,15 +35,16 @@ class SheetPageWithTextField {
           );
         },
       ),
-      pageTitle: const ModalSheetTitle('Page with text field'),
-      backButton: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      closeButton: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      isTopBarLayerAlwaysVisible: true,
+      topBarTitle: const ModalSheetTopBarTitle('Page with text field'),
+      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 80, top: 16),
         child: Column(
           children: [
             const ModalSheetContentText('''
-This page has a text field. We wait for the keyboard closing before starting pagination. Don't forget to add a scroll padding to your text field to avoid the keyboard hiding the text field.
+This page has a text field and always visible top bar title. We wait for the keyboard closing before starting pagination. Don't forget to add a scroll padding to your text field to avoid the keyboard hiding the text field.
 '''),
             Padding(
               padding: const EdgeInsets.only(top: 16),

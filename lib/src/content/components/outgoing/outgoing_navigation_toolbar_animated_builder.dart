@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class CurrentTopBarControlsAnimatedBuilder extends StatelessWidget {
+class OutgoingNavigationToolbarAnimatedBuilder extends StatelessWidget {
   final AnimationController controller;
   final Animation<double> _opacity;
   final Widget child;
 
-  CurrentTopBarControlsAnimatedBuilder({
+  OutgoingNavigationToolbarAnimatedBuilder({
     required this.controller,
     required this.child,
     super.key,
-  }) : _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+  }) : _opacity = Tween<double>(begin: 1.0, end: 0.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(100 / 350, 300 / 350, curve: Curves.linear),
+            curve: const Interval(0, 100 / 350, curve: Curves.linear),
           ),
         );
 

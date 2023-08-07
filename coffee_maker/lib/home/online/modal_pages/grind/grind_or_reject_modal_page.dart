@@ -33,7 +33,7 @@ class GrindOrRejectModalPage {
         'Are you ready to prepare order $coffeeOrderId?',
         textAlign: TextAlign.center,
       ),
-      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Padding(
         padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 48),
         child: ModalSheetContentText('Accept the order to proceed to grinding'),

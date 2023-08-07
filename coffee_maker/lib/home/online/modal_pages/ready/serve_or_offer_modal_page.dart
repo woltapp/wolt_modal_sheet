@@ -33,7 +33,7 @@ class ServeOrOfferModalPage {
         ),
       ),
       pageTitle: const ModalSheetTitle('The coffee is ready!'),
-      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Padding(
         padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 24),
         child: ModalSheetContentText(

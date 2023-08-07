@@ -9,7 +9,7 @@ class WoltModalSheetCloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(end: 16, top: 16),
+      padding: const EdgeInsetsDirectional.only(end: 16),
       child: WoltCircularElevatedButton(
         onPressed: onClosed ?? Navigator.of(context).pop,
         icon: Icons.close,

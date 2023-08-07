@@ -15,9 +15,9 @@ class WoltModalSheetLayout extends StatelessWidget {
   ///
   /// [topBar] represents the top bar widget of the modal sheet.
   ///
-  /// [closeButton] represents the close button widget of the modal sheet.
+  /// [trailingNavBarWidget] represents the close button widget of the modal sheet.
   ///
-  /// [backButton] represents the back button widget of the modal sheet.
+  /// [leadingNavBarWidget] represents the back button widget of the modal sheet.
   ///
   /// [stickyActionBar] represents the action widget located in the bottom of the modal sheet.
   ///
@@ -51,19 +51,15 @@ class WoltModalSheetLayout extends StatelessWidget {
             height: topBarHeight + topBarTranslationY,
             child: paginatingWidgetsGroup.topBarAnimatedBuilder,
           ),
-          PositionedDirectional(
+          Positioned(
             top: 0,
-            end: 0,
-            child: paginatingWidgetsGroup.closeButtonAnimatedBuilder,
+            left: 0,
+            right: 0,
+            child: paginatingWidgetsGroup.navigationToolbarAnimatedBuilder,
           ),
-          PositionedDirectional(
-            top: 0,
-            start: 0,
-            child: paginatingWidgetsGroup.backButtonButtonAnimatedBuilder,
-          ),
-          PositionedDirectional(
-            start: 0,
-            end: 0,
+          Positioned(
+            left: 0,
+            right: 0,
             bottom: 0,
             child: paginatingWidgetsGroup.sabAnimatedBuilder,
           ),

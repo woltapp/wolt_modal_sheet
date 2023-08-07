@@ -29,8 +29,8 @@ class WaterSettingsModalPage {
         },
       ),
       pageTitle: const ModalSheetTitle(pageTitle),
-      closeButton: WoltModalSheetCloseButton(onClosed: onClosed),
-      backButton: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
+      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: Column(
