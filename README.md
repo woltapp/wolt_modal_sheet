@@ -321,7 +321,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 The code snippet above produces the following:
 </br>
 </br>
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app_recording.gif?raw=true)
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app_record.gif?raw=true)
 
 ### Playground app with imperative navigation
 

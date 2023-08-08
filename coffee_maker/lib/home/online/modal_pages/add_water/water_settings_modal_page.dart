@@ -19,7 +19,8 @@ class WaterSettingsModalPage {
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: buttonEnabledListener,
         builder: (_, isEnabled, __) {
-          return StickyActionBarWrapper(
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
               onPressed: onWaterAdded,
               enabled: isEnabled,

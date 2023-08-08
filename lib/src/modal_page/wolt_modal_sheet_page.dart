@@ -110,6 +110,15 @@ class WoltModalSheetPage {
   /// content to be explored below the fold.
   final Widget? stickyActionBar;
 
+  /// Indicates whether a gentle gradient overlay should be rendered above the
+  /// [stickyActionBar]. The purpose of this gradient is to visually suggest
+  /// to the user that additional content might be present below the action bar.
+  ///
+  /// If set to `true`, a gradient from the page's background color to transparent
+  /// is rendered right above the [stickyActionBar]. If `false`, no gradient is rendered.
+  /// By default, it's set to `true`.
+  final bool hasSabGradient;
+
   /// The padding applied to the main content of the page. If not provided, the default padding
   /// will be used depending on the [WoltModalType] (16 for [WoltModalType.bottomSheet] and 32
   /// for [WoltModalType.dialog]).
@@ -138,6 +147,7 @@ class WoltModalSheetPage {
     this.heroImage,
     this.heroImageHeight,
     this.backgroundColor = Colors.white,
+    this.hasSabGradient = true,
     this.forceMaxHeight = false,
     this.scrollController,
     this.stickyActionBar,
@@ -159,6 +169,7 @@ class WoltModalSheetPage {
     Widget? heroImage,
     double? heroImageHeight,
     Color backgroundColor = Colors.white,
+    bool hasSabGradient = true,
     bool forceMaxHeight = false,
     bool isTopBarLayerAlwaysVisible = false,
     bool hasTopBarLayer = true,
@@ -177,6 +188,7 @@ class WoltModalSheetPage {
       heroImage: heroImage,
       heroImageHeight: heroImageHeight,
       backgroundColor: backgroundColor,
+      hasSabGradient: hasSabGradient,
       forceMaxHeight: forceMaxHeight,
       scrollController: scrollController,
       stickyActionBar: stickyActionBar,
@@ -199,6 +211,7 @@ class WoltModalSheetPage {
     Widget? heroImage,
     double? heroImageHeight,
     Color backgroundColor = Colors.white,
+    bool hasSabGradient = true,
     bool forceMaxHeight = false,
     bool isTopBarLayerAlwaysVisible = false,
     bool hasTopBarLayer = true,

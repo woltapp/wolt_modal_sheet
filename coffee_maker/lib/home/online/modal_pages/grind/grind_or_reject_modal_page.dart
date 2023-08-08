@@ -12,7 +12,8 @@ class GrindOrRejectModalPage {
     required VoidCallback onClosed,
   }) {
     return WoltModalSheetPage.withSingleChild(
-      stickyActionBar: StickyActionBarWrapper(
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Column(
           children: [
             WoltElevatedButton(

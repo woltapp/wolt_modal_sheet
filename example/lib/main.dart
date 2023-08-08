@@ -46,7 +46,7 @@ class MainApp extends StatelessWidget {
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
         child: const Padding(
-            padding: EdgeInsets.only(bottom: 120),
+            padding: EdgeInsets.only(bottom: 150),
             child: Text(
               '''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
