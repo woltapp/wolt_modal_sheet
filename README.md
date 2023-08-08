@@ -381,7 +381,13 @@ current state:
 
 ## Additional information
 
-In [this blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design)
-, we explore the foundational design decisions that guide the WoltModalSheet's
-functionality.
+* <b>Design Philosophy</b>: Dive into the creative thought process behind
+  WoltModalSheet's
+  functionality [in our blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design)
+  . Explore how we tackled the
+  design challenges to create an intuitive and responsive
+  experience.
+* <b>Insights from FlutterCon'23
+  talk</b>: We delved into both the design and developmental facets of this 
+  package at the FlutterCon'23 conference. Catch the enlightening [recording of his talk](https://www.droidcon.com/2023/08/07/the-art-of-responsive-modals-building-a-multi-page-sheet-in-flutter/) to understand the nuances.
 
