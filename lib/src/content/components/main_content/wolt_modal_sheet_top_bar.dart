@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
-import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 
 class WoltModalSheetTopBar extends StatelessWidget {
   /// The height of the top bar, defined by the user.
