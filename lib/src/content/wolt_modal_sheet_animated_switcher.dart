@@ -7,9 +7,9 @@ import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar_title_flow.dart';
 import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_navigation_toolbar_animated_builder.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
-import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_navigation_toolbar.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
@@ -42,9 +42,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
 
   WoltModalSheetPage get _page => widget.pages[_pageIndex];
 
-  double get _topBarHeight => _page.hasTopBarLayer ? _page.navigationBarHeight : 0;
+  bool get _hasTopBarLayer => _page.hasTopBarLayer;
 
-  double get _topBarTranslationY => _page.hasTopBarLayer ? 4 : 0;
+  double get _topBarTranslationY => _hasTopBarLayer ? 4 : 0;
 
   late List<GlobalKey> _titleKeys;
   late List<GlobalKey> _mainContentKeys;
@@ -63,11 +63,6 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   bool? _shouldAnimatePagination;
 
   GlobalKey get _pageTitleKey => _titleKeys[_pageIndex];
-
-  Widget get _topBarTitle => WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
-
-  Widget get _topBar =>
-      WoltModalSheetTopBar(topBarColor: _page.backgroundColor, topBarHeight: _topBarHeight);
 
   @override
   void initState() {
@@ -125,7 +120,6 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             page: _page,
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
-            topBarHeight: _topBarHeight,
           ),
         if (currentWidgets != null)
           WoltModalSheetLayout(
@@ -133,7 +127,6 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             page: _page,
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
-            topBarHeight: _topBarHeight,
           ),
         if (currentWidgets != null &&
             animationController != null &&
@@ -220,6 +213,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   }
 
   CurrentPageWidgets _createCurrentWidgets(AnimationController animationController) {
+    final topBarTitle = WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
+    final navigationBarHeight = _page.navigationBarHeight;
+    final isTopBarLayerAlwaysVisible = _page.isTopBarLayerAlwaysVisible;
     return CurrentPageWidgets(
       mainContentAnimatedBuilder: CurrentMainContentAnimatedBuilder(
         mainContent: _createMainContent(
@@ -236,34 +232,31 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       topBarAnimatedBuilder: CurrentTopBarAnimatedBuilder(
         controller: animationController,
         child: _page.hasTopBarLayer
-            ? (_page.isTopBarLayerAlwaysVisible
-                ? _topBar
+            ? (isTopBarLayerAlwaysVisible
+                ? WoltModalSheetTopBar(page: _page)
                 : WoltModalSheetTopBarFlow(
                     page: _page,
                     currentScrollPositionListenable: _currentScrollPosition,
                     topBarTranslationYAmountInPx: _topBarTranslationY,
-                    topBarHeight: _topBarHeight,
                     titleKey: _pageTitleKey,
-                    topBar: _topBar,
                   ))
             : const SizedBox.shrink(),
       ),
       navigationToolbarAnimatedBuilder: CurrentNavigationToolbarAnimatedBuilder(
         controller: animationController,
         child: SizedBox(
-          height: _page.navigationBarHeight,
+          height: navigationBarHeight,
           child: WoltNavigationToolbar(
             middleSpacing: 16.0,
             leading: _page.leadingNavBarWidget,
-            middle: _page.hasTopBarLayer
-                ? (_page.isTopBarLayerAlwaysVisible
-                    ? Center(child: _topBarTitle)
+            middle: _hasTopBarLayer
+                ? (isTopBarLayerAlwaysVisible
+                    ? Center(child: topBarTitle)
                     : WoltModalSheetTopBarTitleFlow(
                         page: _page,
                         currentScrollPositionListenable: _currentScrollPosition,
-                        topBarHeight: _topBarHeight,
                         titleKey: _pageTitleKey,
-                        topBarTitle: _topBarTitle,
+                        topBarTitle: topBarTitle,
                       ))
                 : const SizedBox.shrink(),
             trailing: _page.trailingNavBarWidget,
@@ -310,8 +303,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       ),
       sabAnimatedBuilder: OutgoingSabAnimatedBuilder(
         controller: animationController,
-        stickyActionBarWrapper: (currentWidgetsToBeOutgoing.sabAnimatedBuilder as CurrentSabAnimatedBuilder)
-            .stickyActionBarWrapper,
+        stickyActionBarWrapper:
+            (currentWidgetsToBeOutgoing.sabAnimatedBuilder as CurrentSabAnimatedBuilder)
+                .stickyActionBarWrapper,
       ),
     );
   }
@@ -325,7 +319,6 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       pageTitleKey: titleKey,
       currentScrollPosition: _currentScrollPosition,
       page: _page,
-      topBarHeight: _topBarHeight,
       woltModalType: widget.woltModalType,
     );
   }

@@ -33,7 +33,7 @@ class WaterSettingsModalPage {
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 120),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

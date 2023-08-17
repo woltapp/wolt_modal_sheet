@@ -40,12 +40,15 @@ class AddWaterDescriptionModalPage {
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Padding(
         padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 8),
-        child: ModalSheetContentText(
-          '''
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: ModalSheetContentText(
+            '''
 The water you use is very important to the quality of your coffee. Use filtered or bottled water if your tap water is not good or has a strong odor or taste, such as chlorine.
 
 If you’re using tap water, let it run a few seconds before filling your coffee pot, and be sure to use cold water. Avoid distilled or softened water.
 ''',
+          ),
         ),
       ),
     );

@@ -38,15 +38,15 @@ class MainApp extends StatelessWidget {
             ],
           ),
         ),
-        isTopBarLayerAlwaysVisible: true,
         topBarTitle: Text('Pagination', style: Theme.of(context).textTheme.titleSmall),
+        isTopBarLayerAlwaysVisible: true,
         trailingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(16),
           icon: const Icon(Icons.close),
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
         child: const Padding(
-            padding: EdgeInsets.only(bottom: 150),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 150),
             child: Text(
               '''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
@@ -57,9 +57,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 
     WoltModalSheetPage page2(BuildContext modalSheetContext) {
       return WoltModalSheetPage.withCustomSliverList(
-        mainContentPadding: EdgeInsetsDirectional.zero,
         stickyActionBar: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: ElevatedButton(
             onPressed: () {
               Navigator.of(modalSheetContext).pop();
@@ -73,10 +72,11 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           ),
         ),
         pageTitle: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'Material Colors',
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style:
+                Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         heroImageHeight: 200,

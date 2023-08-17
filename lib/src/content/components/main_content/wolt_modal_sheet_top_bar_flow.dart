@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 
@@ -11,36 +12,34 @@ import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart
 /// position and performs transformations to achieve the desired effects on the top bar, such as
 /// fading in/out and translating vertically.
 class WoltModalSheetTopBarFlow extends StatelessWidget {
-  final double topBarHeight;
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
   final double topBarTranslationYAmountInPx;
   final WoltModalSheetPage page;
-  final Widget topBar;
 
   const WoltModalSheetTopBarFlow({
     required this.page,
-    required this.topBarHeight,
     required this.currentScrollPositionListenable,
     required this.titleKey,
     required this.topBarTranslationYAmountInPx,
-    required this.topBar,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final topBarHeight = page.navigationBarHeight;
+    final heroImageHeight = page.heroImage == null ? 0.0 : (page.heroImageHeight ?? 0.0);
+
     return Flow(
       delegate: _TopBarFlowDelegate(
         topBarHeight: topBarHeight,
-        heroImageHeight: page.heroImageHeight ?? 0,
+        heroImageHeight: heroImageHeight,
         currentScrollPositionListenable: currentScrollPositionListenable,
         titleKey: titleKey,
-        pageTitlePaddingTop: page.pageTitlePaddingTop,
         topBarTranslationYAmountInPx: topBarTranslationYAmountInPx,
         buildContext: context,
       ),
-      children: [topBar],
+      children: [WoltModalSheetTopBar(page: page)],
     );
   }
 }
@@ -50,7 +49,6 @@ class _TopBarFlowDelegate extends FlowDelegate {
   final double heroImageHeight;
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
-  final double pageTitlePaddingTop;
   final double topBarTranslationYAmountInPx;
   final BuildContext buildContext;
 
@@ -59,7 +57,6 @@ class _TopBarFlowDelegate extends FlowDelegate {
     required this.heroImageHeight,
     required this.currentScrollPositionListenable,
     required this.titleKey,
-    required this.pageTitlePaddingTop,
     required this.topBarTranslationYAmountInPx,
     required this.buildContext,
   }) : super(repaint: currentScrollPositionListenable);
@@ -68,18 +65,16 @@ class _TopBarFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    double pageTitleHeight = titleKey.currentContext!.size!.height;
+    final pageTitleHeight = titleKey.currentContext!.size!.height;
 
-    const topBarTranslationYStart = 0.0;
-    final topBarTranslationYEnd = topBarTranslationYAmountInPx;
+    final topBarTranslationYStart = -1 * topBarTranslationYAmountInPx;
+    const topBarTranslationYEnd = 0.0;
     final topBarTranslationYAndOpacityStartPoint =
-    heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight;
-
-    pageTitleHeight = pageTitleHeight == 0 ? pageTitlePaddingTop : pageTitleHeight;
+        heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight - 8;
 
     /// Top bar translation Y
     final topBarTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: pageTitlePaddingTop + pageTitleHeight,
+      rangeInPx: 8 + pageTitleHeight,
       progressInRangeInPx: currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
       startValue: topBarTranslationYStart,
       endValue: topBarTranslationYEnd,
@@ -87,7 +82,7 @@ class _TopBarFlowDelegate extends FlowDelegate {
 
     /// Top bar opacity
     final topBarOpacity = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: pageTitlePaddingTop,
+      rangeInPx: 8,
       progressInRangeInPx: currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
@@ -106,7 +101,6 @@ class _TopBarFlowDelegate extends FlowDelegate {
     return heroImageHeight != oldDelegate.heroImageHeight ||
         titleKey != oldDelegate.titleKey ||
         currentScrollPosition != oldDelegate.currentScrollPosition ||
-        pageTitlePaddingTop != oldDelegate.pageTitlePaddingTop ||
         topBarTranslationYAmountInPx != oldDelegate.topBarTranslationYAmountInPx ||
         topBarHeight != oldDelegate.topBarHeight;
   }

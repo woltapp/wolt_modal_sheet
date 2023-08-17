@@ -13,8 +13,8 @@ class SheetPageWithLazyList {
   }) {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
+    const heroImageHeight = 200.0;
     return WoltModalSheetPage.withCustomSliverList(
-      mainContentPadding: EdgeInsetsDirectional.zero,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
@@ -22,14 +22,16 @@ class SheetPageWithLazyList {
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
-      pageTitle: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ModalSheetTitle(titleText),
-      ),
-      heroImageHeight: 200,
-      heroImage: const Image(
-        image: AssetImage('lib/assets/images/material_colors_hero.png'),
-        fit: BoxFit.cover,
+      topBarTitle: const ModalSheetTopBarTitle(titleText),
+      heroImageHeight: heroImageHeight,
+      heroImage: const Stack(
+        children: [
+          ColoredBox(
+            color: Colors.yellow,
+            child: SizedBox(height: heroImageHeight, width: double.infinity),
+          ),
+          Placeholder(fallbackHeight: heroImageHeight, color: Colors.yellowAccent),
+        ],
       ),
       leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),

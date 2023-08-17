@@ -14,7 +14,6 @@ class SheetPageWithHeroImage {
   }) {
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withSingleChild(
-      mainContentPadding: const EdgeInsetsDirectional.all(16),
       heroImageHeight: 200,
       heroImage: const Image(
         image: AssetImage('lib/assets/images/hero_image.jpg'),
@@ -28,10 +27,11 @@ class SheetPageWithHeroImage {
         ),
       ),
       pageTitle: const ModalSheetTitle('Page with a hero image'),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: const Padding(
-        padding: EdgeInsets.only(bottom: 80, top: 16),
+        padding: EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: ModalSheetContentText('''
 A hero image is a prominent and visually appealing image that is typically placed at the top of page or section to grab the viewer's attention and convey the main theme or message of the content. It is often used in websites, applications, or marketing materials to create an impactful and visually engaging experience.
 '''),

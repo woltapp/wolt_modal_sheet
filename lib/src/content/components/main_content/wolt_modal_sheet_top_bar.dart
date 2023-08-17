@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 
 class WoltModalSheetTopBar extends StatelessWidget {
-  /// The height of the top bar, defined by the user.
-  final double topBarHeight;
+  final WoltModalSheetPage page;
 
-  /// The color of the top bar, defined by the user.
-  final Color topBarColor;
-
-  /// Creates an instance of `WoltModalSheetTopBar`.
-  ///
-  /// Both `topBarColor` and `topBarHeight` must be non-null.
-  const WoltModalSheetTopBar({
-    required this.topBarColor,
-    required this.topBarHeight,
-    Key? key,
-  }) : super(key: key);
+  const WoltModalSheetTopBar({required this.page, Key? key}) : super(key: key);
 
   // TODO: get this information from ThemeData extensions
   /// Constant elevation value that gives the top bar a raised appearance.
@@ -22,17 +12,23 @@ class WoltModalSheetTopBar extends StatelessWidget {
 
   // TODO: get this information from ThemeData extensions
   /// The color for the elevation effect, typically a shade that contrasts with `topBarColor`.
-  static const _elevationColor = Color(0xFFE4E4E4);
+  static const _shadowColor = Color(0xFFE4E4E4);
 
   @override
   Widget build(BuildContext context) {
+    final topBarHeight = page.navigationBarHeight;
+    final backgroundColor = page.backgroundColor;
+
     return Column(
       children: [
-        Container(height: topBarHeight - _elevation, color: topBarColor),
-        const ColoredBox(
-          color: _elevationColor,
-          child: SizedBox(height: _elevation, width: double.infinity),
+        Material(
+          type: MaterialType.canvas,
+          color: backgroundColor,
+          shadowColor: _shadowColor,
+          elevation: _elevation,
+          child: SizedBox(height: topBarHeight - _elevation, width: double.infinity),
         ),
+        const SizedBox(height: _elevation),
       ],
     );
   }

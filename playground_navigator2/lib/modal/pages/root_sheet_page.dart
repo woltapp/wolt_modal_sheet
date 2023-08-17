@@ -29,7 +29,7 @@ class RootSheetPage {
       hasTopBarLayer: false,
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: context.read<RouterCubit>().closeSheet),
       singleChildContent: Padding(
-        padding: const EdgeInsets.only(bottom: 120),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         child: WoltSelectionList<MultiPagePathName>.singleSelect(
           itemTileDataGroup: const WoltSelectionListItemDataGroup(
             group: [

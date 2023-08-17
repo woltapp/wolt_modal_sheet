@@ -15,7 +15,6 @@ class SheetPageWithForcedMaxHeight {
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withSingleChild(
       backgroundColor: WoltColors.green8,
-      mainContentPadding: const EdgeInsetsDirectional.all(16),
       forceMaxHeight: true,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -25,12 +24,16 @@ class SheetPageWithForcedMaxHeight {
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
+      hasTopBarLayer: false,
       pageTitle: const ModalSheetTitle('Page with forced max height and background color'),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
-      child: const Text('''
-This page height is forced to be the max height according to the provided max height ratio regardless of the intrinsic height of the child widget. 
-'''),
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text(
+          '''
+This page height is forced to be the max height according to the provided max height ratio regardless of the intrinsic height of the child widget. This page also doesn't have a top bar nor navigation bar controls. 
+''',
+        ),
+      ),
     );
   }
 }

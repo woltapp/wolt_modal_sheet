@@ -19,7 +19,6 @@ class SheetPageWithTextField {
     });
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withSingleChild(
-      mainContentPadding: const EdgeInsetsDirectional.all(16),
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {
@@ -35,12 +34,13 @@ class SheetPageWithTextField {
           );
         },
       ),
-      isTopBarLayerAlwaysVisible: true,
+      hasTopBarLayer: false,
       topBarTitle: const ModalSheetTopBarTitle('Page with text field'),
+      isTopBarLayerAlwaysVisible: true,
       leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 80, top: 16),
+        padding: const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: Column(
           children: [
             const ModalSheetContentText('''

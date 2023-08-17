@@ -73,16 +73,17 @@ WoltModalSheet and create an intuitive and engaging user experience.
 The structure is organized across layers on the z-axis:
 
 <li><b>Main Content Layer</b>: The fundamental content of the page, 
-including the 
-page title, hero image, and the main content, which may be scrollable.</li>
-<li><b>Sticky Action Bar Layer</b>: Positioned above the main content layer, 
-this layer guides the user towards the next step.</li>
-<li><b>Top Bar Layer</b>: Above the main content layer, this layer includes the top 
-bar title and may become hidden or sticky based on scroll position and 
-specific properties.</li>
-<li><b>Navigation Bar Layer</b>: Sits at the top of the z-axis, above the top bar 
-layer, this layer contains navigational widgets for the interface, such as 
-back or close buttons.</li>
+including the optional page title, optional hero image, and the main content,
+which may be scrollable.</li>
+<li><b>Top Bar Layer</b>: Further above the main content layer, this layer 
+with the filled color includes the top bar title and may become hidden or 
+sticky based on scroll position and specific properties.</li>
+<li><b>Navigation Bar Layer</b>: Sitting at the top of the top bar layer on 
+z-axis, this transparent-background layer contains navigational widgets for 
+the interface, such as back or close buttons.</li>
+<li><b>Sticky Action Bar Layer</b>: Positioned at the top of the z axis, 
+this layer guides the user towards the next step, uses an optional gentle 
+gradient on top to hint that there is more content below ready for scrolling.</li>
 </br>
 
 ![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.png)
@@ -118,13 +119,20 @@ guaranteeing consistent visibility. Its design is flexible, with an option
 to remain hidden or always visible regardless of the scroll position. The
 navigation bar widgets overlay above the top bar, and the top bar title is
 symmetrically framed between the leading and trailing navigation bar widgets.
+</br>
+</br>
+The Top Bar design is flexible, when `hasTopBarLayer` is set to false, the 
+top bar and the `topBarTitle` will be hidden. If 
+`isTopBarLayerAlwaysVisible` set to true, the top bar will be always visible 
+regardless of the scroll position.
 
 ### Sticky action bar (SAB)
 
 The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to
-the bottom of the view, the SAB elevates above the content with a gentle
-gradient. This position guarantees that the action remains visible, subtly
-hinting to the user that there is more content to be explored below the fold.
+the bottom of the view, the SAB elevates above the content with an optional 
+gentle gradient. This position guarantees that the action remains visible, subtly
+hinting to the user that there is more content to be explored below the fold 
+by scrolling.
 
 ### Hero image
 
@@ -141,7 +149,7 @@ context-providing purpose.
 
 ### Main content
 
-The main content delivers information according to user need. It can be
+The main content delivers information according to the user need. It can be 
 scrollable to handle larger content. The content is built lazily to improve the
 performance.
 
@@ -197,15 +205,15 @@ class MainApp extends StatelessWidget {
             ],
           ),
         ),
-        isTopBarLayerAlwaysVisible: true,
         topBarTitle: Text('Pagination', style: Theme.of(context).textTheme.titleSmall),
+        isTopBarLayerAlwaysVisible: true,
         trailingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(16),
           icon: const Icon(Icons.close),
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
         child: const Padding(
-            padding: EdgeInsets.only(bottom: 120),
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 150),
             child: Text(
               '''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
@@ -216,9 +224,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 
     WoltModalSheetPage page2(BuildContext modalSheetContext) {
       return WoltModalSheetPage.withCustomSliverList(
-        mainContentPadding: EdgeInsetsDirectional.zero,
         stickyActionBar: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: ElevatedButton(
             onPressed: () {
               Navigator.of(modalSheetContext).pop();
@@ -232,10 +239,11 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           ),
         ),
         pageTitle: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'Material Colors',
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style:
+                Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         heroImageHeight: 200,
@@ -258,7 +266,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
         ),
         sliverList: SliverList(
           delegate: SliverChildBuilderDelegate(
-                (_, index) => ColorTile(color: allMaterialColors[index]),
+            (_, index) => ColorTile(color: allMaterialColors[index]),
             childCount: allMaterialColors.length,
           ),
         ),
@@ -321,19 +329,19 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 The code snippet above produces the following:
 </br>
 </br>
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app_record.gif?raw=true)
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/wms_example.gif?raw=true)
 
 ### Playground app with imperative navigation
 
 The [playground](./playground/) app demonstrates how to imperatively show the
 modal sheet. The purpose of this module is to play and experiment with various
 use cases. These use cases include:
-It demonstrates
 
 - A page with forced max height independent of its content.
 - A page with a hero image
 - A page with a list whose items are lazily built.
-- A page with a text field.
+- A page with an auto-focused text field.
+- A page without a page title nor a top bar.
 
 ### Playground app with declarative navigation
 
@@ -388,6 +396,8 @@ current state:
   design challenges to create an intuitive and responsive
   experience.
 * <b>Insights from FlutterCon'23
-  talk</b>: We delved into both the design and developmental facets of this 
-  package at the FlutterCon'23 conference. Catch the enlightening [recording of his talk](https://www.droidcon.com/2023/08/07/the-art-of-responsive-modals-building-a-multi-page-sheet-in-flutter/) to understand the nuances.
+  talk</b>: We delved into both the design and developmental facets of this
+  package at the FlutterCon'23 conference. Catch the
+  enlightening [recording of his talk](https://www.droidcon.com/2023/08/07/the-art-of-responsive-modals-building-a-multi-page-sheet-in-flutter/)
+  to understand the nuances.
 

@@ -2,8 +2,8 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class SheetPageWithForcedMaxHeight {
-  SheetPageWithForcedMaxHeight._();
+class SheetPageWithNoPageTitleNoTopBar {
+  SheetPageWithNoPageTitleNoTopBar._();
 
   static WoltModalSheetPage build({
     required VoidCallback onSabPressed,
@@ -22,14 +22,19 @@ class SheetPageWithForcedMaxHeight {
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
-      pageTitle: const ModalSheetTitle('Page with forced max height and background color'),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackPressed),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      hasTopBarLayer: false,
       child: const Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text('''
-This page height is forced to be the max height according to the provided max height ratio regardless of the intrinsic height of the child widget. 
-'''),
+        child: Column(
+          children: [
+            Text(
+              '''
+This page has a very long scrollable content and does not have a page title and top bar.
+''',
+            ),
+            Placeholder(fallbackHeight: 2000, color: WoltColors.green),
+          ],
+        ),
       ),
     );
   }

@@ -34,32 +34,35 @@ class RejectOrderModalPage {
       leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 120),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 24),
-              child: ModalSheetContentText('Please select a reason for rejecting the order'),
-            ),
-            WoltSelectionList<RejectOrderReason>.singleSelect(
-              itemTileDataGroup: WoltSelectionListItemDataGroup(
-                group: RejectOrderReason.values
-                    .map(
-                      (e) => WoltSelectionListItemData(
-                        title: e.title,
-                        subtitle: e.subtitle,
-                        leadingIcon: e.leadingIcon,
-                        value: e,
-                        isSelected: false,
-                      ),
-                    )
-                    .toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 24),
+                child: ModalSheetContentText('Please select a reason for rejecting the order'),
               ),
-              onSelectionUpdateInSingleSelectionList: (selectedItemData) {
-                buttonEnabledListener.value = selectedItemData.isSelected;
-              },
-            ),
-          ],
+              WoltSelectionList<RejectOrderReason>.singleSelect(
+                itemTileDataGroup: WoltSelectionListItemDataGroup(
+                  group: RejectOrderReason.values
+                      .map(
+                        (e) => WoltSelectionListItemData(
+                          title: e.title,
+                          subtitle: e.subtitle,
+                          leadingIcon: e.leadingIcon,
+                          value: e,
+                          isSelected: false,
+                        ),
+                      )
+                      .toList(),
+                ),
+                onSelectionUpdateInSingleSelectionList: (selectedItemData) {
+                  buttonEnabledListener.value = selectedItemData.isSelected;
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

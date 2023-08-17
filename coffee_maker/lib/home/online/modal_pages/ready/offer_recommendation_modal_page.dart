@@ -48,14 +48,20 @@ class OfferRecommendationModalPage {
         delegate: SliverChildBuilderDelegate(
           (_, index) {
             if (index == 0) {
-              return const ModalSheetContentText(
-                'Please select any extras the customer would be interested in purchasing',
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: ModalSheetContentText(
+                  'Please select any extras the customer would be interested in purchasing',
+                ),
               );
             } else {
               final recommendation = allRecommendations[index - 1];
               return Padding(
-                padding: EdgeInsets.only(
-                  bottom: index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  16,
+                  16,
+                  index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
                 ),
                 child: ExtraRecommendationTile(
                   recommendation: recommendation,

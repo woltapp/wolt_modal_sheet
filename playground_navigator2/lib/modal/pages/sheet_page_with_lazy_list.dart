@@ -16,7 +16,6 @@ class SheetPageWithLazyList {
     const titleText = 'Material Colors';
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage.withCustomSliverList(
-      mainContentPadding: EdgeInsetsDirectional.zero,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(

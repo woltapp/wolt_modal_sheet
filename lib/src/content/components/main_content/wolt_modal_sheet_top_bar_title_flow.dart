@@ -4,14 +4,7 @@ import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 
 /// This class represents the top bar title behavior within a modal sheet page.
-///
-/// It leverages properties like [WoltModalSheetTopBarTitleFlow.topBarHeight],
-/// [WoltModalSheetTopBarTitleFlow.currentScrollPositionListenable],
-/// [WoltModalSheetTopBarTitleFlow.titleKey], and [WoltModalSheetPage.heroImageHeight]
-/// (from [WoltModalSheetTopBarTitleFlow.page]) to provide a smooth transition and motion
-/// animation for the top bar title as the user scrolls.
 class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
-  final double topBarHeight;
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
   final WoltModalSheetPage page;
@@ -19,7 +12,6 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
 
   const WoltModalSheetTopBarTitleFlow({
     required this.page,
-    required this.topBarHeight,
     required this.currentScrollPositionListenable,
     required this.titleKey,
     required this.topBarTitle,
@@ -30,13 +22,15 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final topBarHeight = page.navigationBarHeight;
+    final heroImageHeight = page.heroImage == null ? 0.0 : (page.heroImageHeight ?? 0.0);
+
     return Flow(
       delegate: _TopBarTitleFlowDelegate(
         topBarHeight: topBarHeight,
-        heroImageHeight: page.heroImageHeight ?? 0,
+        heroImageHeight: heroImageHeight,
         currentScrollPositionListenable: currentScrollPositionListenable,
         titleKey: titleKey,
-        pageTitlePaddingTop: page.pageTitlePaddingTop,
         buildContext: context,
       ),
       children: [Center(child: topBarTitle)],
@@ -49,7 +43,6 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
   final double heroImageHeight;
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
-  final double pageTitlePaddingTop;
   final BuildContext buildContext;
 
   _TopBarTitleFlowDelegate({
@@ -57,7 +50,6 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
     required this.heroImageHeight,
     required this.currentScrollPositionListenable,
     required this.titleKey,
-    required this.pageTitlePaddingTop,
     required this.buildContext,
   }) : super(repaint: currentScrollPositionListenable);
 
@@ -65,18 +57,16 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    double pageTitleHeight = titleKey.currentContext!.size!.height;
+    final pageTitleHeight = titleKey.currentContext!.size!.height;
     const topBarTitleTranslationYStart =
         -1 * WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
     const topBarTitleTranslationYAmount =
         WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
     const topBarTitleTranslationYEnd = topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
-    pageTitleHeight = pageTitleHeight == 0 ? pageTitlePaddingTop : pageTitleHeight;
-
     final topBarTitleTranslationYAndOpacityStartPoint = heroImageHeight == 0
-        ? pageTitlePaddingTop
-        : heroImageHeight - topBarHeight + pageTitlePaddingTop;
+        ? 8
+        : heroImageHeight - topBarHeight;
 
     /// Top Bar Title translation Y
     final topBarTitleTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
@@ -88,7 +78,7 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
 
     /// Top Bar Title Opacity
     final topBarTitleOpacity = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: topBarHeight / 2,
+      rangeInPx: pageTitleHeight / 2,
       progressInRangeInPx: currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
@@ -107,7 +97,6 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
     return heroImageHeight != oldDelegate.heroImageHeight ||
         titleKey != oldDelegate.titleKey ||
         currentScrollPosition != oldDelegate.currentScrollPosition ||
-        pageTitlePaddingTop != oldDelegate.pageTitlePaddingTop ||
         topBarHeight != oldDelegate.topBarHeight;
   }
 }

@@ -177,7 +177,7 @@ packages:
     source: hosted
     version: "2.1.4"
   wolt_modal_sheet:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: ".."
       relative: true
