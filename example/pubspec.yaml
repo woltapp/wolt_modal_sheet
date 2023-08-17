@@ -9,13 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  wolt_modal_sheet:
+    path: ..
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  wolt_modal_sheet:
-    path: ..
 
 flutter:
   uses-material-design: true
