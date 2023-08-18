@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final pageIndexNotifier = ValueNotifier(0);
 
-    WoltModalSheetPage page1(BuildContext modalSheetContext) {
+    WoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withSingleChild(
         stickyActionBar: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
             ],
           ),
         ),
-        topBarTitle: Text('Pagination', style: Theme.of(context).textTheme.titleSmall),
+        topBarTitle: Text('Pagination', style: textTheme.titleSmall),
         isTopBarLayerAlwaysVisible: true,
         trailingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(16),
@@ -55,7 +55,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
       );
     }
 
-    WoltModalSheetPage page2(BuildContext modalSheetContext) {
+    WoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withCustomSliverList(
         stickyActionBar: Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -75,8 +75,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             'Material Colors',
-            style:
-                Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         heroImageHeight: 200,
@@ -120,9 +119,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       pageIndexNotifier: pageIndexNotifier,
                       context: context,
                       pageListBuilder: (modalSheetContext) {
+                        final textTheme = Theme.of(context).textTheme;
                         return [
-                          page1(modalSheetContext),
-                          page2(modalSheetContext),
+                          page1(modalSheetContext, textTheme),
+                          page2(modalSheetContext, textTheme),
                         ];
                       },
                       modalTypeBuilder: (context) {
