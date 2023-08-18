@@ -7,26 +7,14 @@ import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 ///
 /// This widget is responsible for displaying the main content of the scrollable modal sheet.
 /// It handles the scroll behavior, page layout, and interactions within the modal sheet.
-///
-/// [currentScrollPosition] is updated as the user scrolls through the content.
-///
-/// [topBarHeight] represents the height of the top bar displayed in the modal sheet.
-///
-/// [pageTitleKey] represents the global key for the page title widget, if present.
-///
-/// [woltModalType] represents the type of the scrollable modal.
-///
-/// [page] represents the [WoltModalSheetPage] containing the configuration for the modal sheet.
 class WoltModalSheetMainContent extends StatefulWidget {
   final ValueNotifier<double> currentScrollPosition;
-  final double topBarHeight;
   final GlobalKey pageTitleKey;
   final WoltModalSheetPage page;
   final WoltModalType woltModalType;
 
   const WoltModalSheetMainContent({
     required this.currentScrollPosition,
-    required this.topBarHeight,
     required this.pageTitleKey,
     required this.page,
     required this.woltModalType,
@@ -47,79 +35,55 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
         ScrollController(initialScrollOffset: widget.currentScrollPosition.value);
   }
 
-  static const _defaultTopBarHeight = 56.0;
-
-  EdgeInsetsDirectional get _mainContentPadding {
-    final mainContentPadding = widget.page.mainContentPadding;
-    if (mainContentPadding != null) {
-      return mainContentPadding;
-    }
-    switch (widget.woltModalType) {
-      case WoltModalType.bottomSheet:
-        return const EdgeInsetsDirectional.all(16);
-      case WoltModalType.dialog:
-        return const EdgeInsetsDirectional.all(32);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final heroImageHeight = widget.page.heroImageHeight ?? 0;
+    final page = widget.page;
+    final heroImageHeight = page.heroImage == null ? 0.0 : (widget.page.heroImageHeight ?? 0.0);
+    final pageHasTopBarLayer = page.hasTopBarLayer;
+    final navigationBarHeight = page.navigationBarHeight;
+    final topBarHeight =
+        pageHasTopBarLayer || page.leadingNavBarWidget != null || page.trailingNavBarWidget != null
+            ? navigationBarHeight
+            : 0.0;
+    final singleChildContent = widget.page.singleChildContent;
+    final sliverList = widget.page.sliverList;
     final scrollView = CustomScrollView(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       controller: scrollController,
       slivers: [
-        SliverPadding(
-          padding: EdgeInsetsDirectional.only(
-            top: widget.topBarHeight == 0 && heroImageHeight == 0 ? _defaultTopBarHeight : 0,
-          ),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                if (index == 0) {
-                  final heroImage = widget.page.heroImage;
-                  return heroImage != null && heroImageHeight != 0
-                      ? WoltModalSheetHeroImage(
-                          topBarHeight: widget.topBarHeight,
-                          heroImage: heroImage,
-                          heroImageHeight: heroImageHeight,
-                        )
-                      : SizedBox(height: widget.topBarHeight);
-                } else {
-                  final pageTitle = widget.page.pageTitle;
-                  return Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      top: widget.page.pageTitlePaddingTop,
-                      start: _mainContentPadding.start,
-                      end: _mainContentPadding.end,
-                    ),
-                    child: KeyedSubtree(
-                      key: widget.pageTitleKey,
-                      child: pageTitle ?? const SizedBox.shrink(),
-                    ),
-                  );
-                }
-              },
-              childCount: 2,
-            ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              if (index == 0) {
+                final heroImage = widget.page.heroImage;
+                return heroImage != null
+                    ? WoltModalSheetHeroImage(
+                        topBarHeight: topBarHeight,
+                        heroImage: heroImage,
+                        heroImageHeight: heroImageHeight,
+                      )
+                    : SizedBox(height: topBarHeight);
+              } else {
+                final pageTitle = widget.page.pageTitle;
+                return KeyedSubtree(
+                  key: widget.pageTitleKey,
+                  child: pageTitle ?? const SizedBox.shrink(),
+                );
+              }
+            },
+            childCount: 2,
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsetsDirectional.only(
-            bottom: _mainContentPadding.bottom,
-            start: _mainContentPadding.start,
-            end: _mainContentPadding.end,
-          ),
-          sliver: widget.page.singleChildContent != null
-              ? SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (_, __) => widget.page.singleChildContent,
-                    childCount: 1,
-                  ),
-                )
-              : widget.page.sliverList,
-        ),
+        (singleChildContent != null
+                ? SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (_, __) => singleChildContent,
+                      childCount: 1,
+                    ),
+                  )
+                : sliverList) ??
+            const SizedBox.shrink(),
         if (widget.page.forceMaxHeight)
           const SliverFillRemaining(
             hasScrollBody: false,

@@ -3,6 +3,7 @@ import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
 import 'package:playground/home/pages/sheet_page_with_lazy_list.dart';
+import 'package:playground/home/pages/sheet_page_with_no_page_title_and_no_top_bar.dart';
 import 'package:playground/home/pages/sheet_page_with_text_field.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -11,6 +12,7 @@ enum MultiPagePathName {
   heroImage(pageCount: 2, queryParamName: "heroImage"),
   lazyLoadingList(pageCount: 2, queryParamName: "lazyList"),
   textField(pageCount: 2, queryParamName: "textField"),
+  noTitleNoTopBar(pageCount: 2, queryParamName: "noTitleNoTopBar"),
   allPagesPath(pageCount: 6, queryParamName: "all");
 
   static const defaultPath = MultiPagePathName.allPagesPath;
@@ -53,6 +55,13 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
+    WoltModalSheetPage noTitleNoTopBar(BuildContext context, {bool isLastPage = true}) =>
+        SheetPageWithNoPageTitleNoTopBar.build(
+          onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
+          onClosed: () => close(context),
+          onBackPressed: goToPreviousPage,
+          isLastPage: isLastPage,
+        );
     WoltModalSheetPage textField(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithTextField.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
@@ -69,12 +78,15 @@ enum MultiPagePathName {
         return (context) => [root(context), lazyList(context)];
       case MultiPagePathName.textField:
         return (context) => [root(context), textField(context)];
+      case MultiPagePathName.noTitleNoTopBar:
+        return (context) => [root(context), noTitleNoTopBar(context)];
       case MultiPagePathName.allPagesPath:
         return (context) => [
               root(context),
               heroImage(context, isLastPage: false),
               lazyList(context, isLastPage: false),
               textField(context, isLastPage: false),
+              noTitleNoTopBar(context, isLastPage: false),
               forcedMaxHeight(context, isLastPage: true),
             ];
     }

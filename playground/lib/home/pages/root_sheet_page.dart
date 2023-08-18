@@ -32,7 +32,7 @@ class RootSheetPage {
       hasTopBarLayer: false,
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       singleChildContent: Padding(
-        padding: const EdgeInsets.only(bottom: 120),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         child: WoltSelectionList<MultiPagePathName>.singleSelect(
           itemTileDataGroup: const WoltSelectionListItemDataGroup(
             group: [
@@ -54,6 +54,11 @@ class RootSheetPage {
               WoltSelectionListItemData(
                 title: 'Page with auto-focus text field',
                 value: MultiPagePathName.textField,
+                isSelected: false,
+              ),
+              WoltSelectionListItemData(
+                title: 'Page with no title and no top bar',
+                value: MultiPagePathName.noTitleNoTopBar,
                 isSelected: false,
               ),
               WoltSelectionListItemData(

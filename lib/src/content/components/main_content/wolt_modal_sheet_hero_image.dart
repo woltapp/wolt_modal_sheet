@@ -89,14 +89,14 @@ class _HeroImageFlowDelegate extends FlowDelegate {
     final double scale = WoltLayoutTransformationUtils.calculateTransformationValue(
       startValue: 1.1,
       endValue: 1.0,
-      rangeInPx: heroImageHeight - topBarHeight,
+      rangeInPx: heroImageHeight - topBarHeight - 8,
       progressInRangeInPx: currentScrollPosition,
     );
 
     // Calculate opacity
     final double opacity = WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: heroImageHeight / 2,
-      progressInRangeInPx: currentScrollPosition - ((heroImageHeight / 2) - topBarHeight),
+      rangeInPx: (((heroImageHeight - topBarHeight) / 2) - 8),
+      progressInRangeInPx: currentScrollPosition - ((heroImageHeight - topBarHeight) / 2),
       startValue: 1.0,
       endValue: 0.0,
     );
