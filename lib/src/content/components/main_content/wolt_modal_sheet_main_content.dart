@@ -67,6 +67,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     final heroImageHeight = widget.page.heroImageHeight ?? 0;
     final scrollView = CustomScrollView(
       shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
       controller: scrollController,
       slivers: [
         SliverPadding(
