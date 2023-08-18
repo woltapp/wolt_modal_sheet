@@ -168,168 +168,208 @@ This package has 4 example projects.
 
 ### Example app
 
-The [example](./example/) app demonstrates how to display a two-page modal
-sheet.
+The [example](./example/) app demonstrates how to display a two-pages modal
+sheet that can be customized for dark and light themes
+using [WoltModalSheetThemeData](./lib/src/theme/wolt_modal_sheet_theme_data.dart) theme
+extension.
 
 ```dart
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+Widget build(BuildContext context) {
+  final pageIndexNotifier = ValueNotifier(0);
 
-  @override
-  Widget build(BuildContext context) {
-    final pageIndexNotifier = ValueNotifier(0);
-
-    WoltModalSheetPage page1(BuildContext modalSheetContext) {
-      return WoltModalSheetPage.withSingleChild(
-        stickyActionBar: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(modalSheetContext).pop(),
-                child: const SizedBox(
-                  height: 56.0,
-                  width: double.infinity,
-                  child: Center(child: Text('Cancel')),
-                ),
+  WoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
+    return WoltModalSheetPage.withSingleChild(
+      hasSabGradient: false,
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.all(_pagePadding),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () => Navigator.of(modalSheetContext).pop(),
+              child: const SizedBox(
+                height: _buttonHeight,
+                width: double.infinity,
+                child: Center(child: Text('Cancel')),
               ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-                child: const SizedBox(
-                  height: 56.0,
-                  width: double.infinity,
-                  child: Center(child: Text('Next page')),
-                ),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+              child: const SizedBox(
+                height: _buttonHeight,
+                width: double.infinity,
+                child: Center(child: Text('Next page')),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        topBarTitle: Text('Pagination', style: Theme.of(context).textTheme.titleSmall),
-        isTopBarLayerAlwaysVisible: true,
-        trailingNavBarWidget: IconButton(
-          padding: const EdgeInsets.all(16),
-          icon: const Icon(Icons.close),
-          onPressed: Navigator.of(modalSheetContext).pop,
-        ),
-        child: const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 150),
-            child: Text(
-              '''
+      ),
+      topBarTitle: Text('Pagination', style: textTheme.titleSmall),
+      isTopBarLayerAlwaysVisible: true,
+      trailingNavBarWidget: IconButton(
+        padding: const EdgeInsets.all(_pagePadding),
+        icon: const Icon(Icons.close),
+        onPressed: Navigator.of(modalSheetContext).pop,
+      ),
+      child: const Padding(
+              padding: EdgeInsets.fromLTRB(
+                _pagePadding,
+                _pagePadding,
+                _pagePadding,
+                _bottomPaddingForButton,
+              ),
+              child: Text(
+                '''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
 ''',
-            )),
-      );
-    }
+              )),
+    );
+  }
 
-    WoltModalSheetPage page2(BuildContext modalSheetContext) {
-      return WoltModalSheetPage.withCustomSliverList(
-        stickyActionBar: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(modalSheetContext).pop();
-              pageIndexNotifier.value = 0;
-            },
-            child: const SizedBox(
-              height: 56.0,
-              width: double.infinity,
-              child: Center(child: Text('Close')),
-            ),
-          ),
-        ),
-        pageTitle: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Material Colors',
-            style:
-                Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ),
-        heroImageHeight: 200,
-        heroImage: const Image(
-          image: AssetImage('lib/assets/images/material_colors_hero.png'),
-          fit: BoxFit.cover,
-        ),
-        leadingNavBarWidget: IconButton(
-          padding: const EdgeInsets.all(16),
-          icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        ),
-        trailingNavBarWidget: IconButton(
-          padding: const EdgeInsets.all(16),
-          icon: const Icon(Icons.close),
+  WoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
+    return WoltModalSheetPage.withCustomSliverList(
+      stickyActionBar: Padding(
+        padding:
+        const EdgeInsets.fromLTRB(_pagePadding, _pagePadding / 4, _pagePadding, _pagePadding),
+        child: ElevatedButton(
           onPressed: () {
             Navigator.of(modalSheetContext).pop();
             pageIndexNotifier.value = 0;
           },
-        ),
-        sliverList: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (_, index) => ColorTile(color: allMaterialColors[index]),
-            childCount: allMaterialColors.length,
+          child: const SizedBox(
+            height: _buttonHeight,
+            width: double.infinity,
+            child: Center(child: Text('Close')),
           ),
         ),
-      );
-    }
-
-    return MaterialApp(
-      theme: ThemeData(colorSchemeSeed: const Color(0xFF009DE0), useMaterial3: true),
-      home: Scaffold(
-        body: Builder(
-          builder: (context) {
-            return Center(
-              child: SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () {
-                    WoltModalSheet.show<void>(
-                      pageIndexNotifier: pageIndexNotifier,
-                      context: context,
-                      pageListBuilder: (modalSheetContext) {
-                        return [
-                          page1(modalSheetContext),
-                          page2(modalSheetContext),
-                        ];
-                      },
-                      modalTypeBuilder: (context) {
-                        final size = MediaQuery.of(context).size.width;
-                        if (size < 768) {
-                          return WoltModalType.bottomSheet;
-                        } else {
-                          return WoltModalType.dialog;
-                        }
-                      },
-                      onModalDismissedWithBarrierTap: () {
-                        debugPrint('Closed modal sheet with barrier tap');
-                        Navigator.of(context).pop();
-                        pageIndexNotifier.value = 0;
-                      },
-                      maxDialogWidth: 560,
-                      minDialogWidth: 400,
-                      minPageHeight: 0.4,
-                      maxPageHeight: 0.9,
-                    );
-                  },
-                  child: const SizedBox(
-                    height: 56.0,
-                    child: Center(child: Text('Show Modal Sheet')),
-                  ),
-                ),
-              ),
-            );
-          },
+      ),
+      pageTitle: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: _pagePadding),
+        child: Text(
+          'Material Colors',
+          style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ),
+      heroImage: Image(
+        image: AssetImage(
+          'lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
+        ),
+        fit: BoxFit.cover,
+      ),
+      leadingNavBarWidget: IconButton(
+        padding: const EdgeInsets.all(_pagePadding),
+        icon: const Icon(Icons.arrow_back_rounded),
+        onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+      ),
+      trailingNavBarWidget: IconButton(
+        padding: const EdgeInsets.all(_pagePadding),
+        icon: const Icon(Icons.close),
+        onPressed: () {
+          Navigator.of(modalSheetContext).pop();
+          pageIndexNotifier.value = 0;
+        },
+      ),
+      sliverList: SliverList(
+        delegate: SliverChildBuilderDelegate(
+                  (_, index) => ColorTile(color: allMaterialColors[index]),
+          childCount: allMaterialColors.length,
         ),
       ),
     );
   }
+
+  return MaterialApp(
+    themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
+    theme: ThemeData.light(useMaterial3: true).copyWith(
+      extensions: const <ThemeExtension>[
+        WoltModalSheetThemeData(
+          heroImageHeight: _heroImageHeight,
+          topBarShadowColor: _lightThemeShadowColor,
+          modalBarrierColor: Colors.black54,
+        ),
+      ],
+    ),
+    darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+      extensions: const <ThemeExtension>[
+        WoltModalSheetThemeData(
+          topBarShadowColor: _darkThemeShadowColor,
+          modalBarrierColor: Colors.white12,
+          sabGradientColor: _darkSabGradientColor,
+          dialogShape: BeveledRectangleBorder(),
+          bottomSheetShape: BeveledRectangleBorder(),
+        ),
+      ],
+    ),
+    home: Scaffold(
+      body: Builder(
+        builder: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Light Theme'),
+                  Padding(
+                    padding: const EdgeInsets.all(_pagePadding),
+                    child: Switch(
+                      value: !_isLightTheme,
+                      onChanged: (_) => setState(() => _isLightTheme = !_isLightTheme),
+                    ),
+                  ),
+                  const Text('Dark Theme'),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show<void>(
+                    pageIndexNotifier: pageIndexNotifier,
+                    context: context,
+                    pageListBuilder: (modalSheetContext) {
+                      final textTheme = Theme.of(context).textTheme;
+                      return [
+                        page1(modalSheetContext, textTheme),
+                        page2(modalSheetContext, textTheme),
+                      ];
+                    },
+                    modalTypeBuilder: (context) {
+                      final size = MediaQuery.of(context).size.width;
+                      if (size < _pageBreakpoint) {
+                        return WoltModalType.bottomSheet;
+                      } else {
+                        return WoltModalType.dialog;
+                      }
+                    },
+                    onModalDismissedWithBarrierTap: () {
+                      debugPrint('Closed modal sheet with barrier tap');
+                      Navigator.of(context).pop();
+                      pageIndexNotifier.value = 0;
+                    },
+                    maxDialogWidth: 560,
+                    minDialogWidth: 400,
+                    minPageHeight: 0.0,
+                    maxPageHeight: 0.9,
+                  );
+                },
+                child: const SizedBox(
+                  height: _buttonHeight,
+                  width: _buttonWidth,
+                  child: Center(child: Text('Show Modal Sheet')),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
+  );
 }
 ```
 
 The code snippet above produces the following:
 </br>
 </br>
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/wms_example.gif?raw=true)
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app_with_theme_extensions?raw=true)
 
 ### Playground app with imperative navigation
 

@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:playground/home/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:playground/home/home_screen.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 void main() => runApp(const DemoApp());
+
+const Color _darkSabGradientColor = Color(0xFF313236);
 
 class DemoApp extends StatefulWidget {
   const DemoApp({Key? key}) : super(key: key);
@@ -16,6 +19,8 @@ class DemoApp extends StatefulWidget {
 }
 
 class _DemoAppState extends State<DemoApp> {
+  bool _isLightTheme = true;
+
   @override
   void initState() {
     super.initState();
@@ -30,46 +35,68 @@ class _DemoAppState extends State<DemoApp> {
 
   @override
   Widget build(BuildContext context) {
+    const inputDecorationTheme = InputDecorationTheme(
+      suffixStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: WoltColors.black64,
+      ),
+      contentPadding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
+      border: UnderlineInputBorder(borderSide: BorderSide.none),
+      constraints: BoxConstraints(minHeight: 64),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: WoltColors.blue),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: WoltColors.black16),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      focusColor: WoltColors.blue,
+    );
     return MaterialApp(
-      theme: ThemeData(
-        inputDecorationTheme: const InputDecorationTheme(
-          suffixStyle: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: WoltColors.black64,
-          ),
-          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
-          border: UnderlineInputBorder(borderSide: BorderSide.none),
-          constraints: BoxConstraints(minHeight: 64),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: WoltColors.blue),
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: WoltColors.black16),
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          focusColor: WoltColors.blue,
-        ),
+      themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
+      theme: ThemeData.light().copyWith(
+        brightness: Brightness.light,
+        inputDecorationTheme: inputDecorationTheme,
         primaryColor: WoltColors.blue,
         useMaterial3: true,
-        fontFamily: 'Inter',
-        textTheme: TextTheme(
-          headlineMedium: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w800,
-            letterSpacing: kIsWeb || Platform.isAndroid ? 0.2 : 0.12,
-          ),
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.all(WoltColors.blue),
+          trackColor: MaterialStateProperty.all(WoltColors.blue16),
         ),
-        typography: Typography.material2021(platform: defaultTargetPlatform),
-        scaffoldBackgroundColor: WoltColors.white,
-        indicatorColor: Colors.transparent,
-        cardColor: WoltColors.white,
+        extensions: const <ThemeExtension>[
+          WoltModalSheetThemeData(
+            modalBarrierColor: Colors.black54,
+          ),
+        ],
+      ),
+      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+        brightness: Brightness.dark,
+        inputDecorationTheme: inputDecorationTheme,
+        primaryColor: WoltColors.blue,
+        useMaterial3: true,
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.all(WoltColors.blue),
+          trackColor: MaterialStateProperty.all(WoltColors.blue16),
+        ),
+        extensions: const <ThemeExtension>[
+          WoltModalSheetThemeData(
+            modalBarrierColor: Colors.white12,
+            sabGradientColor: _darkSabGradientColor,
+            dialogShape: BeveledRectangleBorder(),
+            bottomSheetShape: BeveledRectangleBorder(),
+          ),
+        ],
       ),
       debugShowCheckedModeBanner: false,
-      home: const ScrollConfiguration(
-        behavior: DragScrollBehavior(),
-        child: HomeScreen(),
+      home: ScrollConfiguration(
+        behavior: const DragScrollBehavior(),
+        child: HomeScreen(
+          onThemeBrightnessChanged: (bool isLightTheme) => setState(
+            () => _isLightTheme = isLightTheme,
+          ),
+        ),
       ),
     );
   }

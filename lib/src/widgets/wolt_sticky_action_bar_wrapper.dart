@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A widget that wraps the Sticky Action Bar in the [WoltModalSheetPage].
 ///
@@ -27,20 +28,20 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
     if (stickyActionBar == null) {
       return const SizedBox.shrink();
     }
-
-    // The background color for the sticky action bar and potentially its gradient overlay.
-    final backgroundColor = page.backgroundColor;
-
-    // Render a Column widget containing the sticky action bar
-    // and its gradient overlay if needed.
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final backgroundColor =
+        page.sabGradientColor ?? themeData?.sabGradientColor ?? defaultThemeData.sabGradientColor;
+    final hasSabGradient =
+        page.hasSabGradient ?? themeData?.hasSabGradient ?? defaultThemeData.hasSabGradient;
+    final surfaceTintColor = themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
     return Column(
       children: [
         // If a gradient is required, add a Container with a linear gradient decoration.
-        if (page.hasSabGradient)
+        if (hasSabGradient)
           Container(
             key: gradientWidgetKey,
-            /// TODO(ulusoyca): get the gradient height value from the theme extensions
-            height: 24.0,
+            height: themeData?.sabGradientHeight ?? defaultThemeData.sabGradientHeight,
             width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -54,7 +55,15 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
             ),
           ),
         // Render the sticky action bar with its background color.
-        ColoredBox(color: backgroundColor, child: stickyActionBar),
+        if (hasSabGradient)
+          Material(
+            type: MaterialType.canvas,
+            color: backgroundColor,
+            surfaceTintColor: surfaceTintColor,
+            child: stickyActionBar,
+          )
+        else
+          stickyActionBar,
       ],
     );
   }

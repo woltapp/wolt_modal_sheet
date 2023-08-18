@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
@@ -36,6 +37,7 @@ enum MultiPagePathName {
         );
     WoltModalSheetPage forcedMaxHeight(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithForcedMaxHeight.build(
+          brightness: Theme.of(context).brightness,
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,

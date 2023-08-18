@@ -5,15 +5,20 @@ import 'package:playground/home/pages/multi_page_path_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
+const double _buttonWidth = 200.0;
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({required this.onThemeBrightnessChanged, super.key});
+
+  final void Function(bool) onThemeBrightnessChanged;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isSlowAnimation = false;
+  bool _isSlowAnimation = false;
+  bool _isLightTheme = true;
 
   final pageIndexNotifier = ValueNotifier(0);
 
@@ -62,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
           WoltCircularElevatedButton(
             onPressed: () {
               setState(() {
-                timeDilation = isSlowAnimation ? 1.0 : 8.0;
-                isSlowAnimation = !isSlowAnimation;
+                timeDilation = _isSlowAnimation ? 1.0 : 8.0;
+                _isSlowAnimation = !_isSlowAnimation;
               });
             },
             icon: Icons.speed_outlined,
@@ -72,35 +77,55 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Builder(builder: (context) {
-        return Center(
-          child: SizedBox(
-            width: 200,
-            child: WoltElevatedButton(
-              onPressed: () {
-                WoltModalSheet.showWithDynamicPath(
-                  pageIndexNotifier: pageIndexNotifier,
-                  context: context,
-                  pageListBuilderNotifier: pageListBuilderNotifier,
-                  modalTypeBuilder: _modalTypeBuilder,
-                  onModalDismissedWithDrag: () {
-                    debugPrint('Bottom sheet is dismissed with drag.');
-                    Navigator.of(context).pop();
-                    pageIndexNotifier.value = 0;
-                  },
-                  onModalDismissedWithBarrierTap: () {
-                    debugPrint('Modal is dismissed with barrier tap.');
-                    Navigator.of(context).pop();
-                    pageIndexNotifier.value = 0;
-                  },
-                  maxDialogWidth: 560,
-                  minDialogWidth: 400,
-                  minPageHeight: 0.4,
-                  maxPageHeight: 0.9,
-                );
-              },
-              child: const Text('Show Modal Sheet'),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Light Theme'),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Switch(
+                    value: !_isLightTheme,
+                    onChanged: (bool newValue) {
+                      _isLightTheme = !newValue;
+                      widget.onThemeBrightnessChanged(_isLightTheme);
+                    },
+                  ),
+                ),
+                const Text('Dark Theme'),
+              ],
             ),
-          ),
+            SizedBox(
+              width: _buttonWidth,
+              child: WoltElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.showWithDynamicPath(
+                    pageIndexNotifier: pageIndexNotifier,
+                    context: context,
+                    pageListBuilderNotifier: pageListBuilderNotifier,
+                    modalTypeBuilder: _modalTypeBuilder,
+                    onModalDismissedWithDrag: () {
+                      debugPrint('Bottom sheet is dismissed with drag.');
+                      Navigator.of(context).pop();
+                      pageIndexNotifier.value = 0;
+                    },
+                    onModalDismissedWithBarrierTap: () {
+                      debugPrint('Modal is dismissed with barrier tap.');
+                      Navigator.of(context).pop();
+                      pageIndexNotifier.value = 0;
+                    },
+                    maxDialogWidth: 560,
+                    minDialogWidth: 400,
+                    minPageHeight: 0.0,
+                    maxPageHeight: 0.9,
+                  );
+                },
+                child: const Text('Show Modal Sheet'),
+              ),
+            ),
+          ],
         );
       }),
     );

@@ -16,8 +16,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.decorator,
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
+    this.modalBarrierColor,
     WoltModalTypeBuilder? modalTypeBuilder,
     bool? enableDragForBottomSheet,
+    bool? showDragHandleForBottomSheet,
     bool? useSafeArea,
     bool? barrierDismissible,
     AnimationController? transitionAnimationController,
@@ -29,7 +31,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     double? maxDialogWidth,
     double? minPageHeight,
     double? maxPageHeight,
-  })  : _enableDragForBottomSheet = enableDragForBottomSheet ?? true,
+  })  : _enableDragForBottomSheet = enableDragForBottomSheet,
+        _showDragHandleForBottomSheet = showDragHandleForBottomSheet,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
@@ -59,7 +62,9 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final VoidCallback? onModalDismissedWithDrag;
 
-  final bool _enableDragForBottomSheet;
+  final bool? _enableDragForBottomSheet;
+
+  final bool? _showDragHandleForBottomSheet;
 
   final bool _useSafeArea;
 
@@ -74,6 +79,12 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final double? _minPageHeight;
 
   final double? _maxPageHeight;
+
+  /// Specifies the color of the modal barrier that darkens everything below the
+  /// bottom sheet.
+  ///
+  /// Defaults to `Colors.black54` if not provided.
+  final Color? modalBarrierColor;
 
   /// The animation controller that controls the bottom sheet's entrance and
   /// exit animations.
@@ -115,6 +126,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       animationController: animationController,
       enableDragForBottomSheet: _enableDragForBottomSheet,
+      showDragHandleForBottomSheet: _showDragHandleForBottomSheet,
       useSafeArea: _useSafeArea,
       minDialogWidth: _minDialogWidth,
       maxDialogWidth: _maxDialogWidth,
@@ -157,7 +169,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Color? get barrierColor => Colors.black54;
+  Color? get barrierColor => modalBarrierColor ?? Colors.black54;
 
   @override
   Duration get transitionDuration => _transitionDuration;

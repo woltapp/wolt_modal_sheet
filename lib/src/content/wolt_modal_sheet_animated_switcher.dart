@@ -8,6 +8,7 @@ import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_
 import 'package:wolt_modal_sheet/src/content/components/outgoing/outgoing_navigation_toolbar_animated_builder.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_navigation_toolbar.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -17,12 +18,14 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
   final int pageIndex;
   final WoltModalType woltModalType;
   final double sheetWidth;
+  final bool showDragHandleForBottomSheet;
 
   const WoltModalSheetAnimatedSwitcher({
     required this.pages,
     required this.pageIndex,
     required this.woltModalType,
     required this.sheetWidth,
+    required this.showDragHandleForBottomSheet,
     Key? key,
   })  : assert(pageIndex >= 0 && pageIndex < pages.length),
         super(key: key);
@@ -42,7 +45,11 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
 
   WoltModalSheetPage get _page => widget.pages[_pageIndex];
 
-  bool get _hasTopBarLayer => _page.hasTopBarLayer;
+  bool get _hasTopBarLayer {
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    return _page.hasTopBarLayer ?? themeData?.hasTopBarLayer ?? defaultThemeData.hasTopBarLayer;
+  }
 
   double get _topBarTranslationY => _hasTopBarLayer ? 4 : 0;
 
@@ -120,6 +127,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             page: _page,
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
+            showDragHandleForBottomSheet: widget.showDragHandleForBottomSheet,
           ),
         if (currentWidgets != null)
           WoltModalSheetLayout(
@@ -127,6 +135,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             page: _page,
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
+            showDragHandleForBottomSheet: widget.showDragHandleForBottomSheet,
           ),
         if (currentWidgets != null &&
             animationController != null &&
@@ -213,9 +222,15 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   }
 
   CurrentPageWidgets _createCurrentWidgets(AnimationController animationController) {
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final hasTopBarLayer = _hasTopBarLayer;
+    final isTopBarLayerAlwaysVisible = _page.isTopBarLayerAlwaysVisible ??
+        themeData?.isTopBarLayerAlwaysVisible ??
+        defaultThemeData.isTopBarLayerAlwaysVisible;
     final topBarTitle = WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
-    final navigationBarHeight = _page.navigationBarHeight;
-    final isTopBarLayerAlwaysVisible = _page.isTopBarLayerAlwaysVisible;
+    final navBarHeight =
+        _page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
     return CurrentPageWidgets(
       mainContentAnimatedBuilder: CurrentMainContentAnimatedBuilder(
         mainContent: _createMainContent(
@@ -231,7 +246,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       offstagedMainContent: _createMainContent(titleKey: _offstagedTitleKeys[_pageIndex]),
       topBarAnimatedBuilder: CurrentTopBarAnimatedBuilder(
         controller: animationController,
-        child: _page.hasTopBarLayer
+        child: hasTopBarLayer
             ? (isTopBarLayerAlwaysVisible
                 ? WoltModalSheetTopBar(page: _page)
                 : WoltModalSheetTopBarFlow(
@@ -245,11 +260,11 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
       navigationToolbarAnimatedBuilder: CurrentNavigationToolbarAnimatedBuilder(
         controller: animationController,
         child: SizedBox(
-          height: navigationBarHeight,
+          height: navBarHeight,
           child: WoltNavigationToolbar(
             middleSpacing: 16.0,
             leading: _page.leadingNavBarWidget,
-            middle: _hasTopBarLayer
+            middle: hasTopBarLayer
                 ? (isTopBarLayerAlwaysVisible
                     ? Center(child: topBarTitle)
                     : WoltModalSheetTopBarTitleFlow(

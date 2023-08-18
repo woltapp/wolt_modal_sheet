@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
-import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/drag_scroll_behavior.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_bottom_sheet_drag_handle.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// The layout for the Wolt Modal Sheet.
 class WoltModalSheetLayout extends StatelessWidget {
@@ -12,6 +12,7 @@ class WoltModalSheetLayout extends StatelessWidget {
     required this.paginatingWidgetsGroup,
     required this.woltModalType,
     required this.topBarTranslationY,
+    required this.showDragHandleForBottomSheet,
     Key? key,
   }) : super(key: key);
 
@@ -19,12 +20,17 @@ class WoltModalSheetLayout extends StatelessWidget {
   final PaginatingWidgetsGroup paginatingWidgetsGroup;
   final WoltModalType woltModalType;
   final double topBarTranslationY;
+  final bool showDragHandleForBottomSheet;
 
   @override
   Widget build(BuildContext context) {
-    final hasTopBarLayer = page.hasTopBarLayer;
-    final topBarHeight = hasTopBarLayer ? page.navigationBarHeight : 0.0;
-    final shouldShowDragHandle = woltModalType == WoltModalType.bottomSheet;
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final hasTopBarLayer =
+        page.hasTopBarLayer ?? themeData?.hasTopBarLayer ?? defaultThemeData.hasTopBarLayer;
+    final topBarHeight = hasTopBarLayer
+        ? (page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight)
+        : 0.0;
     return ScrollConfiguration(
       behavior: const DragScrollBehavior(),
       child: Stack(
@@ -38,6 +44,13 @@ class WoltModalSheetLayout extends StatelessWidget {
               height: topBarHeight,
               child: paginatingWidgetsGroup.topBarAnimatedBuilder,
             ),
+          if (showDragHandleForBottomSheet)
+            const Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              child: WoltBottomSheetDragHandle(),
+            ),
           Positioned(
             top: 0,
             left: 0,
@@ -50,13 +63,6 @@ class WoltModalSheetLayout extends StatelessWidget {
             bottom: 0,
             child: paginatingWidgetsGroup.sabAnimatedBuilder,
           ),
-          if (shouldShowDragHandle)
-            const Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              child: WoltBottomSheetDragHandle(),
-            ),
         ],
       ),
     );

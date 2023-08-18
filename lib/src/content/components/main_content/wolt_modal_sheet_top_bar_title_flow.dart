@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// This class represents the top bar title behavior within a modal sheet page.
 class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
@@ -22,9 +24,14 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final topBarHeight = page.navigationBarHeight;
-    final heroImageHeight = page.heroImage == null ? 0.0 : (page.heroImageHeight ?? 0.0);
-
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final topBarHeight = page.navBarHeight ??
+        themeData?.navBarHeight ??
+        defaultThemeData.navBarHeight;
+    final heroImageHeight = page.heroImage == null
+        ? 0.0
+        : (page.heroImageHeight ?? themeData?.heroImageHeight ?? defaultThemeData.heroImageHeight);
     return Flow(
       delegate: _TopBarTitleFlowDelegate(
         topBarHeight: topBarHeight,
