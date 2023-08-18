@@ -57,7 +57,7 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    final pageTitleHeight = titleKey.currentContext!.size!.height;
+    final double pageTitleHeight = titleKey.currentContext!.size!.height;
     const topBarTitleTranslationYStart =
         -1 * WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
     const topBarTitleTranslationYAmount =
