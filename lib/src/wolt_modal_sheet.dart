@@ -229,7 +229,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   break;
               }
               final enableDrag = _modalType == WoltModalType.bottomSheet &&
-                  (widget.enableDragForBottomSheet ??
+                  (page.enableDragForBottomSheet ??
+                      widget.enableDragForBottomSheet ??
                       themeData?.enableDragForBottomSheet ??
                       defaultThemeData.enableDragForBottomSheet);
               final showDragHandle = widget.showDragHandleForBottomSheet ??

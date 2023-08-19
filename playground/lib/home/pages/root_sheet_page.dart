@@ -62,6 +62,11 @@ class RootSheetPage {
                 isSelected: false,
               ),
               WoltSelectionListItemData(
+                title: 'Page with dynamic properties',
+                value: MultiPagePathName.dynamicPageProperties,
+                isSelected: false,
+              ),
+              WoltSelectionListItemData(
                 title: 'All the pages in one flow',
                 value: MultiPagePathName.allPagesPath,
                 isSelected: false,
