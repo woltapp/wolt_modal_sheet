@@ -1,26 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 /// Enum representing the type of the modal.
 enum WoltModalType {
   bottomSheet,
   dialog;
 
   const WoltModalType();
-
-  /// Returns the [BorderRadiusGeometry] based on the specified [radiusAmount].
-  ///
-  /// The [radiusAmount] determines the amount of radius to be applied to the border.
-  BorderRadiusGeometry borderRadiusGeometry(double radiusAmount) {
-    final radius = Radius.circular(radiusAmount);
-    switch (this) {
-      case WoltModalType.bottomSheet:
-        return BorderRadius.only(topLeft: radius, topRight: radius);
-      case WoltModalType.dialog:
-        return BorderRadius.all(radius);
-    }
-  }
 
   /// Returns the width of the modal content based on the total [totalWidth].
   ///

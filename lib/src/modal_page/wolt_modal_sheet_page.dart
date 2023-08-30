@@ -46,7 +46,7 @@ class WoltModalSheetPage {
   /// navigation bar layer.
   ///
   /// Top bar aids users in grasping the context by displaying an optional title. The height of
-  /// the top bar is equal to the height of [navigationBarHeight]. In other saying, when visible,
+  /// the top bar is equal to the height of [navBarHeight]. In other saying, when visible,
   /// the top bar fills the transparent background of the navigation bar.
   ///
   /// In scenarios where sheets are filled with content requiring scrolling, by default the top
@@ -57,12 +57,12 @@ class WoltModalSheetPage {
   ///
   /// The Top Bar design is flexible, when [hasTopBarLayer] is set to false, the top bar and the
   /// [topBarTitle] will be hidden.
-  final bool hasTopBarLayer;
+  final bool? hasTopBarLayer;
 
   /// Indicates whether the top bar should always remain visible, regardless of the page scroll
   /// position. When set to true, the top bar will be permanently displayed; when false, it may
   /// be hidden or revealed  based on the page's scrolling behavior.
-  final bool isTopBarLayerAlwaysVisible;
+  final bool? isTopBarLayerAlwaysVisible;
 
   /// A [Widget] that represents the main content displayed in the page.
   final Widget? sliverList;
@@ -80,7 +80,7 @@ class WoltModalSheetPage {
   final double? heroImageHeight;
 
   /// The background color of the page.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// Height of the navigation bar. This value will also be the height of the top bar.
   ///
@@ -93,7 +93,7 @@ class WoltModalSheetPage {
   /// widget often serves as the close button, utilized to close the modal sheet. Together, these
   /// widgets provide clear and intuitive navigational control, differentiating themselves from
   /// the top bar by focusing specifically on directional navigation within the interface.
-  final double navigationBarHeight;
+  final double? navBarHeight;
 
   /// Indicates whether the page height should be at maximum even if the content size is smaller.
   final bool forceMaxHeight;
@@ -113,10 +113,19 @@ class WoltModalSheetPage {
   /// [stickyActionBar]. The purpose of this gradient is to visually suggest
   /// to the user that additional content might be present below the action bar.
   ///
-  /// If set to `true`, a gradient from the page's background color to transparent
-  /// is rendered right above the [stickyActionBar]. If `false`, no gradient is rendered.
-  /// By default, it's set to `true`.
-  final bool hasSabGradient;
+  /// If set to `true`, a gradient from the [sabGradientColor] to transparent is rendered right
+  /// above the [stickyActionBar]. If `false`, no gradient is rendered. By default, it's set to
+  /// `true`.
+  final bool? hasSabGradient;
+
+  /// The color of the gentle gradient overlay that is rendered above the [stickyActionBar]. The
+  /// purpose of this gradient is to visually suggest to the user that additional content might
+  /// be present below the action bar.
+  ///
+  /// If [hasSabGradient] set to `true`, a gradient from this color to transparent is rendered
+  /// right above the [stickyActionBar]. If `false`, no gradient is rendered. By default, it's
+  /// value is to page background color.
+  final Color? sabGradientColor;
 
   /// A widget representing leading widget in the navigation toolbar. This widget is usually
   /// a the back button.
@@ -126,29 +135,26 @@ class WoltModalSheetPage {
   /// a the close button.
   final Widget? trailingNavBarWidget;
 
-
-  static const _defaultNavBarHeight = 72.0;
-
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const WoltModalSheetPage({
     this.pageTitle,
-    this.navigationBarHeight = _defaultNavBarHeight,
+    this.navBarHeight,
     this.sliverList,
     this.singleChildContent,
     this.topBarTitle,
     this.heroImage,
     this.heroImageHeight,
-    this.backgroundColor = Colors.white,
-    this.hasSabGradient = true,
+    this.backgroundColor,
+    this.hasSabGradient,
+    this.sabGradientColor,
     this.forceMaxHeight = false,
     this.scrollController,
     this.stickyActionBar,
     this.leadingNavBarWidget,
     this.trailingNavBarWidget,
-    this.hasTopBarLayer = true,
-    this.isTopBarLayerAlwaysVisible = false,
-  })  : assert((heroImageHeight == null) == (heroImage == null)),
-        assert((singleChildContent != null) == (sliverList == null));
+    this.hasTopBarLayer,
+    this.isTopBarLayerAlwaysVisible,
+  }) : assert((singleChildContent != null) == (sliverList == null));
 
   /// Creates a [WoltModalSheetPage] with a single child main content.
   factory WoltModalSheetPage.withSingleChild({
@@ -158,11 +164,12 @@ class WoltModalSheetPage {
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
-    Color backgroundColor = Colors.white,
-    bool hasSabGradient = true,
+    Color? backgroundColor,
+    bool? hasSabGradient,
+    Color? sabGradientColor,
     bool forceMaxHeight = false,
-    bool isTopBarLayerAlwaysVisible = false,
-    bool hasTopBarLayer = true,
+    bool? isTopBarLayerAlwaysVisible,
+    bool? hasTopBarLayer,
     ScrollController? scrollController,
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
@@ -171,19 +178,20 @@ class WoltModalSheetPage {
     return WoltModalSheetPage(
       singleChildContent: child,
       pageTitle: pageTitle,
+      navBarHeight: navBarHeight,
       topBarTitle: topBarTitle,
-      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
-      hasTopBarLayer: hasTopBarLayer,
       heroImage: heroImage,
       heroImageHeight: heroImageHeight,
       backgroundColor: backgroundColor,
       hasSabGradient: hasSabGradient,
+      sabGradientColor: sabGradientColor,
       forceMaxHeight: forceMaxHeight,
+      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
+      hasTopBarLayer: hasTopBarLayer,
       scrollController: scrollController,
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
-      navigationBarHeight: navBarHeight ?? _defaultNavBarHeight,
     );
   }
 
@@ -191,16 +199,16 @@ class WoltModalSheetPage {
   factory WoltModalSheetPage.withCustomSliverList({
     required Widget sliverList,
     Widget? pageTitle,
-    double? topBarHeight,
     double? navBarHeight,
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
-    Color backgroundColor = Colors.white,
-    bool hasSabGradient = true,
+    Color? backgroundColor,
+    bool? hasSabGradient,
+    Color? sabGradientColor,
     bool forceMaxHeight = false,
-    bool isTopBarLayerAlwaysVisible = false,
-    bool hasTopBarLayer = true,
+    bool? isTopBarLayerAlwaysVisible,
+    bool? hasTopBarLayer,
     ScrollController? scrollController,
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
@@ -209,18 +217,20 @@ class WoltModalSheetPage {
     return WoltModalSheetPage(
       sliverList: sliverList,
       pageTitle: pageTitle,
-      navigationBarHeight: navBarHeight ?? _defaultNavBarHeight,
+      navBarHeight: navBarHeight,
       topBarTitle: topBarTitle,
       heroImage: heroImage,
       heroImageHeight: heroImageHeight,
       backgroundColor: backgroundColor,
+      hasSabGradient: hasSabGradient,
+      sabGradientColor: sabGradientColor,
       forceMaxHeight: forceMaxHeight,
+      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
+      hasTopBarLayer: hasTopBarLayer,
       scrollController: scrollController,
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
-      hasTopBarLayer: hasTopBarLayer,
-      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
     );
   }
 }

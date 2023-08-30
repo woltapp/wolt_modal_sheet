@@ -23,7 +23,6 @@ class SheetPageWithLazyList {
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
-      heroImageHeight: 200,
       heroImage: const Image(
         image: AssetImage('lib/assets/images/material_colors_hero.png'),
         fit: BoxFit.cover,

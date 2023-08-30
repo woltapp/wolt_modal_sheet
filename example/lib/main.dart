@@ -7,12 +7,23 @@ void main() {
 
 const double _bottomPaddingForButton = 150.0;
 const double _buttonHeight = 56.0;
+const double _buttonWidth = 200.0;
 const double _pagePadding = 16.0;
 const double _pageBreakpoint = 768.0;
-const double _heroImageHeight = 200.0;
+const double _heroImageHeight = 250.0;
+const Color _lightThemeShadowColor = Color(0xFFE4E4E4);
+const Color _darkThemeShadowColor = Color(0xFF121212);
+const Color _darkSabGradientColor = Color(0xFF313236);
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  bool _isLightTheme = true;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +31,7 @@ class MainApp extends StatelessWidget {
 
     WoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withSingleChild(
+        hasSabGradient: false,
         stickyActionBar: Padding(
           padding: const EdgeInsets.all(_pagePadding),
           child: Column(
@@ -69,7 +81,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
     WoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withCustomSliverList(
         stickyActionBar: Padding(
-          padding: const EdgeInsets.fromLTRB(_pagePadding, 0, _pagePadding, _pagePadding),
+          padding:
+              const EdgeInsets.fromLTRB(_pagePadding, _pagePadding / 4, _pagePadding, _pagePadding),
           child: ElevatedButton(
             onPressed: () {
               Navigator.of(modalSheetContext).pop();
@@ -89,9 +102,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
             style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        heroImageHeight: _heroImageHeight,
-        heroImage: const Image(
-          image: AssetImage('lib/assets/images/material_colors_hero.png'),
+        heroImage: Image(
+          image: AssetImage(
+            'lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
+          ),
           fit: BoxFit.cover,
         ),
         leadingNavBarWidget: IconButton(
@@ -117,14 +131,48 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
     }
 
     return MaterialApp(
-      theme: ThemeData(colorSchemeSeed: const Color(0xFF009DE0), useMaterial3: true),
+      themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
+      theme: ThemeData.light(useMaterial3: true).copyWith(
+        extensions: const <ThemeExtension>[
+          WoltModalSheetThemeData(
+            heroImageHeight: _heroImageHeight,
+            topBarShadowColor: _lightThemeShadowColor,
+            modalBarrierColor: Colors.black54,
+          ),
+        ],
+      ),
+      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+        extensions: const <ThemeExtension>[
+          WoltModalSheetThemeData(
+            topBarShadowColor: _darkThemeShadowColor,
+            modalBarrierColor: Colors.white12,
+            sabGradientColor: _darkSabGradientColor,
+            dialogShape: BeveledRectangleBorder(),
+            bottomSheetShape: BeveledRectangleBorder(),
+          ),
+        ],
+      ),
       home: Scaffold(
         body: Builder(
           builder: (context) {
-            return Center(
-              child: SizedBox(
-                width: _heroImageHeight,
-                child: ElevatedButton(
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Light Theme'),
+                    Padding(
+                      padding: const EdgeInsets.all(_pagePadding),
+                      child: Switch(
+                        value: !_isLightTheme,
+                        onChanged: (_) => setState(() => _isLightTheme = !_isLightTheme),
+                      ),
+                    ),
+                    const Text('Dark Theme'),
+                  ],
+                ),
+                ElevatedButton(
                   onPressed: () {
                     WoltModalSheet.show<void>(
                       pageIndexNotifier: pageIndexNotifier,
@@ -151,16 +199,17 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       },
                       maxDialogWidth: 560,
                       minDialogWidth: 400,
-                      minPageHeight: 0.4,
+                      minPageHeight: 0.0,
                       maxPageHeight: 0.9,
                     );
                   },
                   child: const SizedBox(
                     height: _buttonHeight,
+                    width: _buttonWidth,
                     child: Center(child: Text('Show Modal Sheet')),
                   ),
                 ),
-              ),
+              ],
             );
           },
         ),

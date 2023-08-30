@@ -12,7 +12,6 @@ class SheetPageWithHeroImage {
     bool isLastPage = true,
   }) {
     return WoltModalSheetPage.withSingleChild(
-      heroImageHeight: 200,
       heroImage: const Image(
         image: AssetImage('lib/assets/images/hero_image.jpg'),
         fit: BoxFit.cover,

@@ -6,13 +6,15 @@ class SheetPageWithForcedMaxHeight {
   SheetPageWithForcedMaxHeight._();
 
   static WoltModalSheetPage build({
+    required Brightness brightness,
     required VoidCallback onSabPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
     return WoltModalSheetPage.withSingleChild(
-      backgroundColor: WoltColors.green8,
+      backgroundColor: brightness == Brightness.light ? WoltColors.green8 : WoltColors.green64,
+      hasSabGradient: false,
       forceMaxHeight: true,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),

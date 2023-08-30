@@ -11,7 +11,6 @@ class ServeOrOfferModalPage {
     required VoidCallback onClosed,
   }) {
     return WoltModalSheetPage.withSingleChild(
-      heroImageHeight: 200,
       heroImage: const Image(
         image: AssetImage('lib/assets/images/coffee_is_ready.png'),
         fit: BoxFit.cover,

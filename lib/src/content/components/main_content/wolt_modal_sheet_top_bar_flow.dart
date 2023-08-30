@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// `WoltModalSheetTopBarFlow` controls the top bar behavior within the modal sheet page
 /// provided by the [WoltModalSheetPage] when `isTopBarLayerAlwaysVisible` is set to true.
@@ -27,8 +28,14 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final topBarHeight = page.navigationBarHeight;
-    final heroImageHeight = page.heroImage == null ? 0.0 : (page.heroImageHeight ?? 0.0);
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final topBarHeight = page.navBarHeight ??
+        themeData?.navBarHeight ??
+        defaultThemeData.navBarHeight;
+    final heroImageHeight = page.heroImage == null
+        ? 0.0
+        : (page.heroImageHeight ?? themeData?.heroImageHeight ?? defaultThemeData.heroImageHeight);
 
     return Flow(
       delegate: _TopBarFlowDelegate(
