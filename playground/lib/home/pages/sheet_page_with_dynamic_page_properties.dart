@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:playground/home/dynamic_page_properties.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+/// This is a page that is shown in the modal sheet to demonstrate how to change the page
+/// properties dynamically.
 class SheetPageWithDynamicPageProperties {
   SheetPageWithDynamicPageProperties._();
 
@@ -17,7 +19,7 @@ class SheetPageWithDynamicPageProperties {
     bool useOriginalPageValues = true;
     return WoltModalSheetPage.withSingleChild(
       hasSabGradient: false,
-      enableDragForBottomSheet: dynamicPageModel.value.enableDragForBottomSheet,
+      enableDrag: dynamicPageModel.value.enableDrag,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
@@ -40,7 +42,7 @@ class SheetPageWithDynamicPageProperties {
                 value: useOriginalPageValues,
                 onChanged: (newValue) {
                   dynamicPageModel.value = dynamicPageModel.value.copyWith(
-                    enableDragForBottomSheet: newValue,
+                    enableDrag: newValue,
                   );
                   setState(() => useOriginalPageValues = !useOriginalPageValues);
                 },

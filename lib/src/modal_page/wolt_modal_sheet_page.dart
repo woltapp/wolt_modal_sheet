@@ -120,7 +120,7 @@ class WoltModalSheetPage {
 
   /// Controls the draggability of the bottom sheet. This setting overrides the value provided
   /// via [WoltModalSheet.show] specifically for this page when the modal is displayed as a bottom sheet.
-  final bool? enableDragForBottomSheet;
+  final bool? enableDrag;
 
   /// The color of the gentle gradient overlay that is rendered above the [stickyActionBar]. The
   /// purpose of this gradient is to visually suggest to the user that additional content might
@@ -150,7 +150,7 @@ class WoltModalSheetPage {
     this.heroImageHeight,
     this.backgroundColor,
     this.hasSabGradient,
-    this.enableDragForBottomSheet,
+    this.enableDrag,
     this.sabGradientColor,
     this.forceMaxHeight = false,
     this.scrollController,
@@ -172,7 +172,7 @@ class WoltModalSheetPage {
     Color? backgroundColor,
     bool? hasSabGradient,
     Color? sabGradientColor,
-    bool? enableDragForBottomSheet,
+    bool? enableDrag,
     bool forceMaxHeight = false,
     bool? isTopBarLayerAlwaysVisible,
     bool? hasTopBarLayer,
@@ -190,7 +190,7 @@ class WoltModalSheetPage {
       heroImageHeight: heroImageHeight,
       backgroundColor: backgroundColor,
       hasSabGradient: hasSabGradient,
-      enableDragForBottomSheet: enableDragForBottomSheet,
+      enableDrag: enableDrag,
       sabGradientColor: sabGradientColor,
       forceMaxHeight: forceMaxHeight,
       isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
@@ -213,7 +213,7 @@ class WoltModalSheetPage {
     Color? backgroundColor,
     bool? hasSabGradient,
     Color? sabGradientColor,
-    bool? enableDragForBottomSheet,
+    bool? enableDrag,
     bool forceMaxHeight = false,
     bool? isTopBarLayerAlwaysVisible,
     bool? hasTopBarLayer,
@@ -232,7 +232,7 @@ class WoltModalSheetPage {
       backgroundColor: backgroundColor,
       hasSabGradient: hasSabGradient,
       sabGradientColor: sabGradientColor,
-      enableDragForBottomSheet: enableDragForBottomSheet,
+      enableDrag: enableDrag,
       forceMaxHeight: forceMaxHeight,
       isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
       hasTopBarLayer: hasTopBarLayer,
@@ -254,7 +254,7 @@ class WoltModalSheetPage {
     Color? backgroundColor,
     bool? hasSabGradient,
     Color? sabGradientColor,
-    bool? enableDragForBottomSheet,
+    bool? enableDrag,
     bool? forceMaxHeight,
     bool? isTopBarLayerAlwaysVisible,
     bool? hasTopBarLayer,
@@ -274,7 +274,7 @@ class WoltModalSheetPage {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       hasSabGradient: hasSabGradient ?? this.hasSabGradient,
       sabGradientColor: sabGradientColor ?? this.sabGradientColor,
-      enableDragForBottomSheet: enableDragForBottomSheet ?? this.enableDragForBottomSheet,
+      enableDrag: enableDrag ?? this.enableDrag,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
       isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,

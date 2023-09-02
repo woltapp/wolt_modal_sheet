@@ -14,7 +14,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.showDragHandleForBottomSheet,
     this.dragHandleColor,
     this.dragHandleSize,
-    this.enableDragForBottomSheet,
+    this.enableDrag,
     this.topBarShadowColor,
     this.topBarElevation,
     this.heroImageHeight,
@@ -65,7 +65,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   final Size? dragHandleSize;
 
   /// Whether the bottom sheet can be dragged.
-  final bool? enableDragForBottomSheet;
+  final bool? enableDrag;
 
   /// The elevation color of the top bar.
   final Color? topBarShadowColor;

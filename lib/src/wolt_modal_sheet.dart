@@ -29,7 +29,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.modalTypeBuilder,
     required this.animationController,
     required this.route,
-    required this.enableDragForBottomSheet,
+    required this.enableDrag,
     required this.showDragHandleForBottomSheet,
     required this.useSafeArea,
     this.minDialogWidth,
@@ -47,7 +47,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   final WoltModalTypeBuilder modalTypeBuilder;
   final AnimationController? animationController;
   final WoltModalSheetRoute<T> route;
-  final bool? enableDragForBottomSheet;
+  final bool? enableDrag;
   final bool? showDragHandleForBottomSheet;
   final bool useSafeArea;
   final double? minDialogWidth;
@@ -69,7 +69,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool useRootNavigator = false,
     bool? useSafeArea,
     bool? barrierDismissible,
-    bool? enableDragForBottomSheet,
+    bool? enableDrag,
     bool? showDragHandleForBottomSheet,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
@@ -93,7 +93,7 @@ class WoltModalSheet<T> extends StatefulWidget {
       useRootNavigator: useRootNavigator,
       useSafeArea: useSafeArea,
       barrierDismissible: barrierDismissible,
-      enableDragForBottomSheet: enableDragForBottomSheet,
+      enableDrag: enableDrag,
       showDragHandleForBottomSheet: showDragHandleForBottomSheet,
       routeSettings: routeSettings,
       transitionDuration: transitionDuration,
@@ -119,7 +119,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool useRootNavigator = false,
     bool? useSafeArea,
     bool? barrierDismissible,
-    bool? enableDragForBottomSheet,
+    bool? enableDrag,
     bool? showDragHandleForBottomSheet,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
@@ -145,7 +145,7 @@ class WoltModalSheet<T> extends StatefulWidget {
         routeSettings: routeSettings,
         transitionDuration: transitionDuration,
         barrierDismissible: barrierDismissible,
-        enableDragForBottomSheet: enableDragForBottomSheet,
+        enableDrag: enableDrag,
         showDragHandleForBottomSheet: showDragHandleForBottomSheet,
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
         onModalDismissedWithDrag: onModalDismissedWithDrag,
@@ -229,10 +229,10 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   break;
               }
               final enableDrag = _modalType == WoltModalType.bottomSheet &&
-                  (page.enableDragForBottomSheet ??
-                      widget.enableDragForBottomSheet ??
-                      themeData?.enableDragForBottomSheet ??
-                      defaultThemeData.enableDragForBottomSheet);
+                  (page.enableDrag ??
+                      widget.enableDrag ??
+                      themeData?.enableDrag ??
+                      defaultThemeData.enableDrag);
               final showDragHandle = widget.showDragHandleForBottomSheet ??
                   (enableDrag &&
                       (themeData?.showDragHandleForBottomSheet ??

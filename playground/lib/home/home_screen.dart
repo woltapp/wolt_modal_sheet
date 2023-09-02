@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     decorator: (child) {
                       return DynamicPageProperties(
                         notifier: DynamicPagePropertiesNotifier(
-                          DynamicPagePropertiesModel(enableDragForBottomSheet: true),
+                          DynamicPagePropertiesModel(enableDrag: true),
                         ),
                         child: child,
                       );

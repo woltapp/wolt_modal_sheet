@@ -10,15 +10,15 @@ class DynamicPagePropertiesNotifier extends ValueNotifier<DynamicPagePropertiesM
 /// A model class that represents the dynamic properties of a page.
 class DynamicPagePropertiesModel {
   /// Indicates whether dragging is enabled for the bottom sheet.
-  final bool enableDragForBottomSheet;
+  final bool enableDrag;
 
   /// Creates a [DynamicPagePropertiesModel] with the provided properties.
-  DynamicPagePropertiesModel({required this.enableDragForBottomSheet});
+  DynamicPagePropertiesModel({required this.enableDrag});
 
   /// Creates a copy of [DynamicPagePropertiesModel] with optional property updates.
-  DynamicPagePropertiesModel copyWith({bool? enableDragForBottomSheet}) {
+  DynamicPagePropertiesModel copyWith({bool? enableDrag}) {
     return DynamicPagePropertiesModel(
-      enableDragForBottomSheet: enableDragForBottomSheet ?? this.enableDragForBottomSheet,
+      enableDrag: enableDrag ?? this.enableDrag,
     );
   }
 }
