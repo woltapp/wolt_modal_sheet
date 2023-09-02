@@ -42,7 +42,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
 
   /// Whether to show the drag handle.
   @override
-  bool get showDragHandleForBottomSheet => enableDrag;
+  bool get showDragHandle => enableDrag;
 
   /// Whether to enable the drag for bottom sheet.
   @override

@@ -18,14 +18,14 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
   final int pageIndex;
   final WoltModalType woltModalType;
   final double sheetWidth;
-  final bool showDragHandleForBottomSheet;
+  final bool showDragHandle;
 
   const WoltModalSheetAnimatedSwitcher({
     required this.pages,
     required this.pageIndex,
     required this.woltModalType,
     required this.sheetWidth,
-    required this.showDragHandleForBottomSheet,
+    required this.showDragHandle,
     Key? key,
   })  : assert(pageIndex >= 0 && pageIndex < pages.length),
         super(key: key);
@@ -127,7 +127,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             page: _page,
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
-            showDragHandleForBottomSheet: widget.showDragHandleForBottomSheet,
+            showDragHandle: widget.showDragHandle,
           ),
         if (currentWidgets != null)
           WoltModalSheetLayout(
@@ -135,7 +135,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             page: _page,
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
-            showDragHandleForBottomSheet: widget.showDragHandleForBottomSheet,
+            showDragHandle: widget.showDragHandle,
           ),
         if (currentWidgets != null &&
             animationController != null &&

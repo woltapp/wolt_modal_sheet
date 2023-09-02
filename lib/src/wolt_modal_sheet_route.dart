@@ -19,7 +19,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.modalBarrierColor,
     WoltModalTypeBuilder? modalTypeBuilder,
     bool? enableDrag,
-    bool? showDragHandleForBottomSheet,
+    bool? showDragHandle,
     bool? useSafeArea,
     bool? barrierDismissible,
     AnimationController? transitionAnimationController,
@@ -32,7 +32,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     double? minPageHeight,
     double? maxPageHeight,
   })  : _enableDrag = enableDrag,
-        _showDragHandleForBottomSheet = showDragHandleForBottomSheet,
+        _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
         _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
@@ -64,7 +64,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final bool? _enableDrag;
 
-  final bool? _showDragHandleForBottomSheet;
+  final bool? _showDragHandle;
 
   final bool _useSafeArea;
 
@@ -126,7 +126,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       animationController: animationController,
       enableDrag: _enableDrag,
-      showDragHandleForBottomSheet: _showDragHandleForBottomSheet,
+      showDragHandle: _showDragHandle,
       useSafeArea: _useSafeArea,
       minDialogWidth: _minDialogWidth,
       maxDialogWidth: _maxDialogWidth,
