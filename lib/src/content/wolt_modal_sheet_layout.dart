@@ -12,7 +12,7 @@ class WoltModalSheetLayout extends StatelessWidget {
     required this.paginatingWidgetsGroup,
     required this.woltModalType,
     required this.topBarTranslationY,
-    required this.showDragHandleForBottomSheet,
+    required this.showDragHandle,
     Key? key,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class WoltModalSheetLayout extends StatelessWidget {
   final PaginatingWidgetsGroup paginatingWidgetsGroup;
   final WoltModalType woltModalType;
   final double topBarTranslationY;
-  final bool showDragHandleForBottomSheet;
+  final bool showDragHandle;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class WoltModalSheetLayout extends StatelessWidget {
               height: topBarHeight,
               child: paginatingWidgetsGroup.topBarAnimatedBuilder,
             ),
-          if (showDragHandleForBottomSheet)
+          if (showDragHandle)
             const Positioned(
               left: 0,
               right: 0,

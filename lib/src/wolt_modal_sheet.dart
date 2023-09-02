@@ -29,8 +29,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.modalTypeBuilder,
     required this.animationController,
     required this.route,
-    required this.enableDragForBottomSheet,
-    required this.showDragHandleForBottomSheet,
+    required this.enableDrag,
+    required this.showDragHandle,
     required this.useSafeArea,
     this.minDialogWidth,
     this.maxDialogWidth,
@@ -47,8 +47,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   final WoltModalTypeBuilder modalTypeBuilder;
   final AnimationController? animationController;
   final WoltModalSheetRoute<T> route;
-  final bool? enableDragForBottomSheet;
-  final bool? showDragHandleForBottomSheet;
+  final bool? enableDrag;
+  final bool? showDragHandle;
   final bool useSafeArea;
   final double? minDialogWidth;
   final double? maxDialogWidth;
@@ -69,8 +69,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool useRootNavigator = false,
     bool? useSafeArea,
     bool? barrierDismissible,
-    bool? enableDragForBottomSheet,
-    bool? showDragHandleForBottomSheet,
+    bool? enableDrag,
+    bool? showDragHandle,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
@@ -93,8 +93,8 @@ class WoltModalSheet<T> extends StatefulWidget {
       useRootNavigator: useRootNavigator,
       useSafeArea: useSafeArea,
       barrierDismissible: barrierDismissible,
-      enableDragForBottomSheet: enableDragForBottomSheet,
-      showDragHandleForBottomSheet: showDragHandleForBottomSheet,
+      enableDrag: enableDrag,
+      showDragHandle: showDragHandle,
       routeSettings: routeSettings,
       transitionDuration: transitionDuration,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
@@ -119,8 +119,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool useRootNavigator = false,
     bool? useSafeArea,
     bool? barrierDismissible,
-    bool? enableDragForBottomSheet,
-    bool? showDragHandleForBottomSheet,
+    bool? enableDrag,
+    bool? showDragHandle,
     RouteSettings? routeSettings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
@@ -145,8 +145,8 @@ class WoltModalSheet<T> extends StatefulWidget {
         routeSettings: routeSettings,
         transitionDuration: transitionDuration,
         barrierDismissible: barrierDismissible,
-        enableDragForBottomSheet: enableDragForBottomSheet,
-        showDragHandleForBottomSheet: showDragHandleForBottomSheet,
+        enableDrag: enableDrag,
+        showDragHandle: showDragHandle,
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
         onModalDismissedWithDrag: onModalDismissedWithDrag,
         transitionAnimationController: transitionAnimationController,
@@ -229,13 +229,14 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   break;
               }
               final enableDrag = _modalType == WoltModalType.bottomSheet &&
-                  (widget.enableDragForBottomSheet ??
-                      themeData?.enableDragForBottomSheet ??
-                      defaultThemeData.enableDragForBottomSheet);
-              final showDragHandle = widget.showDragHandleForBottomSheet ??
+                  (page.enableDrag ??
+                      widget.enableDrag ??
+                      themeData?.enableDrag ??
+                      defaultThemeData.enableDrag);
+              final showDragHandle = widget.showDragHandle ??
                   (enableDrag &&
-                      (themeData?.showDragHandleForBottomSheet ??
-                          defaultThemeData.showDragHandleForBottomSheet));
+                      (themeData?.showDragHandle ??
+                          defaultThemeData.showDragHandle));
               final pageBackgroundColor = page.backgroundColor ??
                   themeData?.backgroundColor ??
                   defaultThemeData.backgroundColor;
@@ -298,7 +299,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                                 pageIndex: pageIndex,
                                 pages: pages,
                                 sheetWidth: constraints.maxWidth,
-                                showDragHandleForBottomSheet: showDragHandle,
+                                showDragHandle: showDragHandle,
                               );
                             },
                           ),

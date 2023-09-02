@@ -118,6 +118,10 @@ class WoltModalSheetPage {
   /// `true`.
   final bool? hasSabGradient;
 
+  /// Controls the draggability of the bottom sheet. This setting overrides the value provided
+  /// via [WoltModalSheet.show] specifically for this page when the modal is displayed as a bottom sheet.
+  final bool? enableDrag;
+
   /// The color of the gentle gradient overlay that is rendered above the [stickyActionBar]. The
   /// purpose of this gradient is to visually suggest to the user that additional content might
   /// be present below the action bar.
@@ -146,6 +150,7 @@ class WoltModalSheetPage {
     this.heroImageHeight,
     this.backgroundColor,
     this.hasSabGradient,
+    this.enableDrag,
     this.sabGradientColor,
     this.forceMaxHeight = false,
     this.scrollController,
@@ -167,6 +172,7 @@ class WoltModalSheetPage {
     Color? backgroundColor,
     bool? hasSabGradient,
     Color? sabGradientColor,
+    bool? enableDrag,
     bool forceMaxHeight = false,
     bool? isTopBarLayerAlwaysVisible,
     bool? hasTopBarLayer,
@@ -184,6 +190,7 @@ class WoltModalSheetPage {
       heroImageHeight: heroImageHeight,
       backgroundColor: backgroundColor,
       hasSabGradient: hasSabGradient,
+      enableDrag: enableDrag,
       sabGradientColor: sabGradientColor,
       forceMaxHeight: forceMaxHeight,
       isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
@@ -206,6 +213,7 @@ class WoltModalSheetPage {
     Color? backgroundColor,
     bool? hasSabGradient,
     Color? sabGradientColor,
+    bool? enableDrag,
     bool forceMaxHeight = false,
     bool? isTopBarLayerAlwaysVisible,
     bool? hasTopBarLayer,
@@ -224,6 +232,7 @@ class WoltModalSheetPage {
       backgroundColor: backgroundColor,
       hasSabGradient: hasSabGradient,
       sabGradientColor: sabGradientColor,
+      enableDrag: enableDrag,
       forceMaxHeight: forceMaxHeight,
       isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible,
       hasTopBarLayer: hasTopBarLayer,
@@ -231,6 +240,48 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
+    );
+  }
+
+  WoltModalSheetPage copyWith({
+    Widget? pageTitle,
+    double? navBarHeight,
+    Widget? sliverList,
+    Widget? singleChildContent,
+    Widget? topBarTitle,
+    Widget? heroImage,
+    double? heroImageHeight,
+    Color? backgroundColor,
+    bool? hasSabGradient,
+    Color? sabGradientColor,
+    bool? enableDrag,
+    bool? forceMaxHeight,
+    bool? isTopBarLayerAlwaysVisible,
+    bool? hasTopBarLayer,
+    ScrollController? scrollController,
+    Widget? stickyActionBar,
+    Widget? leadingNavBarWidget,
+    Widget? trailingNavBarWidget,
+  }) {
+    return WoltModalSheetPage(
+      pageTitle: pageTitle ?? this.pageTitle,
+      navBarHeight: navBarHeight ?? this.navBarHeight,
+      sliverList: sliverList ?? this.sliverList,
+      singleChildContent: singleChildContent ?? this.singleChildContent,
+      topBarTitle: topBarTitle ?? this.topBarTitle,
+      heroImage: heroImage ?? this.heroImage,
+      heroImageHeight: heroImageHeight ?? this.heroImageHeight,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      hasSabGradient: hasSabGradient ?? this.hasSabGradient,
+      sabGradientColor: sabGradientColor ?? this.sabGradientColor,
+      enableDrag: enableDrag ?? this.enableDrag,
+      forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
+      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
+      scrollController: scrollController ?? this.scrollController,
+      stickyActionBar: stickyActionBar ?? this.stickyActionBar,
+      leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
+      trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
     );
   }
 }

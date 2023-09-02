@@ -42,11 +42,11 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
 
   /// Whether to show the drag handle.
   @override
-  bool get showDragHandleForBottomSheet => enableDragForBottomSheet;
+  bool get showDragHandle => enableDrag;
 
   /// Whether to enable the drag for bottom sheet.
   @override
-  bool get enableDragForBottomSheet => true;
+  bool get enableDrag => true;
 
   @override
   Color get dragHandleColor => _colors.onSurfaceVariant.withOpacity(0.4);

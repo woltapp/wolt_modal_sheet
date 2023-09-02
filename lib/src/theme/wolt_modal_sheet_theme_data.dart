@@ -11,10 +11,10 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.modalBarrierColor,
     this.bottomSheetShape,
     this.dialogShape,
-    this.showDragHandleForBottomSheet,
+    this.showDragHandle,
     this.dragHandleColor,
     this.dragHandleSize,
-    this.enableDragForBottomSheet,
+    this.enableDrag,
     this.topBarShadowColor,
     this.topBarElevation,
     this.heroImageHeight,
@@ -56,7 +56,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   final ShapeBorder? dialogShape;
 
   /// Whether to show the drag handle.
-  final bool? showDragHandleForBottomSheet;
+  final bool? showDragHandle;
 
   /// The color of the drag handle.
   final Color? dragHandleColor;
@@ -65,7 +65,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   final Size? dragHandleSize;
 
   /// Whether the bottom sheet can be dragged.
-  final bool? enableDragForBottomSheet;
+  final bool? enableDrag;
 
   /// The elevation color of the top bar.
   final Color? topBarShadowColor;
@@ -135,7 +135,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     Color? modalBarrierColor,
     ShapeBorder? bottomSheetShape,
     ShapeBorder? dialogShape,
-    bool? showDragHandleForBottomSheet,
+    bool? showDragHandle,
     Color? dragHandleColor,
     Size? dragHandleSize,
     Color? topBarShadowColor,
@@ -160,7 +160,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       modalBarrierColor: modalBarrierColor ?? this.modalBarrierColor,
       bottomSheetShape: bottomSheetShape ?? this.bottomSheetShape,
       dialogShape: dialogShape ?? this.dialogShape,
-      showDragHandleForBottomSheet: showDragHandleForBottomSheet ?? this.showDragHandleForBottomSheet,
+      showDragHandle: showDragHandle ?? this.showDragHandle,
       dragHandleColor: dragHandleColor ?? this.dragHandleColor,
       dragHandleSize: dragHandleSize ?? this.dragHandleSize,
       topBarShadowColor: topBarShadowColor ?? this.topBarShadowColor,
@@ -188,7 +188,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     return WoltModalSheetThemeData(
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
       modalElevation: lerpDouble(modalElevation, other.modalElevation, t),
-      showDragHandleForBottomSheet: t < 0.5 ? showDragHandleForBottomSheet : other.showDragHandleForBottomSheet,
+      showDragHandle: t < 0.5 ? showDragHandle : other.showDragHandle,
       modalBarrierColor: Color.lerp(modalBarrierColor, other.modalBarrierColor, t),
       bottomSheetShape: ShapeBorder.lerp(bottomSheetShape, other.bottomSheetShape, t),
       dialogShape: ShapeBorder.lerp(dialogShape, other.dialogShape, t),

@@ -1,6 +1,7 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:playground/home/dynamic_page_properties.dart';
 import 'package:playground/home/pages/multi_page_path_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
@@ -115,6 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       debugPrint('Modal is dismissed with barrier tap.');
                       Navigator.of(context).pop();
                       pageIndexNotifier.value = 0;
+                    },
+                    decorator: (child) {
+                      return DynamicPageProperties(
+                        notifier: DynamicPagePropertiesNotifier(
+                          DynamicPagePropertiesModel(enableDrag: true),
+                        ),
+                        child: child,
+                      );
                     },
                     maxDialogWidth: 560,
                     minDialogWidth: 400,
