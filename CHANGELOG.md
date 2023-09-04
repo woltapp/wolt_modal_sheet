@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Documentation updates. [#53](https://github.com/woltapp/wolt_modal_sheet/pull/53)
+
 ## 0.1.0
 
 - Remove unnecessary import and update example project's dependency version. [#52](https://github.com/woltapp/wolt_modal_sheet/pull/52)
