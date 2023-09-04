@@ -1,5 +1,6 @@
 ## 0.1.0
 
+- Remove unnecessary import and update example project's dependency version. [#52](https://github.com/woltapp/wolt_modal_sheet/pull/52)
 - Add option to dynamically enable bottom sheet drag for a single page. [#45](https://github.com/woltapp/wolt_modal_sheet/pull/45)
 - Add theme extensions for wolt modal sheet. [#44](https://github.com/woltapp/wolt_modal_sheet/pull/44)
 - Enhancing Top Bar Configuration & Scroll Motion Animation. [#42](https://github.com/woltapp/wolt_modal_sheet/pull/42)

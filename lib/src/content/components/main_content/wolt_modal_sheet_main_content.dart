@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_hero_image.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
-import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -49,9 +47,8 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
             defaultThemeData.heroImageHeight);
     final pageHasTopBarLayer =
         page.hasTopBarLayer ?? themeData?.hasTopBarLayer ?? defaultThemeData.hasTopBarLayer;
-    final navBarHeight = page.navBarHeight ??
-        themeData?.navBarHeight ??
-        defaultThemeData.navBarHeight;
+    final navBarHeight =
+        page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
     final topBarHeight =
         pageHasTopBarLayer || page.leadingNavBarWidget != null || page.trailingNavBarWidget != null
             ? navBarHeight
