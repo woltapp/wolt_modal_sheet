@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -26,9 +25,8 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final topBarHeight = page.navBarHeight ??
-        themeData?.navBarHeight ??
-        defaultThemeData.navBarHeight;
+    final topBarHeight =
+        page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
     final heroImageHeight = page.heroImage == null
         ? 0.0
         : (page.heroImageHeight ?? themeData?.heroImageHeight ?? defaultThemeData.heroImageHeight);
@@ -71,9 +69,8 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
         WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
     const topBarTitleTranslationYEnd = topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
-    final topBarTitleTranslationYAndOpacityStartPoint = heroImageHeight == 0
-        ? 8
-        : heroImageHeight - topBarHeight;
+    final topBarTitleTranslationYAndOpacityStartPoint =
+        heroImageHeight == 0 ? 8 : heroImageHeight - topBarHeight;
 
     /// Top Bar Title translation Y
     final topBarTitleTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
