@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Documentation updates. [#54](https://github.com/woltapp/wolt_modal_sheet/pull/54)
+
 ## 0.1.1
 
 - Documentation updates. [#53](https://github.com/woltapp/wolt_modal_sheet/pull/53)
