@@ -12,7 +12,7 @@
 - Automation to mark PRs and issues as stale. [#32](https://github.com/woltapp/wolt_modal_sheet/pull/32)
 - Refactor top bar and navigation control widgets. [#31](https://github.com/woltapp/wolt_modal_sheet/pull/31)
 - Add an optional gradient over the sticky action bar. [#29](https://github.com/woltapp/wolt_modal_sheet/pull/29)
-- Use page title text by default as source of the top bar title when top bar title is not provided. [#28](https://github.com/woltapp/wolt_modal_sheet/pull/28) Thanks to [@]()
+- Use page title text by default as source of the top bar title when top bar title is not provided. [#28](https://github.com/woltapp/wolt_modal_sheet/pull/28)
 - Rework the changelog to show the latest update at the top. [#24](https://github.com/woltapp/wolt_modal_sheet/pull/24) Thanks to [@mkobuolys](https://github.com/mkobuolys)
 - Added missing onModalDismissedWithDrag parameter in .show method. [#22](https://github.com/woltapp/wolt_modal_sheet/pull/22) Thanks to [@canbi](https://github.com/canbi)
 
