@@ -86,7 +86,7 @@ this layer guides the user towards the next step, uses an optional gentle
 gradient on top to hint that there is more content below ready for scrolling.</li>
 </br>
 
-![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.png)
+![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.png?raw=true)
 </br>
 
 By employing these various layers, you can create an interactive and visually
@@ -95,7 +95,7 @@ overall coherence of the page, serving a specific purpose and enhancing the
 overall user experience.
 </br>
 
-![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.jpeg)
+![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.jpeg?raw=true)
 
 ### Navigation bar widgets
 
@@ -155,7 +155,7 @@ performance.
 
 Here is an example that shows all the modal sheet elements in use:
 
-![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg)
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
 
 ## Getting started
 
