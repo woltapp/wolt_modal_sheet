@@ -234,9 +234,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       themeData?.enableDrag ??
                       defaultThemeData.enableDrag);
               final showDragHandle = widget.showDragHandle ??
-                  (enableDrag &&
-                      (themeData?.showDragHandle ??
-                          defaultThemeData.showDragHandle));
+                  (enableDrag && (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
               final pageBackgroundColor = page.backgroundColor ??
                   themeData?.backgroundColor ??
                   defaultThemeData.backgroundColor;
@@ -273,7 +271,17 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                     id: barrierLayoutId,
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: widget.onModalDismissedWithBarrierTap ?? Navigator.of(context).pop,
+                      onTap: () {
+                        if (widget.route.barrierDismissible) {
+                          final onModalDismissedWithBarrierTap =
+                              widget.onModalDismissedWithBarrierTap;
+                          if (onModalDismissedWithBarrierTap != null) {
+                            onModalDismissedWithBarrierTap();
+                          } else {
+                            Navigator.of(context).pop();
+                          }
+                        }
+                      },
                       child: const SizedBox.expand(),
                     ),
                   ),
