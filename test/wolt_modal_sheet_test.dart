@@ -7,30 +7,25 @@ void main() {
     testWidgets('WoltModalSheet.show opens a sheet', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: Center(
-              child: Builder(
-                builder: (context) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      WoltModalSheet.show(
-                        context: context,
-                        pageListBuilder: (context) {
-                          return <WoltModalSheetPage>[
-                            WoltModalSheetPage.withSingleChild(
-                              child: const Text('Wolt modal sheet page'),
-                            ),
-                          ];
-                        },
-                      );
+          home: Scaffold(body: Center(
+            child: Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show(
+                    context: context,
+                    pageListBuilder: (context) {
+                      return <WoltModalSheetPage>[
+                        WoltModalSheetPage.withSingleChild(
+                          child: const Text('Wolt modal sheet page'),
+                        ),
+                      ];
                     },
-                    child: const Text('Open sheet'),
                   );
-
-                }
-              ),
-            )
-          ),
+                },
+                child: const Text('Open sheet'),
+              );
+            }),
+          )),
         ),
       );
 
@@ -43,25 +38,21 @@ void main() {
     testWidgets('Empty pageListBuilder throws an error', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: Center(
-              child: Builder(
-                builder: (context) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      WoltModalSheet.show(
-                        context: context,
-                        pageListBuilder: (context) {
-                          return <WoltModalSheetPage>[];
-                        },
-                      );
+          home: Scaffold(body: Center(
+            child: Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show(
+                    context: context,
+                    pageListBuilder: (context) {
+                      return <WoltModalSheetPage>[];
                     },
-                    child: const Text('Open sheet'),
                   );
-                }
-              ),
-            )
-          ),
+                },
+                child: const Text('Open sheet'),
+              );
+            }),
+          )),
         ),
       );
 
@@ -70,6 +61,110 @@ void main() {
 
       expect(tester.takeException(), isNotNull);
     });
+  });
+
+  group('Modal sheet barrier dismissible', () {
+    testWidgets('WoltModalSheet does not dismiss on barrier tap if barrierDismissible is false',
+        (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(body: Center(
+            child: Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show(
+                    context: context,
+                    barrierDismissible: false,
+                    onModalDismissedWithDrag: () => Navigator.of(context).pop(),
+                    pageListBuilder: (context) {
+                      return <WoltModalSheetPage>[
+                        WoltModalSheetPage.withSingleChild(
+                          child: const Text('Wolt modal sheet page'),
+                        ),
+                      ];
+                    },
+                  );
+                },
+                child: const Text('Open sheet'),
+              );
+            }),
+          )),
+        ),
+      );
+
+      await tester.tap(find.text('Open sheet'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Wolt modal sheet page'), findsOneWidget);
+
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+      expect(find.text('Wolt modal sheet page'), findsOneWidget);
+    });
+
+    testWidgets('WoltModalSheet dismisses on barrier tap if barrierDismissible is true',
+        (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(body: Center(
+            child: Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show(
+                    context: context,
+                    barrierDismissible: true,
+                    pageListBuilder: (context) {
+                      return <WoltModalSheetPage>[
+                        WoltModalSheetPage.withSingleChild(
+                          child: const Text('Wolt modal sheet page'),
+                        ),
+                      ];
+                    },
+                  );
+                },
+                child: const Text('Open sheet'),
+              );
+            }),
+          )),
+        ),
+      );
+
+      await tester.tap(find.text('Open sheet'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Wolt modal sheet page'), findsOneWidget);
+
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+      expect(find.text('Wolt modal sheet page'), findsNothing);
+    });
+  });
+
+  testWidgets('Empty pageListBuilder throws an error', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(body: Center(
+          child: Builder(builder: (context) {
+            return ElevatedButton(
+              onPressed: () {
+                WoltModalSheet.show(
+                  context: context,
+                  pageListBuilder: (context) {
+                    return <WoltModalSheetPage>[];
+                  },
+                );
+              },
+              child: const Text('Open sheet'),
+            );
+          }),
+        )),
+      ),
+    );
+
+    await tester.tap(find.text('Open sheet'));
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNotNull);
   });
 
   testWidgets('WoltModalSheet.modalTypeBuilder defaults', (tester) async {
@@ -82,29 +177,25 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: Builder(
-              builder: (context) {
-                return ElevatedButton(
-                  onPressed: () {
-                    WoltModalSheet.show(
-                      context: context,
-                      pageListBuilder: (context) {
-                        return <WoltModalSheetPage>[
-                          WoltModalSheetPage.withSingleChild(
-                            child: const Text('Wolt modal sheet page'),
-                          ),
-                        ];
-                      },
-                    );
+        home: Scaffold(body: Center(
+          child: Builder(builder: (context) {
+            return ElevatedButton(
+              onPressed: () {
+                WoltModalSheet.show(
+                  context: context,
+                  pageListBuilder: (context) {
+                    return <WoltModalSheetPage>[
+                      WoltModalSheetPage.withSingleChild(
+                        child: const Text('Wolt modal sheet page'),
+                      ),
+                    ];
                   },
-                  child: const Text('Open sheet'),
                 );
-              }
-            ),
-          )
-        ),
+              },
+              child: const Text('Open sheet'),
+            );
+          }),
+        )),
       ),
     );
 
