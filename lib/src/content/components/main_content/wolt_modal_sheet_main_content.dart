@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_hero_image.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
+import 'package:wolt_modal_sheet/src/utils/drag_scroll_behavior.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// The main content widget within the scrollable modal sheet.
@@ -56,6 +57,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     final singleChildContent = widget.page.singleChildContent;
     final sliverList = widget.page.sliverList;
     final scrollView = CustomScrollView(
+      scrollBehavior: const DragScrollBehavior(),
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       controller: scrollController,
@@ -86,7 +88,10 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
         (singleChildContent != null
                 ? SliverList(
                     delegate: SliverChildBuilderDelegate(
-                      (_, __) => singleChildContent,
+                      (_, __) => ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                        child: singleChildContent,
+                      ),
                       childCount: 1,
                     ),
                   )

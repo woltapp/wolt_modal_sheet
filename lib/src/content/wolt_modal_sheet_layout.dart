@@ -31,40 +31,37 @@ class WoltModalSheetLayout extends StatelessWidget {
     final topBarHeight = hasTopBarLayer
         ? (page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight)
         : 0.0;
-    return ScrollConfiguration(
-      behavior: const DragScrollBehavior(),
-      child: Stack(
-        children: [
-          paginatingWidgetsGroup.mainContentAnimatedBuilder,
-          if (hasTopBarLayer)
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              height: topBarHeight,
-              child: paginatingWidgetsGroup.topBarAnimatedBuilder,
-            ),
-          if (showDragHandle)
-            const Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              child: WoltBottomSheetDragHandle(),
-            ),
+    return Stack(
+      children: [
+        paginatingWidgetsGroup.mainContentAnimatedBuilder,
+        if (hasTopBarLayer)
           Positioned(
+            left: 0,
+            right: 0,
             top: 0,
+            height: topBarHeight,
+            child: paginatingWidgetsGroup.topBarAnimatedBuilder,
+          ),
+        if (showDragHandle)
+          const Positioned(
             left: 0,
             right: 0,
-            child: paginatingWidgetsGroup.navigationToolbarAnimatedBuilder,
+            top: 0,
+            child: WoltBottomSheetDragHandle(),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: paginatingWidgetsGroup.sabAnimatedBuilder,
-          ),
-        ],
-      ),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: paginatingWidgetsGroup.navigationToolbarAnimatedBuilder,
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: paginatingWidgetsGroup.sabAnimatedBuilder,
+        ),
+      ],
     );
   }
 }
