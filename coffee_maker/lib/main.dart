@@ -110,13 +110,10 @@ class _DemoAppState extends State<DemoApp> {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: ScrollConfiguration(
-        behavior: const DragScrollBehavior(),
-        child: HomeScreen(
-          groupedCoffeeOrders: GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
-          isStoreOnline: true,
-          isGridOverlayVisible: false,
-        ),
+      home: HomeScreen(
+        groupedCoffeeOrders: GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
+        isStoreOnline: true,
+        isGridOverlayVisible: false,
       ),
     );
   }

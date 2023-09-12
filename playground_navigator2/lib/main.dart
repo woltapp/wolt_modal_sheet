@@ -41,55 +41,52 @@ class _DemoAppState extends State<DemoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: const DragScrollBehavior(),
-      child: BlocProvider(
-        create: (context) => routerCubit,
-        child: MaterialApp.router(
-          routeInformationParser: const PlaygroundRouteInformationParser(),
-          backButtonDispatcher: RootBackButtonDispatcher(),
-          routerDelegate: PlaygroundRouterDelegate(
-            cubit: routerCubit,
-            pageIndexNotifier: pageIndexNotifier,
-            pageListBuilderNotifier: pageListBuilderNotifier,
-          ),
-          theme: ThemeData(
-            inputDecorationTheme: const InputDecorationTheme(
-              suffixStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: WoltColors.black64,
-              ),
-              contentPadding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
-              border: UnderlineInputBorder(borderSide: BorderSide.none),
-              constraints: BoxConstraints(minHeight: 64),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: WoltColors.blue),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: WoltColors.black16),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-              focusColor: WoltColors.blue,
-            ),
-            primaryColor: WoltColors.blue,
-            useMaterial3: true,
-            fontFamily: 'Inter',
-            textTheme: TextTheme(
-              headlineMedium: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w800,
-                letterSpacing: kIsWeb || Platform.isAndroid ? 0.2 : 0.12,
-              ),
-            ),
-            typography: Typography.material2021(platform: defaultTargetPlatform),
-            scaffoldBackgroundColor: WoltColors.white,
-            indicatorColor: Colors.transparent,
-            cardColor: WoltColors.white,
-          ),
-          debugShowCheckedModeBanner: false,
+    return BlocProvider(
+      create: (context) => routerCubit,
+      child: MaterialApp.router(
+        routeInformationParser: const PlaygroundRouteInformationParser(),
+        backButtonDispatcher: RootBackButtonDispatcher(),
+        routerDelegate: PlaygroundRouterDelegate(
+          cubit: routerCubit,
+          pageIndexNotifier: pageIndexNotifier,
+          pageListBuilderNotifier: pageListBuilderNotifier,
         ),
+        theme: ThemeData(
+          inputDecorationTheme: const InputDecorationTheme(
+            suffixStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: WoltColors.black64,
+            ),
+            contentPadding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
+            border: UnderlineInputBorder(borderSide: BorderSide.none),
+            constraints: BoxConstraints(minHeight: 64),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: WoltColors.blue),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: WoltColors.black16),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+            focusColor: WoltColors.blue,
+          ),
+          primaryColor: WoltColors.blue,
+          useMaterial3: true,
+          fontFamily: 'Inter',
+          textTheme: TextTheme(
+            headlineMedium: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              letterSpacing: kIsWeb || Platform.isAndroid ? 0.2 : 0.12,
+            ),
+          ),
+          typography: Typography.material2021(platform: defaultTargetPlatform),
+          scaffoldBackgroundColor: WoltColors.white,
+          indicatorColor: Colors.transparent,
+          cardColor: WoltColors.white,
+        ),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

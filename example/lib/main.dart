@@ -31,51 +31,46 @@ class _MainAppState extends State<MainApp> {
 
     WoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withSingleChild(
-        hasSabGradient: false,
-        stickyActionBar: Padding(
-          padding: const EdgeInsets.all(_pagePadding),
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(modalSheetContext).pop(),
-                child: const SizedBox(
-                  height: _buttonHeight,
-                  width: double.infinity,
-                  child: Center(child: Text('Cancel')),
+          hasSabGradient: false,
+          stickyActionBar: Padding(
+            padding: const EdgeInsets.all(_pagePadding),
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () => Navigator.of(modalSheetContext).pop(),
+                  child: const SizedBox(
+                    height: _buttonHeight,
+                    width: double.infinity,
+                    child: Center(child: Text('Cancel')),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-                child: const SizedBox(
-                  height: _buttonHeight,
-                  width: double.infinity,
-                  child: Center(child: Text('Next page')),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+                  child: const SizedBox(
+                    height: _buttonHeight,
+                    width: double.infinity,
+                    child: Center(child: Text('Next page')),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        topBarTitle: Text('Pagination', style: textTheme.titleSmall),
-        isTopBarLayerAlwaysVisible: true,
-        trailingNavBarWidget: IconButton(
-          padding: const EdgeInsets.all(_pagePadding),
-          icon: const Icon(Icons.close),
-          onPressed: Navigator.of(modalSheetContext).pop,
-        ),
-        child: const Padding(
-            padding: EdgeInsets.fromLTRB(
-              _pagePadding,
-              _pagePadding,
-              _pagePadding,
-              _bottomPaddingForButton,
+              ],
             ),
-            child: Text(
-              '''
-Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
-''',
-            )),
-      );
+          ),
+          topBarTitle: Text('Pagination', style: textTheme.titleSmall),
+          isTopBarLayerAlwaysVisible: true,
+          trailingNavBarWidget: IconButton(
+            padding: const EdgeInsets.all(_pagePadding),
+            icon: const Icon(Icons.close),
+            onPressed: Navigator.of(modalSheetContext).pop,
+          ),
+          child: SizedBox(
+            height: 800,
+            child: ListView(
+              children: [
+                ...[for (int i = 0; i < 30; i++) ListTile(title: Text('Item $i,'))]
+              ],
+            ),
+          ));
     }
 
     WoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {

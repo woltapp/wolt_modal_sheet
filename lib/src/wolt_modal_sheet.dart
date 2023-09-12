@@ -189,6 +189,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 
   static const contentLayoutId = 'contentLayoutId';
 
+  static const mainContentLayoutId = 'mainContentLayoutId';
+
   @override
   void initState() {
     super.initState();
@@ -260,6 +262,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                 delegate: WoltModalMultiChildLayoutDelegate(
                   contentLayoutId: contentLayoutId,
                   barrierLayoutId: barrierLayoutId,
+                  mainContentLayoutId: mainContentLayoutId,
                   modalType: _modalType,
                   minPageHeight: minPageHeight,
                   maxPageHeight: maxPageHeight,
@@ -267,6 +270,13 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   maxDialogWidth: maxDialogWidth,
                 ),
                 children: [
+                  LayoutId(
+                    id: mainContentLayoutId,
+                    child: Offstage(
+                      child:
+                          (page.singleChildContent ?? page.sliverList ?? const SizedBox.shrink()),
+                    ),
+                  ),
                   LayoutId(
                     id: barrierLayoutId,
                     child: GestureDetector(

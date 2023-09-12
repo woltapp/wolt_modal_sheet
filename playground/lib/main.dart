@@ -90,12 +90,9 @@ class _DemoAppState extends State<DemoApp> {
         ],
       ),
       debugShowCheckedModeBanner: false,
-      home: ScrollConfiguration(
-        behavior: const DragScrollBehavior(),
-        child: HomeScreen(
-          onThemeBrightnessChanged: (bool isLightTheme) => setState(
-            () => _isLightTheme = isLightTheme,
-          ),
+      home: HomeScreen(
+        onThemeBrightnessChanged: (bool isLightTheme) => setState(
+          () => _isLightTheme = isLightTheme,
         ),
       ),
     );

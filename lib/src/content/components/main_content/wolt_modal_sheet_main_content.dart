@@ -1,7 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_hero_image.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
-import 'package:wolt_modal_sheet/src/utils/drag_scroll_behavior.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// The main content widget within the scrollable modal sheet.
@@ -55,54 +56,64 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
             ? navBarHeight
             : 0.0;
     final singleChildContent = widget.page.singleChildContent;
-    final sliverList = widget.page.sliverList;
-    final scrollView = CustomScrollView(
-      scrollBehavior: const DragScrollBehavior(),
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      controller: scrollController,
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              if (index == 0) {
-                final heroImage = widget.page.heroImage;
-                return heroImage != null
-                    ? WoltModalSheetHeroImage(
-                        topBarHeight: topBarHeight,
-                        heroImage: heroImage,
-                        heroImageHeight: heroImageHeight,
-                      )
-                    : SizedBox(height: topBarHeight);
-              } else {
-                final pageTitle = widget.page.pageTitle;
-                return KeyedSubtree(
-                  key: widget.pageTitleKey,
-                  child: pageTitle ?? const SizedBox.shrink(),
-                );
-              }
+    final scrollView = SingleChildScrollView(
+      child: SliverToBoxAdapter(
+        child: CustomScrollView(
+          scrollBehavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: <PointerDeviceKind>{
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+              PointerDeviceKind.stylus,
             },
-            childCount: 2,
           ),
+          physics: const ClampingScrollPhysics(),
+          controller: scrollController,
+          slivers: [
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == 0) {
+                    final heroImage = widget.page.heroImage;
+                    return heroImage != null
+                        ? WoltModalSheetHeroImage(
+                            topBarHeight: topBarHeight,
+                            heroImage: heroImage,
+                            heroImageHeight: heroImageHeight,
+                          )
+                        : SizedBox(height: topBarHeight);
+                  } else {
+                    final pageTitle = widget.page.pageTitle;
+                    return KeyedSubtree(
+                      key: widget.pageTitleKey,
+                      child: pageTitle ?? const SizedBox.shrink(),
+                    );
+                  }
+                },
+                childCount: 2,
+              ),
+            ),
+            (singleChildContent != null
+                    ? SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (_, __) => ScrollConfiguration(
+                            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                            child: singleChildContent,
+                          ),
+                          childCount: 1,
+
+                        ),
+                      )
+                    : widget.page.sliverList) ??
+                const SizedBox.shrink(),
+            if (widget.page.forceMaxHeight)
+              const SliverFillRemaining(
+                hasScrollBody: false,
+                child: SizedBox.shrink(),
+              ),
+          ],
         ),
-        (singleChildContent != null
-                ? SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (_, __) => ScrollConfiguration(
-                        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                        child: singleChildContent,
-                      ),
-                      childCount: 1,
-                    ),
-                  )
-                : sliverList) ??
-            const SizedBox.shrink(),
-        if (widget.page.forceMaxHeight)
-          const SliverFillRemaining(
-            hasScrollBody: false,
-            child: SizedBox.shrink(),
-          ),
-      ],
+      ),
     );
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {

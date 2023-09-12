@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 
@@ -16,11 +18,14 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   /// The layout identifier for the content.
   final String contentLayoutId;
 
+  final String mainContentLayoutId;
+
   /// The layout identifier for the barrier.
   final String barrierLayoutId;
 
   /// The type of the scrollable modal.
   final WoltModalType modalType;
+
 
   /// Creates a [WoltModalMultiChildLayoutDelegate].
   ///
@@ -38,6 +43,7 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     required this.minPageHeight,
     required this.contentLayoutId,
     required this.barrierLayoutId,
+    required this.mainContentLayoutId,
     required this.modalType,
     required this.minDialogWidth,
     required this.maxDialogWidth,
@@ -50,15 +56,14 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
       minDialogWidth: minDialogWidth,
       maxDialogWidth: maxDialogWidth,
     );
-    layoutChild(
-      barrierLayoutId,
-      BoxConstraints(maxWidth: size.width, maxHeight: size.height),
-    );
+    final mainContentHeight = layoutChild(mainContentLayoutId, BoxConstraints.loose(size)).height;
+    final minHeight = min(mainContentHeight, size.height * minPageHeight);
+    final maxHeight = max(mainContentHeight, size.height * maxPageHeight);
     final modalHeight = layoutChild(
       contentLayoutId,
       BoxConstraints(
-        minHeight: size.height * minPageHeight,
-        maxHeight: size.height * maxPageHeight,
+        minHeight: min(minHeight, maxHeight),
+        maxHeight: maxHeight,
         maxWidth: modalWidth,
         minWidth: modalWidth,
       ),
