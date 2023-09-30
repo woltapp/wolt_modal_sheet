@@ -42,6 +42,13 @@ class WoltModalSheetPage {
   /// text data, you should explicitly provide topBarTitle widget or set it as SizedBox.shrink().
   final Widget? topBarTitle;
 
+  /// A [Widget] representing the top bar.
+  ///
+  /// When provided this widget will be used as the top bar instead of the default top bar.
+  /// This can be used to provide a custom top bar with custom behavior only when
+  /// [isTopBarLayerAlwaysVisible] is set to true.
+  final Widget? topBarWidget;
+
   /// On z axis, the Top Bar layer resides above the main content layer and below the transparent
   /// navigation bar layer.
   ///
@@ -159,6 +166,7 @@ class WoltModalSheetPage {
     this.trailingNavBarWidget,
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
+    this.topBarWidget,
   }) : assert((singleChildContent != null) == (sliverList == null));
 
   /// Creates a [WoltModalSheetPage] with a single child main content.
@@ -180,6 +188,7 @@ class WoltModalSheetPage {
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
+    Widget? topBarWidget,
   }) {
     return WoltModalSheetPage(
       singleChildContent: child,
@@ -199,6 +208,7 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
+      topBarWidget: topBarWidget,
     );
   }
 
@@ -221,6 +231,7 @@ class WoltModalSheetPage {
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
+    Widget? topBarWidget,
   }) {
     return WoltModalSheetPage(
       sliverList: sliverList,
@@ -240,6 +251,7 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
+      topBarWidget: topBarWidget,
     );
   }
 
@@ -262,6 +274,7 @@ class WoltModalSheetPage {
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
+    Widget? topBarWidget,
   }) {
     return WoltModalSheetPage(
       pageTitle: pageTitle ?? this.pageTitle,
@@ -282,6 +295,7 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar ?? this.stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
+      topBarWidget: topBarWidget ?? this.topBarWidget,
     );
   }
 }
