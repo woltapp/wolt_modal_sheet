@@ -55,7 +55,7 @@ class _MainContentAnimatedBuilderState extends State<MainContentAnimatedBuilder>
       animation: controller,
       builder: (BuildContext context, Widget? _) {
         return SizeTransition(
-          axisAlignment: -1,
+          axisAlignment: -1.0,
           sizeFactor: _sizeFactor ?? pageTransitionState.defaultMainContentSizeFactor(controller),
           child: Opacity(
             opacity: pageTransitionState.mainContentOpacity(controller).value,
