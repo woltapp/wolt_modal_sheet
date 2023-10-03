@@ -48,7 +48,7 @@ class _MainContentAnimatedBuilderState extends State<MainContentAnimatedBuilder>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final controller = widget.controller;
     final pageTransitionState = widget.pageTransitionState;
     return AnimatedBuilder(
