@@ -53,7 +53,7 @@ class _MainContentAnimatedBuilderState extends State<MainContentAnimatedBuilder>
     final pageTransitionState = widget.pageTransitionState;
     return AnimatedBuilder(
       animation: controller,
-      builder: (BuildContext context, Widget? _) {
+      builder: (BuildContext context, _) {
         return SizeTransition(
           axisAlignment: -1.0,
           sizeFactor: _sizeFactor ?? pageTransitionState.defaultMainContentSizeFactor(controller),
