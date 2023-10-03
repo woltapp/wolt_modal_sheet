@@ -18,7 +18,7 @@ class SabAnimatedBuilder extends StatelessWidget {
     final opacity = pageTransitionState.sabOpacity(controller);
     return AnimatedBuilder(
       animation: controller,
-      builder: (BuildContext _, Widget? __) {
+      builder: (BuildContext _,  __) {
         return Opacity(
           opacity: opacity.value,
           child: child,
