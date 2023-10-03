@@ -19,7 +19,10 @@ class SabAnimatedBuilder extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext _, Widget? __) {
-        return Opacity(opacity: opacity.value, child: child);
+        return Opacity(
+          opacity: opacity.value,
+          child: child,
+        );
       },
     );
   }
