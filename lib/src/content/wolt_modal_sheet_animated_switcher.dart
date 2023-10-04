@@ -230,6 +230,10 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     final topBarTitle = WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
     final navBarHeight =
         _page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
+
+    assert(_page.topBarWidget == null || isTopBarLayerAlwaysVisible,
+        'The topBarWidget can only be set when isTopBarLayerAlwaysVisible is true.');
+
     const animatedBuilderKey = ValueKey(WoltModalSheetPageTransitionState.incoming);
     return PaginatingWidgetsGroup(
       mainContentAnimatedBuilder: MainContentAnimatedBuilder(
@@ -252,7 +256,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         controller: animationController,
         child: hasTopBarLayer
             ? (isTopBarLayerAlwaysVisible
-                ? WoltModalSheetTopBar(page: _page)
+                ? (_page.topBarWidget == null
+                    ? WoltModalSheetTopBar(page: _page)
+                    : _page.topBarWidget!)
                 : WoltModalSheetTopBarFlow(
                     page: _page,
                     currentScrollPositionListenable: _scrollPosition,
