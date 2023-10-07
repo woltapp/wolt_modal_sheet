@@ -59,7 +59,9 @@ void main() {
       await tester.tap(find.text('Open sheet'));
       await tester.pumpAndSettle();
 
-      expect(tester.takeException(), isNotNull);
+      final AssertionError exception = tester.takeException() as AssertionError;
+      expect(exception, isAssertionError);
+      expect(exception.message, 'pageListBuilder must return a non-empty list.');
     });
   });
 
