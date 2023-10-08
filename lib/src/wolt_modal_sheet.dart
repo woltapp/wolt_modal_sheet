@@ -215,6 +215,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
         valueListenable: pagesListBuilderNotifier,
         builder: (context, pagesBuilder, _) {
           final pages = pagesBuilder(context);
+          assert(pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
           return ValueListenableBuilder<int>(
             valueListenable: pageIndexNotifier,
             builder: (_, int pageIndex, __) {
