@@ -57,6 +57,11 @@ class RootSheetPage {
                 isSelected: false,
               ),
               WoltSelectionListItemData(
+                title: 'Page with custom top bar',
+                value: MultiPagePathName.customTopBar,
+                isSelected: false,
+              ),
+              WoltSelectionListItemData(
                 title: 'Page with no title and no top bar',
                 value: MultiPagePathName.noTitleNoTopBar,
                 isSelected: false,

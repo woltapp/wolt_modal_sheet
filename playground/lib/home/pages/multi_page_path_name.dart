@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
+import 'package:playground/home/pages/sheet_page_with_custom_top_bar.dart';
 import 'package:playground/home/pages/sheet_page_with_dynamic_page_properties.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
@@ -15,6 +15,7 @@ enum MultiPagePathName {
   lazyLoadingList(pageCount: 2, queryParamName: "lazyList"),
   textField(pageCount: 2, queryParamName: "textField"),
   noTitleNoTopBar(pageCount: 2, queryParamName: "noTitleNoTopBar"),
+  customTopBar(pageCount: 2, queryParamName: "customTopBar"),
   dynamicPageProperties(pageCount: 2, queryParamName: "dynamicPageProperties"),
   allPagesPath(pageCount: 6, queryParamName: "all");
 
@@ -66,6 +67,13 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
+    WoltModalSheetPage customTopBar(BuildContext context, {bool isLastPage = true}) =>
+        SheetPageWithCustomTopBar.build(
+          onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
+          onClosed: () => close(context),
+          onBackPressed: goToPreviousPage,
+          isLastPage: isLastPage,
+        );
     WoltModalSheetPage dynamicPageProperties(BuildContext context, {bool isLastPage = true}) =>
         SheetPageWithDynamicPageProperties.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
@@ -92,6 +100,8 @@ enum MultiPagePathName {
         return (context) => [root(context), textField(context)];
       case MultiPagePathName.noTitleNoTopBar:
         return (context) => [root(context), noTitleNoTopBar(context)];
+      case MultiPagePathName.customTopBar:
+        return (context) => [root(context), customTopBar(context)];
       case MultiPagePathName.dynamicPageProperties:
         return (context) => [root(context), dynamicPageProperties(context)];
       case MultiPagePathName.allPagesPath:
@@ -101,6 +111,7 @@ enum MultiPagePathName {
               lazyList(context, isLastPage: false),
               textField(context, isLastPage: false),
               noTitleNoTopBar(context, isLastPage: false),
+              customTopBar(context, isLastPage: false),
               dynamicPageProperties(context, isLastPage: false),
               forcedMaxHeight(context, isLastPage: true),
             ];

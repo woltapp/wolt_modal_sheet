@@ -104,27 +104,37 @@ the sheet, situated directly above the top bar on the z-axis. It includes
 two specific widgets: the leading and the trailing. The leading widget
 usually functions as the back button, enabling users to navigate to the
 previous page. The trailing widget often serves as the close button, utilized to
-close the modal sheet. Together, these widgets provide clear and intuitive
-navigational control, differentiating themselves from the top bar by focusing
-specifically on directional navigation within the interface.
+close the modal sheet. The middle area is reserved and left empty for the 
+visibility of the top bar title.
+</br>
+</br>
+The navigation bar widgets provide clear and intuitive navigational control, 
+differentiating themselves from the top bar by focusing specifically on 
+directional navigation within the interface.
 
 ### Top bar and top bar title
 
-The Top Bar sits above the main content layer and below the navigation
-bar layer. It aids users in grasping the context by displaying an optional
-title. In scenarios where sheets are filled with content requiring scrolling,
-the top bar becomes visible as the user scrolls, causing the page title
-replaced. At this point, the top bar adopts a 'sticky' position at the top,
-guaranteeing consistent visibility. Its design is flexible, with an option
-to remain hidden or always visible regardless of the scroll position. The
-navigation bar widgets overlay above the top bar, and the top bar title is
-symmetrically framed between the leading and trailing navigation bar widgets.
+The top bar layer sits above the main content layer and below the navigation
+bar layer in z axis. It helps users grasping the context by displaying an 
+optional title. In scenarios where the sheet is filled with content 
+requiring scrolling, the top bar becomes visible as the user scrolls, and 
+replaces the page title. At this point, the top bar adopts a 'sticky' 
+position at the top, guaranteeing consistent visibility.
 </br>
 </br>
-The Top Bar design is flexible, when `hasTopBarLayer` is set to false, the 
-top bar and the `topBarTitle` will be hidden. If 
+The top bar widget has a flexible design. When `hasTopBarLayer` is set to 
+false, the top bar and the top bar title will not be shown. If 
 `isTopBarLayerAlwaysVisible` set to true, the top bar will be always visible 
 regardless of the scroll position.
+</br>
+</br>
+A custom top bar widget can be provided using the `topBar` field. In this 
+case, the `topBarTitle` field will be ignored, and will not be displayed.
+</br>
+</br>
+The navigation bar widgets overlay above the top bar, and when the default 
+top bar widget is used in the page, the top bar title is symmetrically 
+framed between the leading and trailing navigation bar widgets.
 
 ### Sticky action bar (SAB)
 
@@ -377,11 +387,14 @@ The [playground](./playground/) app demonstrates how to imperatively show the
 modal sheet. The purpose of this module is to play and experiment with various
 use cases. These use cases include:
 
-- A page with forced max height independent of its content.
+- A page with a height set to be maximum regardless of the content height.
 - A page with a hero image
 - A page with a list whose items are lazily built.
 - A page with an auto-focused text field.
+- A page with a custom top bar.
 - A page without a page title nor a top bar.
+- A page whose properties are dynamically set.
+- All the pages in one flow.
 
 ### Playground app with declarative navigation
 

@@ -230,11 +230,21 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     final topBarTitle = WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
     final navBarHeight =
         _page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
-
-    assert(_page.topBarWidget == null || isTopBarLayerAlwaysVisible,
-        'The topBarWidget can only be set when isTopBarLayerAlwaysVisible is true.');
-
     const animatedBuilderKey = ValueKey(WoltModalSheetPageTransitionState.incoming);
+    // If the page uses the default top bar, we should show the top bar title to be represented in
+    // the middle of the navigation toolbar.
+    final shouldShowTopBarTitle = hasTopBarLayer && _page.topBar == null;
+    Widget? navigationToolbarMiddle;
+    if (shouldShowTopBarTitle) {
+      navigationToolbarMiddle = isTopBarLayerAlwaysVisible
+          ? Center(child: topBarTitle)
+          : WoltModalSheetTopBarTitleFlow(
+              page: _page,
+              currentScrollPositionListenable: _scrollPosition,
+              titleKey: _pageTitleKey,
+              topBarTitle: topBarTitle,
+            );
+    }
     return PaginatingWidgetsGroup(
       mainContentAnimatedBuilder: MainContentAnimatedBuilder(
         key: animatedBuilderKey,
@@ -256,9 +266,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         controller: animationController,
         child: hasTopBarLayer
             ? (isTopBarLayerAlwaysVisible
-                ? (_page.topBarWidget == null
-                    ? WoltModalSheetTopBar(page: _page)
-                    : _page.topBarWidget!)
+                ? WoltModalSheetTopBar(page: _page)
                 : WoltModalSheetTopBarFlow(
                     page: _page,
                     currentScrollPositionListenable: _scrollPosition,
@@ -276,16 +284,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
           child: WoltNavigationToolbar(
             middleSpacing: 16.0,
             leading: _page.leadingNavBarWidget,
-            middle: hasTopBarLayer
-                ? (isTopBarLayerAlwaysVisible
-                    ? Center(child: topBarTitle)
-                    : WoltModalSheetTopBarTitleFlow(
-                        page: _page,
-                        currentScrollPositionListenable: _scrollPosition,
-                        titleKey: _pageTitleKey,
-                        topBarTitle: topBarTitle,
-                      ))
-                : const SizedBox.shrink(),
+            middle: navigationToolbarMiddle,
             trailing: _page.trailingNavBarWidget,
           ),
         ),

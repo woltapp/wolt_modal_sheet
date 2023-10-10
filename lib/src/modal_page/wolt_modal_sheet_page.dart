@@ -42,12 +42,12 @@ class WoltModalSheetPage {
   /// text data, you should explicitly provide topBarTitle widget or set it as SizedBox.shrink().
   final Widget? topBarTitle;
 
-  /// A [Widget] representing the top bar.
+  /// An optional [Widget] representing the top bar.
   ///
-  /// When provided this widget will be used as the top bar instead of the default top bar.
-  /// This can be used to provide a custom top bar with custom behavior only when
-  /// [isTopBarLayerAlwaysVisible] is set to true.
-  final Widget? topBarWidget;
+  /// When provided this widget will be used as the top bar instead of the default top bar. If
+  /// this widget is provided, the [topBarTitle] will not be displayed. The height of this
+  /// [topBar] should be set using the [navBarHeight] field.
+  final Widget? topBar;
 
   /// On z axis, the Top Bar layer resides above the main content layer and below the transparent
   /// navigation bar layer.
@@ -166,8 +166,11 @@ class WoltModalSheetPage {
     this.trailingNavBarWidget,
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
-    this.topBarWidget,
-  }) : assert((singleChildContent != null) == (sliverList == null));
+    this.topBar,
+  })  : assert(singleChildContent == null || sliverList == null,
+            "Either singleChildContent or sliverList must be provided"),
+        assert(!(topBar != null && hasTopBarLayer == false),
+            "When topBar is provided, hasTopBarLayer must not be false");
 
   /// Creates a [WoltModalSheetPage] with a single child main content.
   factory WoltModalSheetPage.withSingleChild({
@@ -188,7 +191,7 @@ class WoltModalSheetPage {
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
-    Widget? topBarWidget,
+    Widget? topBar,
   }) {
     return WoltModalSheetPage(
       singleChildContent: child,
@@ -208,7 +211,7 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
-      topBarWidget: topBarWidget,
+      topBar: topBar,
     );
   }
 
@@ -231,7 +234,7 @@ class WoltModalSheetPage {
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
-    Widget? topBarWidget,
+    Widget? topBar,
   }) {
     return WoltModalSheetPage(
       sliverList: sliverList,
@@ -251,7 +254,7 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget,
-      topBarWidget: topBarWidget,
+      topBar: topBar,
     );
   }
 
@@ -274,7 +277,7 @@ class WoltModalSheetPage {
     Widget? stickyActionBar,
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
-    Widget? topBarWidget,
+    Widget? topBar,
   }) {
     return WoltModalSheetPage(
       pageTitle: pageTitle ?? this.pageTitle,
@@ -295,7 +298,7 @@ class WoltModalSheetPage {
       stickyActionBar: stickyActionBar ?? this.stickyActionBar,
       leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
-      topBarWidget: topBarWidget ?? this.topBarWidget,
+      topBar: topBar ?? this.topBar,
     );
   }
 }
