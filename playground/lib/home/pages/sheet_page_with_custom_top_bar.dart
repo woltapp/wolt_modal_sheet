@@ -49,7 +49,7 @@ class SheetPageWithCustomTopBar {
 class _CustomTopBar extends StatelessWidget {
   const _CustomTopBar({required this.onClosed, required this.onBackPressed});
 
-  static const _searchBarPadding = EdgeInsets.only(right: 64, top: 16, bottom: 16, left: 0);
+  static const _searchBarPadding = EdgeInsetsDirectional.only(start: 64, top: 16, bottom: 16, end: 0);
 
   final VoidCallback onClosed;
   final VoidCallback onBackPressed;
