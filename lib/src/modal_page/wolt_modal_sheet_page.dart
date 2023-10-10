@@ -167,7 +167,7 @@ class WoltModalSheetPage {
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
     this.topBar,
-  })  : assert((singleChildContent != null) == (sliverList == null),
+  })  : assert(singleChildContent == null || sliverList == null,
             "Either singleChildContent or sliverList must be provided"),
         assert(!(topBar != null && hasTopBarLayer == false),
             "When topBar is provided, hasTopBarLayer must not be false");
