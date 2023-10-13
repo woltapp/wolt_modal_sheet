@@ -39,6 +39,20 @@ example/.fvm/
 /build/
 build/
 
+# pubspec.lock
+pubspec.lock
+example/pubspec.lock
+coffee_maker/pubspec.lock
+playground/pubspec.lock
+playground_navigator2/pubspec.lock
+
+# pubspec_overrides
+pubspec_overrides.yaml
+example/pubspec_overrides.yaml
+coffee_maker/pubspec_overrides.yaml
+playground/pubspec_overrides.yaml
+playground_navigator2/pubspec_overrides.yaml
+
 # Symbolication related
 app.*.symbols
 
