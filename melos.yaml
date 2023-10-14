@@ -1,0 +1,20 @@
+name: wolt_modal_sheet
+repository: https://github.com/woltapp/wolt_modal_sheet
+
+packages:
+  - coffee_maker
+  - demo_ui_components
+  - playground
+  - playground_navigator2
+
+command:
+  bootstrap:
+    # It seems so that running "pub get" in parallel has some issues (like
+    # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+    # makes the CI much more stable.
+    runPubGetInParallel: false
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    exec: dart analyze .
