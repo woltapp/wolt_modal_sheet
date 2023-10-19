@@ -72,17 +72,17 @@ WoltModalSheet and create an intuitive and engaging user experience.
 
 The structure is organized across layers on the z-axis:
 
-<li><b>Main Content Layer</b>: The fundamental content of the page, 
+<li><b>Main Content Layer</b>: The fundamental content of the page,
 including the optional page title, optional hero image, and the main content,
 which may be scrollable.</li>
-<li><b>Top Bar Layer</b>: Further above the main content layer, this layer 
-with the filled color includes the top bar title and may become hidden or 
+<li><b>Top Bar Layer</b>: Further above the main content layer, this layer
+with the filled color includes the top bar title and may become hidden or
 sticky based on scroll position and specific properties.</li>
-<li><b>Navigation Bar Layer</b>: Sitting at the top of the top bar layer on 
-z-axis, this transparent-background layer contains navigational widgets for 
+<li><b>Navigation Bar Layer</b>: Sitting at the top of the top bar layer on
+z-axis, this transparent-background layer contains navigational widgets for
 the interface, such as back or close buttons.</li>
-<li><b>Sticky Action Bar Layer</b>: Positioned at the top of the z axis, 
-this layer guides the user towards the next step, uses an optional gentle 
+<li><b>Sticky Action Bar Layer</b>: Positioned at the top of the z axis,
+this layer guides the user towards the next step, uses an optional gentle
 gradient on top to hint that there is more content below ready for scrolling.</li>
 </br>
 
@@ -104,44 +104,44 @@ the sheet, situated directly above the top bar on the z-axis. It includes
 two specific widgets: the leading and the trailing. The leading widget
 usually functions as the back button, enabling users to navigate to the
 previous page. The trailing widget often serves as the close button, utilized to
-close the modal sheet. The middle area is reserved and left empty for the 
+close the modal sheet. The middle area is reserved and left empty for the
 visibility of the top bar title.
 </br>
 </br>
-The navigation bar widgets provide clear and intuitive navigational control, 
-differentiating themselves from the top bar by focusing specifically on 
+The navigation bar widgets provide clear and intuitive navigational control,
+differentiating themselves from the top bar by focusing specifically on
 directional navigation within the interface.
 
 ### Top bar and top bar title
 
 The top bar layer sits above the main content layer and below the navigation
-bar layer in z axis. It helps users grasping the context by displaying an 
-optional title. In scenarios where the sheet is filled with content 
-requiring scrolling, the top bar becomes visible as the user scrolls, and 
-replaces the page title. At this point, the top bar adopts a 'sticky' 
+bar layer in z axis. It helps users grasping the context by displaying an
+optional title. In scenarios where the sheet is filled with content
+requiring scrolling, the top bar becomes visible as the user scrolls, and
+replaces the page title. At this point, the top bar adopts a 'sticky'
 position at the top, guaranteeing consistent visibility.
 </br>
 </br>
-The top bar widget has a flexible design. When `hasTopBarLayer` is set to 
-false, the top bar and the top bar title will not be shown. If 
-`isTopBarLayerAlwaysVisible` set to true, the top bar will be always visible 
+The top bar widget has a flexible design. When `hasTopBarLayer` is set to
+false, the top bar and the top bar title will not be shown. If
+`isTopBarLayerAlwaysVisible` set to true, the top bar will be always visible
 regardless of the scroll position.
 </br>
 </br>
-A custom top bar widget can be provided using the `topBar` field. In this 
+A custom top bar widget can be provided using the `topBar` field. In this
 case, the `topBarTitle` field will be ignored, and will not be displayed.
 </br>
 </br>
-The navigation bar widgets overlay above the top bar, and when the default 
-top bar widget is used in the page, the top bar title is symmetrically 
+The navigation bar widgets overlay above the top bar, and when the default
+top bar widget is used in the page, the top bar title is symmetrically
 framed between the leading and trailing navigation bar widgets.
 
 ### Sticky action bar (SAB)
 
 The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to
-the bottom of the view, the SAB elevates above the content with an optional 
+the bottom of the view, the SAB elevates above the content with an optional
 gentle gradient. This position guarantees that the action remains visible, subtly
-hinting to the user that there is more content to be explored below the fold 
+hinting to the user that there is more content to be explored below the fold
 by scrolling.
 
 ### Hero image
@@ -159,7 +159,7 @@ context-providing purpose.
 
 ### Main content
 
-The main content delivers information according to the user need. It can be 
+The main content delivers information according to the user need. It can be
 scrollable to handle larger content. The content is built lazily to improve the
 performance.
 
@@ -454,3 +454,20 @@ current state:
   enlightening [recording of his talk](https://www.droidcon.com/2023/08/07/the-art-of-responsive-modals-building-a-multi-page-sheet-in-flutter/)
   to understand the nuances.
 
+### Contributing
+
+To get started with contributing, please follow the steps below:
+
+1. Fork the [wolt_modal_sheet](https://github.com/woltapp/wolt_modal_sheet/fork) repo on GitHub.
+2. Clone your forked repo locally.
+3. Ensure you have [Melos](https://pub.dev/packages/melos/install) installed.
+   ```bash
+   dart pub global activate melos
+   ```
+4. Use Melos to bootstrap the project.
+   ```bash
+   melos bootstrap
+   ```
+5. Create a new branch from the `main` branch.
+6. Make your changes.
+7. Create a pull request.
