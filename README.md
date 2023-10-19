@@ -458,7 +458,7 @@ current state:
 
 To get started with contributing, please follow the steps below:
 
-1. Fork the [wolt_modal_sheet](https://github.com/woltapp/wolt_modal_sheet/fork) repo on GitHub.
+1. [Fork the wolt_modal_sheet repo](https://github.com/woltapp/wolt_modal_sheet/fork) on GitHub.
 2. Clone your forked repo locally.
 3. Ensure you have [Melos](https://pub.dev/packages/melos/install) installed.
    ```bash
