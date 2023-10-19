@@ -1,3 +1,12 @@
+## 0.1.3
+- Add `melos` and cleanup `gitignore` and `pubspec.lock`. [#73](https://github.com/woltapp/wolt_modal_sheet/pull/73) Thanks to [@TahaTesser](https://github.com/TahaTesser)
+- Allow custom top bar widget to be "not always visible". [#69](https://github.com/woltapp/wolt_modal_sheet/pull/69)
+- Throw a helpful error message when returning an empty list in `pageListBuilder`. [#68](https://github.com/woltapp/wolt_modal_sheet/pull/68) Thanks to [@TahaTesser](https://github.com/TahaTesser)
+- Refactoring Animated Builders used in pagination animation. [#65](https://github.com/woltapp/wolt_modal_sheet/pull/65)
+- Added ability to use a custom widget as top bar. [#64](https://github.com/woltapp/wolt_modal_sheet/pull/64) Thanks to [@robyf](https://github.com/robyf)
+- Remove extra scrollbars in the modal sheet due to nested scroll views. [#58](https://github.com/woltapp/wolt_modal_sheet/pull/58)
+- Fix `barrierDismissible` parameter has no effect to prevent modal dismissing. [#56](https://github.com/woltapp/wolt_modal_sheet/pull/56)
+
 ## 0.1.2
 
 - Documentation updates. [#54](https://github.com/woltapp/wolt_modal_sheet/pull/54)
