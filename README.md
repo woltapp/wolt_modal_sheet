@@ -453,10 +453,10 @@ current state:
   package at the FlutterCon'23 conference. Catch the
   enlightening [recording of his talk](https://www.droidcon.com/2023/08/07/the-art-of-responsive-modals-building-a-multi-page-sheet-in-flutter/)
   to understand the nuances.
-* <b>Flutter&Friends talk</b>: This is a lightening talk given at the 
-  Flutter&Friends conference on September'23. It covers the design 
-  guidelines and best practices by showing real-world examples highlighting 
-  what to do—and what not to do. It also covers the technical details of the 
+* <b>Flutter&Friends talk</b>: This is a lightening talk given at the
+  Flutter&Friends conference on September'23. It covers the design
+  guidelines and best practices by showing real-world examples highlighting
+  what to do—and what not to do. It also covers the technical details of the
   implementation. The recording of the talk can be found [here](https://www.youtube.com/live/X3bw1pr1kyQ?si=1SielcIbW6rF-4IC&t=4449).
 
 ### Contributing
