@@ -34,6 +34,9 @@ jobs:
       # Get dependencies
       - name: Get dependencies
         run: flutter pub get
+      # Run flutter analyze
+      - name: flutter analyze
+        run: flutter analyze
 
   dart-format:
     name: dart format
