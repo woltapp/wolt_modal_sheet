@@ -23,8 +23,11 @@ jobs:
       # Setup Melos
       - name: Setup Melos
         run: |
-          pub global activate melos
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+          dart pub global activate melos
+      # Run Melos bootstrap
+      - name: Melos bootstrap
+        run: |
+          melos bootstrap
       # Get Flutter version
       - name: Get Flutter version
         run: flutter --version
