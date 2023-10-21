@@ -59,7 +59,3 @@ jobs:
       - name: Check formatting
         run: |
           dart format --set-exit-if-changed .
-          if ( $? -eq 1 ); then
-            echo "dart format has detected issues"
-            exit 1
-          fi
