@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ModalSheetTitle extends StatelessWidget {
-  const ModalSheetTitle(this.text, {this.textAlign = TextAlign.start, super.key});
+  const ModalSheetTitle(this.text,
+      {this.textAlign = TextAlign.start, super.key});
 
   final String text;
   final TextAlign textAlign;
@@ -13,7 +14,10 @@ class ModalSheetTitle extends StatelessWidget {
       child: Text(
         text,
         textAlign: textAlign,
-        style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall!
+            .copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }

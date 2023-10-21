@@ -43,7 +43,8 @@ class OfferRecommendationModalPage {
       topBarTitle: const ModalSheetTopBarTitle(pageTitle),
       pageTitle: const ModalSheetTitle(pageTitle),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(
           (_, index) {
@@ -69,7 +70,8 @@ class OfferRecommendationModalPage {
                     isSelected
                         ? selectedRecommendations.add(recommendation)
                         : selectedRecommendations.remove(recommendation);
-                    selectedItemCountListener.value = selectedRecommendations.length;
+                    selectedItemCountListener.value =
+                        selectedRecommendations.length;
                   },
                   isSelected: selectedRecommendations.contains(recommendation),
                 ),

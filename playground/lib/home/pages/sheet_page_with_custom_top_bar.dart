@@ -36,9 +36,11 @@ class SheetPageWithCustomTopBar {
         children: const [
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('Scroll to see the custom top bar with a search field in it.'),
+            child: Text(
+                'Scroll to see the custom top bar with a search field in it.'),
           ),
-          Placeholder(fallbackHeight: _placeholderHeight, color: WoltColors.blue),
+          Placeholder(
+              fallbackHeight: _placeholderHeight, color: WoltColors.blue),
         ],
       ),
     );
@@ -49,7 +51,8 @@ class SheetPageWithCustomTopBar {
 class _CustomTopBar extends StatelessWidget {
   const _CustomTopBar({required this.onClosed, required this.onBackPressed});
 
-  static const _searchBarPadding = EdgeInsetsDirectional.only(start: 64, top: 16, bottom: 16, end: 0);
+  static const _searchBarPadding =
+      EdgeInsetsDirectional.only(start: 64, top: 16, bottom: 16, end: 0);
 
   final VoidCallback onClosed;
   final VoidCallback onBackPressed;

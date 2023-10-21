@@ -1,4 +1,3 @@
-
 const String _assetPath = 'lib/assets/images/';
 
 enum ExtraRecommendation {

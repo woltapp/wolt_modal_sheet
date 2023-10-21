@@ -292,7 +292,8 @@ class WoltModalSheetPage {
       sabGradientColor: sabGradientColor ?? this.sabGradientColor,
       enableDrag: enableDrag ?? this.enableDrag,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
-      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      isTopBarLayerAlwaysVisible:
+          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
       scrollController: scrollController ?? this.scrollController,
       stickyActionBar: stickyActionBar ?? this.stickyActionBar,

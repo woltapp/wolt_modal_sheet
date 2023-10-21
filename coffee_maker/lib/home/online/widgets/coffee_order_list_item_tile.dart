@@ -100,7 +100,10 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           onPressed: _onTap,
           child: Text(
             _coffeeOrder.id,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         const SizedBox(width: 8),

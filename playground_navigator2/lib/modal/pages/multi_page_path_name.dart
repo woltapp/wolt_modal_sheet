@@ -18,10 +18,12 @@ enum MultiPagePathName {
   final int pageCount;
   final String queryParamName;
 
-  const MultiPagePathName({required this.pageCount, required this.queryParamName});
+  const MultiPagePathName(
+      {required this.pageCount, required this.queryParamName});
 
   WoltModalSheetPageListBuilder get pageListBuilder {
-    WoltModalSheetPage root(BuildContext context) => RootSheetPage.build(context);
+    WoltModalSheetPage root(BuildContext context) =>
+        RootSheetPage.build(context);
 
     WoltModalSheetPage forcedMaxHeight(
       BuildContext context, {
@@ -69,7 +71,8 @@ enum MultiPagePathName {
 
     switch (this) {
       case MultiPagePathName.forcedMaxHeight:
-        return (context) => [root(context), forcedMaxHeight(context, currentPage: 1)];
+        return (context) =>
+            [root(context), forcedMaxHeight(context, currentPage: 1)];
       case MultiPagePathName.heroImage:
         return (context) => [root(context), heroImage(context, currentPage: 1)];
       case MultiPagePathName.lazyLoadingList:
@@ -90,7 +93,9 @@ enum MultiPagePathName {
   static bool isValidQueryParam(String path, int pageIndex) {
     return MultiPagePathName.values.any(
       (element) =>
-          element.queryParamName == path && element.pageCount > pageIndex && pageIndex >= 0,
+          element.queryParamName == path &&
+          element.pageCount > pageIndex &&
+          pageIndex >= 0,
     );
   }
 }

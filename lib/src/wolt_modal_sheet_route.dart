@@ -35,7 +35,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
         _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
-        _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
+        _transitionDuration =
+            transitionDuration ?? const Duration(milliseconds: 300),
         _barrierDismissible = barrierDismissible ?? true,
         _modalTypeBuilder = modalTypeBuilder ?? _defaultModalTypeBuilder,
         _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,

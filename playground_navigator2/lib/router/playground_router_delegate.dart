@@ -9,12 +9,16 @@ import 'package:playground_navigator2/router/router_pages/sheet_page.dart';
 import 'package:playground_navigator2/router/router_pages/unknown_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfiguration>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<PlaygroundRouterConfiguration> {
+class PlaygroundRouterDelegate
+    extends RouterDelegate<PlaygroundRouterConfiguration>
+    with
+        ChangeNotifier,
+        PopNavigatorRouterDelegateMixin<PlaygroundRouterConfiguration> {
   PlaygroundRouterDelegate({
     required RouterCubit cubit,
     required ValueNotifier<int> pageIndexNotifier,
-    required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
+    required ValueNotifier<WoltModalSheetPageListBuilder>
+        pageListBuilderNotifier,
   })  : _cubit = cubit,
         _pageIndexNotifier = pageIndexNotifier,
         _pageListBuilderNotifier = pageListBuilderNotifier {
@@ -61,7 +65,8 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
 
   @override
   Future<bool> popRoute() async {
-    if (_navigatorKey.currentState != null && _navigatorKey.currentState!.canPop()) {
+    if (_navigatorKey.currentState != null &&
+        _navigatorKey.currentState!.canPop()) {
       _navigatorKey.currentState!.pop();
       return Future.value(true);
     }
@@ -86,13 +91,15 @@ class PlaygroundRouterDelegate extends RouterDelegate<PlaygroundRouterConfigurat
   }
 
   @override
-  Future<void> setNewRoutePath(PlaygroundRouterConfiguration configuration) async {
+  Future<void> setNewRoutePath(
+      PlaygroundRouterConfiguration configuration) async {
     if (configuration.isUnknown) {
       _cubit.showOnUnknownScreen();
     } else if (configuration.isHomePage) {
       _cubit.closeSheet();
     } else if (configuration.isSheetPage) {
-      _cubit.onPathAndPageIndexUpdated(configuration.multiPagePathName!, configuration.pageIndex);
+      _cubit.onPathAndPageIndexUpdated(
+          configuration.multiPagePathName!, configuration.pageIndex);
     }
   }
 

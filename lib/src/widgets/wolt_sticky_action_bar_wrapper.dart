@@ -10,14 +10,16 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
   /// Constructs a `WoltStickyActionBarWrapper`.
   ///
   /// The [page] argument must not be null.
-  const WoltStickyActionBarWrapper({required this.page, Key? key}) : super(key: key);
+  const WoltStickyActionBarWrapper({required this.page, Key? key})
+      : super(key: key);
 
   /// The [WoltModalSheetPage] which provides configuration for the Sticky Action Bar
   /// and potentially its gradient overlay.
   final WoltModalSheetPage page;
 
   @visibleForTesting
-  static const gradientWidgetKey = ValueKey("WoltStickyActionBarWrapperGradient");
+  static const gradientWidgetKey =
+      ValueKey("WoltStickyActionBarWrapperGradient");
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +32,22 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
     }
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final backgroundColor =
-        page.sabGradientColor ?? themeData?.sabGradientColor ?? defaultThemeData.sabGradientColor;
-    final hasSabGradient =
-        page.hasSabGradient ?? themeData?.hasSabGradient ?? defaultThemeData.hasSabGradient;
-    final surfaceTintColor = themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
+    final backgroundColor = page.sabGradientColor ??
+        themeData?.sabGradientColor ??
+        defaultThemeData.sabGradientColor;
+    final hasSabGradient = page.hasSabGradient ??
+        themeData?.hasSabGradient ??
+        defaultThemeData.hasSabGradient;
+    final surfaceTintColor =
+        themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
     return Column(
       children: [
         // If a gradient is required, add a Container with a linear gradient decoration.
         if (hasSabGradient)
           Container(
             key: gradientWidgetKey,
-            height: themeData?.sabGradientHeight ?? defaultThemeData.sabGradientHeight,
+            height: themeData?.sabGradientHeight ??
+                defaultThemeData.sabGradientHeight,
             width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(

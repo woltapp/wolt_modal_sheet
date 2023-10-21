@@ -30,11 +30,13 @@ class SheetPageWithDynamicPageProperties {
       ),
       isTopBarLayerAlwaysVisible: true,
       topBarTitle: const ModalSheetTopBarTitle('Dynamic page properties'),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 100),
-        child: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
           return Row(
             children: [
               const Expanded(child: Text('Enable Drag for Bottom Sheet')),
@@ -44,7 +46,8 @@ class SheetPageWithDynamicPageProperties {
                   dynamicPageModel.value = dynamicPageModel.value.copyWith(
                     enableDrag: newValue,
                   );
-                  setState(() => useOriginalPageValues = !useOriginalPageValues);
+                  setState(
+                      () => useOriginalPageValues = !useOriginalPageValues);
                 },
               ),
             ],

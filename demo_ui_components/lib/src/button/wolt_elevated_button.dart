@@ -39,7 +39,8 @@ class WoltElevatedButton extends StatelessWidget {
                 : theme.enabledBackgroundColor(colorName);
           },
         ),
-        overlayColor: MaterialStateProperty.all<Color>(theme.splashColor(colorName)),
+        overlayColor:
+            MaterialStateProperty.all<Color>(theme.splashColor(colorName)),
         shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),

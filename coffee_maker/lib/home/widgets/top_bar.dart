@@ -19,7 +19,8 @@ class TopBar extends StatelessWidget {
     super.key,
   })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
         _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier,
-        _selectedStepForBottomNavigationBar = selectedStepForBottomNavigationBar;
+        _selectedStepForBottomNavigationBar =
+            selectedStepForBottomNavigationBar;
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
   final ValueNotifier<bool>? _isGridOverlayVisibleNotifier;
@@ -34,8 +35,9 @@ class TopBar extends StatelessWidget {
     late String title;
     switch (context.screenSize) {
       case WoltScreenSize.small:
-        title =
-            _isStoreOnlineNotifier.value && selectedStep != null ? selectedStep.stepName : store;
+        title = _isStoreOnlineNotifier.value && selectedStep != null
+            ? selectedStep.stepName
+            : store;
         break;
       case WoltScreenSize.large:
         title = store;
@@ -58,10 +60,12 @@ class TopBar extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              StoreOnlineStatusButton(isStoreOnlineNotifier: _isStoreOnlineNotifier),
+              StoreOnlineStatusButton(
+                  isStoreOnlineNotifier: _isStoreOnlineNotifier),
               if (isGridOverlayVisibleNotifier != null) ...[
                 const SizedBox(width: 16),
-                GridLayoutButton(isGridOverlayVisible: isGridOverlayVisibleNotifier),
+                GridLayoutButton(
+                    isGridOverlayVisible: isGridOverlayVisibleNotifier),
               ]
             ],
           ),

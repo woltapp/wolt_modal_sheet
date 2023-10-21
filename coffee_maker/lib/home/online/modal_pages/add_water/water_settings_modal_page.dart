@@ -31,7 +31,8 @@ class WaterSettingsModalPage {
       ),
       pageTitle: const ModalSheetTitle(pageTitle),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         child: Column(
@@ -46,7 +47,8 @@ class WaterSettingsModalPage {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: WaterSourceList(
-                onWaterSourceSelected: (source) => buttonEnabledListener.value = source.isSelected,
+                onWaterSourceSelected: (source) =>
+                    buttonEnabledListener.value = source.isSelected,
               ),
             ),
             const ModalSheetSubtitle('Water temperature'),

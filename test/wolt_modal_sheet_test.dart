@@ -61,12 +61,14 @@ void main() {
 
       final AssertionError exception = tester.takeException() as AssertionError;
       expect(exception, isAssertionError);
-      expect(exception.message, 'pageListBuilder must return a non-empty list.');
+      expect(
+          exception.message, 'pageListBuilder must return a non-empty list.');
     });
   });
 
   group('Modal sheet barrier dismissible', () {
-    testWidgets('WoltModalSheet does not dismiss on barrier tap if barrierDismissible is false',
+    testWidgets(
+        'WoltModalSheet does not dismiss on barrier tap if barrierDismissible is false',
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -104,7 +106,8 @@ void main() {
       expect(find.text('Wolt modal sheet page'), findsOneWidget);
     });
 
-    testWidgets('WoltModalSheet dismisses on barrier tap if barrierDismissible is true',
+    testWidgets(
+        'WoltModalSheet dismisses on barrier tap if barrierDismissible is true',
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(

@@ -43,7 +43,8 @@ class WoltSelectionListItemData<T> {
       value: value ?? this.value,
       isSelected: isSelected ?? this.isSelected,
       leadingIcon: leadingIcon ?? this.leadingIcon,
-      leadingImageAssetPath: leadingImageAssetPath ?? this.leadingImageAssetPath,
+      leadingImageAssetPath:
+          leadingImageAssetPath ?? this.leadingImageAssetPath,
     );
   }
 }

@@ -55,7 +55,8 @@ class RadioTrailing extends StatelessWidget {
           ? const Padding(
               padding: EdgeInsets.all(4),
               child: DecoratedBox(
-                decoration: ShapeDecoration(color: WoltColors.blue, shape: CircleBorder()),
+                decoration: ShapeDecoration(
+                    color: WoltColors.blue, shape: CircleBorder()),
               ),
             )
           : const SizedBox.expand(),
@@ -79,7 +80,8 @@ class _TrailingDecoration extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: fillColor,
-        border: const Border.fromBorderSide(BorderSide(color: WoltColors.blue, width: 2)),
+        border: const Border.fromBorderSide(
+            BorderSide(color: WoltColors.blue, width: 2)),
         shape: BoxShape.circle,
       ),
       child: SizedBox.fromSize(size: Size.square(trailingSize), child: child),

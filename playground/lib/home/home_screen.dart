@@ -27,7 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void goToNextPage() => pageIndexNotifier.value = pageIndexNotifier.value + 1;
 
-  void goToPreviousPage() => pageIndexNotifier.value = pageIndexNotifier.value - 1;
+  void goToPreviousPage() =>
+      pageIndexNotifier.value = pageIndexNotifier.value - 1;
 
   void close(BuildContext context) {
     Navigator.of(context).pop();

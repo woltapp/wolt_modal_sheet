@@ -170,7 +170,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       sabGradientHeight: sabGradientHeight ?? this.sabGradientHeight,
       navBarHeight: navBarHeight ?? this.navBarHeight,
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
-      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      isTopBarLayerAlwaysVisible:
+          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
       minDialogWidth: minDialogWidth ?? this.minDialogWidth,
       maxDialogWidth: maxDialogWidth ?? this.maxDialogWidth,
       minPageHeight: minPageHeight ?? this.minPageHeight,
@@ -189,20 +190,25 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
       modalElevation: lerpDouble(modalElevation, other.modalElevation, t),
       showDragHandle: t < 0.5 ? showDragHandle : other.showDragHandle,
-      modalBarrierColor: Color.lerp(modalBarrierColor, other.modalBarrierColor, t),
-      bottomSheetShape: ShapeBorder.lerp(bottomSheetShape, other.bottomSheetShape, t),
+      modalBarrierColor:
+          Color.lerp(modalBarrierColor, other.modalBarrierColor, t),
+      bottomSheetShape:
+          ShapeBorder.lerp(bottomSheetShape, other.bottomSheetShape, t),
       dialogShape: ShapeBorder.lerp(dialogShape, other.dialogShape, t),
       dragHandleColor: Color.lerp(dragHandleColor, other.dragHandleColor, t),
       dragHandleSize: Size.lerp(dragHandleSize, other.dragHandleSize, t),
-      topBarShadowColor: Color.lerp(topBarShadowColor, other.topBarShadowColor, t),
+      topBarShadowColor:
+          Color.lerp(topBarShadowColor, other.topBarShadowColor, t),
       topBarElevation: lerpDouble(topBarElevation, other.topBarElevation, t),
       heroImageHeight: lerpDouble(heroImageHeight, other.heroImageHeight, t),
       hasSabGradient: t < 0.5 ? hasSabGradient : other.hasSabGradient,
-      sabGradientHeight: lerpDouble(sabGradientHeight, other.sabGradientHeight, t),
+      sabGradientHeight:
+          lerpDouble(sabGradientHeight, other.sabGradientHeight, t),
       navBarHeight: lerpDouble(navBarHeight, other.navBarHeight, t),
       hasTopBarLayer: t < 0.5 ? hasTopBarLayer : other.hasTopBarLayer,
-      isTopBarLayerAlwaysVisible:
-          t < 0.5 ? isTopBarLayerAlwaysVisible : other.isTopBarLayerAlwaysVisible,
+      isTopBarLayerAlwaysVisible: t < 0.5
+          ? isTopBarLayerAlwaysVisible
+          : other.isTopBarLayerAlwaysVisible,
       minDialogWidth: lerpDouble(minDialogWidth, other.minDialogWidth, t),
       maxDialogWidth: lerpDouble(maxDialogWidth, other.maxDialogWidth, t),
       minPageHeight: lerpDouble(minPageHeight, other.minPageHeight, t),

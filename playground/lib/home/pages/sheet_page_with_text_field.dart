@@ -26,7 +26,9 @@ class SheetPageWithTextField {
               onPressed: onSabPressed,
               enabled: isEnabled,
               child: Text(
-                !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
+                !isEnabled
+                    ? "Fill the text field to enable"
+                    : (isLastPage ? "Submit" : "Next"),
               ),
             ),
           );
@@ -34,10 +36,12 @@ class SheetPageWithTextField {
       ),
       topBarTitle: const ModalSheetTopBarTitle('Page with text field'),
       isTopBarLayerAlwaysVisible: true,
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
+        padding:
+            const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: Column(
           children: [
             const ModalSheetContentText('''

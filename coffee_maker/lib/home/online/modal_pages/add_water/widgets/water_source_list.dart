@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class WaterSourceList extends StatelessWidget {
   const WaterSourceList({super.key, required this.onWaterSourceSelected});
 
-  final OnSelectionUpdateInSingleSelectionList<WaterSource> onWaterSourceSelected;
+  final OnSelectionUpdateInSingleSelectionList<WaterSource>
+      onWaterSourceSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,8 @@ class WaterSourceList extends StatelessWidget {
           itemTileDataGroup: WoltSelectionListItemDataGroup(
             group: WaterSource.values
                 .map(
-                  (e) => WoltSelectionListItemData(title: e.label, value: e, isSelected: false),
+                  (e) => WoltSelectionListItemData(
+                      title: e.label, value: e, isSelected: false),
                 )
                 .toList(),
           ),

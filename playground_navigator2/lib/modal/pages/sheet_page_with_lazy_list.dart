@@ -19,7 +19,9 @@ class SheetPageWithLazyList {
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
-          onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
+          onPressed: isLastPage
+              ? cubit.closeSheet
+              : () => cubit.goToPage(currentPage + 1),
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
@@ -31,11 +33,13 @@ class SheetPageWithLazyList {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ModalSheetTitle(titleText),
       ),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      leadingNavBarWidget: WoltModalSheetBackButton(
+          onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget:
+          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(
-              (_, index) {
+          (_, index) {
             if (index == 0) {
               return const _HorizontalPrimaryColorList();
             }
@@ -58,7 +62,8 @@ class _HorizontalPrimaryColorList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          for (Color color in Colors.primaries) Container(color: color, height: 100, width: 33),
+          for (Color color in Colors.primaries)
+            Container(color: color, height: 100, width: 33),
         ],
       ),
     );

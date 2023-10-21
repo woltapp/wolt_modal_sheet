@@ -4,7 +4,6 @@ import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPage extends Page<void> {
-
   const SheetPage({
     required this.pageIndexNotifier,
     required this.pageListBuilderNotifier,

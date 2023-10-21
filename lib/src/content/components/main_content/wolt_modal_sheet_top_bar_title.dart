@@ -21,7 +21,8 @@ class WoltModalSheetTopBarTitle extends StatefulWidget {
   final GlobalKey pageTitleKey;
 
   @override
-  State<WoltModalSheetTopBarTitle> createState() => _WoltModalSheetTopBarTitleState();
+  State<WoltModalSheetTopBarTitle> createState() =>
+      _WoltModalSheetTopBarTitleState();
 }
 
 class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
@@ -49,8 +50,9 @@ class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
   @override
   Widget build(BuildContext context) {
     final topBarTitle = widget.page.topBarTitle;
-    final pageTitleText =
-        (widget.page.pageTitle is Text) ? (widget.page.pageTitle as Text).data : this.pageTitleText;
+    final pageTitleText = (widget.page.pageTitle is Text)
+        ? (widget.page.pageTitle as Text).data
+        : this.pageTitleText;
 
     if (topBarTitle != null) {
       return topBarTitle;

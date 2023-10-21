@@ -23,12 +23,15 @@ class GroupedCoffeeOrders extends Equatable {
 
   /// Creates a new instance of [GroupedCoffeeOrders] from a list of [CoffeeOrder]s.
   factory GroupedCoffeeOrders.fromCoffeeOrders(List<CoffeeOrder> coffeeOrders) {
-    final grindStateOrders =
-        coffeeOrders.where((o) => o.coffeeMakerStep == CoffeeMakerStep.grind).toList();
-    final addWaterStateOrders =
-        coffeeOrders.where((o) => o.coffeeMakerStep == CoffeeMakerStep.addWater).toList();
-    final readyStateOrders =
-        coffeeOrders.where((o) => o.coffeeMakerStep == CoffeeMakerStep.ready).toList();
+    final grindStateOrders = coffeeOrders
+        .where((o) => o.coffeeMakerStep == CoffeeMakerStep.grind)
+        .toList();
+    final addWaterStateOrders = coffeeOrders
+        .where((o) => o.coffeeMakerStep == CoffeeMakerStep.addWater)
+        .toList();
+    final readyStateOrders = coffeeOrders
+        .where((o) => o.coffeeMakerStep == CoffeeMakerStep.ready)
+        .toList();
     return GroupedCoffeeOrders(
       grindStateOrders: grindStateOrders,
       addWaterStateOrders: addWaterStateOrders,
@@ -44,7 +47,8 @@ class GroupedCoffeeOrders extends Equatable {
       ];
 
   @override
-  List<Object?> get props => [grindStateOrders, addWaterStateOrders, readyStateOrders];
+  List<Object?> get props =>
+      [grindStateOrders, addWaterStateOrders, readyStateOrders];
 
   /// Returns the count of coffee orders for a specific coffee maker step.
   int countForStep(CoffeeMakerStep step) {

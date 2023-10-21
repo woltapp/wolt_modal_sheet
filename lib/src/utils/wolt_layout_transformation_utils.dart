@@ -1,7 +1,6 @@
 import 'dart:math';
 
 class WoltLayoutTransformationUtils {
-
   WoltLayoutTransformationUtils._();
 
   static double calculateTransformationValue({

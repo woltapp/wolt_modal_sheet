@@ -24,7 +24,8 @@ class SheetPageWithHeroImage {
         ),
       ),
       pageTitle: const ModalSheetTitle('Page with a hero image'),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       child: const Padding(
         padding: EdgeInsets.only(bottom: 80, top: 16, left: 16, right: 16),

@@ -30,10 +30,12 @@ class SheetPageWithLazyList {
             color: Colors.yellow,
             child: SizedBox(height: heroImageHeight, width: double.infinity),
           ),
-          Placeholder(fallbackHeight: heroImageHeight, color: Colors.yellowAccent),
+          Placeholder(
+              fallbackHeight: heroImageHeight, color: Colors.yellowAccent),
         ],
       ),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       sliverList: SliverList(
         delegate: SliverChildBuilderDelegate(
@@ -60,7 +62,8 @@ class _HorizontalPrimaryColorList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          for (Color color in Colors.primaries) Container(color: color, height: 100, width: 33),
+          for (Color color in Colors.primaries)
+            Container(color: color, height: 100, width: 33),
         ],
       ),
     );

@@ -8,8 +8,10 @@ class WoltSelectionListItemDataGroup<T> {
 
   int get itemTileCount => group.length;
 
-  List<T> get selectedValues =>
-      group.where((c) => c.isSelected).map((e) => e.value).toList(growable: false);
+  List<T> get selectedValues => group
+      .where((c) => c.isSelected)
+      .map((e) => e.value)
+      .toList(growable: false);
 
   const WoltSelectionListItemDataGroup({required this.group});
 
@@ -41,7 +43,8 @@ class WoltSelectionListItemDataGroup<T> {
         updatedGroup = group.map((item) {
           final selectedIndex = group.indexOf(item);
 
-          return item.copyWith(isSelected: index == selectedIndex ? isSelected : false);
+          return item.copyWith(
+              isSelected: index == selectedIndex ? isSelected : false);
         }).toList();
         break;
     }
@@ -49,7 +52,8 @@ class WoltSelectionListItemDataGroup<T> {
     return WoltSelectionListItemDataGroup<T>(group: updatedGroup);
   }
 
-  WoltSelectionListItemDataGroup<T> copyWith(List<WoltSelectionListItemData<T>>? group) {
+  WoltSelectionListItemDataGroup<T> copyWith(
+      List<WoltSelectionListItemData<T>>? group) {
     return WoltSelectionListItemDataGroup<T>(group: group ?? this.group);
   }
 }

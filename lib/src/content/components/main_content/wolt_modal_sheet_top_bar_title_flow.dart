@@ -25,11 +25,14 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final topBarHeight =
-        page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
+    final topBarHeight = page.navBarHeight ??
+        themeData?.navBarHeight ??
+        defaultThemeData.navBarHeight;
     final heroImageHeight = page.heroImage == null
         ? 0.0
-        : (page.heroImageHeight ?? themeData?.heroImageHeight ?? defaultThemeData.heroImageHeight);
+        : (page.heroImageHeight ??
+            themeData?.heroImageHeight ??
+            defaultThemeData.heroImageHeight);
     return Flow(
       delegate: _TopBarTitleFlowDelegate(
         topBarHeight: topBarHeight,
@@ -67,23 +70,28 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
         -1 * WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
     const topBarTitleTranslationYAmount =
         WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
-    const topBarTitleTranslationYEnd = topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
+    const topBarTitleTranslationYEnd =
+        topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
     final topBarTitleTranslationYAndOpacityStartPoint =
         heroImageHeight == 0 ? 8 : heroImageHeight - topBarHeight;
 
     /// Top Bar Title translation Y
-    final topBarTitleTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
+    final topBarTitleTranslationY =
+        WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: pageTitleHeight,
-      progressInRangeInPx: currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
+      progressInRangeInPx:
+          currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
       startValue: topBarTitleTranslationYStart,
       endValue: topBarTitleTranslationYEnd,
     );
 
     /// Top Bar Title Opacity
-    final topBarTitleOpacity = WoltLayoutTransformationUtils.calculateTransformationValue(
+    final topBarTitleOpacity =
+        WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: pageTitleHeight / 2,
-      progressInRangeInPx: currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
+      progressInRangeInPx:
+          currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
     );

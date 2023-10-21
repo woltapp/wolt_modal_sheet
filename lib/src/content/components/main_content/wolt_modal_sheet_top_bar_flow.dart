@@ -35,7 +35,9 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
         defaultThemeData.navBarHeight;
     final heroImageHeight = page.heroImage == null
         ? 0.0
-        : (page.heroImageHeight ?? themeData?.heroImageHeight ?? defaultThemeData.heroImageHeight);
+        : (page.heroImageHeight ??
+            themeData?.heroImageHeight ??
+            defaultThemeData.heroImageHeight);
 
     return Flow(
       delegate: _TopBarFlowDelegate(
@@ -80,17 +82,21 @@ class _TopBarFlowDelegate extends FlowDelegate {
         heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight - 8;
 
     /// Top bar translation Y
-    final topBarTranslationY = WoltLayoutTransformationUtils.calculateTransformationValue(
+    final topBarTranslationY =
+        WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: 8 + pageTitleHeight,
-      progressInRangeInPx: currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
+      progressInRangeInPx:
+          currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
       startValue: topBarTranslationYStart,
       endValue: topBarTranslationYEnd,
     );
 
     /// Top bar opacity
-    final topBarOpacity = WoltLayoutTransformationUtils.calculateTransformationValue(
+    final topBarOpacity =
+        WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: 8,
-      progressInRangeInPx: currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
+      progressInRangeInPx:
+          currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
     );
@@ -108,7 +114,8 @@ class _TopBarFlowDelegate extends FlowDelegate {
     return heroImageHeight != oldDelegate.heroImageHeight ||
         titleKey != oldDelegate.titleKey ||
         currentScrollPosition != oldDelegate.currentScrollPosition ||
-        topBarTranslationYAmountInPx != oldDelegate.topBarTranslationYAmountInPx ||
+        topBarTranslationYAmountInPx !=
+            oldDelegate.topBarTranslationYAmountInPx ||
         topBarHeight != oldDelegate.topBarHeight;
   }
 }

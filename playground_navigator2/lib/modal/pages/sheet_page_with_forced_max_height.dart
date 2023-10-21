@@ -19,13 +19,16 @@ class SheetPageWithForcedMaxHeight {
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
-          onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
+          onPressed: isLastPage
+              ? cubit.closeSheet
+              : () => cubit.goToPage(currentPage + 1),
           colorName: WoltColorName.green,
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
       hasTopBarLayer: false,
-      pageTitle: const ModalSheetTitle('Page with forced max height and background color'),
+      pageTitle: const ModalSheetTitle(
+          'Page with forced max height and background color'),
       child: const Padding(
         padding: EdgeInsets.all(16.0),
         child: Text(

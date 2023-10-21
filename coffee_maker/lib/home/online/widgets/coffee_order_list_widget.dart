@@ -35,7 +35,8 @@ class CoffeeOrderListWidget extends StatelessWidget {
                     coffeeOrder: coffeeOrder,
                     onSelected: _onCoffeeOrderSelected,
                   ),
-                  if (index == coffeeOrders.length - 1) const SizedBox(height: 16),
+                  if (index == coffeeOrders.length - 1)
+                    const SizedBox(height: 16),
                 ],
               );
             },

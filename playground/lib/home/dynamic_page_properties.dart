@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A [ValueNotifier] that holds and manages the state of the dynamic properties for a [WoltModalSheetPage].
-class DynamicPagePropertiesNotifier extends ValueNotifier<DynamicPagePropertiesModel> {
+class DynamicPagePropertiesNotifier
+    extends ValueNotifier<DynamicPagePropertiesModel> {
   /// Constructs a [DynamicPagePropertiesNotifier] instance with the initial [value].
-  DynamicPagePropertiesNotifier(DynamicPagePropertiesModel value) : super(value);
+  DynamicPagePropertiesNotifier(DynamicPagePropertiesModel value)
+      : super(value);
 }
 
 /// A model class that represents the dynamic properties of a page.
@@ -24,7 +26,8 @@ class DynamicPagePropertiesModel {
 }
 
 /// An [InheritedNotifier] that provides access to the dynamic page properties within its subtree.
-class DynamicPageProperties extends InheritedNotifier<DynamicPagePropertiesNotifier> {
+class DynamicPageProperties
+    extends InheritedNotifier<DynamicPagePropertiesNotifier> {
   /// Creates an instance of [DynamicPageProperties].
   ///
   /// The [notifier] holds the [DynamicPagePropertiesNotifier] that manages the dynamic page properties,
@@ -37,6 +40,8 @@ class DynamicPageProperties extends InheritedNotifier<DynamicPagePropertiesNotif
 
   /// Retrieves the [DynamicPagePropertiesNotifier] from the nearest ancestor [DynamicPageProperties].
   static DynamicPagePropertiesNotifier? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<DynamicPageProperties>()?.notifier;
+    return context
+        .dependOnInheritedWidgetOfExactType<DynamicPageProperties>()
+        ?.notifier;
   }
 }

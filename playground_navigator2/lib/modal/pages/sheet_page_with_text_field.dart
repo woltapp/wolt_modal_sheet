@@ -25,10 +25,14 @@ class SheetPageWithTextField {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
-              onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
+              onPressed: isLastPage
+                  ? cubit.closeSheet
+                  : () => cubit.goToPage(currentPage + 1),
               enabled: isEnabled,
               child: Text(
-                !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
+                !isEnabled
+                    ? "Fill the text field to enable"
+                    : (isLastPage ? "Submit" : "Next"),
               ),
             ),
           );
@@ -37,10 +41,13 @@ class SheetPageWithTextField {
       hasTopBarLayer: false,
       topBarTitle: const ModalSheetTopBarTitle('Page with text field'),
       isTopBarLayerAlwaysVisible: true,
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      leadingNavBarWidget: WoltModalSheetBackButton(
+          onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget:
+          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
+        padding:
+            const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: Column(
           children: [
             const ModalSheetContentText('''
