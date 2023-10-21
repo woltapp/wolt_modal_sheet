@@ -20,6 +20,11 @@ jobs:
         with:
           flutter-version: '3.7.2' # Uses the minimum supported version.
           channel: 'stable'
+      # Setup Melos
+      - name: Setup Melos
+        run: |
+          pub global activate melos
+          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
       # Get Flutter version
       - name: Get Flutter version
         run: flutter --version
