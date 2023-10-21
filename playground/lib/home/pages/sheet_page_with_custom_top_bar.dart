@@ -31,9 +31,9 @@ class SheetPageWithCustomTopBar {
       isTopBarLayerAlwaysVisible: false,
       topBar: _CustomTopBar(onClosed: onClosed, onBackPressed: onBackPressed),
       pageTitle: const ModalSheetTitle('Page with custom top bar'),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text('Scroll to see the custom top bar with a search field in it.'),
@@ -71,9 +71,10 @@ class _CustomTopBar extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: _searchBarPadding,
-              child: SearchBar(
-                hintText: 'Search',
-                onChanged: (value) {},
+              child: IconButton(
+                onPressed: () {},
+                tooltip: 'Search',
+                icon: const Icon(Icons.search),
               ),
             ),
           ),

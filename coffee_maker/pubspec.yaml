@@ -3,7 +3,8 @@ description: The coffee maker example project to demonstrate the usage of wolt_m
 publish_to: "none"
 
 environment:
-  sdk: ">=2.17.0 <4.0.0"
+  sdk: '>=2.19.2 <4.0.0'
+  flutter: '>=3.7.2'
 
 dependencies:
   flutter:

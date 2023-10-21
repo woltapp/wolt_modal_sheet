@@ -173,9 +173,8 @@ void main() {
     const Size wideSize = Size(800.0, 600.0);
     const Size narrowSize = Size(300.0, 600.0);
 
-    addTearDown(tester.view.reset);
-    tester.view.physicalSize = wideSize;
-    tester.view.devicePixelRatio = 1.0;
+    tester.binding.window.physicalSizeTestValue = wideSize;
+    tester.binding.window.devicePixelRatioTestValue = 1.0;
 
     await tester.pumpWidget(
       MaterialApp(
@@ -207,15 +206,19 @@ void main() {
     Finder sheetMaterial = find.byType(Material).last;
 
     // The default modalTypeBuilder should be a dialog on wide screens.
-    expect(tester.getSize(sheetMaterial), const Size(320.0, 160.0));
-    expect(tester.getTopLeft(sheetMaterial), const Offset(240.0, 220.0));
+    expect(tester.getSize(sheetMaterial), const Size(400.0, 71.0));
+    expect(tester.getTopLeft(sheetMaterial), const Offset(200.0, 253.0));
 
     // Configure to show the narrow layout.
-    tester.view.physicalSize = narrowSize;
+    tester.binding.window.physicalSizeTestValue = narrowSize;
     await tester.pumpAndSettle();
 
     // The default modalTypeBuilder should be a bottom sheet on narrow screens.
-    expect(tester.getSize(sheetMaterial), const Size(300.0, 160.0));
-    expect(tester.getTopLeft(sheetMaterial), const Offset(0.0, 440.0));
+    expect(tester.getSize(sheetMaterial), const Size(300.0, 71.0));
+    expect(tester.getTopLeft(sheetMaterial), const Offset(0.0, 510.0));
+
+    // Reset the physical size and device pixel ratio.
+    tester.binding.window.clearPhysicalSizeTestValue();
+    tester.binding.window.clearDevicePixelRatioTestValue();
   });
 }

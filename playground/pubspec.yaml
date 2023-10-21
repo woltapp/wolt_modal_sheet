@@ -1,8 +1,10 @@
 name: playground
 description: A playground to test various use cases with the wolt modal sheet with imperative navigation
 publish_to: "none"
+
 environment:
-  sdk: ">=2.17.0 <4.0.0"
+  sdk: '>=2.19.2 <4.0.0'
+  flutter: '>=3.7.2'
 
 dependencies:
   flutter:
