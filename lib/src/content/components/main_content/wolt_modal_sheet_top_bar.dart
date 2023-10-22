@@ -30,14 +30,20 @@ class WoltModalSheetTopBar extends StatelessWidget {
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
 
     // Determine the top bar's elevation, shadow color, height, background color, and surface tint color.
-    final elevation = themeData?.topBarElevation ?? defaultThemeData.topBarElevation;
+    final elevation =
+        themeData?.topBarElevation ?? defaultThemeData.topBarElevation;
     final shadowColor = themeData?.topBarShadowColor ??
-        (theme.brightness == Brightness.light ? const Color(0xFFE4E4E4) : const Color(0xFF121212));
-    final topBarHeight =
-        page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
-    final backgroundColor =
-        page.backgroundColor ?? themeData?.backgroundColor ?? defaultThemeData.backgroundColor;
-    final surfaceTintColor = themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
+        (theme.brightness == Brightness.light
+            ? const Color(0xFFE4E4E4)
+            : const Color(0xFF121212));
+    final topBarHeight = page.navBarHeight ??
+        themeData?.navBarHeight ??
+        defaultThemeData.navBarHeight;
+    final backgroundColor = page.backgroundColor ??
+        themeData?.backgroundColor ??
+        defaultThemeData.backgroundColor;
+    final surfaceTintColor =
+        themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
 
     // Create the default top bar widget.
     SizedBox topBarWidget = SizedBox(

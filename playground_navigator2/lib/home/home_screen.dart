@@ -37,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SizedBox(
             width: 200,
             child: WoltElevatedButton(
-              onPressed: context.read<RouterCubit>().onShowModalSheetButtonPressed,
+              onPressed:
+                  context.read<RouterCubit>().onShowModalSheetButtonPressed,
               child: const Text('Show Modal Sheet'),
             ),
           ),

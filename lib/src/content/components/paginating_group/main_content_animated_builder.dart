@@ -22,18 +22,22 @@ class MainContentAnimatedBuilder extends StatefulWidget {
   });
 
   @override
-  State<MainContentAnimatedBuilder> createState() => _MainContentAnimatedBuilderState();
+  State<MainContentAnimatedBuilder> createState() =>
+      _MainContentAnimatedBuilderState();
 }
 
-class _MainContentAnimatedBuilderState extends State<MainContentAnimatedBuilder> {
+class _MainContentAnimatedBuilderState
+    extends State<MainContentAnimatedBuilder> {
   Animation<double>? _sizeFactor;
 
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(() {
-      BuildContext? incomingContext = widget.incomingOffstagedMainContentKey.currentContext;
-      BuildContext? outgoingContext = widget.outgoingOffstagedMainContentKey.currentContext;
+      BuildContext? incomingContext =
+          widget.incomingOffstagedMainContentKey.currentContext;
+      BuildContext? outgoingContext =
+          widget.outgoingOffstagedMainContentKey.currentContext;
       if (_sizeFactor == null &&
           incomingContext?.mounted == true &&
           outgoingContext?.mounted == true) {
@@ -56,7 +60,8 @@ class _MainContentAnimatedBuilderState extends State<MainContentAnimatedBuilder>
       builder: (BuildContext context, _) {
         return SizeTransition(
           axisAlignment: -1.0,
-          sizeFactor: _sizeFactor ?? pageTransitionState.defaultMainContentSizeFactor(controller),
+          sizeFactor: _sizeFactor ??
+              pageTransitionState.defaultMainContentSizeFactor(controller),
           child: Opacity(
             opacity: pageTransitionState.mainContentOpacity(controller).value,
             child: SlideTransition(

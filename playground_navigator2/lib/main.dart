@@ -83,7 +83,8 @@ class _DemoAppState extends State<DemoApp> {
                 letterSpacing: kIsWeb || Platform.isAndroid ? 0.2 : 0.12,
               ),
             ),
-            typography: Typography.material2021(platform: defaultTargetPlatform),
+            typography:
+                Typography.material2021(platform: defaultTargetPlatform),
             scaffoldBackgroundColor: WoltColors.white,
             indicatorColor: Colors.transparent,
             cardColor: WoltColors.white,

@@ -39,7 +39,8 @@ class GrindOrRejectModalPage {
         padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 48),
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: ModalSheetContentText('Accept the order to proceed to grinding'),
+          child:
+              ModalSheetContentText('Accept the order to proceed to grinding'),
         ),
       ),
     );

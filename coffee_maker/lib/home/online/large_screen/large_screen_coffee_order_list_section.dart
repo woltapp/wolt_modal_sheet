@@ -32,7 +32,9 @@ class LargeScreenCoffeeOrderListSection extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            color: _coffeeMakerStep == CoffeeMakerStep.ready ? DemoAppColors.white : null,
+            color: _coffeeMakerStep == CoffeeMakerStep.ready
+                ? DemoAppColors.white
+                : null,
             decoration: _coffeeMakerStep == CoffeeMakerStep.ready
                 ? null
                 : const ShapeDecoration(
@@ -72,7 +74,8 @@ class _LargeScreenCoffeeOrderListHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.only(top: 16, bottom: 8),
       decoration: const ShapeDecoration(
-        shape: StadiumBorder(side: BorderSide(color: DemoAppColors.gray, width: 2)),
+        shape: StadiumBorder(
+            side: BorderSide(color: DemoAppColors.gray, width: 2)),
         color: DemoAppColors.white,
       ),
       child: Text(

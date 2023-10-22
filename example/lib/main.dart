@@ -29,7 +29,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     final pageIndexNotifier = ValueNotifier(0);
 
-    WoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
+    WoltModalSheetPage page1(
+        BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withSingleChild(
         hasSabGradient: false,
         stickyActionBar: Padding(
@@ -46,7 +47,8 @@ class _MainAppState extends State<MainApp> {
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+                onPressed: () =>
+                    pageIndexNotifier.value = pageIndexNotifier.value + 1,
                 child: const SizedBox(
                   height: _buttonHeight,
                   width: double.infinity,
@@ -78,11 +80,12 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
       );
     }
 
-    WoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
+    WoltModalSheetPage page2(
+        BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage.withCustomSliverList(
         stickyActionBar: Padding(
-          padding:
-              const EdgeInsets.fromLTRB(_pagePadding, _pagePadding / 4, _pagePadding, _pagePadding),
+          padding: const EdgeInsets.fromLTRB(
+              _pagePadding, _pagePadding / 4, _pagePadding, _pagePadding),
           child: ElevatedButton(
             onPressed: () {
               Navigator.of(modalSheetContext).pop();
@@ -99,7 +102,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           padding: const EdgeInsets.symmetric(horizontal: _pagePadding),
           child: Text(
             'Material Colors',
-            style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style:
+                textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         heroImage: Image(
@@ -111,7 +115,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
         leadingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(_pagePadding),
           icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+          onPressed: () =>
+              pageIndexNotifier.value = pageIndexNotifier.value - 1,
         ),
         trailingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(_pagePadding),
@@ -166,7 +171,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       padding: const EdgeInsets.all(_pagePadding),
                       child: Switch(
                         value: !_isLightTheme,
-                        onChanged: (_) => setState(() => _isLightTheme = !_isLightTheme),
+                        onChanged: (_) =>
+                            setState(() => _isLightTheme = !_isLightTheme),
                       ),
                     ),
                     const Text('Dark Theme'),

@@ -28,7 +28,8 @@ void main() {
       expect(find.text('Page Title'), findsNothing);
     });
 
-    testWidgets('should use page title when top bar title is not provided and page title is Text',
+    testWidgets(
+        'should use page title when top bar title is not provided and page title is Text',
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -47,7 +48,8 @@ void main() {
       expect(find.text('Page Title'), findsOneWidget);
     });
 
-    testWidgets('should display nothing when neither top bar title nor page title is provided',
+    testWidgets(
+        'should display nothing when neither top bar title nor page title is provided',
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -62,7 +64,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(tester.element(find.byType(WoltModalSheetTopBarTitle).at(0)).size, Size.zero);
+      expect(tester.element(find.byType(WoltModalSheetTopBarTitle).at(0)).size,
+          Size.zero);
     });
   });
 }

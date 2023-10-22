@@ -10,7 +10,8 @@ class WoltModalSheetBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(start: 16),
-      child: WoltCircularElevatedButton(onPressed: onBackPressed, icon: Icons.arrow_back_rounded),
+      child: WoltCircularElevatedButton(
+          onPressed: onBackPressed, icon: Icons.arrow_back_rounded),
     );
   }
 }

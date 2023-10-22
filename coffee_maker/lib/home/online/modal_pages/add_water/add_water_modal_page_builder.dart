@@ -30,7 +30,8 @@ class AddWaterModalPageBuilder {
           onBackButtonPressed: goToPreviousPage,
           onClosed: Navigator.of(context).pop,
           onWaterAdded: () {
-            model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.ready);
+            model.onCoffeeOrderStatusChange(
+                coffeeOrderId, CoffeeMakerStep.ready);
             Navigator.pop(context);
           },
         )

@@ -6,7 +6,8 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 void main() {
   group('WoltStickyActionBarWrapper', () {
     group('Rendering', () {
-      testWidgets('should render shrunk widget when stickyActionBar is null', (tester) async {
+      testWidgets('should render shrunk widget when stickyActionBar is null',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: Scaffold(
@@ -20,10 +21,13 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(tester.element(find.byType(WoltStickyActionBarWrapper).at(0)).size, Size.zero);
+        expect(
+            tester.element(find.byType(WoltStickyActionBarWrapper).at(0)).size,
+            Size.zero);
       });
 
-      testWidgets('should render stickyActionBar when provided', (tester) async {
+      testWidgets('should render stickyActionBar when provided',
+          (tester) async {
         const testActionBar = Text("ActionBar");
 
         await tester.pumpWidget(
@@ -44,7 +48,8 @@ void main() {
     });
 
     group('Gradient visibility', () {
-      testWidgets('should show gradient when hasSabGradient is true', (tester) async {
+      testWidgets('should show gradient when hasSabGradient is true',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: WoltStickyActionBarWrapper(
@@ -57,10 +62,12 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(find.byKey(WoltStickyActionBarWrapper.gradientWidgetKey), findsOneWidget);
+        expect(find.byKey(WoltStickyActionBarWrapper.gradientWidgetKey),
+            findsOneWidget);
       });
 
-      testWidgets('should not show gradient when hasSabGradient is false', (tester) async {
+      testWidgets('should not show gradient when hasSabGradient is false',
+          (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
             home: WoltStickyActionBarWrapper(
@@ -73,7 +80,8 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(find.byKey(WoltStickyActionBarWrapper.gradientWidgetKey), findsNothing);
+        expect(find.byKey(WoltStickyActionBarWrapper.gradientWidgetKey),
+            findsNothing);
       });
     });
   });

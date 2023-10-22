@@ -42,12 +42,14 @@ void main() {
       /// Ideally, start the name with the word 'should' to make it clear what the expected result is and use the
       /// word 'when' to describe a specific scenario.
 
-      testWidgets('should <expected result> when <action to perform>', (tester) async {
+      testWidgets('should <expected result> when <action to perform>',
+          (tester) async {
         /// Arrange
         /// Create test objects and stub methods here
         // Set up needed data
         await tester.pumpWidget(
-          const MaterialApp(home: SizedBox.shrink() /* Insert your widget to test here */),
+          const MaterialApp(
+              home: SizedBox.shrink() /* Insert your widget to test here */),
         );
         await tester.pumpAndSettle();
 
@@ -66,15 +68,18 @@ void main() {
         );
       });
 
-      testWidgets('should <expected result 2> when <action to perform 2>', (tester) async {});
+      testWidgets('should <expected result 2> when <action to perform 2>',
+          (tester) async {});
     });
 
     group('subgroup-2', () {
       setUp(() {});
 
-      testWidgets('should <expected result 1> when <actions to perform 1>', (tester) async {});
+      testWidgets('should <expected result 1> when <actions to perform 1>',
+          (tester) async {});
 
-      testWidgets('should <expected result 2> when <actions to perform 2>', (tester) async {});
+      testWidgets('should <expected result 2> when <actions to perform 2>',
+          (tester) async {});
     });
   });
 }

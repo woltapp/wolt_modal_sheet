@@ -21,14 +21,17 @@ class SheetPageWithHeroImage {
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
-          onPressed: isLastPage ? cubit.closeSheet : () => cubit.goToPage(currentPage + 1),
+          onPressed: isLastPage
+              ? cubit.closeSheet
+              : () => cubit.goToPage(currentPage + 1),
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
       pageTitle: const ModalSheetTitle('Page with a hero image'),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: () => cubit.goToPage(currentPage - 1)),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      leadingNavBarWidget: WoltModalSheetBackButton(
+          onBackPressed: () => cubit.goToPage(currentPage - 1)),
+      trailingNavBarWidget:
+          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: const Padding(
         padding: EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: ModalSheetContentText('''

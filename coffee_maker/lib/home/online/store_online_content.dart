@@ -13,7 +13,8 @@ import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
-typedef OnCoffeeOrderStatusChange = Function(String coffeeOrderId, [CoffeeMakerStep? newStep]);
+typedef OnCoffeeOrderStatusChange = Function(String coffeeOrderId,
+    [CoffeeMakerStep? newStep]);
 
 class StoreOnlineContent extends StatefulWidget {
   const StoreOnlineContent({
@@ -34,24 +35,28 @@ class StoreOnlineContent extends StatefulWidget {
 }
 
 class _StoreOnlineContentState extends State<StoreOnlineContent> {
-  Map<CoffeeMakerStep, CoffeeOrderListWidget> _getCoffeeMakerStepListWidgets(BuildContext context) {
+  Map<CoffeeMakerStep, CoffeeOrderListWidget> _getCoffeeMakerStepListWidgets(
+      BuildContext context) {
     final model = context.read<StoreOnlineViewModel>();
 
     return {
       CoffeeMakerStep.grind: CoffeeOrderListWidget(
         coffeeOrders: model.groupedCoffeeOrders.grindStateOrders,
         coffeeMakerStep: CoffeeMakerStep.grind,
-        onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInGrindState(context, id),
+        onCoffeeOrderSelected: (id) =>
+            _onCoffeeOrderSelectedInGrindState(context, id),
       ),
       CoffeeMakerStep.addWater: CoffeeOrderListWidget(
         coffeeOrders: model.groupedCoffeeOrders.addWaterStateOrders,
         coffeeMakerStep: CoffeeMakerStep.addWater,
-        onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInAddWaterState(context, id),
+        onCoffeeOrderSelected: (id) =>
+            _onCoffeeOrderSelectedInAddWaterState(context, id),
       ),
       CoffeeMakerStep.ready: CoffeeOrderListWidget(
         coffeeOrders: model.groupedCoffeeOrders.readyStateOrders,
         coffeeMakerStep: CoffeeMakerStep.ready,
-        onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInReadyState(context, id),
+        onCoffeeOrderSelected: (id) =>
+            _onCoffeeOrderSelectedInReadyState(context, id),
       ),
     };
   }
@@ -59,20 +64,23 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<StoreOnlineViewModel>(
-      create: (context) =>
-          StoreOnlineViewModel()..onInit(groupedCoffeeOrders: widget._groupedCoffeeOrders),
+      create: (context) => StoreOnlineViewModel()
+        ..onInit(groupedCoffeeOrders: widget._groupedCoffeeOrders),
       child: Consumer<StoreOnlineViewModel>(
         builder: (context, model, _) {
           return WoltScreenWidthAdaptiveWidget(
             smallScreenWidthChild: SmallScreenOnlineContent(
-              coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
+              coffeeMakerStepListWidgets:
+                  _getCoffeeMakerStepListWidgets(context),
               groupedCoffeeOrders: model.groupedCoffeeOrders,
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
             ),
             largeScreenWidthChild: LargeScreenOnlineContent(
-              coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(context),
+              coffeeMakerStepListWidgets:
+                  _getCoffeeMakerStepListWidgets(context),
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
-              isGridOverlayVisibleNotifier: widget._isGridOverlayVisibleNotifier,
+              isGridOverlayVisibleNotifier:
+                  widget._isGridOverlayVisibleNotifier,
             ),
           );
         },
@@ -80,7 +88,8 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     );
   }
 
-  void _onCoffeeOrderSelectedInGrindState(BuildContext context, String coffeeOrderId) {
+  void _onCoffeeOrderSelectedInGrindState(
+      BuildContext context, String coffeeOrderId) {
     final model = context.read<StoreOnlineViewModel>();
     final pageIndexNotifier = ValueNotifier(0);
 
@@ -89,10 +98,13 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
       context: context,
       pageListBuilder: GrindModalPageBuilder.build(
         coffeeOrderId: coffeeOrderId,
-        goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+        goToPreviousPage: () =>
+            pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        goToNextPage: () =>
+            pageIndexNotifier.value = pageIndexNotifier.value + 1,
         onStartGrinding: () {
-          model.onCoffeeOrderStatusChange(coffeeOrderId, CoffeeMakerStep.addWater);
+          model.onCoffeeOrderStatusChange(
+              coffeeOrderId, CoffeeMakerStep.addWater);
           Navigator.pop(context);
         },
         onCoffeeOrderRejected: () {
@@ -104,7 +116,8 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
     );
   }
 
-  void _onCoffeeOrderSelectedInAddWaterState(BuildContext context, String coffeeOrderId) {
+  void _onCoffeeOrderSelectedInAddWaterState(
+      BuildContext context, String coffeeOrderId) {
     final model = context.read<StoreOnlineViewModel>();
     final pageIndexNotifier = ValueNotifier(0);
 
@@ -119,14 +132,17 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
       },
       pageListBuilder: AddWaterModalPageBuilder.build(
         coffeeOrderId: coffeeOrderId,
-        goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+        goToPreviousPage: () =>
+            pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        goToNextPage: () =>
+            pageIndexNotifier.value = pageIndexNotifier.value + 1,
       ),
       modalTypeBuilder: _modalTypeBuilder,
     );
   }
 
-  void _onCoffeeOrderSelectedInReadyState(BuildContext context, String coffeeOrderId) {
+  void _onCoffeeOrderSelectedInReadyState(
+      BuildContext context, String coffeeOrderId) {
     final model = context.read<StoreOnlineViewModel>();
 
     final pageIndexNotifier = ValueNotifier(0);
@@ -135,8 +151,10 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
       context: context,
       pageListBuilder: ReadyModalPageBuilder.build(
         coffeeOrderId: coffeeOrderId,
-        goToPreviousPage: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+        goToPreviousPage: () =>
+            pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        goToNextPage: () =>
+            pageIndexNotifier.value = pageIndexNotifier.value + 1,
         onCoffeeOrderServed: () {
           model.onCoffeeOrderStatusChange(coffeeOrderId);
           Navigator.pop(context);

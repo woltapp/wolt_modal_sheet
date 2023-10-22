@@ -17,7 +17,7 @@ class RejectOrderModalPage {
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: buttonEnabledListener,
         builder: (_, isEnabled, __) {
-          return  Padding(
+          return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
               onPressed: onCoffeeOrderRejected,
@@ -31,7 +31,8 @@ class RejectOrderModalPage {
       ),
       pageTitle: const ModalSheetTitle('Reject order'),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      leadingNavBarWidget: WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
+      leadingNavBarWidget:
+          WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: Padding(
@@ -41,7 +42,8 @@ class RejectOrderModalPage {
             children: [
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
-                child: ModalSheetContentText('Please select a reason for rejecting the order'),
+                child: ModalSheetContentText(
+                    'Please select a reason for rejecting the order'),
               ),
               WoltSelectionList<RejectOrderReason>.singleSelect(
                 itemTileDataGroup: WoltSelectionListItemDataGroup(

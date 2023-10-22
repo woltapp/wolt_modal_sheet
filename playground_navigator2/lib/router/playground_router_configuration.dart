@@ -1,5 +1,3 @@
-
-
 import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 
 class PlaygroundRouterConfiguration {
@@ -13,7 +11,8 @@ class PlaygroundRouterConfiguration {
     this.pageIndex = 0,
   });
 
-  factory PlaygroundRouterConfiguration.home() => PlaygroundRouterConfiguration._();
+  factory PlaygroundRouterConfiguration.home() =>
+      PlaygroundRouterConfiguration._();
 
   factory PlaygroundRouterConfiguration.unknown() =>
       PlaygroundRouterConfiguration._(isUnknown: true);

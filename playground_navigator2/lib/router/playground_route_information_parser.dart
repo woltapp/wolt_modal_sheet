@@ -27,9 +27,10 @@ class PlaygroundRouteInformationParser
         } else {
           final path = queryParams[pathQueryParam];
           final pageIndexText = queryParams[pageIndexQueryParam];
-          final pageIndex = pageIndexText != null && int.tryParse(pageIndexText) != null
-              ? int.parse(pageIndexText)
-              : null;
+          final pageIndex =
+              pageIndexText != null && int.tryParse(pageIndexText) != null
+                  ? int.parse(pageIndexText)
+                  : null;
           if (pageIndex != null &&
               path != null &&
               MultiPagePathName.isValidQueryParam(path, pageIndex)) {
@@ -50,7 +51,8 @@ class PlaygroundRouteInformationParser
   }
 
   @override
-  RouteInformation? restoreRouteInformation(PlaygroundRouterConfiguration configuration) {
+  RouteInformation? restoreRouteInformation(
+      PlaygroundRouterConfiguration configuration) {
     if (configuration.isUnknown) {
       return const RouteInformation(location: '/unknown');
     } else if (configuration.isHomePage) {
@@ -59,7 +61,8 @@ class PlaygroundRouteInformationParser
       final path = configuration.multiPagePathName?.queryParamName;
       final pageIndex = configuration.pageIndex;
       return RouteInformation(
-        location: '/$sheetPageSegment?$pathQueryParam=$path&$pageIndexQueryParam=$pageIndex',
+        location:
+            '/$sheetPageSegment?$pathQueryParam=$path&$pageIndexQueryParam=$pageIndex',
       );
     } else {
       return null;

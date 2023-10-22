@@ -12,7 +12,8 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// The [isStoreOnlineNotifier] is a [ValueNotifier] that notifies the widget of changes in the store's online status.
 class LargeScreenOnlineContent extends StatefulWidget {
   const LargeScreenOnlineContent({
-    required Map<CoffeeMakerStep, CoffeeOrderListWidget> coffeeMakerStepListWidgets,
+    required Map<CoffeeMakerStep, CoffeeOrderListWidget>
+        coffeeMakerStepListWidgets,
     required ValueNotifier<bool> isStoreOnlineNotifier,
     required ValueNotifier<bool> isGridOverlayVisibleNotifier,
     super.key,
@@ -25,7 +26,8 @@ class LargeScreenOnlineContent extends StatefulWidget {
   final ValueNotifier<bool> _isGridOverlayVisibleNotifier;
 
   @override
-  State<LargeScreenOnlineContent> createState() => _LargeScreenOnlineContentState();
+  State<LargeScreenOnlineContent> createState() =>
+      _LargeScreenOnlineContentState();
 }
 
 class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
@@ -37,7 +39,8 @@ class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
           children: <Widget>[
             TopBar(
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
-              isGridOverlayVisibleNotifier: widget._isGridOverlayVisibleNotifier,
+              isGridOverlayVisibleNotifier:
+                  widget._isGridOverlayVisibleNotifier,
             ),
             Expanded(
               child: WoltResponsiveLayoutGrid(
@@ -49,24 +52,24 @@ class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
                     columnSpan: 3,
                     columnCellWidget: LargeScreenCoffeeOrderListSection(
                       coffeeMakerStep: CoffeeMakerStep.grind,
-                      coffeeOrderListWidget:
-                          widget._coffeeMakerStepListWidgets[CoffeeMakerStep.grind]!,
+                      coffeeOrderListWidget: widget
+                          ._coffeeMakerStepListWidgets[CoffeeMakerStep.grind]!,
                     ),
                   ),
                   WoltColumnSpanCell(
                     columnSpan: 3,
                     columnCellWidget: LargeScreenCoffeeOrderListSection(
                       coffeeMakerStep: CoffeeMakerStep.addWater,
-                      coffeeOrderListWidget:
-                          widget._coffeeMakerStepListWidgets[CoffeeMakerStep.addWater]!,
+                      coffeeOrderListWidget: widget._coffeeMakerStepListWidgets[
+                          CoffeeMakerStep.addWater]!,
                     ),
                   ),
                   WoltColumnSpanCell(
                     columnSpan: 2,
                     columnCellWidget: LargeScreenCoffeeOrderListSection(
                       coffeeMakerStep: CoffeeMakerStep.ready,
-                      coffeeOrderListWidget:
-                          widget._coffeeMakerStepListWidgets[CoffeeMakerStep.ready]!,
+                      coffeeOrderListWidget: widget
+                          ._coffeeMakerStepListWidgets[CoffeeMakerStep.ready]!,
                     ),
                   ),
                 ],

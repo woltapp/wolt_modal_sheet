@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  build:
+  flutter-analyze:
     name: flutter analyze
     runs-on: ubuntu-latest
     steps:
@@ -37,3 +37,25 @@ jobs:
       # Run flutter analyze
       - name: flutter analyze
         run: flutter analyze
+
+  dart-format:
+    name: dart format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.2' # Uses the minimum supported version.
+          channel: 'stable'
+      # Setup Melos
+      - name: Setup Melos
+        run: |
+          dart pub global activate melos
+      # Run Melos bootstrap
+      - name: Melos bootstrap
+        run: |
+          melos bootstrap
+      # CHeck if there are formatting issues
+      - name: Check formatting
+        run: |
+          dart format --set-exit-if-changed .

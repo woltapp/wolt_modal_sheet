@@ -25,10 +25,13 @@ class WoltModalSheetLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final hasTopBarLayer =
-        page.hasTopBarLayer ?? themeData?.hasTopBarLayer ?? defaultThemeData.hasTopBarLayer;
+    final hasTopBarLayer = page.hasTopBarLayer ??
+        themeData?.hasTopBarLayer ??
+        defaultThemeData.hasTopBarLayer;
     final topBarHeight = hasTopBarLayer
-        ? (page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight)
+        ? (page.navBarHeight ??
+            themeData?.navBarHeight ??
+            defaultThemeData.navBarHeight)
         : 0.0;
     return Stack(
       children: [

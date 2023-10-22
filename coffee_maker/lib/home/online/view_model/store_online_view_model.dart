@@ -22,12 +22,14 @@ class StoreOnlineViewModel extends ChangeNotifier {
   /// If [newStep] is not provided the method removes the coffee order from the current list of
   /// orders.
   /// Finally, the method triggers a state update to reflect the changes in the UI.
-  void onCoffeeOrderStatusChange(String coffeeOrderId, [CoffeeMakerStep? newStep]) {
+  void onCoffeeOrderStatusChange(String coffeeOrderId,
+      [CoffeeMakerStep? newStep]) {
     final currentList = List<CoffeeOrder>.from(_groupedCoffeeOrders.allOrders);
     final updateIndex = currentList.indexWhere((o) => o.id == coffeeOrderId);
 
     if ([CoffeeMakerStep.addWater, CoffeeMakerStep.ready].contains(newStep)) {
-      currentList[updateIndex] = currentList[updateIndex].copyWith(coffeeMakerStep: newStep);
+      currentList[updateIndex] =
+          currentList[updateIndex].copyWith(coffeeMakerStep: newStep);
     } else {
       currentList.removeAt(updateIndex);
     }

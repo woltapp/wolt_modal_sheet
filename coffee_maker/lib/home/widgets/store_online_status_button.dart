@@ -19,8 +19,8 @@ class StoreOnlineStatusButton extends StatelessWidget {
       builder: (_, isOnline, __) {
         return OutlinedButton(
           style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
-                side:
-                    const MaterialStatePropertyAll(BorderSide(width: 2, color: DemoAppColors.gray)),
+                side: const MaterialStatePropertyAll(
+                    BorderSide(width: 2, color: DemoAppColors.gray)),
               ),
           onPressed: () {
             _isStoreOnlineNotifier.value = !_isStoreOnlineNotifier.value;

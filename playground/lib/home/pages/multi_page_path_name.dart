@@ -24,7 +24,8 @@ enum MultiPagePathName {
   final int pageCount;
   final String queryParamName;
 
-  const MultiPagePathName({required this.pageCount, required this.queryParamName});
+  const MultiPagePathName(
+      {required this.pageCount, required this.queryParamName});
 
   WoltModalSheetPageListBuilder pageListBuilder({
     required VoidCallback goToNextPage,
@@ -38,7 +39,8 @@ enum MultiPagePathName {
           onPathSelectedFromList: onMultiPagePathSelected,
           onClosed: () => close(context),
         );
-    WoltModalSheetPage forcedMaxHeight(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage forcedMaxHeight(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithForcedMaxHeight.build(
           brightness: Theme.of(context).brightness,
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
@@ -46,35 +48,40 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage heroImage(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage heroImage(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithHeroImage.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage lazyList(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage lazyList(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithLazyList.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage noTitleNoTopBar(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage noTitleNoTopBar(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithNoPageTitleNoTopBar.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage customTopBar(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage customTopBar(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithCustomTopBar.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage dynamicPageProperties(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage dynamicPageProperties(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithDynamicPageProperties.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
@@ -82,7 +89,8 @@ enum MultiPagePathName {
           context: context,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage textField(BuildContext context, {bool isLastPage = true}) =>
+    WoltModalSheetPage textField(BuildContext context,
+            {bool isLastPage = true}) =>
         SheetPageWithTextField.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
@@ -121,7 +129,9 @@ enum MultiPagePathName {
   static bool isValidQueryParam(String path, int pageIndex) {
     return MultiPagePathName.values.any(
       (element) =>
-          element.queryParamName == path && element.pageCount > pageIndex && pageIndex >= 0,
+          element.queryParamName == path &&
+          element.pageCount > pageIndex &&
+          pageIndex >= 0,
     );
   }
 }

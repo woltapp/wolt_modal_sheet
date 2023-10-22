@@ -14,7 +14,8 @@ const double _closeProgressThreshold = 0.5;
 const int defaultWoltModalTransitionAnimationDuration = 350;
 
 /// Signature for a function that builds a list of [WoltModalSheetPage] based on the given [BuildContext].
-typedef WoltModalSheetPageListBuilder = List<WoltModalSheetPage> Function(BuildContext context);
+typedef WoltModalSheetPageListBuilder = List<WoltModalSheetPage> Function(
+    BuildContext context);
 
 /// Signature for a function that returns the [WoltModalType] based on the given [BuildContext].
 typedef WoltModalTypeBuilder = WoltModalType Function(BuildContext context);
@@ -112,7 +113,8 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   static Future<T?> showWithDynamicPath<T>({
     required BuildContext context,
-    required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
+    required ValueNotifier<WoltModalSheetPageListBuilder>
+        pageListBuilderNotifier,
     WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
@@ -134,7 +136,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     double? maxPageHeight,
     Color? modalBarrierColor,
   }) {
-    final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
+    final NavigatorState navigator =
+        Navigator.of(context, rootNavigator: useRootNavigator);
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     return navigator.push<T>(
       WoltModalSheetRoute<T>(
@@ -176,12 +179,14 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
   Widget Function(Widget) get _decorator =>
       widget.decorator ?? (widget) => Builder(builder: (_) => widget);
 
-  bool get _dismissUnderway => widget.animationController!.status == AnimationStatus.reverse;
+  bool get _dismissUnderway =>
+      widget.animationController!.status == AnimationStatus.reverse;
 
   final GlobalKey _childKey = GlobalKey(debugLabel: 'BottomSheet child');
 
   double get _childHeight {
-    final RenderBox renderBox = _childKey.currentContext!.findRenderObject()! as RenderBox;
+    final RenderBox renderBox =
+        _childKey.currentContext!.findRenderObject()! as RenderBox;
     return renderBox.size.height;
   }
 
@@ -215,7 +220,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
         valueListenable: pagesListBuilderNotifier,
         builder: (context, pagesBuilder, _) {
           final pages = pagesBuilder(context);
-          assert(pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
+          assert(pages.isNotEmpty,
+              'pageListBuilder must return a non-empty list.');
           return ValueListenableBuilder<int>(
             valueListenable: pageIndexNotifier,
             builder: (_, int pageIndex, __) {
@@ -223,10 +229,12 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
               late ShapeBorder shape;
               switch (_modalType) {
                 case WoltModalType.bottomSheet:
-                  shape = themeData?.bottomSheetShape ?? defaultThemeData.bottomSheetShape;
+                  shape = themeData?.bottomSheetShape ??
+                      defaultThemeData.bottomSheetShape;
                   break;
                 case WoltModalType.dialog:
-                  shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
+                  shape =
+                      themeData?.dialogShape ?? defaultThemeData.dialogShape;
                   break;
               }
               final enableDrag = _modalType == WoltModalType.bottomSheet &&
@@ -235,7 +243,9 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       themeData?.enableDrag ??
                       defaultThemeData.enableDrag);
               final showDragHandle = widget.showDragHandle ??
-                  (enableDrag && (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
+                  (enableDrag &&
+                      (themeData?.showDragHandle ??
+                          defaultThemeData.showDragHandle));
               final pageBackgroundColor = page.backgroundColor ??
                   themeData?.backgroundColor ??
                   defaultThemeData.backgroundColor;
@@ -251,11 +261,14 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
               final maxDialogWidth = widget.maxDialogWidth ??
                   themeData?.maxDialogWidth ??
                   defaultThemeData.maxDialogWidth;
-              final shadowColor = themeData?.shadowColor ?? defaultThemeData.shadowColor;
-              final surfaceTintColor =
-                  themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
-              final modalElevation = themeData?.modalElevation ?? defaultThemeData.modalElevation;
-              final clipBehavior = themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
+              final shadowColor =
+                  themeData?.shadowColor ?? defaultThemeData.shadowColor;
+              final surfaceTintColor = themeData?.surfaceTintColor ??
+                  defaultThemeData.surfaceTintColor;
+              final modalElevation =
+                  themeData?.modalElevation ?? defaultThemeData.modalElevation;
+              final clipBehavior =
+                  themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
 
               final multiChildLayout = CustomMultiChildLayout(
                 delegate: WoltModalMultiChildLayoutDelegate(
@@ -291,8 +304,10 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                     child: KeyedSubtree(
                       key: _childKey,
                       child: GestureDetector(
-                        onVerticalDragStart: enableDrag ? _handleDragStart : null,
-                        onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
+                        onVerticalDragStart:
+                            enableDrag ? _handleDragStart : null,
+                        onVerticalDragUpdate:
+                            enableDrag ? _handleDragUpdate : null,
                         onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
                         child: Material(
                           color: pageBackgroundColor,
@@ -366,7 +381,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
     }
     bool isClosing = false;
     if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
-      final double flingVelocity = -details.velocity.pixelsPerSecond.dy / _childHeight;
+      final double flingVelocity =
+          -details.velocity.pixelsPerSecond.dy / _childHeight;
       if (widget.animationController!.value > 0.0) {
         widget.animationController!.fling(velocity: flingVelocity);
       }

@@ -28,7 +28,8 @@ class WoltSelectionListTile<T> extends StatefulWidget {
   final CrossAxisAlignment? tileCrossAxisAlignment;
 
   @override
-  State<WoltSelectionListTile<T>> createState() => _WoltSelectionListTileState<T>();
+  State<WoltSelectionListTile<T>> createState() =>
+      _WoltSelectionListTileState<T>();
 }
 
 class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
@@ -68,9 +69,11 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
       child: InkWell(
         onTap: _onTap,
         child: Padding(
-          padding: widget.tilePadding ?? const EdgeInsets.symmetric(vertical: 16),
+          padding:
+              widget.tilePadding ?? const EdgeInsets.symmetric(vertical: 16),
           child: Row(
-            crossAxisAlignment: widget.tileCrossAxisAlignment ?? CrossAxisAlignment.start,
+            crossAxisAlignment:
+                widget.tileCrossAxisAlignment ?? CrossAxisAlignment.start,
             children: [
               if (imageAssetPath != null) ...[
                 SizedBox(
@@ -94,10 +97,12 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_data.title, style: Theme.of(context).textTheme.bodyLarge!),
+                    Text(_data.title,
+                        style: Theme.of(context).textTheme.bodyLarge!),
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
-                      Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
+                      Text(subtitle,
+                          style: Theme.of(context).textTheme.bodyMedium),
                     ]
                   ],
                 ),

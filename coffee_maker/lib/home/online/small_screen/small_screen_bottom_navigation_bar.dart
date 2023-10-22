@@ -40,7 +40,8 @@ class SmallScreenBottomNavigationBar extends StatelessWidget {
           ],
           selectedIndex: _selectedStep.index,
           onDestinationSelected: (i) {
-            _onSelected(CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i));
+            _onSelected(
+                CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i));
           },
         ),
       ],
@@ -128,7 +129,8 @@ class _DestinationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = Icon(iconData, color: isSelected ? DemoAppColors.blue : DemoAppColors.black64);
+    final icon = Icon(iconData,
+        color: isSelected ? DemoAppColors.blue : DemoAppColors.black64);
     return count == 0
         ? icon
         : Badge(
