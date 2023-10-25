@@ -1,5 +1,22 @@
-[![pub package](https://img.shields.io/pub/v/wolt_modal_sheet.svg)](https://pub.dev/packages/wolt_modal_sheet)
-[![package publisher](https://img.shields.io/pub/publisher/wolt_modal_sheet.svg)](https://pub.dev/packages/wolt_modal_sheet/publisher)
+<p align="center">
+    <a href="https://wolt.com/"><img src="https://img.shields.io/badge/Powered%20by-Wolt-blue.svg" alt="Wolt"></a>
+    <a href="https://pub.dev/packages/wolt_modal_sheet/publisher"><img src="https://img.shields.io/pub/publisher/wolt_modal_sheet.svg" alt="Wolt on pub.dev"></a>
+    <br>
+    <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/flutter-platform/wolt_modal_sheet" alt="Platforms"></a>
+    <br>
+    <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://img.shields.io/pub/v/wolt_modal_sheet?logo=dart&logoColor=white" alt="Pub Version"></a>
+    <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/points/wolt_modal_sheet" alt="Pub points"></a>
+    <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/likes/wolt_modal_sheet" alt="Pub Likes"></a>
+    <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/popularity/wolt_modal_sheet" alt="Pub popularity"></a>
+    <br>    
+    <a href="https://github.com/woltapp/wolt_modal_sheet"><img src="https://img.shields.io/github/stars/woltapp/wolt_modal_sheet?style=social" alt="Repo stars"></a>
+    <a href="https://github.com/woltapp/wolt_modal_sheet/pulls"><img src="https://img.shields.io/github/issues-pr/woltapp/wolt_modal_sheet" alt="Repo PRs"></a>
+    <a href="https://github.com/woltapp/wolt_modal_sheet/issues?q=is%3Aissue+is%3Aopen"><img src="https://img.shields.io/github/issues/woltapp/wolt_modal_sheet" alt="Repo issues"></a>
+    <a href="https://github.com/woltapp/wolt_modal_sheet/graphs/contributors"><img src="https://badgen.net/github/contributors/woltapp/wolt_modal_sheet" alt="Contributors"></a>
+    <a href="https://github.com/woltapp/wolt_modal_sheet/blob/main/LICENSE"><img src="https://badgen.net/github/license/woltapp/wolt_modal_sheet" alt="License"></a>
+    <br>       
+    <a href="https://app.codecov.io/gh/woltapp/wolt_modal_sheet"><img src="https://img.shields.io/codecov/c/github/woltapp/wolt_modal_sheet?logo=codecov&logoColor=white" alt="Coverage Status"></a>
+</p>
 
 # WoltModalSheet
 
