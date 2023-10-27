@@ -90,19 +90,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
             childCount: 2,
           ),
         ),
-        (singleChildContent != null
-                ? SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (_, __) => ScrollConfiguration(
-                        behavior: ScrollConfiguration.of(context)
-                            .copyWith(scrollbars: false),
-                        child: singleChildContent,
-                      ),
-                      childCount: 1,
-                    ),
-                  )
-                : sliverList) ??
-            const SizedBox.shrink(),
+        ...page.mainContent,
         if (widget.page.forceMaxHeight)
           const SliverFillRemaining(
             hasScrollBody: false,

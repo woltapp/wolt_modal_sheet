@@ -14,7 +14,7 @@ void main() {
               body: WoltStickyActionBarWrapper(
                 page: WoltModalSheetPage(
                   stickyActionBar: null,
-                  singleChildContent: SizedBox.shrink(),
+                  child: SizedBox.shrink(),
                 ),
               ),
             ),
@@ -36,7 +36,7 @@ void main() {
               body: WoltStickyActionBarWrapper(
                 page: WoltModalSheetPage(
                   stickyActionBar: testActionBar,
-                  singleChildContent: SizedBox.shrink(),
+                  child: SizedBox.shrink(),
                 ),
               ),
             ),
@@ -55,7 +55,7 @@ void main() {
             home: WoltStickyActionBarWrapper(
               page: WoltModalSheetPage(
                 stickyActionBar: Text("ActionBar"),
-                singleChildContent: SizedBox.shrink(),
+                child: SizedBox.shrink(),
                 hasSabGradient: true,
               ),
             ),
@@ -74,7 +74,7 @@ void main() {
               page: WoltModalSheetPage(
                 stickyActionBar: Text("ActionBar"),
                 hasSabGradient: false,
-                singleChildContent: SizedBox.shrink(),
+                child: SizedBox.shrink(),
               ),
             ),
           ),

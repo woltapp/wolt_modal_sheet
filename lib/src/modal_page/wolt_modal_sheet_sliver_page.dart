@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_base_page.dart';
 
-class WoltModalSheetPage extends WoltModalSheetBasePage {
-  /// A [Widget] that represents the main content displayed in the page.
-  /// This is a shortcut for providing a list of Sliver widgets with only one Sliver widget.
-  final Widget child;
+class WoltModalSheetSliverPage extends WoltModalSheetBasePage {
+  /// The slivers to place inside the main content.
+  final List<Widget> slivers;
 
-  /// Creates a [WoltModalSheetPage] with a single child main content.
-  WoltModalSheetPage({
-    required this.child,
+  /// Creates a [WoltModalSheetSliverPage] with a single child main content.
+  WoltModalSheetSliverPage({
+    required this.slivers,
     Widget? pageTitle,
     double? navBarHeight,
     Widget? topBarTitle,
@@ -27,7 +26,7 @@ class WoltModalSheetPage extends WoltModalSheetBasePage {
     Widget? trailingNavBarWidget,
     Widget? topBar,
   }) : super(
-          mainContent: [SliverToBoxAdapter(child: child)],
+          mainContent: slivers,
           pageTitle: pageTitle,
           navBarHeight: navBarHeight,
           topBarTitle: topBarTitle,
@@ -47,11 +46,11 @@ class WoltModalSheetPage extends WoltModalSheetBasePage {
           topBar: topBar,
         );
 
-  WoltModalSheetPage copyWith({
+  WoltModalSheetSliverPage copyWith({
     Widget? pageTitle,
     double? navBarHeight,
     Widget? sliverList,
-    Widget? child,
+    List<Widget>? slivers,
     Widget? topBarTitle,
     Widget? heroImage,
     double? heroImageHeight,
@@ -68,10 +67,10 @@ class WoltModalSheetPage extends WoltModalSheetBasePage {
     Widget? trailingNavBarWidget,
     Widget? topBar,
   }) {
-    return WoltModalSheetPage(
+    return WoltModalSheetSliverPage(
       pageTitle: pageTitle ?? this.pageTitle,
       navBarHeight: navBarHeight ?? this.navBarHeight,
-      child: child ?? this.child,
+      slivers: slivers ?? this.slivers,
       topBarTitle: topBarTitle ?? this.topBarTitle,
       heroImage: heroImage ?? this.heroImage,
       heroImageHeight: heroImageHeight ?? this.heroImageHeight,
@@ -80,8 +79,7 @@ class WoltModalSheetPage extends WoltModalSheetBasePage {
       sabGradientColor: sabGradientColor ?? this.sabGradientColor,
       enableDrag: enableDrag ?? this.enableDrag,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
-      isTopBarLayerAlwaysVisible:
-          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
       scrollController: scrollController ?? this.scrollController,
       stickyActionBar: stickyActionBar ?? this.stickyActionBar,
