@@ -1,3 +1,10 @@
+## 0.1.4
+- Chore: add badges to README.md. [#87](https://github.com/woltapp/wolt_modal_sheet/pull/87) by [Mikhail Zotyev @MbIXjkee](https://github.com/MbIXjkee)
+- Add dart format check to merge check list. [#84](https://github.com/woltapp/wolt_modal_sheet/pull/84) by [Taha Tesser @TahaTesser](https://github.com/TahaTesser)
+- Update the package & examples to support minimum Flutter v3.7.2 [#81](https://github.com/woltapp/wolt_modal_sheet/pull/81) by [Taha Tesser @TahaTesser](https://github.com/TahaTesser)
+- Add the Flutter&Friends talk to the additional information section in  README.md. [#79](https://github.com/woltapp/wolt_modal_sheet/pull/79) by [Cagatay Ulusoy @ulusoyca](https://github.com/ulusoyca)
+- Add contributing guide. [#81](https://github.com/woltapp/wolt_modal_sheet/pull/81) by [Taha Tesser @TahaTesser](https://github.com/TahaTesser)
+
 ## 0.1.3
 - Add `melos` and cleanup `gitignore` and `pubspec.lock`. [#73](https://github.com/woltapp/wolt_modal_sheet/pull/73) Thanks to [@TahaTesser](https://github.com/TahaTesser)
 - Allow custom top bar widget to be "not always visible". [#69](https://github.com/woltapp/wolt_modal_sheet/pull/69)
