@@ -13,7 +13,7 @@ import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
-  final List<WoltModalSheetPage> pages;
+  final List<SliverWoltModalSheetPage> pages;
   final int pageIndex;
   final WoltModalType woltModalType;
   final double sheetWidth;
@@ -44,7 +44,7 @@ class _WoltModalSheetAnimatedSwitcherState
 
   int get _pageIndex => widget.pageIndex;
 
-  WoltModalSheetPage get _page => widget.pages[_pageIndex];
+  SliverWoltModalSheetPage get _page => widget.pages[_pageIndex];
 
   bool get _hasTopBarLayer {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();

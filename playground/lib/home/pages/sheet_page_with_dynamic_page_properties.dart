@@ -17,7 +17,7 @@ class SheetPageWithDynamicPageProperties {
   }) {
     final dynamicPageModel = DynamicPageProperties.of(context)!;
     bool useOriginalPageValues = true;
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       hasSabGradient: false,
       enableDrag: dynamicPageModel.value.enableDrag,
       stickyActionBar: Padding(

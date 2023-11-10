@@ -13,8 +13,8 @@ const double _closeProgressThreshold = 0.5;
 
 const int defaultWoltModalTransitionAnimationDuration = 350;
 
-/// Signature for a function that builds a list of [WoltModalSheetPage] based on the given [BuildContext].
-typedef WoltModalSheetPageListBuilder = List<WoltModalSheetPage> Function(
+/// Signature for a function that builds a list of [SliverWoltModalSheetPage] based on the given [BuildContext].
+typedef WoltModalSheetPageListBuilder = List<SliverWoltModalSheetPage> Function(
     BuildContext context);
 
 /// Signature for a function that returns the [WoltModalType] based on the given [BuildContext].

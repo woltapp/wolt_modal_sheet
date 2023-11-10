@@ -11,7 +11,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WoltModalSheetMainContent extends StatefulWidget {
   final ValueNotifier<double> currentScrollPosition;
   final GlobalKey pageTitleKey;
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
   final WoltModalType woltModalType;
 
   const WoltModalSheetMainContent({
@@ -45,7 +45,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     final page = widget.page;
     final heroImageHeight = page.heroImage == null
         ? 0.0
-        : (widget.page.heroImageHeight ??
+        : (page.heroImageHeight ??
             themeData?.heroImageHeight ??
             defaultThemeData.heroImageHeight);
     final pageHasTopBarLayer = page.hasTopBarLayer ??
@@ -59,8 +59,6 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
             page.trailingNavBarWidget != null
         ? navBarHeight
         : 0.0;
-    final singleChildContent = widget.page.singleChildContent;
-    final sliverList = widget.page.sliverList;
     final scrollView = CustomScrollView(
       scrollBehavior: const DragScrollBehavior(),
       shrinkWrap: true,
@@ -71,7 +69,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               if (index == 0) {
-                final heroImage = widget.page.heroImage;
+                final heroImage = page.heroImage;
                 return heroImage != null
                     ? WoltModalSheetHeroImage(
                         topBarHeight: topBarHeight,
@@ -80,7 +78,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
                       )
                     : SizedBox(height: topBarHeight);
               } else {
-                final pageTitle = widget.page.pageTitle;
+                final pageTitle = page.pageTitle;
                 return KeyedSubtree(
                   key: widget.pageTitleKey,
                   child: pageTitle ?? const SizedBox.shrink(),
@@ -90,8 +88,8 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
             childCount: 2,
           ),
         ),
-        ...page.mainContent,
-        if (widget.page.forceMaxHeight)
+        ...page.mainContentSlivers,
+        if (page.forceMaxHeight)
           const SliverFillRemaining(
             hasScrollBody: false,
             child: SizedBox.shrink(),

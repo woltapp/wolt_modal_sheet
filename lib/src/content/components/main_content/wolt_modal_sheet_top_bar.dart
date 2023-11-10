@@ -14,7 +14,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 /// theming values.
 class WoltModalSheetTopBar extends StatelessWidget {
   /// The modal sheet page that contains the configuration and content settings.
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
 
   /// Creates a new instance of [WoltModalSheetTopBar].
   const WoltModalSheetTopBar({

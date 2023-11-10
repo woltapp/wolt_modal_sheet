@@ -56,7 +56,7 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    WoltModalSheetPage lazyList(BuildContext context,
+    SliverWoltModalSheetPage lazyList(BuildContext context,
             {bool isLastPage = true}) =>
         SheetPageWithLazyList.build(
           onSabPressed: () => isLastPage ? close(context) : goToNextPage(),

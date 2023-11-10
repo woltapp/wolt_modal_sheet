@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/modal_page/sliver_wolt_modal_sheet_page.dart';
 
 /// A widget to display the top bar title in a modal sheet.
 ///
@@ -17,7 +17,7 @@ class WoltModalSheetTopBarTitle extends StatefulWidget {
     required this.pageTitleKey,
   }) : super(key: key);
 
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
   final GlobalKey pageTitleKey;
 
   @override

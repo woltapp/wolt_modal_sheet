@@ -9,12 +9,12 @@ void main() {
       testWidgets('should render shrunk widget when stickyActionBar is null',
           (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
+          MaterialApp(
             home: Scaffold(
               body: WoltStickyActionBarWrapper(
                 page: WoltModalSheetPage(
                   stickyActionBar: null,
-                  child: SizedBox.shrink(),
+                  child: const SizedBox.shrink(),
                 ),
               ),
             ),
@@ -31,12 +31,12 @@ void main() {
         const testActionBar = Text("ActionBar");
 
         await tester.pumpWidget(
-          const MaterialApp(
+          MaterialApp(
             home: Scaffold(
               body: WoltStickyActionBarWrapper(
                 page: WoltModalSheetPage(
                   stickyActionBar: testActionBar,
-                  child: SizedBox.shrink(),
+                  child: const SizedBox.shrink(),
                 ),
               ),
             ),
@@ -51,11 +51,11 @@ void main() {
       testWidgets('should show gradient when hasSabGradient is true',
           (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
+          MaterialApp(
             home: WoltStickyActionBarWrapper(
               page: WoltModalSheetPage(
-                stickyActionBar: Text("ActionBar"),
-                child: SizedBox.shrink(),
+                stickyActionBar: const Text("ActionBar"),
+                child: const SizedBox.shrink(),
                 hasSabGradient: true,
               ),
             ),
@@ -69,12 +69,12 @@ void main() {
       testWidgets('should not show gradient when hasSabGradient is false',
           (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(
+          MaterialApp(
             home: WoltStickyActionBarWrapper(
               page: WoltModalSheetPage(
-                stickyActionBar: Text("ActionBar"),
+                stickyActionBar: const Text("ActionBar"),
                 hasSabGradient: false,
-                child: SizedBox.shrink(),
+                child: const SizedBox.shrink(),
               ),
             ),
           ),

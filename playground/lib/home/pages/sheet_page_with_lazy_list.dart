@@ -5,7 +5,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class SheetPageWithLazyList {
   SheetPageWithLazyList._();
 
-  static WoltModalSheetPage build({
+  static SliverWoltModalSheetPage build({
     required VoidCallback onSabPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
@@ -14,7 +14,7 @@ class SheetPageWithLazyList {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
     const heroImageHeight = 200.0;
-    return WoltModalSheetPage.withCustomSliverList(
+    return SliverWoltModalSheetPage(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
@@ -24,8 +24,8 @@ class SheetPageWithLazyList {
       ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       heroImageHeight: heroImageHeight,
-      heroImage: Stack(
-        children: const [
+      heroImage: const Stack(
+        children: [
           ColoredBox(
             color: Colors.yellow,
             child: SizedBox(height: heroImageHeight, width: double.infinity),
@@ -37,17 +37,19 @@ class SheetPageWithLazyList {
       leadingNavBarWidget:
           WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      sliverList: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (_, index) {
-            if (index == 0) {
-              return const _HorizontalPrimaryColorList();
-            }
-            return ColorTile(color: colors[index]);
-          },
-          childCount: colors.length + 1,
-        ),
-      ),
+      mainContentSlivers: [
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, index) {
+              if (index == 0) {
+                return const _HorizontalPrimaryColorList();
+              }
+              return ColorTile(color: colors[index]);
+            },
+            childCount: colors.length + 1,
+          ),
+        )
+      ],
     );
   }
 }

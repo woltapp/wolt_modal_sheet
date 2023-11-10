@@ -13,7 +13,7 @@ class SheetPageWithHeroImage {
     bool isLastPage = true,
   }) {
     final cubit = context.read<RouterCubit>();
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       heroImage: const Image(
         image: AssetImage('lib/assets/images/hero_image.jpg'),
         fit: BoxFit.cover,

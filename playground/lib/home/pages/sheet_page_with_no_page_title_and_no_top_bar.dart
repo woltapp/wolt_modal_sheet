@@ -11,7 +11,7 @@ class SheetPageWithNoPageTitleNoTopBar {
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       backgroundColor: WoltColors.green8,
       forceMaxHeight: true,
       stickyActionBar: Padding(
@@ -23,10 +23,10 @@ class SheetPageWithNoPageTitleNoTopBar {
         ),
       ),
       hasTopBarLayer: false,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
-          children: const [
+          children: [
             Text(
               '''
 This page has a very long scrollable content and does not have a page title and top bar.

@@ -7,7 +7,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class SheetPageWithLazyList {
   SheetPageWithLazyList._();
 
-  static WoltModalSheetPage build(
+  static SliverWoltModalSheetPage build(
     BuildContext context, {
     required int currentPage,
     bool isLastPage = true,
@@ -15,7 +15,7 @@ class SheetPageWithLazyList {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
     final cubit = context.read<RouterCubit>();
-    return WoltModalSheetPage.withCustomSliverList(
+    return SliverWoltModalSheetPage(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
@@ -37,17 +37,19 @@ class SheetPageWithLazyList {
           onBackPressed: () => cubit.goToPage(currentPage - 1)),
       trailingNavBarWidget:
           WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
-      sliverList: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (_, index) {
-            if (index == 0) {
-              return const _HorizontalPrimaryColorList();
-            }
-            return ColorTile(color: colors[index]);
-          },
-          childCount: colors.length + 1,
+      mainContentSlivers: [
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, index) {
+              if (index == 0) {
+                return const _HorizontalPrimaryColorList();
+              }
+              return ColorTile(color: colors[index]);
+            },
+            childCount: colors.length + 1,
+          ),
         ),
-      ),
+      ],
     );
   }
 }

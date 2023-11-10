@@ -16,7 +16,7 @@ class SheetPageWithCustomTopBar {
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       backgroundColor: WoltColors.blue8,
       forceMaxHeight: true,
       stickyActionBar: Padding(
@@ -31,9 +31,9 @@ class SheetPageWithCustomTopBar {
       isTopBarLayerAlwaysVisible: false,
       topBar: _CustomTopBar(onClosed: onClosed, onBackPressed: onBackPressed),
       pageTitle: const ModalSheetTitle('Page with custom top bar'),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(

@@ -20,7 +20,36 @@ import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 ///
 /// By organizing these components across distinct layers, the class facilitates a clear and
 /// intuitive user experience, with flexible customization options for various use cases.
-abstract class WoltModalSheetBasePage {
+///
+/// [SliverWoltModalSheetPage] utilizes Flutter's sliver widgets for its main content,
+/// encapsulated in [mainContentSlivers]. Slivers are specialized Flutter widgets that
+/// create elements with custom scroll effects and are a fundamental part of creating
+/// advanced scrollable layouts.
+///
+/// The use of slivers in this context offers several key advantages:
+///
+/// 1. **Efficient On-Demand Rendering:**
+///    Slivers render their items lazily, meaning they only build and render items that
+///    are currently visible within the viewport. This approach is highly efficient for
+///    scrollable lists or content areas with many items, as it optimizes both memory
+///    usage and performance, especially for long or infinitely scrolling lists.
+///
+/// 2. **Custom Scroll Effects:**
+///    Slivers enable the creation of custom scroll effects and behaviors. This is
+///    particularly useful in the context of a modal sheet, where customized scrolling
+///    behavior can enhance the user experience. For instance, parallax effects, sticky
+///    headers, or collapsing toolbars can be seamlessly implemented using slivers.
+///
+/// 3. **Flexible Layout Structures:**
+///    Slivers provide flexibility in layout design, allowing for dynamic arrangements of
+///    components in a scrollable area. This flexibility is crucial for
+///    [SliverWoltModalSheetPage] as it needs to adapt to various content structures and
+///    user interactions within the modal sheet.
+///
+/// 4. **Integration with CustomScrollView:**
+///    Using slivers allows `SliverWoltModalSheetPage` to integrate seamlessly with
+///    `CustomScrollView`, a widget designed to create custom scroll effects with slivers.
+class SliverWoltModalSheetPage {
   /// Represents the widget that stands for the page title. A page title above the main content
   /// provides users with a quick understanding of what to expect from the page. As the user
   /// scrolls, this title becomes hidden, at which point the top bar title continues to serve
@@ -73,7 +102,7 @@ abstract class WoltModalSheetBasePage {
 
   /// This list of sliver widgets within the scrollable modal sheet is responsible for displaying
   /// the main content inside the [CustomScrollView] of the modal sheet.
-  final List<Widget> mainContent;
+  final List<Widget> mainContentSlivers;
 
   /// A [Widget] representing the hero image displayed on top of the main content. A Hero Image
   /// is positioned at the top of the main content. This widget immediately grabs the user's
@@ -144,8 +173,8 @@ abstract class WoltModalSheetBasePage {
   final Widget? trailingNavBarWidget;
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
-  const WoltModalSheetBasePage({
-    required this.mainContent,
+  const SliverWoltModalSheetPage({
+    required this.mainContentSlivers,
     this.pageTitle,
     this.navBarHeight,
     this.topBarTitle,
