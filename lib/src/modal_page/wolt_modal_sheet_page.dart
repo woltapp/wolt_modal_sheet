@@ -85,7 +85,6 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
   WoltModalSheetPage copyWith({
     Widget? pageTitle,
     double? navBarHeight,
-    Widget? sliverList,
     Widget? child,
     Widget? topBarTitle,
     Widget? heroImage,

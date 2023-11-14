@@ -178,6 +178,7 @@ class SliverWoltModalSheetPage {
     this.pageTitle,
     this.navBarHeight,
     this.topBarTitle,
+    this.topBar,
     this.heroImage,
     this.heroImageHeight,
     this.backgroundColor,
@@ -191,7 +192,6 @@ class SliverWoltModalSheetPage {
     this.trailingNavBarWidget,
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
-    this.topBar,
   }) : assert(!(topBar != null && hasTopBarLayer == false),
             "When topBar is provided, hasTopBarLayer must not be false");
 }
