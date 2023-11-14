@@ -538,21 +538,3 @@ current state:
   guidelines and best practices by showing real-world examples highlighting
   what to do—and what not to do. It also covers the technical details of the
   implementation. The recording of the talk can be found [here](https://www.youtube.com/live/X3bw1pr1kyQ?si=1SielcIbW6rF-4IC&t=4449).
-
-### Contributing
-
-To get started with contributing, please follow the steps below:
-
-1. [Fork the wolt_modal_sheet repo](https://github.com/woltapp/wolt_modal_sheet/fork) on GitHub.
-2. Clone your forked repo locally.
-3. Ensure you have [Melos](https://pub.dev/packages/melos/install) installed.
-   ```bash
-   dart pub global activate melos
-   ```
-4. Use Melos to bootstrap the project.
-   ```bash
-   melos bootstrap
-   ```
-5. Create a new branch from the `main` branch.
-6. Make your changes.
-7. Create a pull request.
