@@ -10,7 +10,7 @@ class AddWaterDescriptionModalPage {
     required VoidCallback onNextPage,
     required VoidCallback onClosed,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       heroImage: const Image(
         image: AssetImage('lib/assets/images/add_water_description.png'),
         fit: BoxFit.cover,

@@ -8,7 +8,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
   final Widget topBarTitle;
 
   const WoltModalSheetTopBarTitleFlow({

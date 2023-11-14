@@ -184,6 +184,59 @@ Here is an example that shows all the modal sheet elements in use:
 
 ![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
 
+## Usage of WoltModalSheet Pages
+
+The WoltModalSheet library provides two primary classes for constructing 
+modal sheet pages: `SliverWoltModalSheetPage` and `WoltModalSheetPage`. 
+Understanding the use cases and functionalities of these classes is key to 
+creating performant and easy to construct modal sheets.
+
+### SliverWoltModalSheetPage
+
+`SliverWoltModalSheetPage` is designed for complex and dynamic content 
+layouts within a modal sheet. It leverages the power of Flutter's Sliver 
+widgets to provide flexible and efficient scrolling behaviors.
+
+```dart
+SliverWoltModalSheetPage(
+  mainContentSlivers: [
+    SliverList(
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        // Your list items
+      }),
+    ),
+    // Other sliver widgets...
+  ],
+  // Additional page elements like pageTitle, topBarTitle, etc.
+)
+```
+
+### WoltModalSheetPage
+WoltModalSheetPage provides a simpler alternative for pages that primarily 
+consist of a single widget or a straightforward layout. It automatically 
+wraps the child widget in a SliverToBoxAdapter, making it suitable for use 
+in sliver-based scrollable layouts.
+
+Key Features:
+* Simplicity: Ideal for single-widget content or basic layouts.
+* No Sliver Overhead: Automatically handles the wrapping of non-sliver 
+  widgets into slivers.
+* Ease of Use: Simplifies the process of creating modal sheet pages without 
+  needing to deal with slivers directly.
+
+ ```dart
+WoltModalSheetPage(
+  child: MyCustomContentWidget(),
+  pageTitle: Text('My Page Title'),
+  // Other properties...
+)
+ ```
+
+### Choosing Between the Two
+* Use `SliverWoltModalSheetPage` when your modal sheet requires complex scrolling behaviors or needs to display a list of items.
+* Choose WoltModalSheetPage for simpler content layouts or when working with 
+  a single widget.
+
 ## Getting started
 
 To use this plugin, add wolt_modal_sheet as a dependency in your pubspec.yaml
@@ -201,11 +254,12 @@ using [WoltModalSheetThemeData](./lib/src/theme/wolt_modal_sheet_theme_data.dart
 extension.
 
 ```dart
+@override
 Widget build(BuildContext context) {
   final pageIndexNotifier = ValueNotifier(0);
 
-  WoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
-    return WoltModalSheetPage.withSingleChild(
+  SliverWoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
+    return WoltModalSheetPage(
       hasSabGradient: false,
       stickyActionBar: Padding(
         padding: const EdgeInsets.all(_pagePadding),
@@ -253,25 +307,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
     );
   }
 
-  WoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
-    return WoltModalSheetPage.withCustomSliverList(
-      stickyActionBar: Padding(
-        padding:
-        const EdgeInsets.fromLTRB(_pagePadding, _pagePadding / 4, _pagePadding, _pagePadding),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(modalSheetContext).pop();
-            pageIndexNotifier.value = 0;
-          },
-          child: const SizedBox(
-            height: _buttonHeight,
-            width: double.infinity,
-            child: Center(child: Text('Close')),
-          ),
-        ),
-      ),
+  SliverWoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
+    return SliverWoltModalSheetPage(
       pageTitle: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: _pagePadding),
+        padding: const EdgeInsets.all(_pagePadding),
         child: Text(
           'Material Colors',
           style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
@@ -296,12 +335,36 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           pageIndexNotifier.value = 0;
         },
       ),
-      sliverList: SliverList(
-        delegate: SliverChildBuilderDelegate(
-                  (_, index) => ColorTile(color: allMaterialColors[index]),
-          childCount: allMaterialColors.length,
+      mainContentSlivers: [
+        SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 10.0,
+            childAspectRatio: 2.0,
+          ),
+          delegate: SliverChildBuilderDelegate(
+                    (_, index) => ColorTile(color: materialColorsInGrid[index]),
+            childCount: materialColorsInGrid.length,
+          ),
         ),
-      ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+                    (_, index) => ColorTile(color: materialColorsInSliverList[index]),
+            childCount: materialColorsInSliverList.length,
+          ),
+        ),
+        ...materialColorsInSpinner.map((e) => Shifter(child: ColorTile(color: e))).toList(),
+        SliverPadding(
+          padding: const EdgeInsets.all(_pagePadding),
+          sliver: SliverToBoxAdapter(
+            child: TextButton(
+              onPressed: Navigator.of(modalSheetContext).pop,
+              child: const Text('Close'),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -396,7 +459,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 The code snippet above produces the following:
 </br>
 </br>
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_app_with_theme_extensions.gif?raw=true)
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/wms_demo.gif?raw=true)
 
 ### Playground app with imperative navigation
 

@@ -18,3 +18,5 @@ command:
 scripts:
   analyze:
     exec: dart analyze .
+  format:
+    exec: dart format --set-exit-if-changed .

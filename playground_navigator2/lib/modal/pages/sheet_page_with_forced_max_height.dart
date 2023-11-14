@@ -13,7 +13,7 @@ class SheetPageWithForcedMaxHeight {
     bool isLastPage = true,
   }) {
     final cubit = context.read<RouterCubit>();
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       backgroundColor: WoltColors.green8,
       forceMaxHeight: true,
       stickyActionBar: Padding(

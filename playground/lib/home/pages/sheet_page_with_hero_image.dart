@@ -11,7 +11,7 @@ class SheetPageWithHeroImage {
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       heroImage: const Image(
         image: AssetImage('lib/assets/images/hero_image.jpg'),
         fit: BoxFit.cover,

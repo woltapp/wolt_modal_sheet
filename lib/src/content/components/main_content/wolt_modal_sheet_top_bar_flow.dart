@@ -16,7 +16,7 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
   final ValueListenable<double> currentScrollPositionListenable;
   final GlobalKey titleKey;
   final double topBarTranslationYAmountInPx;
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
 
   const WoltModalSheetTopBarFlow({
     required this.page,

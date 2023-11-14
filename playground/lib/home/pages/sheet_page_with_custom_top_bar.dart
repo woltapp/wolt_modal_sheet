@@ -16,7 +16,7 @@ class SheetPageWithCustomTopBar {
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       backgroundColor: WoltColors.blue8,
       forceMaxHeight: true,
       stickyActionBar: Padding(

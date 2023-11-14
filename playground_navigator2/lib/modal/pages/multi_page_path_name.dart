@@ -47,7 +47,7 @@ enum MultiPagePathName {
           currentPage: currentPage,
         );
 
-    WoltModalSheetPage lazyList(
+    SliverWoltModalSheetPage lazyList(
       BuildContext context, {
       bool isLastPage = true,
       required int currentPage,

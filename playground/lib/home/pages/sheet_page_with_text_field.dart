@@ -16,7 +16,7 @@ class SheetPageWithTextField {
     textEditingController.addListener(() {
       isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
     });
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {

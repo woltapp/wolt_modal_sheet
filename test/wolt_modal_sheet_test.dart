@@ -15,7 +15,7 @@ void main() {
                     context: context,
                     pageListBuilder: (context) {
                       return <WoltModalSheetPage>[
-                        WoltModalSheetPage.withSingleChild(
+                        WoltModalSheetPage(
                           child: const Text('Wolt modal sheet page'),
                         ),
                       ];
@@ -82,7 +82,7 @@ void main() {
                     onModalDismissedWithDrag: () => Navigator.of(context).pop(),
                     pageListBuilder: (context) {
                       return <WoltModalSheetPage>[
-                        WoltModalSheetPage.withSingleChild(
+                        WoltModalSheetPage(
                           child: const Text('Wolt modal sheet page'),
                         ),
                       ];
@@ -120,7 +120,7 @@ void main() {
                     barrierDismissible: true,
                     pageListBuilder: (context) {
                       return <WoltModalSheetPage>[
-                        WoltModalSheetPage.withSingleChild(
+                        WoltModalSheetPage(
                           child: const Text('Wolt modal sheet page'),
                         ),
                       ];
@@ -189,7 +189,7 @@ void main() {
                   context: context,
                   pageListBuilder: (context) {
                     return <WoltModalSheetPage>[
-                      WoltModalSheetPage.withSingleChild(
+                      WoltModalSheetPage(
                         child: const Text('Wolt modal sheet page'),
                       ),
                     ];

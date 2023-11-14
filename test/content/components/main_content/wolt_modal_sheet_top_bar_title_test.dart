@@ -13,7 +13,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: WoltModalSheetTopBarTitle(
-              page: WoltModalSheetPage.withSingleChild(
+              page: WoltModalSheetPage(
                 child: const SizedBox.shrink(),
                 topBarTitle: const Text('Top Bar Title'),
                 pageTitle: const Text('Page Title'),
@@ -35,7 +35,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: WoltModalSheetTopBarTitle(
-              page: WoltModalSheetPage.withSingleChild(
+              page: WoltModalSheetPage(
                 child: const SizedBox.shrink(),
                 pageTitle: Text('Page Title', key: pageTitleKey),
               ),
@@ -55,7 +55,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: WoltModalSheetTopBarTitle(
-              page: WoltModalSheetPage.withSingleChild(
+              page: WoltModalSheetPage(
                 child: const SizedBox.shrink(),
               ),
               pageTitleKey: pageTitleKey,

@@ -15,7 +15,7 @@ class WoltModalSheetLayout extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
   final PaginatingWidgetsGroup paginatingWidgetsGroup;
   final WoltModalType woltModalType;
   final double topBarTranslationY;

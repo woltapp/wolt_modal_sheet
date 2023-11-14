@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-/// A widget that wraps the Sticky Action Bar in the [WoltModalSheetPage].
+/// A widget that wraps the Sticky Action Bar in the [SliverWoltModalSheetPage].
 ///
 /// It handles the conditional rendering of the Sticky Action Bar and the
-/// gradient overlay above it, based on the configurations provided in the [WoltModalSheetPage].
+/// gradient overlay above it, based on the configurations provided in the [SliverWoltModalSheetPage].
 class WoltStickyActionBarWrapper extends StatelessWidget {
   /// Constructs a `WoltStickyActionBarWrapper`.
   ///
@@ -13,9 +13,9 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
   const WoltStickyActionBarWrapper({required this.page, Key? key})
       : super(key: key);
 
-  /// The [WoltModalSheetPage] which provides configuration for the Sticky Action Bar
+  /// The [SliverWoltModalSheetPage] which provides configuration for the Sticky Action Bar
   /// and potentially its gradient overlay.
-  final WoltModalSheetPage page;
+  final SliverWoltModalSheetPage page;
 
   @visibleForTesting
   static const gradientWidgetKey =

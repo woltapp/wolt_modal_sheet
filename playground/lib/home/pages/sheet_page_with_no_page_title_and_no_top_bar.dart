@@ -11,7 +11,7 @@ class SheetPageWithNoPageTitleNoTopBar {
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       backgroundColor: WoltColors.green8,
       forceMaxHeight: true,
       stickyActionBar: Padding(

@@ -12,7 +12,7 @@ class SheetPageWithForcedMaxHeight {
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       backgroundColor: brightness == Brightness.light
           ? WoltColors.green8
           : WoltColors.green64,

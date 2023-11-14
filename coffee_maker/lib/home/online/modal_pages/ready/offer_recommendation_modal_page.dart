@@ -7,7 +7,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class OfferRecommendationModalPage {
   OfferRecommendationModalPage._();
 
-  static WoltModalSheetPage build({
+  static SliverWoltModalSheetPage build({
     required VoidCallback onCoffeeOrderServed,
     required VoidCallback onBackButtonPressed,
     required VoidCallback onClosed,
@@ -18,7 +18,7 @@ class OfferRecommendationModalPage {
     final tileCount = allRecommendations.length + 1;
     final Set<ExtraRecommendation> selectedRecommendations = {};
 
-    return WoltModalSheetPage.withCustomSliverList(
+    return SliverWoltModalSheetPage(
       stickyActionBar: ValueListenableBuilder<int>(
         valueListenable: selectedItemCountListener,
         builder: (_, count, __) {
@@ -45,42 +45,45 @@ class OfferRecommendationModalPage {
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
       leadingNavBarWidget:
           WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
-      sliverList: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (_, index) {
-            if (index == 0) {
-              return const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: ModalSheetContentText(
-                  'Please select any extras the customer would be interested in purchasing',
-                ),
-              );
-            } else {
-              final recommendation = allRecommendations[index - 1];
-              return Padding(
-                padding: EdgeInsets.fromLTRB(
-                  16,
-                  16,
-                  16,
-                  index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
-                ),
-                child: ExtraRecommendationTile(
-                  recommendation: recommendation,
-                  onPressed: (isSelected) {
-                    isSelected
-                        ? selectedRecommendations.add(recommendation)
-                        : selectedRecommendations.remove(recommendation);
-                    selectedItemCountListener.value =
-                        selectedRecommendations.length;
-                  },
-                  isSelected: selectedRecommendations.contains(recommendation),
-                ),
-              );
-            }
-          },
-          childCount: tileCount,
+      mainContentSlivers: [
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, index) {
+              if (index == 0) {
+                return const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: ModalSheetContentText(
+                    'Please select any extras the customer would be interested in purchasing',
+                  ),
+                );
+              } else {
+                final recommendation = allRecommendations[index - 1];
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    16,
+                    16,
+                    16,
+                    index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
+                  ),
+                  child: ExtraRecommendationTile(
+                    recommendation: recommendation,
+                    onPressed: (isSelected) {
+                      isSelected
+                          ? selectedRecommendations.add(recommendation)
+                          : selectedRecommendations.remove(recommendation);
+                      selectedItemCountListener.value =
+                          selectedRecommendations.length;
+                    },
+                    isSelected:
+                        selectedRecommendations.contains(recommendation),
+                  ),
+                );
+              }
+            },
+            childCount: tileCount,
+          ),
         ),
-      ),
+      ],
     );
   }
 }

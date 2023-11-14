@@ -11,7 +11,7 @@ class GrindOrRejectModalPage {
     required VoidCallback onStartGrinding,
     required VoidCallback onClosed,
   }) {
-    return WoltModalSheetPage.withSingleChild(
+    return WoltModalSheetPage(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Column(
