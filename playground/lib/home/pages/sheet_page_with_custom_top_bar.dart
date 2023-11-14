@@ -31,9 +31,9 @@ class SheetPageWithCustomTopBar {
       isTopBarLayerAlwaysVisible: false,
       topBar: _CustomTopBar(onClosed: onClosed, onBackPressed: onBackPressed),
       pageTitle: const ModalSheetTitle('Page with custom top bar'),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(

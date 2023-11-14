@@ -23,10 +23,10 @@ class SheetPageWithNoPageTitleNoTopBar {
         ),
       ),
       hasTopBarLayer: false,
-      child: const Padding(
-        padding: EdgeInsets.all(16.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: [
+          children: const [
             Text(
               '''
 This page has a very long scrollable content and does not have a page title and top bar.
