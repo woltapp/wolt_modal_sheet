@@ -1,6 +1,7 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:playground/common/simple_test_route.dart';
 import 'package:playground/home/dynamic_page_properties.dart';
 import 'package:playground/home/pages/multi_page_path_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -135,10 +136,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Text('Show Modal Sheet'),
               ),
             ),
+            const SizedBox(height: 12),
+            ElevatedButton(onPressed: _showSimpleRoute, child: const Text('Show simple route')),
           ],
         );
       }),
     );
+  }
+
+  void _showSimpleRoute() {
+    Navigator.of(context).push(SimpleTestRoute());
   }
 
   WoltModalType _modalTypeBuilder(BuildContext context) {
