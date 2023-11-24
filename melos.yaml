@@ -18,5 +18,9 @@ command:
 scripts:
   analyze:
     exec: dart analyze .
+    # Uncomment to use with FVM :
+    # exec: fvm flutter analyze .
   format:
     exec: dart format --set-exit-if-changed .
+    # Uncomment to use with FVM :
+    # exec: fvm dart format --set-exit-if-changed .

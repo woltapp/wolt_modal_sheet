@@ -130,4 +130,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   /// If null, [WoltModalSheet] uses [Clip.none].
   @override
   Clip get clipBehavior => Clip.antiAlias;
+
+  @override
+  ScrollPhysics? get mainContentScrollPhysics => null;
 }

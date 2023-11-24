@@ -35,6 +35,7 @@ class _DemoAppState extends State<DemoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: const CustomScrollBehavior(),
       theme: ThemeData(
         primaryColor: DemoAppColors.blue,
         useMaterial3: true,
@@ -113,14 +114,11 @@ class _DemoAppState extends State<DemoApp> {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: ScrollConfiguration(
-        behavior: const DragScrollBehavior(),
-        child: HomeScreen(
-          groupedCoffeeOrders:
-              GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
-          isStoreOnline: true,
-          isGridOverlayVisible: false,
-        ),
+      home: HomeScreen(
+        groupedCoffeeOrders:
+            GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
+        isStoreOnline: true,
+        isGridOverlayVisible: false,
       ),
     );
   }
