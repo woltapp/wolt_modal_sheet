@@ -33,26 +33,36 @@ class SheetPageWithDynamicPageProperties {
       leadingNavBarWidget:
           WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 100),
-        child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return Row(
-            children: [
-              const Expanded(child: Text('Enable Drag for Bottom Sheet')),
-              Switch(
-                value: useOriginalPageValues,
-                onChanged: (newValue) {
-                  dynamicPageModel.value = dynamicPageModel.value.copyWith(
-                    enableDrag: newValue,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Row(
+                    children: [
+                      const Expanded(
+                          child: Text('Enable Drag for Bottom Sheet')),
+                      Switch(
+                        value: useOriginalPageValues,
+                        onChanged: (newValue) {
+                          dynamicPageModel.value =
+                              dynamicPageModel.value.copyWith(
+                            enableDrag: newValue,
+                          );
+                          setState(() =>
+                              useOriginalPageValues = !useOriginalPageValues);
+                        },
+                      ),
+                    ],
                   );
-                  setState(
-                      () => useOriginalPageValues = !useOriginalPageValues);
                 },
               ),
-            ],
-          );
-        }),
+            ),
+            const Placeholder(fallbackHeight: 1200, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }
