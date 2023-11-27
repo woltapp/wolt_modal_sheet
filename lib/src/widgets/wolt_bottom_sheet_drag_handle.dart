@@ -13,33 +13,37 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final handleSize = themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
     final handleColor = themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
+
+    // Ensure that handle size does not exceed the minimum interactive dimension.
+    final adjustedHandleWidth = handleSize.width.clamp(0.0, _minInteractiveDimension);
+    final adjustedHandleHeight = handleSize.height.clamp(0.0, _minInteractiveDimension);
+
+    // Calculate padding to center the handle.
+    final horizontalPadding = (_minInteractiveDimension - adjustedHandleWidth) / 2;
     const topPadding = 8.0;
-    final bottomPadding = _minInteractiveDimension - topPadding - handleSize.height;
-    final horizontalPadding = (_minInteractiveDimension - handleSize.width) / 2;
+    final bottomPadding = _minInteractiveDimension - topPadding - adjustedHandleHeight;
+
     return Semantics(
       label: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       container: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        child: SizedBox.square(
-          dimension: _minInteractiveDimension,
-          // By setting behavior to HitTestBehavior.opaque, the GestureDetector will capture touch
-          // events even if its child (the drag handle) isn't the exact size of the gesture.
-          // This will prevent the scrollable content below from receiving the touch events,
-          // effectively allowing the handler to capture drag gestures.
+        child: SizedBox(
+          width: _minInteractiveDimension,
+          height: _minInteractiveDimension,
           child: Container(
             margin: EdgeInsets.fromLTRB(
               horizontalPadding,
               topPadding,
               horizontalPadding,
-              bottomPadding,
+              bottomPadding.clamp(0.0, _minInteractiveDimension),
             ),
             decoration: BoxDecoration(
               color: handleColor,
-              borderRadius: BorderRadius.circular(handleSize.height / 2),
+              borderRadius: BorderRadius.circular(adjustedHandleHeight / 2),
             ),
-            width: handleSize.width,
-            height: handleSize.height,
+            width: adjustedHandleWidth,
+            height: adjustedHandleHeight,
           ),
         ),
       ),
