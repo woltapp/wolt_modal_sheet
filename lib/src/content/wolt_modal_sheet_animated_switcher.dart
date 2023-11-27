@@ -134,6 +134,7 @@ class _WoltModalSheetAnimatedSwitcherState
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
             showDragHandle: widget.showDragHandle,
+            sheetWidth: widget.sheetWidth,
           ),
         if (incomingWidgets != null)
           WoltModalSheetLayout(
@@ -142,6 +143,7 @@ class _WoltModalSheetAnimatedSwitcherState
             woltModalType: widget.woltModalType,
             topBarTranslationY: _topBarTranslationY,
             showDragHandle: widget.showDragHandle,
+            sheetWidth: widget.sheetWidth,
           ),
         if (incomingWidgets != null &&
             animationController != null &&

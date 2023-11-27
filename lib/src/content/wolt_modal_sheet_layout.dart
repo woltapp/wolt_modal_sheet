@@ -12,6 +12,7 @@ class WoltModalSheetLayout extends StatelessWidget {
     required this.woltModalType,
     required this.topBarTranslationY,
     required this.showDragHandle,
+    required this.sheetWidth,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class WoltModalSheetLayout extends StatelessWidget {
   final WoltModalType woltModalType;
   final double topBarTranslationY;
   final bool showDragHandle;
+  final double sheetWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class WoltModalSheetLayout extends StatelessWidget {
             themeData?.navBarHeight ??
             defaultThemeData.navBarHeight)
         : 0.0;
+    final handleWidth = (themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize).width;
     return Stack(
       children: [
         paginatingWidgetsGroup.mainContentAnimatedBuilder,
@@ -45,11 +48,10 @@ class WoltModalSheetLayout extends StatelessWidget {
             child: paginatingWidgetsGroup.topBarAnimatedBuilder,
           ),
         if (showDragHandle)
-          const Positioned(
-            left: 0,
-            right: 0,
+          Positioned(
+            left: (sheetWidth - handleWidth) / 2,
             top: 0,
-            child: WoltBottomSheetDragHandle(),
+            child: const WoltBottomSheetDragHandle(),
           ),
         Positioned(
           top: 0,

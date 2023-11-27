@@ -11,32 +11,35 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final handleSize =
-        themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
-    final handleColor =
-        themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
+    final handleSize = themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
+    final handleColor = themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
+    const topPadding = 8.0;
+    final bottomPadding = _minInteractiveDimension - topPadding - handleSize.height;
+    final horizontalPadding = (_minInteractiveDimension - handleSize.width) / 2;
     return Semantics(
       label: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       container: true,
-      child: SizedBox.square(
-        dimension: _minInteractiveDimension,
-        // By setting behavior to HitTestBehavior.opaque, the GestureDetector will capture touch
-        // events even if its child (the drag handle) isn't the exact size of the gesture.
-        // This will prevent the scrollable content below from receiving the touch events,
-        // effectively allowing the handler to capture drag gestures.
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              margin: const EdgeInsets.only(top: 8.0),
-              height: handleSize.height,
-              width: handleSize.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(handleSize.height / 2),
-                color: handleColor,
-              ),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        child: SizedBox.square(
+          dimension: _minInteractiveDimension,
+          // By setting behavior to HitTestBehavior.opaque, the GestureDetector will capture touch
+          // events even if its child (the drag handle) isn't the exact size of the gesture.
+          // This will prevent the scrollable content below from receiving the touch events,
+          // effectively allowing the handler to capture drag gestures.
+          child: Container(
+            margin: EdgeInsets.fromLTRB(
+              horizontalPadding,
+              topPadding,
+              horizontalPadding,
+              bottomPadding,
             ),
+            decoration: BoxDecoration(
+              color: handleColor,
+              borderRadius: BorderRadius.circular(handleSize.height / 2),
+            ),
+            width: handleSize.width,
+            height: handleSize.height,
           ),
         ),
       ),
