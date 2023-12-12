@@ -11,17 +11,23 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final handleSize = themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
-    final handleColor = themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
+    final handleSize =
+        themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
+    final handleColor =
+        themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
 
     // Ensure that handle size does not exceed the minimum interactive dimension.
-    final adjustedHandleWidth = handleSize.width.clamp(0.0, _minInteractiveDimension);
-    final adjustedHandleHeight = handleSize.height.clamp(0.0, _minInteractiveDimension);
+    final adjustedHandleWidth =
+        handleSize.width.clamp(0.0, _minInteractiveDimension);
+    final adjustedHandleHeight =
+        handleSize.height.clamp(0.0, _minInteractiveDimension);
 
     // Calculate padding to center the handle.
-    final horizontalPadding = (_minInteractiveDimension - adjustedHandleWidth) / 2;
+    final horizontalPadding =
+        (_minInteractiveDimension - adjustedHandleWidth) / 2;
     const topPadding = 8.0;
-    final bottomPadding = _minInteractiveDimension - topPadding - adjustedHandleHeight;
+    final bottomPadding =
+        _minInteractiveDimension - topPadding - adjustedHandleHeight;
 
     return Semantics(
       label: MaterialLocalizations.of(context).modalBarrierDismissLabel,

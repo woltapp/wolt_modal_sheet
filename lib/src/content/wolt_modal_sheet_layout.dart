@@ -35,7 +35,8 @@ class WoltModalSheetLayout extends StatelessWidget {
             themeData?.navBarHeight ??
             defaultThemeData.navBarHeight)
         : 0.0;
-    final handleWidth = (themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize).width;
+    final handleWidth =
+        (themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize).width;
     return Stack(
       children: [
         paginatingWidgetsGroup.mainContentAnimatedBuilder,
