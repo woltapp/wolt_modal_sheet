@@ -11,4 +11,4 @@ export 'src/text/modal_sheet_content_text.dart';
 export 'src/text/modal_sheet_subtitle.dart';
 export 'src/text/modal_sheet_title.dart';
 export 'src/text/modal_sheet_top_bar_title.dart';
-export 'src/utils/drag_scroll_behavior.dart';
+export 'src/utils/custom_scroll_behavior.dart';

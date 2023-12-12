@@ -15,13 +15,15 @@ class SheetPageWithLazyList {
     const titleText = 'Material Colors';
     const heroImageHeight = 200.0;
     return SliverWoltModalSheetPage(
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: WoltElevatedButton(
-          onPressed: onSabPressed,
-          child: Text(isLastPage ? "Close" : "Next"),
-        ),
-      ),
+      stickyActionBar: isLastPage
+          ? null
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: WoltElevatedButton(
+                onPressed: onSabPressed,
+                child: const Text("Next"),
+              ),
+            ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       heroImageHeight: heroImageHeight,
       heroImage: Stack(
@@ -44,7 +46,7 @@ class SheetPageWithLazyList {
               if (index == 0) {
                 return const _HorizontalPrimaryColorList();
               }
-              return ColorTile(color: colors[index]);
+              return ColorTile(color: colors[index - 1]);
             },
             childCount: colors.length + 1,
           ),

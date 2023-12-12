@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_hero_image.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
-import 'package:wolt_modal_sheet/src/utils/drag_scroll_behavior.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// The main content widget within the scrollable modal sheet.
@@ -62,9 +61,9 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
         ? navBarHeight
         : 0.0;
     final scrollView = CustomScrollView(
-      scrollBehavior: const DragScrollBehavior(),
       shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
+      physics: themeData?.mainContentScrollPhysics ??
+          defaultThemeData.mainContentScrollPhysics,
       controller: scrollController,
       slivers: [
         SliverList(

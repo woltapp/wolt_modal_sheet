@@ -31,6 +31,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.surfaceTintColor,
     this.clipBehavior,
     this.shadowColor,
+    this.mainContentScrollPhysics,
   });
 
   /// Overrides the default value for surfaceTintColor.
@@ -128,6 +129,9 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   /// If null, [WoltModalSheet] uses [Clip.antiAlias].
   final Clip? clipBehavior;
 
+  /// The default value for [WoltModalSheet] scrollPhysics in the main content.
+  final ScrollPhysics? mainContentScrollPhysics;
+
   @override
   WoltModalSheetThemeData copyWith({
     Color? backgroundColor,
@@ -153,6 +157,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     Color? surfaceTintColor,
     Color? shadowColor,
     Clip? clipBehavior,
+    ScrollPhysics? mainContentScrollPhysics,
   }) {
     return WoltModalSheetThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -179,6 +184,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       surfaceTintColor: surfaceTintColor ?? this.surfaceTintColor,
       shadowColor: shadowColor ?? this.shadowColor,
       clipBehavior: clipBehavior ?? this.clipBehavior,
+      mainContentScrollPhysics:
+          mainContentScrollPhysics ?? this.mainContentScrollPhysics,
     );
   }
 
@@ -216,6 +223,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       surfaceTintColor: Color.lerp(surfaceTintColor, other.surfaceTintColor, t),
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      mainContentScrollPhysics:
+          t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
     );
   }
 }
