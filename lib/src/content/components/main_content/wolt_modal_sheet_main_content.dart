@@ -51,6 +51,8 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     final pageHasTopBarLayer = page.hasTopBarLayer ??
         themeData?.hasTopBarLayer ??
         defaultThemeData.hasTopBarLayer;
+    final isTopBarLayerAlwaysVisible =
+        pageHasTopBarLayer && page.isTopBarLayerAlwaysVisible == true;
     final navBarHeight = page.navBarHeight ??
         themeData?.navBarHeight ??
         defaultThemeData.navBarHeight;
@@ -76,7 +78,11 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
                         heroImage: heroImage,
                         heroImageHeight: heroImageHeight,
                       )
-                    : SizedBox(height: topBarHeight);
+                    // If top bar layer is always visible, the padding is explicitly added to the
+                    // scroll view since top bar will not be integrated to scroll view at all.
+                    // Otherwise, we implicitly create a spacing as a part of the scroll view.
+                    : SizedBox(
+                        height: isTopBarLayerAlwaysVisible ? 0 : topBarHeight);
               } else {
                 final pageTitle = page.pageTitle;
                 return KeyedSubtree(
@@ -107,7 +113,13 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
         }
         return false;
       },
-      child: scrollView,
+      child: Padding(
+        // The scroll view should be padded by the height of the top bar layer if it's always
+        // visible. Otherwise, over scroll effect will not be visible due to the top bar layer.
+        padding:
+            EdgeInsets.only(top: isTopBarLayerAlwaysVisible ? topBarHeight : 0),
+        child: scrollView,
+      ),
     );
   }
 }
