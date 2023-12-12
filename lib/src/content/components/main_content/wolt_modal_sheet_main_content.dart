@@ -22,7 +22,8 @@ class WoltModalSheetMainContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<WoltModalSheetMainContent> createState() => _WoltModalSheetMainContentState();
+  State<WoltModalSheetMainContent> createState() =>
+      _WoltModalSheetMainContentState();
 }
 
 class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
@@ -32,7 +33,8 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
   void initState() {
     super.initState();
     scrollController = widget.page.scrollController ??
-        ScrollController(initialScrollOffset: widget.currentScrollPosition.value);
+        ScrollController(
+            initialScrollOffset: widget.currentScrollPosition.value);
   }
 
   @override
@@ -42,18 +44,24 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     final page = widget.page;
     final heroImageHeight = page.heroImage == null
         ? 0.0
-        : (page.heroImageHeight ?? themeData?.heroImageHeight ?? defaultThemeData.heroImageHeight);
-    final pageHasTopBarLayer =
-        page.hasTopBarLayer ?? themeData?.hasTopBarLayer ?? defaultThemeData.hasTopBarLayer;
-    final navBarHeight =
-        page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
-    final topBarHeight =
-        pageHasTopBarLayer || page.leadingNavBarWidget != null || page.trailingNavBarWidget != null
-            ? navBarHeight
-            : 0.0;
+        : (page.heroImageHeight ??
+            themeData?.heroImageHeight ??
+            defaultThemeData.heroImageHeight);
+    final pageHasTopBarLayer = page.hasTopBarLayer ??
+        themeData?.hasTopBarLayer ??
+        defaultThemeData.hasTopBarLayer;
+    final navBarHeight = page.navBarHeight ??
+        themeData?.navBarHeight ??
+        defaultThemeData.navBarHeight;
+    final topBarHeight = pageHasTopBarLayer ||
+            page.leadingNavBarWidget != null ||
+            page.trailingNavBarWidget != null
+        ? navBarHeight
+        : 0.0;
     final scrollView = CustomScrollView(
       shrinkWrap: true,
-      physics: themeData?.mainContentScrollPhysics ?? defaultThemeData.mainContentScrollPhysics,
+      physics: themeData?.mainContentScrollPhysics ??
+          defaultThemeData.mainContentScrollPhysics,
       controller: scrollController,
       slivers: [
         SliverList(
@@ -89,10 +97,12 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
     );
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {
-        final isVerticalScrollNotification = scrollNotification is ScrollUpdateNotification &&
-            scrollNotification.metrics.axis == Axis.vertical;
+        final isVerticalScrollNotification =
+            scrollNotification is ScrollUpdateNotification &&
+                scrollNotification.metrics.axis == Axis.vertical;
         if (isVerticalScrollNotification) {
-          widget.currentScrollPosition.value = scrollNotification.metrics.pixels;
+          widget.currentScrollPosition.value =
+              scrollNotification.metrics.pixels;
         }
         return false;
       },

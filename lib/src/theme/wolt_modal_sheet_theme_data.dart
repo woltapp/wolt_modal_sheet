@@ -184,7 +184,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       surfaceTintColor: surfaceTintColor ?? this.surfaceTintColor,
       shadowColor: shadowColor ?? this.shadowColor,
       clipBehavior: clipBehavior ?? this.clipBehavior,
-      mainContentScrollPhysics: mainContentScrollPhysics ?? this.mainContentScrollPhysics,
+      mainContentScrollPhysics:
+          mainContentScrollPhysics ?? this.mainContentScrollPhysics,
     );
   }
 
@@ -222,7 +223,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       surfaceTintColor: Color.lerp(surfaceTintColor, other.surfaceTintColor, t),
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
-      mainContentScrollPhysics: t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
+      mainContentScrollPhysics:
+          t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
     );
   }
 }
