@@ -1,3 +1,15 @@
+## 0.2.0
+- Update readme for breaking changes. [#114](https://github.com/woltapp/wolt_modal_sheet/pull/114)
+- Fix overflow scroll effect visibility when top bar is always visible. [#104](https://github.com/woltapp/wolt_modal_sheet/pull/104)
+- Remove custom scroll behavior, allow scroll physics customization, fix double scroll effects and double scroll bars. [#103](https://github.com/woltapp/wolt_modal_sheet/pull/103)
+- Add feature request and issue templates. [#101](https://github.com/woltapp/wolt_modal_sheet/pull/101)
+- Add PR template. [#100](https://github.com/woltapp/wolt_modal_sheet/pull/100)
+- Move contribution steps to its own file. [#98](https://github.com/woltapp/wolt_modal_sheet/pull/98)
+- Use super for constructor parameters in WoltModalSheet page. [#97](https://github.com/woltapp/wolt_modal_sheet/pull/97)
+- **BREAKING CHANGE**:
+  - Introduce SliverWoltModalSheetPage and WoltModalSheetPage classes to construct modal sheet pages. [#95](https://github.com/woltapp/wolt_modal_sheet/pull/95)
+  - Please follow [migration guide](https://github.com/woltapp/wolt_modal_sheet#migration-from-01x-to-020) if you are migrating from 0.1.x version.
+
 ## 0.1.4
 - Chore: add badges to README.md. [#87](https://github.com/woltapp/wolt_modal_sheet/pull/87) by [Mikhail Zotyev @MbIXjkee](https://github.com/MbIXjkee)
 - Add dart format check to merge check list. [#84](https://github.com/woltapp/wolt_modal_sheet/pull/84) by [Taha Tesser @TahaTesser](https://github.com/TahaTesser)
