@@ -28,9 +28,11 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
       container: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        child: SizedBox(
-          width: _minInteractiveDimension,
-          height: _minInteractiveDimension,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minWidth: _minInteractiveDimension,
+            minHeight: _minInteractiveDimension,
+          ),
           child: Container(
             margin: EdgeInsets.fromLTRB(
               horizontalPadding,
