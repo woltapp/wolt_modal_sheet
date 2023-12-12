@@ -237,6 +237,53 @@ WoltModalSheetPage(
 * Choose WoltModalSheetPage for simpler content layouts or when working with 
   a single widget.
 
+### Migration from 0.1.x to 0.2.0
+
+This section provides detailed guidance on the breaking changes introduced in
+version 0.2.0, particularly focusing on the usage of the `WoltModalSheetPage`
+class.
+
+#### Changes Overview
+
+* The previous constructors `WoltModalSheetPage.withSingleChild` and
+  `WoltModalSheetPage.withCustomSliverList` have been removed in this update.
+* We have introduced a new class, `SliverWoltModalSheetPage`, which now
+  serves as the base class for pages. This new class is intended to replace the
+  `WoltModalSheetPage.withCustomSliverList` constructor.
+* The `WoltModalSheetPage` class has been updated to extend from
+  `SliverWoltModalSheetPage`. This substitutes the `WoltModalSheetPage.
+  withSingleChild` constructor.
+* The `mainContentSlivers` property is now added to
+  `SliverWoltModalSheetPage` to replace the `sliverList` property of
+  `WoltModalSheetPage.withCustomSliverList`. This allows using list of
+  sliver widgets instead of a single sliver list in sliver pages.
+
+#### Migration Steps
+
+* If your previous implementation used `WoltModalSheetPage.withSingleChild`,
+  you can now directly transition to using `WoltModalSheetPage`.
+
+```dart
+// Before
+WoltModalSheetPage.withSingleChild(child: MyWidget());
+
+// After
+WoltModalSheetPage(child: MyWidget());
+```
+
+* If you were utilizing `WoltModalSheetPage.withCustomSliverList` for complex,
+  sliver-based content, switch to `SliverWoltModalSheetPage`. Utilize the
+  `mainContentSlivers` property to achieve a similar but more enhanced
+  functionality.
+
+```dart
+// Before
+WoltModalSheetPage.withCustomSliverList(sliverList: MySliverList());
+
+// After
+SliverWoltModalSheetPage(mainContentSlivers: [MySliverList1(), MySliverList2()]);
+```
+
 ## Getting started
 
 To use this plugin, add wolt_modal_sheet as a dependency in your pubspec.yaml
@@ -459,7 +506,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 The code snippet above produces the following:
 </br>
 </br>
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/wms_demo.gif?raw=true)
+
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_wms_demo.gif?raw=true)
 
 ### Playground app with imperative navigation
 
