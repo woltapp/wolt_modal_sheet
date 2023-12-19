@@ -12,8 +12,10 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final handleSize = themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
-    final handleColor = themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
+    final handleSize =
+        themeData?.dragHandleSize ?? defaultThemeData.dragHandleSize;
+    final handleColor =
+        themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
     return Semantics(
       label: semanticsLabel(context),
       container: true,
@@ -43,9 +45,11 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
   }
 
   String semanticsLabel(BuildContext context) {
-    return Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)
+    return Localizations.of<MaterialLocalizations>(
+                context, MaterialLocalizations)
             ?.modalBarrierDismissLabel ??
-        Localizations.of<CupertinoLocalizations>(context, CupertinoLocalizations)
+        Localizations.of<CupertinoLocalizations>(
+                context, CupertinoLocalizations)
             ?.modalBarrierDismissLabel ??
         const DefaultMaterialLocalizations().modalBarrierDismissLabel;
   }
