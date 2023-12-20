@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -16,7 +17,7 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
     final handleColor =
         themeData?.dragHandleColor ?? defaultThemeData.dragHandleColor;
     return Semantics(
-      label: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      label: semanticsLabel(context),
       container: true,
       child: SizedBox.square(
         dimension: _minInteractiveDimension,
@@ -41,5 +42,15 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String semanticsLabel(BuildContext context) {
+    return Localizations.of<MaterialLocalizations>(
+                context, MaterialLocalizations)
+            ?.modalBarrierDismissLabel ??
+        Localizations.of<CupertinoLocalizations>(
+                context, CupertinoLocalizations)
+            ?.modalBarrierDismissLabel ??
+        const DefaultMaterialLocalizations().modalBarrierDismissLabel;
   }
 }
