@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_keyboard_visibility: ">=6.0.0"
 
 flutter:
   uses-material-design: true
