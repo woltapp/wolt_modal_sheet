@@ -44,7 +44,7 @@ class SheetPageWithLazyList {
               if (index == 0) {
                 return const _HorizontalPrimaryColorList();
               }
-              return ColorTile(color: colors[index]);
+              return ColorTile(color: colors[index - 1]);
             },
             childCount: colors.length + 1,
           ),
