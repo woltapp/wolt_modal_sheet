@@ -289,6 +289,22 @@ SliverWoltModalSheetPage(mainContentSlivers: [MySliverList1(), MySliverList2()])
 To use this plugin, add wolt_modal_sheet as a dependency in your pubspec.yaml
 file.
 
+## CupertinoApp support
+
+In the package, certain Material widgets rely on retrieving Material localizations information
+from the widget tree. However, Material localizations are not inherently available in CupertinoApp,
+leading to potential errors. To mitigate this issue, if your application utilizes CupertinoApp
+rather than MaterialApp, it is needed to incorporate a default Material localization delegate
+into your application configuration.
+
+```dart
+CupertinoApp(
+  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+    DefaultMaterialLocalizations.delegate,
+],)
+```
+To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
+
 ## Usage
 
 This package has 4 example projects.
