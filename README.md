@@ -291,10 +291,11 @@ file.
 
 ## CupertinoApp support
 
-Some Material widgets that we use in the package reads material localisations information from the widget tree.
-Since, Material localisations are not available in `CupertinoApp` by default, it causes an error. To prevent that;
-if you are using `CupertinoApp` instead of `MaterialApp`, please add default material localization
-delegate to your app:
+In the package, certain Material widgets rely on retrieving Material localizations information
+from the widget tree. However, Material localizations are not inherently available in CupertinoApp,
+leading to potential errors. To mitigate this issue, if your application utilizes CupertinoApp
+rather than MaterialApp, it is needed to incorporate a default Material localization delegate
+into your application configuration.
 
 ```dart
 CupertinoApp(
