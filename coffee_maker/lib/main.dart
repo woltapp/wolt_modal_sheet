@@ -36,6 +36,8 @@ class _DemoAppState extends State<DemoApp> {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      // This is needed to make the app working with CupertinoApp.
+      // For more details on CupertinoApp support, see the "CupertinoApp Support" section in the README file.
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         DefaultMaterialLocalizations.delegate,
       ],
@@ -86,18 +88,15 @@ class _DemoAppState extends State<DemoApp> {
           ),
           outlinedButtonTheme: OutlinedButtonThemeData(
             style: OutlinedButton.styleFrom(
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(fontWeight: FontWeight.bold),
+              textStyle:
+                  Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
               foregroundColor: DemoAppColors.black,
               backgroundColor: DemoAppColors.white,
               surfaceTintColor: DemoAppColors.white,
               fixedSize: const Size.fromHeight(36),
               padding: const EdgeInsets.all(12),
               visualDensity: VisualDensity.compact,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               side: BorderSide.none,
             ),
           ),
@@ -120,8 +119,7 @@ class _DemoAppState extends State<DemoApp> {
           ),
         ),
         child: HomeScreen(
-          groupedCoffeeOrders:
-              GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
+          groupedCoffeeOrders: GroupedCoffeeOrders.fromCoffeeOrders(mockCoffeeOrders),
           isStoreOnline: true,
           isGridOverlayVisible: false,
         ),
