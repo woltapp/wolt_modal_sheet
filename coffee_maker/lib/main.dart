@@ -67,6 +67,7 @@ class _DemoAppState extends State<DemoApp> {
           textTheme: TextTheme(
             headlineMedium: TextStyle(
               fontSize: 28,
+              color: DemoAppColors.black,
               fontWeight: FontWeight.w800,
               letterSpacing: kIsWeb || Platform.isAndroid ? 0.2 : 0.12,
             ),
