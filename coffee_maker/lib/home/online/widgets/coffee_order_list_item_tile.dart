@@ -103,7 +103,7 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold),
+                .copyWith(fontWeight: FontWeight.bold, color: DemoAppColors.black),
           ),
         ),
         const SizedBox(width: 8),
