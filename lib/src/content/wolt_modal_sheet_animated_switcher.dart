@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_main_content.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar_flow.dart';
@@ -8,6 +11,7 @@ import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginat
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/wolt_modal_sheet_page_transition_state.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
+import 'package:wolt_modal_sheet/src/utils/soft_keyboard_closed_event.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_navigation_toolbar.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -64,9 +68,42 @@ class _WoltModalSheetAnimatedSwitcherState
 
   AnimationController? _animationController;
 
+  /// List of [ScrollController] objects, one for each [WoltModalSheetPage] main content.
+  List<ScrollController> _scrollControllers = [];
+
+  /// The [ScrollController] of the current [WoltModalSheetPage] main content.
+  ScrollController get _currentPageScrollController =>
+      _scrollControllers[_pageIndex];
+
+  /// List of [ValueNotifier] objects, each one for the listening of the scroll position updates
+  /// in each [WoltModalSheetPage] main content.
   List<ValueNotifier<double>> _scrollPositions = [];
 
-  ValueNotifier<double> get _scrollPosition => _scrollPositions[_pageIndex];
+  /// The current scroll position of the current [WoltModalSheetPage] main content. This is
+  /// needed to create a [ScrollController] with initial scroll offset when changing pages.
+  ValueNotifier<double> get _currentPageScrollPosition =>
+      _scrollPositions[_pageIndex];
+
+  /// Subscription for discovering the state of the soft-keyboard visibility
+  late StreamSubscription<bool> _softKeyboardVisibilitySubscription;
+
+  /// Value notifier for discovering when the soft-keyboard is dismissed. These events are
+  /// consumed by [WoltModalSheetTopBarFlow] and [WoltModalSheetTopBarTitleFlow] to trigger a
+  /// re-paint when keyboard is closing. This is needed to avoid the top bar from being stuck
+  /// when keyboard is closing.
+  ///
+  /// By default, the top bar visibility is synced with the scroll controller position. The
+  /// [WoltModalSheetTopBarFlow] and [WoltModalSheetTopBarTitleFlow] paints the top bar according
+  /// to the scroll position changes.
+  ///
+  /// When the keyboard appears the scroll controller receives scroll update events, which are
+  /// sent by the Flutter SDK. However, the keyboard closing events do not cause a change in the
+  /// scroll controller. Therefore, we need to manually trigger a re-paint when the keyboard is
+  /// closing.
+  final ValueNotifier<SoftKeyboardClosedEvent> _softKeyboardClosedNotifier =
+      ValueNotifier(
+    const SoftKeyboardClosedEvent(eventId: 0),
+  );
 
   bool _isForwardMove = true;
 
@@ -79,6 +116,9 @@ class _WoltModalSheetAnimatedSwitcherState
     super.initState();
     _resetGlobalKeys();
     _resetScrollPositions();
+    _resetScrollControllers();
+    _subscribeToCurrentPageScrollPositionChanges();
+    _subscribeToSoftKeyboardClosedEvent();
   }
 
   void _resetGlobalKeys() {
@@ -96,6 +136,42 @@ class _WoltModalSheetAnimatedSwitcherState
     ];
   }
 
+  void _resetScrollControllers() {
+    _scrollControllers.clear();
+    _scrollControllers = [
+      for (int i = 0; i < _pagesCount; i++)
+        (_page.scrollController ??
+            ScrollController(initialScrollOffset: _scrollPositions[i].value))
+    ];
+  }
+
+  void _subscribeToCurrentPageScrollPositionChanges() {
+    for (final scrollController in _scrollControllers) {
+      scrollController.addListener(() {
+        if (_currentPageScrollController.hasClients) {
+          _currentPageScrollPosition.value =
+              _currentPageScrollController.position.pixels;
+        }
+      });
+    }
+  }
+
+  void _subscribeToSoftKeyboardClosedEvent() {
+    _softKeyboardVisibilitySubscription =
+        KeyboardVisibilityController().onChange.listen((
+      bool visible,
+    ) async {
+      if (!visible) {
+        /// Wait for closing soft keyboard animation to finish before emitting new value.
+        await Future.delayed(const Duration(milliseconds: 250));
+        final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
+        final newEventId = lastEventId + 1;
+        _softKeyboardClosedNotifier.value =
+            SoftKeyboardClosedEvent(eventId: newEventId);
+      }
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -108,13 +184,15 @@ class _WoltModalSheetAnimatedSwitcherState
   void didUpdateWidget(covariant WoltModalSheetAnimatedSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
     _isForwardMove = oldWidget.pageIndex < widget.pageIndex;
-    if (oldWidget.pageIndex != widget.pageIndex) {
-      _addPage(animate: true);
-    }
     if (oldWidget.pages != widget.pages &&
         oldWidget.pageIndex == widget.pageIndex) {
       _resetScrollPositions();
+      _resetScrollControllers();
+      _subscribeToCurrentPageScrollPositionChanges();
       _resetGlobalKeys();
+    }
+    if (oldWidget.pageIndex != widget.pageIndex) {
+      _addPage(animate: true);
     }
   }
 
@@ -172,6 +250,13 @@ class _WoltModalSheetAnimatedSwitcherState
   @override
   void dispose() {
     _animationController?.dispose();
+    _softKeyboardVisibilitySubscription.cancel();
+    for (final element in _scrollControllers) {
+      element.dispose();
+    }
+    for (final element in _scrollPositions) {
+      element.dispose();
+    }
     super.dispose();
   }
 
@@ -253,9 +338,10 @@ class _WoltModalSheetAnimatedSwitcherState
           ? Center(child: topBarTitle)
           : WoltModalSheetTopBarTitleFlow(
               page: _page,
-              currentScrollPositionListenable: _scrollPosition,
+              scrollController: _currentPageScrollController,
               titleKey: _pageTitleKey,
               topBarTitle: topBarTitle,
+              softKeyboardClosedListenable: _softKeyboardClosedNotifier,
             );
     }
     return PaginatingWidgetsGroup(
@@ -272,6 +358,7 @@ class _WoltModalSheetAnimatedSwitcherState
         child: _createMainContent(
           mainContentKey: _mainContentKeys[_pageIndex],
           titleKey: _pageTitleKey,
+          scrollController: _currentPageScrollController,
         ),
       ),
       offstagedMainContent:
@@ -285,9 +372,10 @@ class _WoltModalSheetAnimatedSwitcherState
                 ? WoltModalSheetTopBar(page: _page)
                 : WoltModalSheetTopBarFlow(
                     page: _page,
-                    currentScrollPositionListenable: _scrollPosition,
+                    scrollController: _currentPageScrollController,
                     topBarTranslationYAmountInPx: _topBarTranslationY,
                     titleKey: _pageTitleKey,
+                    softKeyboardClosedListenable: _softKeyboardClosedNotifier,
                   ))
             : const SizedBox.shrink(),
       ),
@@ -363,11 +451,12 @@ class _WoltModalSheetAnimatedSwitcherState
   WoltModalSheetMainContent _createMainContent({
     required GlobalKey titleKey,
     GlobalKey? mainContentKey,
+    ScrollController? scrollController,
   }) {
     return WoltModalSheetMainContent(
       key: mainContentKey,
       pageTitleKey: titleKey,
-      currentScrollPosition: _scrollPosition,
+      scrollController: scrollController,
       page: _page,
       woltModalType: widget.woltModalType,
     );
