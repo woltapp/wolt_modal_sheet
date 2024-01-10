@@ -7,14 +7,14 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 ///
 /// This widget is responsible for displaying the main content of the scrollable modal sheet.
 /// It handles the scroll behavior, page layout, and interactions within the modal sheet.
-class WoltModalSheetMainContent extends StatefulWidget {
-  final ValueNotifier<double> currentScrollPosition;
+class WoltModalSheetMainContent extends StatelessWidget {
+  final ScrollController? scrollController;
   final GlobalKey pageTitleKey;
   final SliverWoltModalSheetPage page;
   final WoltModalType woltModalType;
 
   const WoltModalSheetMainContent({
-    required this.currentScrollPosition,
+    required this.scrollController,
     required this.pageTitleKey,
     required this.page,
     required this.woltModalType,
@@ -22,26 +22,9 @@ class WoltModalSheetMainContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<WoltModalSheetMainContent> createState() =>
-      _WoltModalSheetMainContentState();
-}
-
-class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController = widget.page.scrollController ??
-        ScrollController(
-            initialScrollOffset: widget.currentScrollPosition.value);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final page = widget.page;
     final heroImageHeight = page.heroImage == null
         ? 0.0
         : (page.heroImageHeight ??
@@ -85,7 +68,7 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
               } else {
                 final pageTitle = page.pageTitle;
                 return KeyedSubtree(
-                  key: widget.pageTitleKey,
+                  key: pageTitleKey,
                   child: pageTitle ?? const SizedBox.shrink(),
                 );
               }
@@ -101,24 +84,12 @@ class _WoltModalSheetMainContentState extends State<WoltModalSheetMainContent> {
           ),
       ],
     );
-    return NotificationListener<ScrollNotification>(
-      onNotification: (scrollNotification) {
-        final isVerticalScrollNotification =
-            scrollNotification is ScrollUpdateNotification &&
-                scrollNotification.metrics.axis == Axis.vertical;
-        if (isVerticalScrollNotification) {
-          widget.currentScrollPosition.value =
-              scrollNotification.metrics.pixels;
-        }
-        return false;
-      },
-      child: Padding(
-        // The scroll view should be padded by the height of the top bar layer if it's always
-        // visible. Otherwise, over scroll effect will not be visible due to the top bar layer.
-        padding:
-            EdgeInsets.only(top: isTopBarLayerAlwaysVisible ? topBarHeight : 0),
-        child: scrollView,
-      ),
+    return Padding(
+      // The scroll view should be padded by the height of the top bar layer if it's always
+      // visible. Otherwise, over scroll effect will not be visible due to the top bar layer.
+      padding:
+          EdgeInsets.only(top: isTopBarLayerAlwaysVisible ? topBarHeight : 0),
+      child: scrollView,
     );
   }
 }

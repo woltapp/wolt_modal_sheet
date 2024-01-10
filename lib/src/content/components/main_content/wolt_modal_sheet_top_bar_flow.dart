@@ -2,27 +2,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
+import 'package:wolt_modal_sheet/src/utils/soft_keyboard_closed_event.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-/// `WoltModalSheetTopBarFlow` controls the top bar behavior within the modal sheet page
-/// provided by the [WoltModalSheetPage] when `isTopBarLayerAlwaysVisible` is set to true.
+/// [WoltModalSheetTopBarFlow] controls the top bar behavior within the modal sheet page
+/// provided by the [WoltModalSheetPage] when `isTopBarLayerAlwaysVisible` is set to false.
 ///
 /// It is responsible for the positioning, translation, and opacity of the top bar as the user
 /// scrolls through the content. Utilizing the [Flow] widget, it listens to the current scroll
-/// position and performs transformations to achieve the desired effects on the top bar, such as
-/// fading in/out and translating vertically.
+/// position and soft keyboard closing events, then, performs transformations to achieve the
+/// desired  effects on the top bar, such as fading in/out and translating vertically.
 class WoltModalSheetTopBarFlow extends StatelessWidget {
-  final ValueListenable<double> currentScrollPositionListenable;
+  final ScrollController scrollController;
   final GlobalKey titleKey;
   final double topBarTranslationYAmountInPx;
   final SliverWoltModalSheetPage page;
+  final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedListenable;
 
   const WoltModalSheetTopBarFlow({
     required this.page,
-    required this.currentScrollPositionListenable,
+    required this.scrollController,
     required this.titleKey,
     required this.topBarTranslationYAmountInPx,
+    required this.softKeyboardClosedListenable,
     Key? key,
   }) : super(key: key);
 
@@ -43,10 +46,10 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
       delegate: _TopBarFlowDelegate(
         topBarHeight: topBarHeight,
         heroImageHeight: heroImageHeight,
-        currentScrollPositionListenable: currentScrollPositionListenable,
+        scrollController: scrollController,
         titleKey: titleKey,
         topBarTranslationYAmountInPx: topBarTranslationYAmountInPx,
-        buildContext: context,
+        softKeyboardClosedListenable: softKeyboardClosedListenable,
       ),
       children: [WoltModalSheetTopBar(page: page)],
     );
@@ -56,21 +59,26 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
 class _TopBarFlowDelegate extends FlowDelegate {
   final double topBarHeight;
   final double heroImageHeight;
-  final ValueListenable<double> currentScrollPositionListenable;
+  final ScrollController scrollController;
   final GlobalKey titleKey;
   final double topBarTranslationYAmountInPx;
-  final BuildContext buildContext;
+  final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedListenable;
 
   _TopBarFlowDelegate({
     required this.topBarHeight,
     required this.heroImageHeight,
-    required this.currentScrollPositionListenable,
+    required this.scrollController,
     required this.titleKey,
     required this.topBarTranslationYAmountInPx,
-    required this.buildContext,
-  }) : super(repaint: currentScrollPositionListenable);
+    required this.softKeyboardClosedListenable,
+  }) : super(
+          repaint: Listenable.merge([
+            scrollController,
+            softKeyboardClosedListenable,
+          ]),
+        );
 
-  double get currentScrollPosition => currentScrollPositionListenable.value;
+  double get currentScrollOffset => scrollController.position.pixels;
 
   @override
   void paintChildren(FlowPaintingContext context) {
@@ -86,7 +94,7 @@ class _TopBarFlowDelegate extends FlowDelegate {
         WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: 8 + pageTitleHeight,
       progressInRangeInPx:
-          currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
+          currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
       startValue: topBarTranslationYStart,
       endValue: topBarTranslationYEnd,
     );
@@ -96,7 +104,7 @@ class _TopBarFlowDelegate extends FlowDelegate {
         WoltLayoutTransformationUtils.calculateTransformationValue(
       rangeInPx: 8,
       progressInRangeInPx:
-          currentScrollPosition - topBarTranslationYAndOpacityStartPoint,
+          currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
       startValue: 0.0,
       endValue: 1.0,
     );
@@ -113,9 +121,11 @@ class _TopBarFlowDelegate extends FlowDelegate {
   bool shouldRepaint(covariant _TopBarFlowDelegate oldDelegate) {
     return heroImageHeight != oldDelegate.heroImageHeight ||
         titleKey != oldDelegate.titleKey ||
-        currentScrollPosition != oldDelegate.currentScrollPosition ||
+        currentScrollOffset != oldDelegate.currentScrollOffset ||
         topBarTranslationYAmountInPx !=
             oldDelegate.topBarTranslationYAmountInPx ||
+        softKeyboardClosedListenable.value !=
+            oldDelegate.softKeyboardClosedListenable.value ||
         topBarHeight != oldDelegate.topBarHeight;
   }
 }
