@@ -4,7 +4,7 @@
 - Fix 'No MaterialLocalizations found' exception for Cupertino apps [#116](https://github.com/woltapp/wolt_modal_sheet/pull/116)
 - **BREAKING CHANGE**:
   - Fix TopBar Widget keeps being visible after Keyboard hides. [#119](https://github.com/woltapp/wolt_modal_sheet/pull/119)
-  - This fix, adds a new dependency to the package and requires minimum 6.0.0 of flutter_keyboard_visibility package.
+  - This fix, adds a new dependency to the package and requires minimum 6.0.0 of flutter_keyboard_visibility package if this package is used in your project with lower version than 6.0.0.
 
 
 ## 0.2.0
