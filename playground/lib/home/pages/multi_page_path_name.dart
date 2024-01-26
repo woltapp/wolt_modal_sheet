@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:playground/home/pages/sheet_page_with_custom_top_bar.dart';
 import 'package:playground/home/pages/sheet_page_with_dynamic_page_properties.dart';
+import 'package:playground/home/pages/sheet_page_with_flexible_sheet_layout.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
 import 'package:playground/home/pages/sheet_page_with_lazy_list.dart';
@@ -17,6 +18,7 @@ enum MultiPagePathName {
   noTitleNoTopBar(pageCount: 2, queryParamName: "noTitleNoTopBar"),
   customTopBar(pageCount: 2, queryParamName: "customTopBar"),
   dynamicPageProperties(pageCount: 2, queryParamName: "dynamicPageProperties"),
+  flexibleLayout(pageCount: 2, queryParamName: "flexibleLayout"),
   allPagesPath(pageCount: 6, queryParamName: "all");
 
   static const defaultPath = MultiPagePathName.allPagesPath;
@@ -80,6 +82,16 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
+    FlexibleWoltModalSheetPage flexibleSheetLayout(
+      BuildContext context, {
+      bool isLastPage = true,
+    }) =>
+        SheetPageWithFlexibleSheetLayout.build(
+          nextPagePressed: () => isLastPage ? close(context) : goToNextPage(),
+          onClosed: () => close(context),
+          onBackPressed: goToPreviousPage,
+          isLastPage: isLastPage,
+        );
     WoltModalSheetPage dynamicPageProperties(BuildContext context,
             {bool isLastPage = true}) =>
         SheetPageWithDynamicPageProperties.build(
@@ -112,6 +124,8 @@ enum MultiPagePathName {
         return (context) => [root(context), customTopBar(context)];
       case MultiPagePathName.dynamicPageProperties:
         return (context) => [root(context), dynamicPageProperties(context)];
+      case MultiPagePathName.flexibleLayout:
+        return (context) => [root(context), flexibleSheetLayout(context)];
       case MultiPagePathName.allPagesPath:
         return (context) => [
               root(context),
@@ -121,6 +135,7 @@ enum MultiPagePathName {
               noTitleNoTopBar(context, isLastPage: false),
               customTopBar(context, isLastPage: false),
               dynamicPageProperties(context, isLastPage: false),
+              flexibleSheetLayout(context, isLastPage: false),
               forcedMaxHeight(context, isLastPage: true),
             ];
     }

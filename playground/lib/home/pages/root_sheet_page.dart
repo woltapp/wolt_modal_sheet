@@ -72,6 +72,11 @@ class RootSheetPage {
                 isSelected: false,
               ),
               WoltSelectionListItemData(
+                title: 'WoltFlexibleSheetPage example',
+                value: MultiPagePathName.flexibleLayout,
+                isSelected: false,
+              ),
+              WoltSelectionListItemData(
                 title: 'All the pages in one flow',
                 value: MultiPagePathName.allPagesPath,
                 isSelected: false,
