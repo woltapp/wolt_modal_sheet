@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:playground/home/pages/sheet_page_with_custom_top_bar.dart';
 import 'package:playground/home/pages/sheet_page_with_dynamic_page_properties.dart';
-import 'package:playground/home/pages/sheet_page_with_flexible_sheet_layout.dart';
+import 'package:playground/home/pages/sheet_page_with_non_scrolling_layout.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
 import 'package:playground/home/pages/sheet_page_with_lazy_list.dart';
@@ -82,11 +82,11 @@ enum MultiPagePathName {
           onBackPressed: goToPreviousPage,
           isLastPage: isLastPage,
         );
-    FlexibleWoltModalSheetPage flexibleSheetLayout(
+    NonScrollingWoltModalSheetPage nonScrollingSheetLayout(
       BuildContext context, {
       bool isLastPage = true,
     }) =>
-        SheetPageWithFlexibleSheetLayout.build(
+        SheetPageWithNonScrollingLayout.build(
           nextPagePressed: () => isLastPage ? close(context) : goToNextPage(),
           onClosed: () => close(context),
           onBackPressed: goToPreviousPage,
@@ -125,7 +125,7 @@ enum MultiPagePathName {
       case MultiPagePathName.dynamicPageProperties:
         return (context) => [root(context), dynamicPageProperties(context)];
       case MultiPagePathName.flexibleLayout:
-        return (context) => [root(context), flexibleSheetLayout(context)];
+        return (context) => [root(context), nonScrollingSheetLayout(context)];
       case MultiPagePathName.allPagesPath:
         return (context) => [
               root(context),
@@ -135,7 +135,7 @@ enum MultiPagePathName {
               noTitleNoTopBar(context, isLastPage: false),
               customTopBar(context, isLastPage: false),
               dynamicPageProperties(context, isLastPage: false),
-              flexibleSheetLayout(context, isLastPage: false),
+              nonScrollingSheetLayout(context, isLastPage: false),
               forcedMaxHeight(context, isLastPage: true),
             ];
     }

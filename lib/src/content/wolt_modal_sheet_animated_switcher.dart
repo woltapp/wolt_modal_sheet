@@ -343,7 +343,7 @@ class _WoltModalSheetAnimatedSwitcherState
     Widget? navigationToolbarMiddle;
     if (shouldShowTopBarTitle) {
       navigationToolbarMiddle =
-          isTopBarLayerAlwaysVisible || _page is FlexibleWoltModalSheetPage
+          isTopBarLayerAlwaysVisible || _page is NonScrollingWoltModalSheetPage
               ? Center(child: topBarTitle)
               : WoltModalSheetTopBarTitleFlow(
                   page: _page,
@@ -377,7 +377,8 @@ class _WoltModalSheetAnimatedSwitcherState
         pageTransitionState: WoltModalSheetPageTransitionState.incoming,
         controller: animationController,
         child: hasTopBarLayer
-            ? (isTopBarLayerAlwaysVisible || _page is FlexibleWoltModalSheetPage
+            ? (isTopBarLayerAlwaysVisible ||
+                    _page is NonScrollingWoltModalSheetPage
                 ? WoltModalSheetTopBar(page: _page)
                 : WoltModalSheetTopBarFlow(
                     page: _page,

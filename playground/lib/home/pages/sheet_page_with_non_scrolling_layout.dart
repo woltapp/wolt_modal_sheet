@@ -2,17 +2,17 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class SheetPageWithFlexibleSheetLayout {
-  SheetPageWithFlexibleSheetLayout._();
+class SheetPageWithNonScrollingLayout {
+  SheetPageWithNonScrollingLayout._();
 
-  static FlexibleWoltModalSheetPage build({
+  static NonScrollingWoltModalSheetPage build({
     required VoidCallback nextPagePressed,
     required VoidCallback onBackPressed,
     required VoidCallback onClosed,
     bool isLastPage = true,
   }) {
     const textStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
-    return FlexibleWoltModalSheetPage(
+    return NonScrollingWoltModalSheetPage(
       leadingNavBarWidget:
           WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),

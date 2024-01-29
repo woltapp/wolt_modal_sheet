@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-/// A [FlexibleWoltModalSheetPage] is a specialized page for the [WoltModalSheet]
+/// A [NonScrollingWoltModalSheetPage] is a specialized page for the [WoltModalSheet]
 /// that is designed to display content which is flexible in height but unlikely
 /// to require scrolling.
 ///
@@ -16,13 +16,13 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 ///   sheet's maximum height, leading to overflow, it is recommended to use
 ///   [SliverWoltModalSheetPage] or [WoltModalSheetPage] instead. These classes
 ///   provide scrolling capabilities to handle larger content effectively using slivers.
-class FlexibleWoltModalSheetPage extends SliverWoltModalSheetPage {
+class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
   /// A [Widget] that represents the main content displayed in the page.
   /// This is a shortcut for providing a list of Sliver widgets with only one Sliver widget.
   final Widget child;
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
-  FlexibleWoltModalSheetPage({
+  NonScrollingWoltModalSheetPage({
     required this.child,
     super.backgroundColor,
     super.enableDrag,

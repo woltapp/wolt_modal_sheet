@@ -186,10 +186,11 @@ Here is an example that shows all the modal sheet elements in use:
 
 ## Usage of WoltModalSheet Pages
 
-The WoltModalSheet library provides two primary classes for constructing 
-modal sheet pages: `SliverWoltModalSheetPage` and `WoltModalSheetPage`. 
-Understanding the use cases and functionalities of these classes is key to 
-creating performant and easy to construct modal sheets.
+The WoltModalSheet library provides three primary classes for constructing 
+modal sheet pages: `WoltModalSheetPage`, `SliverWoltModalSheetPage`, and 
+`NonScrollingWoltModalSheetPage`. Understanding the use cases and 
+functionalities of these classes is key to creating performant, 
+easy-to-construct modal sheets.
 
 ### SliverWoltModalSheetPage
 
@@ -212,6 +213,7 @@ SliverWoltModalSheetPage(
 ```
 
 ### WoltModalSheetPage
+
 WoltModalSheetPage provides a simpler alternative for pages that primarily 
 consist of a single widget or a straightforward layout. It automatically 
 wraps the child widget in a SliverToBoxAdapter, making it suitable for use 
@@ -232,10 +234,56 @@ WoltModalSheetPage(
 )
  ```
 
-### Choosing Between the Two
-* Use `SliverWoltModalSheetPage` when your modal sheet requires complex scrolling behaviors or needs to display a list of items.
-* Choose WoltModalSheetPage for simpler content layouts or when working with 
-  a single widget.
+### NonScrollingWoltModalSheetPage
+
+`NonScrollingWoltModalSheetPage` is designed to display content which is 
+flexible in height but unlikely to require scrolling. This class is ideal 
+for content that adapts to the available vertical space within the modal 
+sheet's maximum height, but is unlikely to exceed that height and require 
+scrolling.
+
+Key Features:
+* Adaptability: Designed for content with flexible height but fixed or 
+intrinsic dimensions.
+* Flex Layout: Can utilize the Flex layout model of a Column for effective 
+  space management.
+* Non-Scrolling: Best for content that fits within the modal sheet's maximum 
+  height without needing scrolling.
+
+*Warning:* If there is a risk that the content's height might exceed the modal 
+sheet's maximum height, leading to overflow, it is recommended to use 
+SliverWoltModalSheetPage or WoltModalSheetPage instead. These classes 
+provide scrolling capabilities to handle larger content effectively using 
+slivers.
+
+ ```dart
+NonScrollingWoltModalSheetPage(
+  child: MyFlexibleHeightWidget(),
+  // Additional properties...
+)
+
+ ```
+
+This class extends SliverWoltModalSheetPage, offering a streamlined approach 
+to handle non-scrolling content within a modal sheet.
+
+### Choosing between the three
+When deciding which class to use for your modal sheet, consider the following guidelines:
+
+* WoltModalSheetPage: Choose this for simpler content layouts, especially 
+  when working with a single widget. It's best suited for straightforward 
+  layouts that don't require the complexities of Slivers.
+
+* SliverWoltModalSheetPage: Opt for this class when your modal sheet
+  requires complex scrolling behaviors or needs to display a long list of
+  items. It's ideal for dynamic content layouts that benefit from the advanced
+  capabilities of Flutter's Sliver widgets.
+
+* NonScrollingWoltModalSheetPage: This class is best when your content is 
+  flexible in height but unlikely to require scrolling. It’s perfect for 
+  modal sheets where the content fits within the modal's maximum height 
+  without the need for scrollable behavior. Use this for content with fixed 
+  or intrinsic dimensions that need to adapt to available vertical space.
 
 ### Migration from 0.1.x to 0.2.0
 
