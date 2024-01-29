@@ -193,6 +193,14 @@ class _WoltModalSheetAnimatedSwitcherState
     }
     if (oldWidget.pageIndex != widget.pageIndex) {
       _addPage(animate: true);
+    } else {
+      // In this case, the page index didn't change and there is no pagination animation needed,
+      // but all the widgets inside the page should be marked as dirty to receive the updates. We
+      // are aware that this is not the most efficient way to handle this problem. There
+      // is a planned complete internal refactor for performance improvements and address this
+      // issue.
+      _incomingPageWidgets = null;
+      _addPage(animate: false);
     }
   }
 
