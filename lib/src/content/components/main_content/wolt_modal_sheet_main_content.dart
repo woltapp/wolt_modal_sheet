@@ -43,41 +43,44 @@ class WoltModalSheetMainContent extends StatelessWidget {
             page.trailingNavBarWidget != null
         ? navBarHeight
         : 0.0;
+    final isNonScrollingPage = page is NonScrollingWoltModalSheetPage;
     final scrollView = CustomScrollView(
       shrinkWrap: true,
       physics: themeData?.mainContentScrollPhysics ??
           defaultThemeData.mainContentScrollPhysics,
       controller: scrollController,
       slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              if (index == 0) {
-                final heroImage = page.heroImage;
-                return heroImage != null
-                    ? WoltModalSheetHeroImage(
-                        topBarHeight: topBarHeight,
-                        heroImage: heroImage,
-                        heroImageHeight: heroImageHeight,
-                      )
-                    // If top bar layer is always visible, the padding is explicitly added to the
-                    // scroll view since top bar will not be integrated to scroll view at all.
-                    // Otherwise, we implicitly create a spacing as a part of the scroll view.
-                    : SizedBox(
-                        height: isTopBarLayerAlwaysVisible ? 0 : topBarHeight);
-              } else {
-                final pageTitle = page.pageTitle;
-                return KeyedSubtree(
-                  key: pageTitleKey,
-                  child: pageTitle ?? const SizedBox.shrink(),
-                );
-              }
-            },
-            childCount: 2,
+        if (!isNonScrollingPage)
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == 0) {
+                  final heroImage = page.heroImage;
+                  return heroImage != null
+                      ? WoltModalSheetHeroImage(
+                          topBarHeight: topBarHeight,
+                          heroImage: heroImage,
+                          heroImageHeight: heroImageHeight,
+                        )
+                      // If top bar layer is always visible, the padding is explicitly added to the
+                      // scroll view since top bar will not be integrated to scroll view at all.
+                      // Otherwise, we implicitly create a spacing as a part of the scroll view.
+                      : SizedBox(
+                          height:
+                              isTopBarLayerAlwaysVisible ? 0 : topBarHeight);
+                } else {
+                  final pageTitle = page.pageTitle;
+                  return KeyedSubtree(
+                    key: pageTitleKey,
+                    child: pageTitle ?? const SizedBox.shrink(),
+                  );
+                }
+              },
+              childCount: 2,
+            ),
           ),
-        ),
         ...page.mainContentSlivers,
-        if (page.forceMaxHeight)
+        if (page.forceMaxHeight && !isNonScrollingPage)
           const SliverFillRemaining(
             hasScrollBody: false,
             child: SizedBox.shrink(),
