@@ -16,16 +16,16 @@ class SheetPageWithNonScrollingLayout {
       leadingNavBarWidget:
           WoltModalSheetBackButton(onBackPressed: onBackPressed),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      hasTopBarLayer: true,
+      navBarHeight: 72.0,
+      topBarTitle: const Text('Non-scrolling page'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Flexible(
             flex: 2,
-            child: ColoredBox(
-              color: Colors.blue,
-              child: Center(
-                child: Text('Flex: 2', style: textStyle),
-              ),
+            child: Center(
+              child: Text('Flex: 2', style: textStyle),
             ),
           ),
           const Flexible(

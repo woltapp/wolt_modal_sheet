@@ -72,7 +72,7 @@ class RootSheetPage {
                 isSelected: false,
               ),
               WoltSelectionListItemData(
-                title: 'WoltFlexibleSheetPage example',
+                title: 'NonScrollingWoltModalSheetPage example',
                 value: MultiPagePathName.flexibleLayout,
                 isSelected: false,
               ),

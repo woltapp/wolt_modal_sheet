@@ -18,7 +18,8 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 ///   provide scrolling capabilities to handle larger content effectively using slivers.
 class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
   /// A [Widget] that represents the main content displayed in the page.
-  /// This is a shortcut for providing a list of Sliver widgets with only one Sliver widget.
+  /// This is a shortcut for providing a list of Sliver widgets with only one Sliver widget which
+  /// is [SliverFillViewport].
   final Widget child;
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
@@ -35,9 +36,7 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
   }) : super(
           isTopBarLayerAlwaysVisible: hasTopBarLayer,
           mainContentSlivers: [
-            SliverFillViewport(
-              delegate: SliverChildListDelegate([child]),
-            ),
+            SliverFillViewport(delegate: SliverChildListDelegate([child])),
           ],
         );
 }
