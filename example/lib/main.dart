@@ -96,8 +96,8 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           ),
         ),
         heroImage: Image(
-          image: AssetImage(
-            'lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
+          image: NetworkImage(
+            'https://raw.githubusercontent.com/woltapp/wolt_modal_sheet/main/example/lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
           ),
           fit: BoxFit.cover,
         ),
