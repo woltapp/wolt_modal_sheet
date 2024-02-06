@@ -1,3 +1,9 @@
+## 0.4.0
+- Fix state update handling: Current page do not receive update for new 
+  widget subtree in the page when the decorator marks the page as dirty. 
+  [#128](https://github.com/woltapp/wolt_modal_sheet/pull/128)
+- Add NonScrollingWoltModalSheetPage page type. [#127](https://github.com/woltapp/wolt_modal_sheet/pull/127)
+
 ## 0.3.0
 - Convert MaterialApp example app to CupertinoApp. [#120](https://github.com/woltapp/wolt_modal_sheet/pull/120)
 - Fix RangeError on the SheetPageWithLazyList of the playground_navigator2 [#118](https://github.com/woltapp/wolt_modal_sheet/pull/118)
