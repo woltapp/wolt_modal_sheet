@@ -1,3 +1,6 @@
+## 0.4.1
+- Reverts [#128](https://github.com/woltapp/wolt_modal_sheet/pull/128) to fix [#134](https://github.com/woltapp/wolt_modal_sheet/issues/134) and [#135](https://github.com/woltapp/wolt_modal_sheet/issues/135)
+
 ## 0.4.0
 - Fix state update handling: Current page do not receive update for new 
   widget subtree in the page when the decorator marks the page as dirty. 
