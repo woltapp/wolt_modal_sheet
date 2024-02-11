@@ -13,7 +13,8 @@ class PlaygroundRouteInformationParser
   @override
   Future<PlaygroundRouterConfiguration> parseRouteInformation(
       RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location!);
+    final uri = routeInformation.uri;
+
     if (uri.pathSegments.isEmpty) {
       return PlaygroundRouterConfiguration.home();
     } else if (uri.pathSegments.length == 1) {
@@ -54,15 +55,15 @@ class PlaygroundRouteInformationParser
   RouteInformation? restoreRouteInformation(
       PlaygroundRouterConfiguration configuration) {
     if (configuration.isUnknown) {
-      return const RouteInformation(location: '/unknown');
+      return RouteInformation(uri: Uri.parse('/unknown'));
     } else if (configuration.isHomePage) {
-      return const RouteInformation(location: '/');
+      return RouteInformation(uri: Uri.parse('/'));
     } else if (configuration.isSheetPage) {
       final path = configuration.multiPagePathName?.queryParamName;
       final pageIndex = configuration.pageIndex;
       return RouteInformation(
-        location:
-            '/$sheetPageSegment?$pathQueryParam=$path&$pageIndexQueryParam=$pageIndex',
+        uri: Uri.parse(
+            '/$sheetPageSegment?$pathQueryParam=$path&$pageIndexQueryParam=$pageIndex'),
       );
     } else {
       return null;
