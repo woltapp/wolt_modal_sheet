@@ -64,11 +64,10 @@ class _DemoAppState extends State<DemoApp> {
       themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
       scrollBehavior:
           CustomScrollBehavior(androidSdkVersion: widget.androidSdkVersion),
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData.light(useMaterial3: true).copyWith(
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
         primaryColor: WoltColors.blue,
-        useMaterial3: true,
         switchTheme: SwitchThemeData(
           thumbColor: MaterialStateProperty.all(WoltColors.blue),
           trackColor: MaterialStateProperty.all(WoltColors.blue16),
@@ -83,7 +82,6 @@ class _DemoAppState extends State<DemoApp> {
         brightness: Brightness.dark,
         inputDecorationTheme: inputDecorationTheme,
         primaryColor: WoltColors.blue,
-        useMaterial3: true,
         switchTheme: SwitchThemeData(
           thumbColor: MaterialStateProperty.all(WoltColors.blue),
           trackColor: MaterialStateProperty.all(WoltColors.blue16),

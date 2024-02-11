@@ -26,8 +26,8 @@ class SheetPageWithLazyList {
             ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       heroImageHeight: heroImageHeight,
-      heroImage: Stack(
-        children: const [
+      heroImage: const Stack(
+        children: [
           ColoredBox(
             color: Colors.yellow,
             child: SizedBox(height: heroImageHeight, width: double.infinity),
