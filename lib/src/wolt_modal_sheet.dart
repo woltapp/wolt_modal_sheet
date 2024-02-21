@@ -318,8 +318,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                               enableDrag ? _handleDragStart : null,
                           onVerticalDragUpdate:
                               enableDrag ? _handleDragUpdate : null,
-                          onVerticalDragEnd:
-                              enableDrag ? _handleDragEnd : null,
+                          onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
                           child: Material(
                             color: pageBackgroundColor,
                             elevation: modalElevation,
