@@ -312,30 +312,34 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       id: contentLayoutId,
                       child: KeyedSubtree(
                         key: _childKey,
-                        child: GestureDetector(
-                          excludeFromSemantics: true,
-                          onVerticalDragStart:
-                              enableDrag ? _handleDragStart : null,
-                          onVerticalDragUpdate:
-                              enableDrag ? _handleDragUpdate : null,
-                          onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
-                          child: Material(
-                            color: pageBackgroundColor,
-                            elevation: modalElevation,
-                            surfaceTintColor: surfaceTintColor,
-                            shadowColor: shadowColor,
-                            shape: shape,
-                            clipBehavior: clipBehavior,
-                            child: LayoutBuilder(
-                              builder: (_, constraints) {
-                                return WoltModalSheetAnimatedSwitcher(
-                                  woltModalType: _modalType,
-                                  pageIndex: pageIndex,
-                                  pages: pages,
-                                  sheetWidth: constraints.maxWidth,
-                                  showDragHandle: showDragHandle,
-                                );
-                              },
+                        child: Semantics(
+                         label: routeLabel,
+                         container: true,
+                          child: GestureDetector(
+                            onVerticalDragStart:
+                                enableDrag ? _handleDragStart : null,
+                            onVerticalDragUpdate:
+                                enableDrag ? _handleDragUpdate : null,
+                            onVerticalDragEnd:
+                                enableDrag ? _handleDragEnd : null,
+                            child: Material(
+                              color: pageBackgroundColor,
+                              elevation: modalElevation,
+                              surfaceTintColor: surfaceTintColor,
+                              shadowColor: shadowColor,
+                              shape: shape,
+                              clipBehavior: clipBehavior,
+                              child: LayoutBuilder(
+                                builder: (_, constraints) {
+                                  return WoltModalSheetAnimatedSwitcher(
+                                    woltModalType: _modalType,
+                                    pageIndex: pageIndex,
+                                    pages: pages,
+                                    sheetWidth: constraints.maxWidth,
+                                    showDragHandle: showDragHandle,
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
