@@ -273,52 +273,50 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
               final clipBehavior =
                   themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
 
-              final multiChildLayout = Semantics(
-                scopesRoute: true,
-                namesRoute: true,
-                label: routeLabel,
-                explicitChildNodes: true,
-                child: CustomMultiChildLayout(
-                  delegate: WoltModalMultiChildLayoutDelegate(
-                    contentLayoutId: contentLayoutId,
-                    barrierLayoutId: barrierLayoutId,
-                    modalType: _modalType,
-                    minPageHeight: minPageHeight,
-                    maxPageHeight: maxPageHeight,
-                    minDialogWidth: minDialogWidth,
-                    maxDialogWidth: maxDialogWidth,
-                  ),
-                  children: [
-                    LayoutId(
-                      id: barrierLayoutId,
-                      child: GestureDetector(
-                        excludeFromSemantics: true,
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          if (widget.route.barrierDismissible) {
-                            final onModalDismissedWithBarrierTap =
-                                widget.onModalDismissedWithBarrierTap;
-                            if (onModalDismissedWithBarrierTap != null) {
-                              onModalDismissedWithBarrierTap();
-                            } else {
-                              Navigator.of(context).pop();
-                            }
+              final multiChildLayout = CustomMultiChildLayout(
+                delegate: WoltModalMultiChildLayoutDelegate(
+                  contentLayoutId: contentLayoutId,
+                  barrierLayoutId: barrierLayoutId,
+                  modalType: _modalType,
+                  minPageHeight: minPageHeight,
+                  maxPageHeight: maxPageHeight,
+                  minDialogWidth: minDialogWidth,
+                  maxDialogWidth: maxDialogWidth,
+                ),
+                children: [
+                  LayoutId(
+                    id: barrierLayoutId,
+                    child: GestureDetector(
+                      excludeFromSemantics: true,
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (widget.route.barrierDismissible) {
+                          final onModalDismissedWithBarrierTap =
+                              widget.onModalDismissedWithBarrierTap;
+                          if (onModalDismissedWithBarrierTap != null) {
+                            onModalDismissedWithBarrierTap();
+                          } else {
+                            Navigator.of(context).pop();
                           }
-                        },
-                        child: const SizedBox.expand(),
-                      ),
+                        }
+                      },
+                      child: const SizedBox.expand(),
                     ),
-                    LayoutId(
-                      id: contentLayoutId,
-                      child: KeyedSubtree(
-                        key: _childKey,
+                  ),
+                  LayoutId(
+                    id: contentLayoutId,
+                    child: KeyedSubtree(
+                      key: _childKey,
+                      child: Semantics(
+                        label: routeLabel,
                         child: GestureDetector(
                           excludeFromSemantics: true,
                           onVerticalDragStart:
                               enableDrag ? _handleDragStart : null,
                           onVerticalDragUpdate:
                               enableDrag ? _handleDragUpdate : null,
-                          onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                          onVerticalDragEnd:
+                              enableDrag ? _handleDragEnd : null,
                           child: Material(
                             color: pageBackgroundColor,
                             elevation: modalElevation,
@@ -341,8 +339,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
               return Scaffold(
                 backgroundColor: Colors.transparent,
