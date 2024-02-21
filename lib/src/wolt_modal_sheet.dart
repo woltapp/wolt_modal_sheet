@@ -313,8 +313,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       child: KeyedSubtree(
                         key: _childKey,
                         child: Semantics(
-                         label: routeLabel,
-                         container: true,
+                          label: routeLabel,
+                          container: true,
                           child: GestureDetector(
                             onVerticalDragStart:
                                 enableDrag ? _handleDragStart : null,
