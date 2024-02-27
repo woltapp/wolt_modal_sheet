@@ -1,7 +1,7 @@
 {
     "version": "0.2",
     "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-    "dictionaries": ["vgv_allowed", "vgv_forbidden", "flutter_deck_authors"],
+    "dictionaries": ["vgv_allowed", "vgv_forbidden"],
     "dictionaryDefinitions": [
       {
         "name": "vgv_allowed",
@@ -12,13 +12,8 @@
         "name": "vgv_forbidden",
         "path": "https://raw.githubusercontent.com/verygoodopensource/very_good_dictionaries/main/forbidden.txt",
         "description": "Forbidden VGV Spellings"
-      },
-      {
-        "name": "flutter_deck_authors",
-        "path": "https://raw.githubusercontent.com/mkobuolys/flutter_deck/main/cspell/authors.txt",
-        "description": "Allowed authors using flutter_deck"
       }
     ],
     "useGitignore": true,
-    "words": ["flutter_deck"]
+    "words": ["wolt","Yuho"]
   }
