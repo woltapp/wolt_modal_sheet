@@ -15,7 +15,7 @@
       },
       {
         "name": "wolt_allowed",
-        "path": "https://github.com/AcarFurkan/wolt_modal_sheet/blob/update-check-workflow/cspell/wolt_allowed.txt",
+        "path": "https://raw.githubusercontent.com/AcarFurkan/wolt_modal_sheet/update-check-workflow/cspell/wolt_allowed.txt",
         "description": "Wolt Spellings"
       }
     ],
