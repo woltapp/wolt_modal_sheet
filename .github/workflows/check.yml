@@ -23,7 +23,6 @@ jobs:
     with:
       includes: |
         **/*.{dart,md,yaml}
-        !CHANGELOG.md
       modified_files_only: false
 
   build:
