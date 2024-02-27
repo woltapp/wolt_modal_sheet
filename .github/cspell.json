@@ -1,7 +1,7 @@
 {
     "version": "0.2",
     "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-    "dictionaries": ["vgv_allowed", "vgv_forbidden"],
+    "dictionaries": ["vgv_allowed", "vgv_forbidden","wolt_allowed"],
     "dictionaryDefinitions": [
       {
         "name": "vgv_allowed",
@@ -12,6 +12,11 @@
         "name": "vgv_forbidden",
         "path": "https://raw.githubusercontent.com/verygoodopensource/very_good_dictionaries/main/forbidden.txt",
         "description": "Forbidden VGV Spellings"
+      },
+      {
+        "name": "wolt_allowed",
+        "path": "https://github.com/AcarFurkan/wolt_modal_sheet/blob/update-check-workflow/cspell/wolt_allowed.txt",
+        "description": "Wolt Spellings"
       }
     ],
     "useGitignore": true,
