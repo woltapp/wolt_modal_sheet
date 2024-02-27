@@ -29,3 +29,4 @@ jobs:
     with:
       flutter_channel: stable
       min_coverage: 0 
+      flutter_version: 3.7.2
