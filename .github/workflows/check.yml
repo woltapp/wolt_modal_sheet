@@ -21,6 +21,9 @@ jobs:
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
     with:
+      includes: |
+        **/*.{dart,md,yaml}
+        !CHANGELOG.md
       modified_files_only: false
 
   build:
