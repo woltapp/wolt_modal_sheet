@@ -81,7 +81,7 @@
 
 ## 0.0.3
 
-- Fix broken gifs in ReadMe [#3](https://github.com/woltapp/wolt_modal_sheet/pull/3)
+- Fix broken GIFs in ReadMe [#3](https://github.com/woltapp/wolt_modal_sheet/pull/3)
 
 ## 0.0.2
 
