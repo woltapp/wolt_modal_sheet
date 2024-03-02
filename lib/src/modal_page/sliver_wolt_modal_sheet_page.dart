@@ -115,6 +115,13 @@ class SliverWoltModalSheetPage {
   /// The background color of the page.
   final Color? backgroundColor;
 
+  /// Overrides the default value for surfaceTintColor.
+  ///
+  /// If null, [WoltModalSheet] will not display an overlay color.
+  ///
+  /// See [Material.surfaceTintColor] for more details.
+  final Color? surfaceTintColor;
+
   /// Height of the navigation bar. This value will also be the height of the top bar.
   ///
   /// The navigation bar layer has a transparent background, and sits directly above the top bar
@@ -182,6 +189,7 @@ class SliverWoltModalSheetPage {
     this.heroImage,
     this.heroImageHeight,
     this.backgroundColor,
+    this.surfaceTintColor,
     this.hasSabGradient,
     this.enableDrag,
     this.sabGradientColor,
