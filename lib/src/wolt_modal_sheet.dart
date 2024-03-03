@@ -263,7 +263,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   defaultThemeData.maxDialogWidth;
               final shadowColor =
                   themeData?.shadowColor ?? defaultThemeData.shadowColor;
-              final surfaceTintColor = themeData?.surfaceTintColor ??
+              final surfaceTintColor = page.surfaceTintColor ??
+                  themeData?.surfaceTintColor ??
                   defaultThemeData.surfaceTintColor;
               final modalElevation =
                   themeData?.modalElevation ?? defaultThemeData.modalElevation;
