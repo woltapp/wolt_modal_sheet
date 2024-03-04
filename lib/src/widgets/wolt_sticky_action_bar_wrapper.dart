@@ -38,8 +38,9 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
     final hasSabGradient = page.hasSabGradient ??
         themeData?.hasSabGradient ??
         defaultThemeData.hasSabGradient;
-    final surfaceTintColor =
-        themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
+    final surfaceTintColor = page.surfaceTintColor ??
+        themeData?.surfaceTintColor ??
+        defaultThemeData.surfaceTintColor;
     return Column(
       children: [
         // If a gradient is required, add a Container with a linear gradient decoration.
