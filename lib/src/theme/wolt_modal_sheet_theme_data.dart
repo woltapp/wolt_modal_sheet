@@ -34,11 +34,32 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.mainContentScrollPhysics,
   });
 
-  /// Overrides the default value for surfaceTintColor.
+  /// The color of the surface tint overlay applied to the material color
+  /// to indicate elevation for the modal sheet page. The [surfaceTintColor] is applied to the
+  /// modal sheet background color, top bar color, and the sticky action bar wrapper colors.
   ///
-  /// If null, [WoltModalSheet] will not display an overlay color.
+  /// {@template flutter.material.material.surfaceTintColor}
+  /// Material Design 3 introduced a new way for some components to indicate
+  /// their elevation by using a surface tint color overlay on top of the
+  /// base material [color]. This overlay is painted with an opacity that is
+  /// related to the [elevation] of the material.
   ///
-  /// See [Material.surfaceTintColor] for more details.
+  /// If [ThemeData.useMaterial3] is false, then this property is not used.
+  ///
+  /// If [ThemeData.useMaterial3] is true and [surfaceTintColor] is not null and
+  /// not [Colors.transparent], then it will be used to overlay the base [backgroundColor]
+  /// with an opacity based on the [modalElevation].
+  ///
+  /// If [ThemeData.useMaterial3] is true and [surfaceTintColor] is null, then the default
+  /// [surfaceTintColor] value is taken from the [ColorScheme].
+  ///
+  /// See also:
+  ///
+  ///   * [ThemeData.useMaterial3], which turns this feature on.
+  ///   * [ElevationOverlay.applySurfaceTint], which is used to implement the
+  ///     tint.
+  ///   * https://m3.material.io/styles/color/the-color-system/color-roles
+  ///     which specifies how the overlay is applied.
   final Color? surfaceTintColor;
 
   /// The background color of the modal sheet.
