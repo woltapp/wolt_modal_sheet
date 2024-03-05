@@ -213,6 +213,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final String routeLabel = _modalType.routeLabel(context);
     return _decorator(
       // The order of the notifier builders matter because we want to use the same instance of
       // the page list whenever page index is updated.
@@ -285,6 +286,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   LayoutId(
                     id: barrierLayoutId,
                     child: GestureDetector(
+                      excludeFromSemantics: true,
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
                         if (widget.route.barrierDismissible) {
@@ -304,29 +306,33 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                     id: contentLayoutId,
                     child: KeyedSubtree(
                       key: _childKey,
-                      child: GestureDetector(
-                        onVerticalDragStart:
-                            enableDrag ? _handleDragStart : null,
-                        onVerticalDragUpdate:
-                            enableDrag ? _handleDragUpdate : null,
-                        onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
-                        child: Material(
-                          color: pageBackgroundColor,
-                          elevation: modalElevation,
-                          surfaceTintColor: surfaceTintColor,
-                          shadowColor: shadowColor,
-                          shape: shape,
-                          clipBehavior: clipBehavior,
-                          child: LayoutBuilder(
-                            builder: (_, constraints) {
-                              return WoltModalSheetAnimatedSwitcher(
-                                woltModalType: _modalType,
-                                pageIndex: pageIndex,
-                                pages: pages,
-                                sheetWidth: constraints.maxWidth,
-                                showDragHandle: showDragHandle,
-                              );
-                            },
+                      child: Semantics(
+                        label: routeLabel,
+                        child: GestureDetector(
+                          excludeFromSemantics: true,
+                          onVerticalDragStart:
+                              enableDrag ? _handleDragStart : null,
+                          onVerticalDragUpdate:
+                              enableDrag ? _handleDragUpdate : null,
+                          onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                          child: Material(
+                            color: pageBackgroundColor,
+                            elevation: modalElevation,
+                            surfaceTintColor: surfaceTintColor,
+                            shadowColor: shadowColor,
+                            shape: shape,
+                            clipBehavior: clipBehavior,
+                            child: LayoutBuilder(
+                              builder: (_, constraints) {
+                                return WoltModalSheetAnimatedSwitcher(
+                                  woltModalType: _modalType,
+                                  pageIndex: pageIndex,
+                                  pages: pages,
+                                  sheetWidth: constraints.maxWidth,
+                                  showDragHandle: showDragHandle,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
