@@ -72,7 +72,8 @@ enum WoltModalType {
         MaterialLocalizations.of(context);
     switch (this) {
       case WoltModalType.bottomSheet:
-        return localizations.bottomSheetLabel;
+        // TODO: Add support for bottomSheetLabel once minimum supported version allows // return localizations.bottomSheetLabel;
+        return localizations.dialogLabel;
       case WoltModalType.dialog:
         return localizations.dialogLabel;
     }

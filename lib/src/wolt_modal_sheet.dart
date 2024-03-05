@@ -56,7 +56,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   final double? minPageHeight;
   final double? maxPageHeight;
 
-  static const ParametricCurve<double> animationCurve = Easing.legacyDecelerate;
+  static const ParametricCurve<double> animationCurve = decelerateEasing;
 
   @override
   State<WoltModalSheet> createState() => _WoltModalSheetState();
@@ -169,7 +169,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 class _WoltModalSheetState extends State<WoltModalSheet> {
   late WoltModalType _modalType;
 
-  ParametricCurve<double> animationCurve = Easing.legacyDecelerate;
+  ParametricCurve<double> animationCurve = decelerateEasing;
 
   ValueNotifier<int> get pageIndexNotifier => widget.pageIndexNotifier;
 
