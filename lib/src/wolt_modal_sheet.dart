@@ -56,7 +56,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   final double? minPageHeight;
   final double? maxPageHeight;
 
-  static const ParametricCurve<double> animationCurve = decelerateEasing;
+  static const ParametricCurve<double> animationCurve = Easing.legacyDecelerate;
 
   @override
   State<WoltModalSheet> createState() => _WoltModalSheetState();
@@ -169,7 +169,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 class _WoltModalSheetState extends State<WoltModalSheet> {
   late WoltModalType _modalType;
 
-  ParametricCurve<double> animationCurve = decelerateEasing;
+  ParametricCurve<double> animationCurve = Easing.legacyDecelerate;
 
   ValueNotifier<int> get pageIndexNotifier => widget.pageIndexNotifier;
 
@@ -213,9 +213,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-    final String routeLabel = localizations.dialogLabel;
+    final String routeLabel = _modalType.routeLabel(context);
     return _decorator(
       // The order of the notifier builders matter because we want to use the same instance of
       // the page list whenever page index is updated.

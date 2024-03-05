@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 /// Enum representing the type of the modal.
 enum WoltModalType {
   bottomSheet,
@@ -59,6 +61,20 @@ enum WoltModalType {
         return totalHeight - modalHeight;
       case WoltModalType.dialog:
         return (totalHeight - modalHeight) / 2;
+    }
+  }
+
+  /// Returns the semantic label to be used for accessibility purposes based on the modal type.
+  ///
+  /// [context] is the BuildContext used to access MaterialLocalizations.
+  String routeLabel(BuildContext context) {
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
+    switch (this) {
+      case WoltModalType.bottomSheet:
+        return localizations.bottomSheetLabel;
+      case WoltModalType.dialog:
+        return localizations.dialogLabel;
     }
   }
 }
