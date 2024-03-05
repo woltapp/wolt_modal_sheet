@@ -42,8 +42,9 @@ class WoltModalSheetTopBar extends StatelessWidget {
     final backgroundColor = page.backgroundColor ??
         themeData?.backgroundColor ??
         defaultThemeData.backgroundColor;
-    final surfaceTintColor =
-        themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
+    final surfaceTintColor = page.surfaceTintColor ??
+        themeData?.surfaceTintColor ??
+        defaultThemeData.surfaceTintColor;
 
     // Create the default top bar widget.
     SizedBox topBarWidget = SizedBox(
