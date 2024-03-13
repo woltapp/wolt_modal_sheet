@@ -271,6 +271,9 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                   themeData?.modalElevation ?? defaultThemeData.modalElevation;
               final clipBehavior =
                   themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
+              final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
+                  themeData?.resizeToAvoidBottomInset ??
+                  defaultThemeData.resizeToAvoidBottomInset;
 
               final multiChildLayout = CustomMultiChildLayout(
                 delegate: WoltModalMultiChildLayoutDelegate(
@@ -341,6 +344,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                 ],
               );
               return Scaffold(
+                resizeToAvoidBottomInset: resizeToAvoidBottomInset,
                 backgroundColor: Colors.transparent,
                 body: widget.useSafeArea
                     ? Stack(

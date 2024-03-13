@@ -30,6 +30,7 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
     super.leadingNavBarWidget,
     super.trailingNavBarWidget,
     super.hasTopBarLayer = false,
+    super.resizeToAvoidBottomInset,
     super.topBar,
     super.topBarTitle,
     super.navBarHeight,

@@ -34,6 +34,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.shadowColor,
     this.mainContentScrollPhysics,
     this.animationStyle,
+    this.resizeToAvoidBottomInset,
   });
 
   /// The color of the surface tint overlay applied to the material color
@@ -158,6 +159,17 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   /// Motion animation styles for both pagination and scrolling animations.
   final WoltModalSheetAnimationStyle? animationStyle;
 
+  /// If there is an onscreen keyboard displayed above the
+  /// modal sheet, the main content can be resized to avoid overlapping the keyboard, which
+  /// prevents widgets inside the main content from being obscured by the keyboard.
+  ///
+  /// WoltModalSheet internally uses a [Scaffold] to provide this functionality and to handle the
+  /// safe area color for the modal sheet. Setting this value will set the same value inside the
+  /// internal [Scaffold] of the modal sheet.
+  ///
+  /// Defaults to true.
+  final bool? resizeToAvoidBottomInset;
+
   @override
   WoltModalSheetThemeData copyWith({
     Color? backgroundColor,
@@ -185,6 +197,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     Clip? clipBehavior,
     ScrollPhysics? mainContentScrollPhysics,
     WoltModalSheetAnimationStyle? animationStyle,
+    bool? resizeToAvoidBottomInset,
   }) {
     return WoltModalSheetThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -214,6 +227,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       mainContentScrollPhysics:
           mainContentScrollPhysics ?? this.mainContentScrollPhysics,
       animationStyle: animationStyle ?? this.animationStyle,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
     );
   }
 
@@ -225,6 +240,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
       modalElevation: lerpDouble(modalElevation, other.modalElevation, t),
       showDragHandle: t < 0.5 ? showDragHandle : other.showDragHandle,
+      resizeToAvoidBottomInset:
+          t < 0.5 ? resizeToAvoidBottomInset : other.resizeToAvoidBottomInset,
       modalBarrierColor:
           Color.lerp(modalBarrierColor, other.modalBarrierColor, t),
       bottomSheetShape:

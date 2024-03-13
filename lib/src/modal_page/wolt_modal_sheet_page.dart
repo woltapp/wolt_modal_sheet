@@ -55,6 +55,7 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
     super.sabGradientColor,
     super.enableDrag,
     super.forceMaxHeight = false,
+    super.resizeToAvoidBottomInset,
     super.isTopBarLayerAlwaysVisible,
     super.hasTopBarLayer,
     super.scrollController,
