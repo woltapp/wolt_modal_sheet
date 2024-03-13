@@ -10,7 +10,6 @@ class WoltModalSheetLayout extends StatelessWidget {
     required this.page,
     required this.paginatingWidgetsGroup,
     required this.woltModalType,
-    required this.topBarTranslationY,
     required this.showDragHandle,
     Key? key,
   }) : super(key: key);
@@ -18,7 +17,6 @@ class WoltModalSheetLayout extends StatelessWidget {
   final SliverWoltModalSheetPage page;
   final PaginatingWidgetsGroup paginatingWidgetsGroup;
   final WoltModalType woltModalType;
-  final double topBarTranslationY;
   final bool showDragHandle;
 
   @override

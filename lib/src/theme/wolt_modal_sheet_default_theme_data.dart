@@ -151,4 +151,9 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   /// Defaults to [Clip.antiAliasWithSaveLayer].
   @override
   Clip get clipBehavior => Clip.antiAliasWithSaveLayer;
+
+  /// Motion animation styles for both pagination and page scrolling.
+  @override
+  WoltModalSheetAnimationStyle get animationStyle =>
+      const WoltModalSheetAnimationStyle();
 }
