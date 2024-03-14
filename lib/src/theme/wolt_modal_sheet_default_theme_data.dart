@@ -148,7 +148,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
 
   /// Overrides the default value for [WoltModalSheet] clipBehavior.
   ///
-  /// If null, [WoltModalSheet] uses [Clip.antiAliasWithSaveLayer].
+  /// Defaults to [Clip.antiAliasWithSaveLayer].
   @override
   Clip get clipBehavior => Clip.antiAliasWithSaveLayer;
 }
