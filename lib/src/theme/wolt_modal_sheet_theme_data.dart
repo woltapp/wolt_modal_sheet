@@ -147,7 +147,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
 
   /// Overrides the default value for [WoltModalSheet] clipBehavior.
   ///
-  /// If null, [WoltModalSheet] uses [Clip.antiAlias].
+  /// If null, [WoltModalSheet] uses [Clip.antiAliasWithSaveLayer].
   final Clip? clipBehavior;
 
   /// The default value for [WoltModalSheet] scrollPhysics in the main content.
