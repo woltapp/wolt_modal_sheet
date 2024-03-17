@@ -8,6 +8,9 @@ void main() {
     await tester.pumpWidget(const MainApp());
 
     // Verify that the app page is displayed.
-    expect(find.widgetWithText(ElevatedButton, 'Show Modal Sheet'), findsOneWidget);
+    expect(
+      find.widgetWithText(ElevatedButton, 'Show Modal Sheet'),
+      findsOneWidget,
+    );
   });
 }
