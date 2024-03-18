@@ -33,6 +33,7 @@ class WoltModalSheetHeroImage extends StatelessWidget {
   /// The height of the hero image.
   final double heroImageHeight;
 
+  /// Animation styles for scrolling within Wolt Modal Sheet Page.
   final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   @override
@@ -74,6 +75,7 @@ class _HeroImageFlowDelegate extends FlowDelegate {
   /// The height of the hero image.
   final double heroImageHeight;
 
+  /// Animation styles for scrolling within Wolt Modal Sheet Page.
   final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   @override
