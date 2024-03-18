@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_animation_style.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 
 @immutable
@@ -32,6 +33,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.clipBehavior,
     this.shadowColor,
     this.mainContentScrollPhysics,
+    this.animationStyle,
   });
 
   /// The color of the surface tint overlay applied to the material color
@@ -153,6 +155,9 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   /// The default value for [WoltModalSheet] scrollPhysics in the main content.
   final ScrollPhysics? mainContentScrollPhysics;
 
+  /// Motion animation styles for both pagination and scrolling animations.
+  final WoltModalSheetAnimationStyle? animationStyle;
+
   @override
   WoltModalSheetThemeData copyWith({
     Color? backgroundColor,
@@ -179,6 +184,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     Color? shadowColor,
     Clip? clipBehavior,
     ScrollPhysics? mainContentScrollPhysics,
+    WoltModalSheetAnimationStyle? animationStyle,
   }) {
     return WoltModalSheetThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -207,6 +213,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       clipBehavior: clipBehavior ?? this.clipBehavior,
       mainContentScrollPhysics:
           mainContentScrollPhysics ?? this.mainContentScrollPhysics,
+      animationStyle: animationStyle ?? this.animationStyle,
     );
   }
 
@@ -246,6 +253,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
       mainContentScrollPhysics:
           t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
+      animationStyle: t < 0.5 ? animationStyle : other.animationStyle,
     );
   }
 }

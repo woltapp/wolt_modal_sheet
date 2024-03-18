@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 enum WoltModalSheetPageTransitionState {
   incoming,
@@ -16,120 +17,146 @@ enum WoltModalSheetPageTransitionState {
     }
   }
 
-  Animation<double> mainContentSizeFactor(
-    AnimationController controller, {
+  Animation<double> mainContentHeightTransition(
+    AnimationController controller,
+    WoltModalSheetPaginationAnimationStyle style, {
     required double incomingMainContentHeight,
     required double outgoingMainContentHeight,
   }) {
-    const interval = Interval(0 / 350, 300 / 350, curve: Curves.fastOutSlowIn);
+    final interval = style.modalSheetHeightTransitionCurve;
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
         return Tween<double>(
-                begin: outgoingMainContentHeight / incomingMainContentHeight,
-                end: 1.0)
-            .animate(CurvedAnimation(parent: controller, curve: interval));
+          begin: outgoingMainContentHeight / incomingMainContentHeight,
+          end: 1.0,
+        ).animate(CurvedAnimation(parent: controller, curve: interval));
       case WoltModalSheetPageTransitionState.outgoing:
         return Tween<double>(
-                begin: 1.0,
-                end: incomingMainContentHeight / outgoingMainContentHeight)
-            .animate(CurvedAnimation(parent: controller, curve: interval));
+          begin: 1.0,
+          end: incomingMainContentHeight / outgoingMainContentHeight,
+        ).animate(CurvedAnimation(parent: controller, curve: interval));
     }
   }
 
-  Animation<double> mainContentOpacity(AnimationController controller) {
+  Animation<double> mainContentOpacity(
+    AnimationController controller,
+    WoltModalSheetPaginationAnimationStyle style,
+  ) {
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
         return Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(150 / 350, 350 / 350, curve: Curves.linear),
+            curve: style.mainContentIncomingOpacityCurve,
           ),
         );
       case WoltModalSheetPageTransitionState.outgoing:
         return Tween<double>(begin: 1.0, end: 0.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(50 / 350, 150 / 350, curve: Curves.linear),
+            curve: style.mainContentOutgoingOpacityCurve,
           ),
         );
     }
   }
 
   Animation<Offset> mainContentSlidePosition(
-    AnimationController controller, {
+    AnimationController controller,
+    WoltModalSheetPaginationAnimationStyle style, {
     required double sheetWidth,
     required double screenWidth,
     required bool isForwardMove,
   }) {
-    const interval = Interval(50 / 350, 350 / 350, curve: Curves.fastOutSlowIn);
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
+        final incomingBeginOffset = Offset(
+            sheetWidth * 0.3 * (isForwardMove ? 1 : -1) / screenWidth, 0);
         return Tween<Offset>(
-          begin: Offset(
-              sheetWidth * 0.3 * (isForwardMove ? 1 : -1) / screenWidth, 0),
-          end: Offset.zero,
-        ).animate(CurvedAnimation(parent: controller, curve: interval));
+          begin:
+              style.incomingMainContentSlideBeginOffset ?? incomingBeginOffset,
+          end: style.incomingMainContentSlideEndOffset,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: style.mainContentIncomingSlidePositionCurve,
+          ),
+        );
       case WoltModalSheetPageTransitionState.outgoing:
+        final outgoingEndOffset = Offset(
+            sheetWidth * 0.3 * (isForwardMove ? -1 : 1) / screenWidth, 0);
         return Tween<Offset>(
-          begin: Offset.zero,
-          end: Offset(
-              sheetWidth * 0.3 * (isForwardMove ? -1 : 1) / screenWidth, 0),
-        ).animate(CurvedAnimation(parent: controller, curve: interval));
+          begin: style.outgoingMainContentSlideBeginOffset,
+          end: style.outgoingMainContentSlideEndOffset ?? outgoingEndOffset,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: style.mainContentIncomingSlidePositionCurve,
+          ),
+        );
     }
   }
 
-  Animation<double> navigationToolbarOpacity(AnimationController controller) {
+  Animation<double> navigationToolbarOpacity(
+    AnimationController controller,
+    WoltModalSheetPaginationAnimationStyle style,
+  ) {
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
         return Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(100 / 350, 300 / 350, curve: Curves.linear),
+            curve: style.incomingNavigationToolbarOpacityCurve,
           ),
         );
       case WoltModalSheetPageTransitionState.outgoing:
         return Tween<double>(begin: 1.0, end: 0.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(0, 100 / 350, curve: Curves.linear),
+            curve: style.incomingNavigationToolbarOpacityCurve,
           ),
         );
     }
   }
 
-  Animation<double> sabOpacity(AnimationController controller) {
+  Animation<double> sabOpacity(
+    AnimationController controller,
+    WoltModalSheetPaginationAnimationStyle style,
+  ) {
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
         return Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(100 / 350, 300 / 350, curve: Curves.linear),
+            curve: style.incomingSabOpacityCurve,
           ),
         );
       case WoltModalSheetPageTransitionState.outgoing:
         return Tween<double>(begin: 1.0, end: 0.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(0, 100 / 350),
+            curve: style.outgoingSabOpacityCurve,
           ),
         );
     }
   }
 
-  Animation<double> topBarOpacity(AnimationController controller) {
+  Animation<double> topBarOpacity(
+    AnimationController controller,
+    WoltModalSheetPaginationAnimationStyle style,
+  ) {
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
         return Tween<double>(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(150 / 350, 350 / 350, curve: Curves.linear),
+            curve: style.incomingTopBarOpacityCurve,
           ),
         );
       case WoltModalSheetPageTransitionState.outgoing:
         return Tween<double>(begin: 1.0, end: 0.0).animate(
           CurvedAnimation(
             parent: controller,
-            curve: const Interval(0, 150 / 350, curve: Curves.linear),
+            curve: style.outgoingTopBarOpacityCurve,
           ),
         );
     }

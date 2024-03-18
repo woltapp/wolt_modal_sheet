@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/wolt_modal_sheet_page_transition_state.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class MainContentAnimatedBuilder extends StatefulWidget {
   final AnimationController controller;
@@ -9,6 +10,7 @@ class MainContentAnimatedBuilder extends StatefulWidget {
   final bool forwardMove;
   final double sheetWidth;
   final WoltModalSheetPageTransitionState pageTransitionState;
+  final WoltModalSheetPaginationAnimationStyle paginationAnimationStyle;
 
   const MainContentAnimatedBuilder({
     required this.controller,
@@ -18,6 +20,7 @@ class MainContentAnimatedBuilder extends StatefulWidget {
     required this.forwardMove,
     required this.sheetWidth,
     required this.pageTransitionState,
+    required this.paginationAnimationStyle,
     super.key,
   });
 
@@ -41,8 +44,9 @@ class _MainContentAnimatedBuilderState
       if (_sizeFactor == null &&
           incomingContext?.mounted == true &&
           outgoingContext?.mounted == true) {
-        _sizeFactor = widget.pageTransitionState.mainContentSizeFactor(
+        _sizeFactor = widget.pageTransitionState.mainContentHeightTransition(
           widget.controller,
+          widget.paginationAnimationStyle,
           incomingMainContentHeight: incomingContext!.size!.height,
           outgoingMainContentHeight: outgoingContext!.size!.height,
         );
@@ -63,10 +67,13 @@ class _MainContentAnimatedBuilderState
           sizeFactor: _sizeFactor ??
               pageTransitionState.defaultMainContentSizeFactor(controller),
           child: Opacity(
-            opacity: pageTransitionState.mainContentOpacity(controller).value,
+            opacity: pageTransitionState
+                .mainContentOpacity(controller, widget.paginationAnimationStyle)
+                .value,
             child: SlideTransition(
               position: pageTransitionState.mainContentSlidePosition(
                 controller,
+                widget.paginationAnimationStyle,
                 sheetWidth: widget.sheetWidth,
                 screenWidth: screenWidth,
                 isForwardMove: widget.forwardMove,

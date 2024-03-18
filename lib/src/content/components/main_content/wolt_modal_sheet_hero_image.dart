@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// The hero image widget displayed on top of the main content.
 ///
@@ -19,6 +20,7 @@ class WoltModalSheetHeroImage extends StatelessWidget {
     required this.heroImage,
     required this.topBarHeight,
     required this.heroImageHeight,
+    required this.scrollAnimationStyle,
     Key? key,
   }) : super(key: key);
 
@@ -31,6 +33,9 @@ class WoltModalSheetHeroImage extends StatelessWidget {
   /// The height of the hero image.
   final double heroImageHeight;
 
+  /// Animation styles for scrolling within Wolt Modal Sheet Page.
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
+
   @override
   Widget build(BuildContext context) {
     return Flow(
@@ -38,6 +43,7 @@ class WoltModalSheetHeroImage extends StatelessWidget {
         scrollPosition: Scrollable.of(context).position,
         topBarHeight: topBarHeight,
         heroImageHeight: heroImageHeight,
+        scrollAnimationStyle: scrollAnimationStyle,
       ),
       children: [heroImage],
     );
@@ -57,6 +63,7 @@ class _HeroImageFlowDelegate extends FlowDelegate {
     required this.scrollPosition,
     required this.topBarHeight,
     required this.heroImageHeight,
+    required this.scrollAnimationStyle,
   }) : super(repaint: scrollPosition);
 
   /// The scroll position of the modal sheet.
@@ -67,6 +74,9 @@ class _HeroImageFlowDelegate extends FlowDelegate {
 
   /// The height of the hero image.
   final double heroImageHeight;
+
+  /// Animation styles for scrolling within Wolt Modal Sheet Page.
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   @override
   Size getSize(BoxConstraints constraints) {
@@ -88,8 +98,8 @@ class _HeroImageFlowDelegate extends FlowDelegate {
     // Calculate scale
     final double scale =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      startValue: 1.1,
-      endValue: 1.0,
+      startValue: scrollAnimationStyle.heroImageScaleStart,
+      endValue: scrollAnimationStyle.heroImageScaleEnd,
       rangeInPx: heroImageHeight - topBarHeight - 8,
       progressInRangeInPx: currentScrollPosition,
     );
@@ -100,8 +110,8 @@ class _HeroImageFlowDelegate extends FlowDelegate {
       rangeInPx: (((heroImageHeight - topBarHeight) / 2) - 8),
       progressInRangeInPx:
           currentScrollPosition - ((heroImageHeight - topBarHeight) / 2),
-      startValue: 1.0,
-      endValue: 0.0,
+      startValue: scrollAnimationStyle.heroImageOpacityStart,
+      endValue: scrollAnimationStyle.heroImageOpacityEnd,
     );
 
     // Calculate the translation to center the image

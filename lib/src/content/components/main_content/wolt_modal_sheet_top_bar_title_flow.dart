@@ -18,6 +18,7 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
   final SliverWoltModalSheetPage page;
   final Widget topBarTitle;
   final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedListenable;
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   const WoltModalSheetTopBarTitleFlow({
     required this.page,
@@ -25,10 +26,9 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
     required this.titleKey,
     required this.topBarTitle,
     required this.softKeyboardClosedListenable,
+    required this.scrollAnimationStyle,
     Key? key,
   }) : super(key: key);
-
-  static const _topBarTitleTranslationYAmount = 8.0;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +49,7 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
         scrollController: scrollController,
         titleKey: titleKey,
         softKeyboardClosedNotifier: softKeyboardClosedListenable,
+        scrollAnimationStyle: scrollAnimationStyle,
       ),
       children: [Center(child: topBarTitle)],
     );
@@ -61,6 +62,7 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
   final ScrollController scrollController;
   final GlobalKey titleKey;
   final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedNotifier;
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   _TopBarTitleFlowDelegate({
     required this.topBarHeight,
@@ -68,6 +70,7 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
     required this.scrollController,
     required this.titleKey,
     required this.softKeyboardClosedNotifier,
+    required this.scrollAnimationStyle,
   }) : super(
           repaint: Listenable.merge([
             scrollController,
@@ -80,11 +83,10 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
   @override
   void paintChildren(FlowPaintingContext context) {
     final double pageTitleHeight = titleKey.currentContext!.size!.height;
-    const topBarTitleTranslationYStart =
-        -1 * WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
-    const topBarTitleTranslationYAmount =
-        WoltModalSheetTopBarTitleFlow._topBarTitleTranslationYAmount;
-    const topBarTitleTranslationYEnd =
+    final topBarTitleTranslationYAmount =
+        scrollAnimationStyle.topBarTitleTranslationYInPixels;
+    final topBarTitleTranslationYStart = -1 * topBarTitleTranslationYAmount;
+    final topBarTitleTranslationYEnd =
         topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
     final topBarTitleTranslationYAndOpacityStartPoint =
@@ -106,8 +108,8 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
       rangeInPx: pageTitleHeight / 2,
       progressInRangeInPx:
           currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
-      startValue: 0.0,
-      endValue: 1.0,
+      startValue: scrollAnimationStyle.topBarTitleOpacityStart,
+      endValue: scrollAnimationStyle.topBarTitleOpacityEnd,
     );
 
     /// Paint Top Bar Title

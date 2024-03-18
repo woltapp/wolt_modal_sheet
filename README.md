@@ -184,6 +184,56 @@ Here is an example that shows all the modal sheet elements in use:
 
 ![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
 
+## Customizable Animations
+
+Developers can customize the page scrolling and pagination animations by
+providing an instance of  `WoltModalSheetAnimationStyle` class to 
+`WoltModalSheetThemeData`.
+
+### Default Animation Style Specifications
+
+#### Pagination Animation
+
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/pagination_modal_sheet.png?raw=true)
+
+#### Scrolling Animation
+
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/scrolling_modal_sheet.png?raw=true)
+
+### Example Configuration
+
+```dart
+WoltModalSheetThemeData(
+  animationStyle: WoltModalSheetAnimationStyle(
+    paginationAnimationStyle: WoltModalSheetPaginationAnimationStyle(
+      mainContentIncomingOpacityCurve: const Interval(
+        150 / 350,
+        350 / 350,
+        curve: Curves.linear,
+      ),
+      modalSheetHeightTransitionCurve: const Interval(
+        0 / 350,
+        300 / 350,
+        curve: Curves.fastOutSlowIn,
+      ),
+      incomingSabOpacityCurve: const Interval(
+        100 / 350,
+        300 / 350,
+        curve: Curves.linear,
+      ),
+      // Define additional pagination animation styles as needed.
+    ),
+    scrollAnimationStyle: WoltModalSheetScrollAnimationStyle(
+      heroImageScaleStart: 1.0,
+      heroImageScaleEnd: 0.9,
+      topBarTitleTranslationYInPixels: 8.0,
+      topBarTranslationYInPixels: 4.0,
+      // Define additional scroll animation styles as needed.
+    ),
+  ),
+),
+```
+
 ## Usage of WoltModalSheet Pages
 
 The WoltModalSheet library provides three primary classes for constructing 
