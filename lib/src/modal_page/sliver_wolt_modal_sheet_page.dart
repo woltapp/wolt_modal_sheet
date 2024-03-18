@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 
 /// The page classes are responsible for creating a modal sheet page within the context of the
@@ -200,6 +201,17 @@ class SliverWoltModalSheetPage {
   /// a the close button.
   final Widget? trailingNavBarWidget;
 
+  /// If there is an onscreen keyboard displayed above the
+  /// modal sheet, the main content can be resized to avoid overlapping the keyboard, which
+  /// prevents widgets inside the main content from being obscured by the keyboard.
+  ///
+  /// WoltModalSheet internally uses a [Scaffold] to provide this functionality and to handle the
+  /// safe area color for the modal sheet. Setting this value will set the same value inside the
+  /// internal [Scaffold] of the modal sheet.
+  ///
+  /// The default value is set in [WoltModalSheetDefaultThemeData.resizeToAvoidBottomInset].
+  final bool? resizeToAvoidBottomInset;
+
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
     required this.mainContentSlivers,
@@ -221,6 +233,7 @@ class SliverWoltModalSheetPage {
     this.trailingNavBarWidget,
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
+    this.resizeToAvoidBottomInset,
   }) : assert(!(topBar != null && hasTopBarLayer == false),
             "When topBar is provided, hasTopBarLayer must not be false");
 }

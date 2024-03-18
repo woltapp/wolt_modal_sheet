@@ -70,6 +70,9 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   bool get enableDrag => true;
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Color get dragHandleColor => _colorsScheme.onSurfaceVariant.withOpacity(0.4);
 
   /// The size of the drag handle.
