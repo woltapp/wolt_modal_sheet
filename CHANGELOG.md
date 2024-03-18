@@ -1,3 +1,26 @@
+## 0.5.0
+- Update example app files for missing RunnerTests folder and Podfile. [#166](https://github.com/woltapp/wolt_modal_sheet/pull/166)
+  - Fixes [#153](https://github.com/woltapp/wolt_modal_sheet/issues/153)
+- Introduce `WoltModalSheetAnimationStyle` to customize the pagination and 
+  scrolling animation styles of the modal sheet. [#165](https://github.com/woltapp/wolt_modal_sheet/pull/165)
+  - Addresses the issues: 
+    - [#125](https://github.com/woltapp/wolt_modal_sheet/issues/125)
+    - [#131](https://github.com/woltapp/wolt_modal_sheet/issues/131)
+- Change default clip behavior to antiAliasWithSaveLayer to fix Top Bar 
+  rendering issues. [#164](https://github.com/woltapp/wolt_modal_sheet/pull/164)
+  - Fixes [#162](https://github.com/woltapp/wolt_modal_sheet/issues/162)
+- Add resizeToAvoidBottomInset option to control soft keyboard overlay 
+  behavior. [#163](https://github.com/woltapp/wolt_modal_sheet/pull/163)
+  - Fixes [#154](https://github.com/woltapp/wolt_modal_sheet/issues/154)
+- Add firebase hosting and deploy workflow so that every time PR is opened, 
+  the samples will be deployed and sent as a message, and every time the 
+  main is merged, the main samples will be deployed again. [#159](https://github.com/woltapp/wolt_modal_sheet/pull/159)
+- The surfaceTintColor field is added to pages to control background color 
+  of the modal sheet for every page. [#156](https://github.com/woltapp/wolt_modal_sheet/pull/156)
+  - Addresses [#139](https://github.com/woltapp/wolt_modal_sheet/issues/139)
+- Added semantics for improved accessibility of the modal sheet. [#150](https://github.com/woltapp/wolt_modal_sheet/pull/150)
+  - Addresses [#148](https://github.com/woltapp/wolt_modal_sheet/issues/148) 
+
 ## 0.4.1
 - Reverts [#128](https://github.com/woltapp/wolt_modal_sheet/pull/128) to fix [#134](https://github.com/woltapp/wolt_modal_sheet/issues/134) and [#135](https://github.com/woltapp/wolt_modal_sheet/issues/135)
 
