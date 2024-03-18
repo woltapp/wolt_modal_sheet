@@ -17,7 +17,6 @@ class SheetPageWithTextField {
       isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
     });
     return WoltModalSheetPage(
-      resizeToAvoidBottomInset: true,
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (_, isEnabled, __) {
