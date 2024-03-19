@@ -184,6 +184,46 @@ Here is an example that shows all the modal sheet elements in use:
 
 ![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
 
+## Designer's Collaboration Guide
+
+To ensure seamless collaboration between designers and developers, we have 
+provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-Modal-Sheet-Specs?type=design&node-id=7%3A514&mode=design&t=NULXGTxl2YvnawyH-1) dedicated to the WoltModalSheet package. This resource aims to guide designers through the process of creating and handing over designs that leverage the WoltModalSheet's capabilities effectively.
+
+### What's Inside the Figma File
+
+- **Example Design Specifications**: Detailed design guidelines and 
+  specifications mirroring those used internally at Wolt. These specs 
+  illustrate how to prepare designs for development handoff, ensuring a 
+  smooth transition from design to implementation.
+
+- **Modal Types Specifications**: This section showcases specifications for 
+  different modal types, including dialog and bottom sheet modals. It covers 
+  essential details like dimensions, layout of elements, and visual 
+  arrangements, providing clear instructions for replicating these styles in 
+  your projects.
+
+- **Motion Animation Specs for Modal Interactions**: To complement the 
+  static design aspects, this section demonstrates motion animation 
+  specifications for pagination and scrolling interactions. It includes 
+  guidelines for animating transitions between modal sheet pages and within 
+  the content scroll, enabling designers to specify dynamic, engaging user 
+  experiences.
+
+### Utilizing the Figma File
+
+By integrating this Figma file into your design process, you can:
+
+- **Align on Design Language**: Ensure that your application's design 
+  language and the modal sheet's functionality are in harmony, providing a 
+  consistent user experience.
+
+- **Facilitate Design Handoff**: Use the provided specifications as a 
+  reference point for design handoff, minimizing misunderstandings and 
+  streamlining the development process.
+
+- **Inspire Creative Solutions**: Leverage the examples and specifications 
+  as a source of inspiration for implementing innovative design solutions.
+
 ## Customizable Animations
 
 Developers can customize the page scrolling and pagination animations by
