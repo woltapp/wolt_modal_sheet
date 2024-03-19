@@ -1,5 +1,8 @@
 ## 0.5.0
-- Update example app files for missing RunnerTests folder and Podfile. [#166](https://github.com/woltapp/wolt_modal_sheet/pull/166)
+- Added a "Designer's Collaboration Guide" section to the README, including 
+  a Figma file link for streamlined design handoff and enhanced 
+  collaboration between designers and developers. [#166](https://github.com/woltapp/wolt_modal_sheet/pull/166)
+- Update example app files for missing RunnerTests folder and Podfile. [#168](https://github.com/woltapp/wolt_modal_sheet/pull/168)
   - Fixes [#153](https://github.com/woltapp/wolt_modal_sheet/issues/153)
 - Introduce `WoltModalSheetAnimationStyle` to customize the pagination and 
   scrolling animation styles of the modal sheet. [#165](https://github.com/woltapp/wolt_modal_sheet/pull/165)
