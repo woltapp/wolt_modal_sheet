@@ -76,21 +76,6 @@ class _DemoAppState extends State<DemoApp> {
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
             modalBarrierColor: Colors.black54,
-            animationStyle: WoltModalSheetAnimationStyle(
-              scrollAnimationStyle: WoltModalSheetScrollAnimationStyle(
-                heroImageScaleStart: 1.0, // Start with no scaling
-                heroImageScaleEnd: 0.8, // End with the hero image scaled down for a dynamic effect
-                heroImageOpacityStart: 1.0, // Start fully opaque
-                heroImageOpacityEnd: 0.0, // End fully transparent, making the hero image disappear on scroll
-                topBarTranslationYInPixels: 2.0, // Increase the vertical translation for a noticeable movement
-                topBarOpacityStart: 0.0, // Start fully transparent
-                topBarOpacityEnd: 1.0, // End fully opaque, ensuring the top bar is fully visible after scrolling
-                topBarTitleTranslationYInPixels: 2.0, // Increase for a more pronounced vertical
-                // movement
-                topBarTitleOpacityStart: 0.0, // Start with the top bar title fully transparent
-                topBarTitleOpacityEnd: 1.0, // End with the top bar title fully opaque
-              ),
-            )
           ),
         ],
       ),
