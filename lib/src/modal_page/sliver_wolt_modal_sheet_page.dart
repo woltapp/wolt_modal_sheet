@@ -105,6 +105,9 @@ class SliverWoltModalSheetPage {
   /// the main content inside the [CustomScrollView] of the modal sheet.
   final List<Widget> mainContentSlivers;
 
+  /// Just like [mainContentSlivers] but exposes enclosing [BuildContext]
+  final List<Widget> Function(BuildContext context)? mainContentSliversBuilder;
+
   /// A [Widget] representing the hero image displayed on top of the main content. A Hero Image
   /// is positioned at the top of the main content. This widget immediately grabs the user's
   /// attention, effectively conveying the primary theme or message of the content.
@@ -215,6 +218,7 @@ class SliverWoltModalSheetPage {
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
     required this.mainContentSlivers,
+    this.mainContentSliversBuilder,
     this.pageTitle,
     this.navBarHeight,
     this.topBarTitle,
