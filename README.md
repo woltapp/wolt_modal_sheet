@@ -26,6 +26,44 @@ in [Wolt](https://wolt.com/) products, this UI component offers a visually
 appealing and user-friendly modal sheet with multiple pages, motion animation
 for page transitions, and scrollable content within each page.
 
+# Table of Contents
+
+- [Features](#features)
+  * [Multi-Page Layout](#multi-page-layout)
+  * [Scrollable Content](#scrollable-content)
+  * [Responsive Design](#responsive-design)
+  * [Motion Animation](#motion-animation)
+  * [Imperative and Declarative Navigation](#imperative-and-declarative-navigation)
+  * [Dynamic Pagination](#dynamic-pagination)
+  * [State Management Integration](#state-management-integration)
+- [Understanding the page elements](#understanding-the-page-elements)
+  * [Navigation bar widgets](#navigation-bar-widgets)
+  * [Top bar and top bar title](#top-bar-and-top-bar-title)
+  * [Sticky action bar (SAB)](#sticky-action-bar--sab-)
+  * [Hero image](#hero-image)
+  * [Page Title](#page-title)
+  * [Main content](#main-content)
+- [Designer's Collaboration Guide](#designer-s-collaboration-guide)
+  * [What's Inside the Figma File](#what-s-inside-the-figma-file)
+  * [Utilizing the Figma File](#utilizing-the-figma-file)
+- [Customizable Animations](#customizable-animations)
+  * [Default Animation Style Specifications](#default-animation-style-specifications)
+  * [Example Configuration](#example-configuration)
+- [Usage of WoltModalSheet Pages](#usage-of-woltmodalsheet-pages)
+  * [SliverWoltModalSheetPage](#sliverwoltmodalsheetpage)
+  * [WoltModalSheetPage](#woltmodalsheetpage)
+  * [NonScrollingWoltModalSheetPage](#nonscrollingwoltmodalsheetpage)
+  * [Choosing between the three](#choosing-between-the-three)
+  * [Migration from 0.1.x to 0.2.0](#migration-from-0.1.x-to-0.2.0)
+- [Getting started](#getting-started)
+- [CupertinoApp support](#cupertinoapp-support)
+- [Usage](#usage)
+  * [Example app](#example-app)
+  * [Playground app with imperative navigation](#playground-app-with-imperative-navigation)
+  * [Playground app with declarative navigation](#playground-app-with-declarative-navigation)
+  * [Coffee maker app for state management example](#coffee-maker-app-for-state-management-example)
+- [Additional information](#additional-information)
+
 ## Features
 
 ### Multi-Page Layout
