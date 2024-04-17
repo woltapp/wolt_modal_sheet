@@ -1,9 +1,12 @@
 import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker/home/online/large_screen/large_screen_online_content.dart';
-import 'package:coffee_maker/home/online/modal_pages/add_water/add_water_modal_page_builder.dart';
-import 'package:coffee_maker/home/online/modal_pages/grind/grind_modal_page_builder.dart';
-import 'package:coffee_maker/home/online/modal_pages/ready/ready_modal_page_builder.dart';
+import 'package:coffee_maker/home/online/modal_pages/add_water/add_water_description_modal_page.dart';
+import 'package:coffee_maker/home/online/modal_pages/add_water/water_settings_modal_page.dart';
+import 'package:coffee_maker/home/online/modal_pages/grind/grind_or_reject_modal_page.dart';
+import 'package:coffee_maker/home/online/modal_pages/grind/reject_order_modal_page.dart';
+import 'package:coffee_maker/home/online/modal_pages/ready/offer_recommendation_modal_page.dart';
+import 'package:coffee_maker/home/online/modal_pages/ready/serve_or_offer_modal_page.dart';
 import 'package:coffee_maker/home/online/small_screen/small_screen_online_content.dart';
 import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
@@ -91,27 +94,19 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   void _onCoffeeOrderSelectedInGrindState(
       BuildContext context, String coffeeOrderId) {
     final model = context.read<StoreOnlineViewModel>();
-    final pageIndexNotifier = ValueNotifier(0);
 
     WoltModalSheet.show(
-      pageIndexNotifier: pageIndexNotifier,
       context: context,
-      pageListBuilder: GrindModalPageBuilder.build(
-        coffeeOrderId: coffeeOrderId,
-        goToPreviousPage: () =>
-            pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        goToNextPage: () =>
-            pageIndexNotifier.value = pageIndexNotifier.value + 1,
-        onStartGrinding: () {
-          model.onCoffeeOrderStatusChange(
-              coffeeOrderId, CoffeeMakerStep.addWater);
-          Navigator.pop(context);
-        },
-        onCoffeeOrderRejected: () {
-          model.onCoffeeOrderStatusChange(coffeeOrderId);
-          Navigator.pop(context);
-        },
-      ),
+      pageListBuilder: (context) => [
+        GrindOrRejectModalPage.build(coffeeOrderId: coffeeOrderId),
+        RejectOrderModalPage.build(coffeeOrderId: coffeeOrderId),
+      ],
+      decorator: (child) {
+        return ChangeNotifierProvider<StoreOnlineViewModel>.value(
+          value: model,
+          builder: (_, __) => child,
+        );
+      },
       modalTypeBuilder: _modalTypeBuilder,
     );
   }
@@ -119,10 +114,8 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   void _onCoffeeOrderSelectedInAddWaterState(
       BuildContext context, String coffeeOrderId) {
     final model = context.read<StoreOnlineViewModel>();
-    final pageIndexNotifier = ValueNotifier(0);
 
     WoltModalSheet.show(
-      pageIndexNotifier: pageIndexNotifier,
       context: context,
       decorator: (child) {
         return ChangeNotifierProvider<StoreOnlineViewModel>.value(
@@ -130,13 +123,12 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           builder: (_, __) => child,
         );
       },
-      pageListBuilder: AddWaterModalPageBuilder.build(
-        coffeeOrderId: coffeeOrderId,
-        goToPreviousPage: () =>
-            pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        goToNextPage: () =>
-            pageIndexNotifier.value = pageIndexNotifier.value + 1,
-      ),
+      pageListBuilder: (context) {
+        return [
+          AddWaterDescriptionModalPage.build(coffeeOrderId),
+          WaterSettingsModalPage.build(coffeeOrderId)
+        ];
+      },
       modalTypeBuilder: _modalTypeBuilder,
     );
   }
@@ -145,21 +137,18 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
       BuildContext context, String coffeeOrderId) {
     final model = context.read<StoreOnlineViewModel>();
 
-    final pageIndexNotifier = ValueNotifier(0);
     WoltModalSheet.show(
-      pageIndexNotifier: pageIndexNotifier,
       context: context,
-      pageListBuilder: ReadyModalPageBuilder.build(
-        coffeeOrderId: coffeeOrderId,
-        goToPreviousPage: () =>
-            pageIndexNotifier.value = pageIndexNotifier.value - 1,
-        goToNextPage: () =>
-            pageIndexNotifier.value = pageIndexNotifier.value + 1,
-        onCoffeeOrderServed: () {
-          model.onCoffeeOrderStatusChange(coffeeOrderId);
-          Navigator.pop(context);
-        },
-      ),
+      pageListBuilder: (context) => [
+        ServeOrOfferModalPage.build(coffeeOrderId: coffeeOrderId),
+        OfferRecommendationModalPage.build(coffeeOrderId: coffeeOrderId)
+      ],
+      decorator: (child) {
+        return ChangeNotifierProvider<StoreOnlineViewModel>.value(
+          value: model,
+          builder: (_, __) => child,
+        );
+      },
       modalTypeBuilder: _modalTypeBuilder,
     );
   }

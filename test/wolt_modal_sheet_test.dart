@@ -169,7 +169,7 @@ void main() {
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
 
-    expect(tester.takeException(), isNotNull);
+    expect(tester.takeException() != null, true);
   });
 
   testWidgets('WoltModalSheet.modalTypeBuilder defaults', (tester) async {
