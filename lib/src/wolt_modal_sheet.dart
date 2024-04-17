@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
@@ -59,7 +60,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   static const ParametricCurve<double> animationCurve = decelerateEasing;
 
   @override
-  State<WoltModalSheet> createState() => _WoltModalSheetState();
+  State<WoltModalSheet> createState() => WoltModalSheetState();
 
   static Future<T?> show<T>({
     required BuildContext context,
@@ -113,8 +114,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   static Future<T?> showWithDynamicPath<T>({
     required BuildContext context,
-    required ValueNotifier<WoltModalSheetPageListBuilder>
-        pageListBuilderNotifier,
+    required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
     WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
@@ -136,8 +136,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     double? maxPageHeight,
     Color? modalBarrierColor,
   }) {
-    final NavigatorState navigator =
-        Navigator.of(context, rootNavigator: useRootNavigator);
+    final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     return navigator.push<T>(
       WoltModalSheetRoute<T>(
@@ -166,7 +165,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   }
 }
 
-class _WoltModalSheetState extends State<WoltModalSheet> {
+class WoltModalSheetState extends State<WoltModalSheet> {
   late WoltModalType _modalType;
 
   ParametricCurve<double> animationCurve = decelerateEasing;
@@ -179,14 +178,12 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
   Widget Function(Widget) get _decorator =>
       widget.decorator ?? (widget) => Builder(builder: (_) => widget);
 
-  bool get _dismissUnderway =>
-      widget.animationController!.status == AnimationStatus.reverse;
+  bool get _dismissUnderway => widget.animationController!.status == AnimationStatus.reverse;
 
   final GlobalKey _childKey = GlobalKey(debugLabel: 'BottomSheet child');
 
   double get _childHeight {
-    final RenderBox renderBox =
-        _childKey.currentContext!.findRenderObject()! as RenderBox;
+    final RenderBox renderBox = _childKey.currentContext!.findRenderObject()! as RenderBox;
     return renderBox.size.height;
   }
 
@@ -221,8 +218,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
         valueListenable: pagesListBuilderNotifier,
         builder: (context, pagesBuilder, _) {
           final pages = pagesBuilder(context);
-          assert(pages.isNotEmpty,
-              'pageListBuilder must return a non-empty list.');
+          assert(pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
           return ValueListenableBuilder<int>(
             valueListenable: pageIndexNotifier,
             builder: (_, int pageIndex, __) {
@@ -230,12 +226,10 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
               late ShapeBorder shape;
               switch (_modalType) {
                 case WoltModalType.bottomSheet:
-                  shape = themeData?.bottomSheetShape ??
-                      defaultThemeData.bottomSheetShape;
+                  shape = themeData?.bottomSheetShape ?? defaultThemeData.bottomSheetShape;
                   break;
                 case WoltModalType.dialog:
-                  shape =
-                      themeData?.dialogShape ?? defaultThemeData.dialogShape;
+                  shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
                   break;
               }
               final enableDrag = _modalType == WoltModalType.bottomSheet &&
@@ -244,9 +238,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                       themeData?.enableDrag ??
                       defaultThemeData.enableDrag);
               final showDragHandle = widget.showDragHandle ??
-                  (enableDrag &&
-                      (themeData?.showDragHandle ??
-                          defaultThemeData.showDragHandle));
+                  (enableDrag && (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
               final pageBackgroundColor = page.backgroundColor ??
                   themeData?.backgroundColor ??
                   defaultThemeData.backgroundColor;
@@ -262,15 +254,12 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
               final maxDialogWidth = widget.maxDialogWidth ??
                   themeData?.maxDialogWidth ??
                   defaultThemeData.maxDialogWidth;
-              final shadowColor =
-                  themeData?.shadowColor ?? defaultThemeData.shadowColor;
+              final shadowColor = themeData?.shadowColor ?? defaultThemeData.shadowColor;
               final surfaceTintColor = page.surfaceTintColor ??
                   themeData?.surfaceTintColor ??
                   defaultThemeData.surfaceTintColor;
-              final modalElevation =
-                  themeData?.modalElevation ?? defaultThemeData.modalElevation;
-              final clipBehavior =
-                  themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
+              final modalElevation = themeData?.modalElevation ?? defaultThemeData.modalElevation;
+              final clipBehavior = themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
               final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
                   themeData?.resizeToAvoidBottomInset ??
                   defaultThemeData.resizeToAvoidBottomInset;
@@ -313,10 +302,8 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                         label: routeLabel,
                         child: GestureDetector(
                           excludeFromSemantics: true,
-                          onVerticalDragStart:
-                              enableDrag ? _handleDragStart : null,
-                          onVerticalDragUpdate:
-                              enableDrag ? _handleDragUpdate : null,
+                          onVerticalDragStart: enableDrag ? _handleDragStart : null,
+                          onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
                           onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
                           child: Material(
                             color: pageBackgroundColor,
@@ -392,8 +379,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
     }
     bool isClosing = false;
     if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
-      final double flingVelocity =
-          -details.velocity.pixelsPerSecond.dy / _childHeight;
+      final double flingVelocity = -details.velocity.pixelsPerSecond.dy / _childHeight;
       if (widget.animationController!.value > 0.0) {
         widget.animationController!.fling(velocity: flingVelocity);
       }
@@ -423,5 +409,64 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
         Navigator.pop(context);
       }
     }
+  }
+
+  /// The state from the closest instance of this class that encloses the given
+  /// context.
+  ///
+  /// Typical usage is as follows:
+  ///
+  /// ```dart
+  /// WoltModalSheet.of(context).popPage()
+  ///
+  /// If there is no [WoltModalSheet] in the give `context`, this function will throw
+  /// a [FlutterError] in debug mode, and an exception in release mode.
+  ///
+  /// This method can be expensive (it walks the element tree).
+  static WoltModalSheetState of(BuildContext context) {
+    // Handles the case where the input context is a navigator element.
+    WoltModalSheetState? wms;
+    if (context is StatefulElement && context.state is WoltModalSheetState) {
+      wms = context.state as WoltModalSheetState;
+    }
+    wms ??= context.findAncestorStateOfType<WoltModalSheetState>();
+
+    assert(() {
+      if (wms == null) {
+        throw FlutterError(
+          'Operation requested with a context that does not include a WoltModalSheet.\n'
+          'The context used to push or pop WoltModalSheetPage must be that of a widget that is a '
+          'descendant of a WoltModalSheet widget.',
+        );
+      }
+      return true;
+    }());
+    return wms!;
+  }
+
+  /// Pop the last [WoltModalSheetPage] off the [WoltModalSheet] that most tightly encloses the
+  /// given context.
+  static void pop(BuildContext context) {
+    final wms = WoltModalSheetState.of(context);
+    wms.pageIndexNotifier.value = max(wms.pageIndexNotifier.value - 1, 0);
+  }
+
+  /// Push the page onto the [WoltModalSheet] list that most tightly encloses the given context.
+  static WoltModalSheetState push(BuildContext context, SliverWoltModalSheetPage page) {
+    final wms = WoltModalSheetState.of(context);
+    return wms
+      ..pagesListBuilderNotifier.value = (BuildContext context) => [
+            ...wms.pagesListBuilderNotifier.value(context),
+            page,
+          ];
+  }
+
+  /// Push the page onto the [WoltModalSheet] list that most tightly encloses the given context
+  /// and paginate to that page.
+  static void pushAndShow(BuildContext context, SliverWoltModalSheetPage page) {
+    final wms = push(context, page);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      wms.pageIndexNotifier.value = wms.pageIndexNotifier.value + 1;
+    });
   }
 }
