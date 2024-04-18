@@ -28,12 +28,11 @@ class SheetPageWithCustomTopBar {
         ),
       ),
       trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      isTopBarLayerAlwaysVisible: false,
       topBar: _CustomTopBar(onClosed: onClosed, onBackPressed: onBackPressed),
       pageTitle: const ModalSheetTitle('Page with custom top bar'),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
@@ -71,16 +70,31 @@ class _CustomTopBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Center(child: ModalSheetTitle('Feeling lucky?')),
-          Expanded(
-            child: Padding(
-              padding: _searchBarPadding,
-              child: IconButton(
-                onPressed: () {},
-                tooltip: 'Search',
-                icon: const Icon(Icons.search),
-              ),
+          const Spacer(),
+          Padding(
+            padding: _searchBarPadding,
+            child: IconButton(
+              onPressed: () {
+                WoltModalSheet.show(
+                  context: context,
+                  modalTypeBuilder: (context) => WoltModalType.dialog,
+                  pageListBuilder: (sheetContext) => [
+                    WoltModalSheetPage(
+                      child: const SizedBox(),
+                      topBarTitle: const ModalSheetTitle(
+                        'Custom tab bar action!',
+                        textAlign: TextAlign.center,
+                      ),
+                      isTopBarLayerAlwaysVisible: true,
+                    )
+                  ],
+                );
+              },
+              tooltip: 'Custom Action',
+              icon: const Icon(Icons.accessibility, color: Colors.white,),
             ),
           ),
+          const SizedBox(width: 70,),
         ],
       ),
     );

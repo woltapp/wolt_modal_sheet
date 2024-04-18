@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginating_widgets_group.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_bottom_sheet_drag_handle.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+
+const double _minInteractiveDimension = 48.0;
 
 /// The layout for the Wolt Modal Sheet.
 class WoltModalSheetLayout extends StatelessWidget {
@@ -31,9 +34,24 @@ class WoltModalSheetLayout extends StatelessWidget {
             themeData?.navBarHeight ??
             defaultThemeData.navBarHeight)
         : 0.0;
+
     return Stack(
       children: [
         paginatingWidgetsGroup.mainContentAnimatedBuilder,
+        if (showDragHandle)
+          Positioned(
+            child: GestureDetector(
+              // By setting behavior to HitTestBehavior.opaque, the GestureDetector will capture touch
+              // events even if its child (the drag handle) isn't the exact size of the gesture.
+              // Effectively allowing the handler to capture drag gestures.
+              behavior: HitTestBehavior.opaque,
+              child: const Row(
+                children: [
+                  SizedBox(height: _minInteractiveDimension,),
+                ],
+              ),
+            ),
+          ),
         if (hasTopBarLayer)
           Positioned(
             left: 0,
