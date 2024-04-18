@@ -1,34 +1,32 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
+import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithTextField {
   SheetPageWithTextField._();
 
-  static WoltModalSheetPage build({
-    required VoidCallback onSabPressed,
-    required VoidCallback onBackPressed,
-    required VoidCallback onClosed,
-    bool isLastPage = true,
-  }) {
+  static const ModalPageName pageId = ModalPageName.textField;
+
+  static WoltModalSheetPage build(BuildContext context, {bool isLastPage = true}) {
     ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     final textEditingController = TextEditingController();
     textEditingController.addListener(() {
       isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
     });
     return WoltModalSheetPage(
+      id: pageId,
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
-        builder: (_, isEnabled, __) {
+        builder: (context, isEnabled, __) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
-              onPressed: onSabPressed,
+              onPressed:
+                  isLastPage ? Navigator.of(context).pop : WoltModalSheet.of(context).showNext,
               enabled: isEnabled,
               child: Text(
-                !isEnabled
-                    ? "Fill the text field to enable"
-                    : (isLastPage ? "Submit" : "Next"),
+                !isEnabled ? "Fill the text field to enable" : (isLastPage ? "Submit" : "Next"),
               ),
             ),
           );
@@ -36,12 +34,10 @@ class SheetPageWithTextField {
       ),
       pageTitle: const ModalSheetTitle('Page with text field'),
       topBarTitle: const ModalSheetTopBarTitle('Page with text field'),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackPressed),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
+        padding: const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: Column(
           children: [
             const ModalSheetContentText('''

@@ -18,7 +18,7 @@ class SheetPage extends Page<void> {
   Route<void> createRoute(BuildContext context) {
     return WoltModalSheetRoute<void>(
       pageIndexNotifier: pageIndexNotifier,
-      pageListBuilderNotifier: pageListBuilderNotifier,
+      pageListBuilder: pageListBuilderNotifier,
       onModalDismissedWithDrag: () {
         context.read<RouterCubit>().closeSheet();
       },

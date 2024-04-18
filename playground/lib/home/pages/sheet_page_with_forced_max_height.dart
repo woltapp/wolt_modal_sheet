@@ -1,36 +1,35 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
+import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithForcedMaxHeight {
   SheetPageWithForcedMaxHeight._();
 
-  static WoltModalSheetPage build({
-    required Brightness brightness,
-    required VoidCallback onSabPressed,
-    required VoidCallback onBackPressed,
-    required VoidCallback onClosed,
+  static const ModalPageName pageId = ModalPageName.forcedMaxHeight;
+
+  static WoltModalSheetPage build(
+    BuildContext context,
+    Brightness brightness, {
     bool isLastPage = true,
   }) {
     return WoltModalSheetPage(
-      backgroundColor: brightness == Brightness.light
-          ? WoltColors.green8
-          : WoltColors.green64,
+      id: pageId,
+      backgroundColor: brightness == Brightness.light ? WoltColors.green8 : WoltColors.green64,
       hasSabGradient: false,
       forceMaxHeight: true,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: WoltElevatedButton(
-          onPressed: onSabPressed,
+          onPressed:
+              isLastPage ? Navigator.of(context).pop : WoltModalSheet.of(context).showNext,
           colorName: WoltColorName.green,
           child: Text(isLastPage ? "Close" : "Next"),
         ),
       ),
-      pageTitle: const ModalSheetTitle(
-          'Page with forced max height and background color'),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackPressed),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      pageTitle: const ModalSheetTitle('Page with forced max height and background color'),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(
         padding: EdgeInsets.all(16.0),
         child: Text('''

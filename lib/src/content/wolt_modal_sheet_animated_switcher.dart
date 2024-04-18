@@ -182,15 +182,16 @@ class _WoltModalSheetAnimatedSwitcherState
   void didUpdateWidget(covariant WoltModalSheetAnimatedSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
     _isForwardMove = oldWidget.pageIndex < widget.pageIndex;
-    if (oldWidget.pages != widget.pages &&
-        oldWidget.pageIndex == widget.pageIndex) {
+    final isDifferentPageList = oldWidget.pages != widget.pages;
+    final isDifferentPageIndex = oldWidget.pageIndex != widget.pageIndex;
+    if (isDifferentPageList || isDifferentPageIndex) {
       _resetScrollPositions();
       _resetScrollControllers();
       _subscribeToCurrentPageScrollPositionChanges();
       _resetGlobalKeys();
-    }
-    if (oldWidget.pageIndex != widget.pageIndex) {
-      _addPage(animate: true);
+      if (isDifferentPageIndex) {
+        _addPage(animate: true);
+      }
     }
   }
 

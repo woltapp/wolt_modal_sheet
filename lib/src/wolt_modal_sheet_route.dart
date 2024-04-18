@@ -11,8 +11,7 @@ WoltModalTypeBuilder _defaultModalTypeBuilder = (context) {
 
 class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
-    required this.pageListBuilderNotifier,
-    this.pageIndexNotifier,
+    required this.pageListBuilder,
     this.decorator,
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
@@ -35,8 +34,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
         _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
-        _transitionDuration =
-            transitionDuration ?? const Duration(milliseconds: 300),
+        _transitionDuration = transitionDuration ?? const Duration(milliseconds: 300),
         _barrierDismissible = barrierDismissible ?? true,
         _modalTypeBuilder = modalTypeBuilder ?? _defaultModalTypeBuilder,
         _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
@@ -49,9 +47,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   Widget Function(Widget)? decorator;
 
-  final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
-
-  final ValueNotifier<int>? pageIndexNotifier;
+  final WoltModalSheetPageListBuilder pageListBuilder;
 
   final WoltModalTypeBuilder _modalTypeBuilder;
 
@@ -120,8 +116,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     return WoltModalSheet(
       route: this,
       decorator: decorator,
-      pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
-      pageListBuilderNotifier: pageListBuilderNotifier,
+      pageListBuilder: pageListBuilder,
       modalTypeBuilder: _modalTypeBuilder,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,

@@ -31,10 +31,7 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    final pageIndexNotifier = ValueNotifier(0);
-
-    SliverWoltModalSheetPage page1(
-        BuildContext modalSheetContext, TextTheme textTheme) {
+    SliverWoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage(
         hasSabGradient: false,
         stickyActionBar: Padding(
@@ -51,8 +48,7 @@ class _MainAppState extends State<MainApp> {
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () =>
-                    pageIndexNotifier.value = pageIndexNotifier.value + 1,
+                onPressed: () => WoltModalSheet.of(modalSheetContext).showNext(),
                 child: const SizedBox(
                   height: _buttonHeight,
                   width: double.infinity,
@@ -84,15 +80,13 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
       );
     }
 
-    SliverWoltModalSheetPage page2(
-        BuildContext modalSheetContext, TextTheme textTheme) {
+    SliverWoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
       return SliverWoltModalSheetPage(
         pageTitle: Padding(
           padding: const EdgeInsets.all(_pagePadding),
           child: Text(
             'Material Colors',
-            style:
-                textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         heroImage: Image(
@@ -104,16 +98,12 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
         leadingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(_pagePadding),
           icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () =>
-              pageIndexNotifier.value = pageIndexNotifier.value - 1,
+          onPressed: () => WoltModalSheet.of(modalSheetContext).showPrevious(),
         ),
         trailingNavBarWidget: IconButton(
           padding: const EdgeInsets.all(_pagePadding),
           icon: const Icon(Icons.close),
-          onPressed: () {
-            Navigator.of(modalSheetContext).pop();
-            pageIndexNotifier.value = 0;
-          },
+          onPressed: Navigator.of(modalSheetContext).pop,
         ),
         mainContentSlivers: [
           SliverGrid(
@@ -134,9 +124,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
               childCount: materialColorsInSliverList.length,
             ),
           ),
-          ...materialColorsInSpinner
-              .map((e) => Shifter(child: ColorTile(color: e)))
-              .toList(),
+          ...materialColorsInSpinner.map((e) => Shifter(child: ColorTile(color: e))).toList(),
           SliverPadding(
             padding: const EdgeInsets.all(_pagePadding),
             sliver: SliverToBoxAdapter(
@@ -188,8 +176,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       padding: const EdgeInsets.all(_pagePadding),
                       child: Switch(
                         value: !_isLightTheme,
-                        onChanged: (_) =>
-                            setState(() => _isLightTheme = !_isLightTheme),
+                        onChanged: (_) => setState(() => _isLightTheme = !_isLightTheme),
                       ),
                     ),
                     const Text('Dark Theme'),
@@ -198,7 +185,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                 ElevatedButton(
                   onPressed: () {
                     WoltModalSheet.show<void>(
-                      pageIndexNotifier: pageIndexNotifier,
                       context: context,
                       pageListBuilder: (modalSheetContext) {
                         final textTheme = Theme.of(context).textTheme;
@@ -218,7 +204,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       onModalDismissedWithBarrierTap: () {
                         debugPrint('Closed modal sheet with barrier tap');
                         Navigator.of(context).pop();
-                        pageIndexNotifier.value = 0;
                       },
                       maxDialogWidth: 560,
                       minDialogWidth: 400,
@@ -294,10 +279,8 @@ class Shifter extends SingleChildRenderObjectWidget {
   }
 }
 
-class _SpinnerRenderSliver extends RenderSliver
-    with RenderObjectWithChildMixin<RenderBox> {
-  final LayerHandle<TransformLayer> _transformLayer =
-      LayerHandle<TransformLayer>();
+class _SpinnerRenderSliver extends RenderSliver with RenderObjectWithChildMixin<RenderBox> {
+  final LayerHandle<TransformLayer> _transformLayer = LayerHandle<TransformLayer>();
   Matrix4? _paintTransform;
 
   @override
@@ -351,8 +334,8 @@ class _SpinnerRenderSliver extends RenderSliver
       cacheExtent: cacheExtent,
       maxPaintExtent: childExtent,
       hitTestExtent: paintedChildSize,
-      hasVisualOverflow: childExtent > constraints.remainingPaintExtent ||
-          constraints.scrollOffset > 0.0,
+      hasVisualOverflow:
+          childExtent > constraints.remainingPaintExtent || constraints.scrollOffset > 0.0,
     );
 
     _setChildParentData(child!, constraints, geometry!);
@@ -409,8 +392,7 @@ class _SpinnerRenderSliver extends RenderSliver
       constraints.growthDirection,
     )) {
       case AxisDirection.up:
-        dy = -(geometry.scrollExtent -
-            (geometry.paintExtent + constraints.scrollOffset));
+        dy = -(geometry.scrollExtent - (geometry.paintExtent + constraints.scrollOffset));
         break;
       case AxisDirection.right:
         dx = -constraints.scrollOffset;
@@ -419,8 +401,7 @@ class _SpinnerRenderSliver extends RenderSliver
         dy = -constraints.scrollOffset;
         break;
       case AxisDirection.left:
-        dx = -(geometry.scrollExtent -
-            (geometry.paintExtent + constraints.scrollOffset));
+        dx = -(geometry.scrollExtent - (geometry.paintExtent + constraints.scrollOffset));
         break;
     }
 
