@@ -14,4 +14,12 @@ To get started with contributing, please follow the steps below:
    ```
 5. Create a new branch from the `main` branch.
 6. Make your changes.
-7. Create a pull request.
+7. Run Melos format to format the code.
+   ```bash
+   melos format
+   ```
+8. Run Melos analyze to identify any issues.
+   ```bash
+   melos analyze
+   ```
+9. Create a pull request.

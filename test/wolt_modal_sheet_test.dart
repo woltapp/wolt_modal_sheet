@@ -176,8 +176,8 @@ void main() {
     const Size wideSize = Size(800.0, 600.0);
     const Size narrowSize = Size(300.0, 600.0);
 
-    tester.binding.window.physicalSizeTestValue = wideSize;
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
+    tester.view.physicalSize = wideSize;
+    tester.view.devicePixelRatio = 1.0;
 
     await tester.pumpWidget(
       MaterialApp(
@@ -213,7 +213,7 @@ void main() {
     expect(tester.getTopLeft(sheetMaterial), const Offset(200.0, 253.0));
 
     // Configure to show the narrow layout.
-    tester.binding.window.physicalSizeTestValue = narrowSize;
+    tester.view.physicalSize = narrowSize;
     await tester.pumpAndSettle();
 
     // The default modalTypeBuilder should be a bottom sheet on narrow screens.
@@ -221,7 +221,7 @@ void main() {
     expect(tester.getTopLeft(sheetMaterial), const Offset(0.0, 510.0));
 
     // Reset the physical size and device pixel ratio.
-    tester.binding.window.clearPhysicalSizeTestValue();
-    tester.binding.window.clearDevicePixelRatioTestValue();
+    tester.view.resetPhysicalSize();
+    tester.view.resetDevicePixelRatio();
   });
 }

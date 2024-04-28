@@ -30,10 +30,9 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
   Widget build(BuildContext context) {
     final content =
         _OfflineContent(isStoreOnlineNotifier: widget._isStoreOnlineNotifier);
-    final screenSize =
-        MediaQuery.of(context).size.width < defaultWidthBreakPoint
-            ? WoltScreenSize.small
-            : WoltScreenSize.large;
+    final screenSize = MediaQuery.sizeOf(context).width < defaultWidthBreakPoint
+        ? WoltScreenSize.small
+        : WoltScreenSize.large;
     final isLargeScreen = screenSize == WoltScreenSize.large;
 
     return Scaffold(
