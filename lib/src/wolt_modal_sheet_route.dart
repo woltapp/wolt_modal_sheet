@@ -4,7 +4,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 double _defaultModalTypeBreakPoint = 768.0;
 
 WoltModalTypeBuilder _defaultModalTypeBuilder = (context) {
-  return MediaQuery.of(context).size.width < _defaultModalTypeBreakPoint
+  return MediaQuery.sizeOf(context).width < _defaultModalTypeBreakPoint
       ? WoltModalType.bottomSheet
       : WoltModalType.dialog;
 };

@@ -358,7 +358,7 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
                               child: ColoredBox(
                                 color: pageBackgroundColor,
                                 child: SizedBox(
-                                  height: MediaQuery.of(context).padding.bottom,
+                                  height: MediaQuery.paddingOf(context).bottom,
                                   width: double.infinity,
                                 ),
                               ),

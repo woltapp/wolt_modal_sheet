@@ -662,7 +662,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       ];
                     },
                     modalTypeBuilder: (context) {
-                      final size = MediaQuery.of(context).size.width;
+                      final size = MediaQuery.sizeOf(context).width;
                       if (size < _pageBreakpoint) {
                         return WoltModalType.bottomSheet;
                       } else {
