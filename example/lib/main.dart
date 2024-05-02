@@ -29,8 +29,7 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    SliverWoltModalSheetPage page1(
-        BuildContext modalSheetContext, TextTheme textTheme) {
+    SliverWoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
       return WoltModalSheetPage(
         hasSabGradient: false,
         stickyActionBar: Padding(
@@ -79,15 +78,13 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
       );
     }
 
-    SliverWoltModalSheetPage page2(
-        BuildContext modalSheetContext, TextTheme textTheme) {
+    SliverWoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
       return SliverWoltModalSheetPage(
         pageTitle: Padding(
           padding: const EdgeInsets.all(_pagePadding),
           child: Text(
             'Material Colors',
-            style:
-                textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         heroImage: Image(
@@ -167,8 +164,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       padding: const EdgeInsets.all(_pagePadding),
                       child: Switch(
                         value: !_isLightTheme,
-                        onChanged: (_) =>
-                            setState(() => _isLightTheme = !_isLightTheme),
+                        onChanged: (_) => setState(() => _isLightTheme = !_isLightTheme),
                       ),
                     ),
                     const Text('Dark Theme'),
