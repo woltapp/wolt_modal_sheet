@@ -341,17 +341,19 @@ class _WoltModalSheetAnimatedSwitcherState
     final shouldShowTopBarTitle = hasTopBarLayer && _page.topBar == null;
     Widget? navigationToolbarMiddle;
     if (shouldShowTopBarTitle) {
-      navigationToolbarMiddle =
-          isTopBarLayerAlwaysVisible || _page is NonScrollingWoltModalSheetPage
-              ? Center(child: topBarTitle)
-              : WoltModalSheetTopBarTitleFlow(
-                  scrollAnimationStyle: animationStyle.scrollAnimationStyle,
-                  page: _page,
-                  scrollController: _currentPageScrollController,
-                  titleKey: _pageTitleKey,
-                  topBarTitle: topBarTitle,
-                  softKeyboardClosedListenable: _softKeyboardClosedNotifier,
-                );
+      if (isTopBarLayerAlwaysVisible ||
+          _page is NonScrollingWoltModalSheetPage) {
+        navigationToolbarMiddle = Center(child: topBarTitle);
+      } else {
+        navigationToolbarMiddle = WoltModalSheetTopBarTitleFlow(
+          scrollAnimationStyle: animationStyle.scrollAnimationStyle,
+          page: _page,
+          scrollController: _currentPageScrollController,
+          titleKey: _pageTitleKey,
+          topBarTitle: topBarTitle,
+          softKeyboardClosedListenable: _softKeyboardClosedNotifier,
+        );
+      }
     }
     return PaginatingWidgetsGroup(
       mainContentAnimatedBuilder: MainContentAnimatedBuilder(
