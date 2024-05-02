@@ -43,6 +43,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   PaginatingWidgetsGroup? _incomingPageWidgets;
   PaginatingWidgetsGroup? _outgoingPageWidgets;
 
+  static const int _maxKeyboardAnimationDuration = 250;
+
   int get _pagesCount => widget.pages.length;
 
   int get _pageIndex => widget.pageIndex;
@@ -148,7 +150,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         KeyboardVisibilityController().onChange.listen((bool visible) async {
           if (!visible) {
             /// Wait for closing soft keyboard animation to finish before emitting new value.
-            await Future.delayed(const Duration(milliseconds: 250));
+            await Future.delayed(
+              const Duration(milliseconds: _maxKeyboardAnimationDuration),
+            );
             final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
             final newEventId = lastEventId + 1;
             _softKeyboardClosedNotifier.value = SoftKeyboardClosedEvent(eventId: newEventId);
