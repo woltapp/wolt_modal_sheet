@@ -1,0 +1,30 @@
+name: coffee_maker_navigator_2
+description: The coffee maker example project to demonstrate the usage of wolt_modal_sheet library using Navigator 2.0
+publish_to: "none"
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.6'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+  provider: ^6.0.5
+  shared_preferences: ^2.2.3
+  wolt_responsive_layout_grid: ^0.0.3
+  flutter_simple_dependency_injection: ^2.0.0
+  wolt_modal_sheet:
+    path: ..
+  demo_ui_components:
+    path: ../demo_ui_components
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  test: ^1.18.2
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/assets/images/

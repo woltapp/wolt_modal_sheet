@@ -18,7 +18,7 @@ class WoltColors {
   static const red64 = Color(0xFFFB8174);
   static const red48 = Color(0xFFFDA197);
   static const red16 = Color(0xFFFEDFDC);
-  static const red8 = Color(0xFFFFF0EE);
+  static const red8 = Color(0xFFFFEFEE);
 
   static const blue = Color(0xFF009DE0);
   static const blue64 = Color(0xFF5CC0EB);
@@ -31,4 +31,6 @@ class WoltColors {
   static const green48 = Color(0xFF94E58A);
   static const green16 = Color(0xFFDBF6D8);
   static const green8 = Color(0xFFEDFBEC);
+
+  static const Color gray = Color(0xFFE4E4E5);
 }

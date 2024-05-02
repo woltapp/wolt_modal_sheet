@@ -1,5 +1,5 @@
-import 'package:coffee_maker/constants/demo_app_colors.dart';
 import 'package:coffee_maker/home/widgets/top_bar.dart';
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
@@ -46,7 +46,7 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
             ),
             Expanded(
               child: ColoredBox(
-                color: DemoAppColors.red,
+                color: WoltColors.red,
                 child: WoltScreenWidthAdaptiveWidget(
                   smallScreenWidthChild: SizedBox.expand(
                     child: Padding(
@@ -87,8 +87,10 @@ class _OfflineContent extends StatelessWidget {
         Text(
           'You are offline',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displaySmall!.copyWith(
-              fontWeight: FontWeight.bold, color: DemoAppColors.white),
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall!
+              .copyWith(fontWeight: FontWeight.bold, color: WoltColors.white),
         ),
         const SizedBox(height: 12),
         Text(
@@ -96,7 +98,7 @@ class _OfflineContent extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .bodyMedium!
-              .copyWith(color: DemoAppColors.white),
+              .copyWith(color: WoltColors.white),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 32),

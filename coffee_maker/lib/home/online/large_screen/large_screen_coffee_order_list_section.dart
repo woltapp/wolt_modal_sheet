@@ -1,6 +1,6 @@
-import 'package:coffee_maker/constants/demo_app_colors.dart';
 import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 /// A section that displays a list of coffee orders on a large screen.
@@ -33,14 +33,14 @@ class LargeScreenCoffeeOrderListSection extends StatelessWidget {
             height: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             color: _coffeeMakerStep == CoffeeMakerStep.ready
-                ? DemoAppColors.white
+                ? WoltColors.white
                 : null,
             decoration: _coffeeMakerStep == CoffeeMakerStep.ready
                 ? null
                 : const ShapeDecoration(
-                    color: DemoAppColors.black4,
+                    color: WoltColors.black8,
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(color: DemoAppColors.white, width: 2),
+                      side: BorderSide(color: WoltColors.white, width: 2),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(16),
                         topLeft: Radius.circular(16),
@@ -74,9 +74,9 @@ class _LargeScreenCoffeeOrderListHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.only(top: 16, bottom: 8),
       decoration: const ShapeDecoration(
-        shape: StadiumBorder(
-            side: BorderSide(color: DemoAppColors.gray, width: 2)),
-        color: DemoAppColors.white,
+        shape:
+            StadiumBorder(side: BorderSide(color: WoltColors.gray, width: 2)),
+        color: WoltColors.white,
       ),
       child: Text(
         '${_coffeeMakerStep.stepName} ($_count)',

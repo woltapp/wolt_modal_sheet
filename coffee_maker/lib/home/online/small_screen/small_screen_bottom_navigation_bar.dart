@@ -1,7 +1,7 @@
-import 'package:coffee_maker/constants/demo_app_colors.dart';
 import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker/home/widgets/coffee_maker_custom_divider.dart';
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
@@ -130,11 +130,11 @@ class _DestinationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final icon = Icon(iconData,
-        color: isSelected ? DemoAppColors.blue : DemoAppColors.black64);
+        color: isSelected ? WoltColors.blue : WoltColors.black64);
     return count == 0
         ? icon
         : Badge(
-            backgroundColor: DemoAppColors.red,
+            backgroundColor: WoltColors.red,
             label: Text(count.toString()),
             child: icon,
           );
