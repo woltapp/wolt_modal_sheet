@@ -93,9 +93,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   /// sent by the Flutter SDK. However, the keyboard closing events do not cause a change in the
   /// scroll controller. Therefore, we need to manually trigger a re-paint when the keyboard is
   /// closing.
-  final ValueNotifier<SoftKeyboardClosedEvent> _softKeyboardClosedNotifier = ValueNotifier(
-    const SoftKeyboardClosedEvent(eventId: 0),
-  );
+  final ValueNotifier<SoftKeyboardClosedEvent> _softKeyboardClosedNotifier =
+      ValueNotifier(const SoftKeyboardClosedEvent(eventId: 0));
 
   bool _isForwardMove = true;
 
