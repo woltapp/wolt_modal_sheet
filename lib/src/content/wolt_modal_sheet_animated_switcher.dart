@@ -146,7 +146,7 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
 
   void _subscribeToSoftKeyboardClosedEvent() {
     _softKeyboardVisibilitySubscription =
-        KeyboardVisibilityController().onChange.listen((bool visible,) async {
+        KeyboardVisibilityController().onChange.listen((bool visible) async {
           if (!visible) {
             /// Wait for closing soft keyboard animation to finish before emitting new value.
             await Future.delayed(const Duration(milliseconds: 250));
