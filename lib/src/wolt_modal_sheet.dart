@@ -231,7 +231,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - A `Future` that resolves to the value returned
   static Future<T?> showWithDynamicPath<T>({
     required BuildContext context,
-    required ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier,
+    required ValueNotifier<WoltModalSheetPageListBuilder>
+        pageListBuilderNotifier,
     WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? decorator,
@@ -253,7 +254,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     double? maxPageHeight,
     Color? modalBarrierColor,
   }) {
-    final NavigatorState navigator = Navigator.of(context, rootNavigator: useRootNavigator);
+    final NavigatorState navigator =
+        Navigator.of(context, rootNavigator: useRootNavigator);
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     return navigator.push<T>(
       WoltModalSheetRoute<T>(
@@ -300,7 +302,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     if (context is StatefulElement && context.state is WoltModalSheetState) {
       woltModalSheetState = context.state as WoltModalSheetState;
     }
-    woltModalSheetState ??= context.findAncestorStateOfType<WoltModalSheetState>();
+    woltModalSheetState ??=
+        context.findAncestorStateOfType<WoltModalSheetState>();
 
     assert(() {
       if (woltModalSheetState == null) {
@@ -326,7 +329,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// Returns:
   /// None.
-  static void replaceCurrentPage(BuildContext context, SliverWoltModalSheetPage newPage) {
+  static void replaceCurrentPage(
+      BuildContext context, SliverWoltModalSheetPage newPage) {
     WoltModalSheet.of(context).replaceCurrentPage(newPage);
   }
 
@@ -356,7 +360,8 @@ class WoltModalSheet<T> extends StatefulWidget {
     List<SliverWoltModalSheetPage> newPages, {
     int? selectedPageIndex,
   }) {
-    WoltModalSheet.of(context).replaceAllPages(newPages, selectedPageIndex: selectedPageIndex);
+    WoltModalSheet.of(context)
+        .replaceAllPages(newPages, selectedPageIndex: selectedPageIndex);
   }
 
   /// Adds one or more new pages to the modal sheet stack without making them the current view.
@@ -367,7 +372,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// Parameters:
   /// - [pages]: The List of [SliverWoltModalSheetPage] to be added to the stack. Can also be a single page.
-  static void addPages(BuildContext context, List<SliverWoltModalSheetPage> pages) {
+  static void addPages(
+      BuildContext context, List<SliverWoltModalSheetPage> pages) {
     WoltModalSheet.of(context).addPages(pages);
   }
 
@@ -396,7 +402,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// Returns:
   /// None.
-  static void addOrReplacePages(BuildContext context, List<SliverWoltModalSheetPage> pages) {
+  static void addOrReplacePages(
+      BuildContext context, List<SliverWoltModalSheetPage> pages) {
     return WoltModalSheet.of(context).addOrReplacePages(pages);
   }
 
@@ -407,7 +414,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// Returns:
   /// None.
-  static void addOrReplacePage(BuildContext context, SliverWoltModalSheetPage page) {
+  static void addOrReplacePage(
+      BuildContext context, SliverWoltModalSheetPage page) {
     return addOrReplacePages(context, [page]);
   }
 
@@ -426,7 +434,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// Returns:
   /// None.
-  static void pushPages(BuildContext context, List<SliverWoltModalSheetPage> pages) {
+  static void pushPages(
+      BuildContext context, List<SliverWoltModalSheetPage> pages) {
     return WoltModalSheet.of(context).pushPages(pages);
   }
 
@@ -516,7 +525,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   /// Returns:
   /// - [bool]: Returns `true` if replacing  page was successful, `false` if no page with the
   /// specified [id] is found.
-  static bool replacePage(BuildContext context, Object id, SliverWoltModalSheetPage page) {
+  static bool replacePage(
+      BuildContext context, Object id, SliverWoltModalSheetPage page) {
     return WoltModalSheet.of(context).replacePage(id, page);
   }
 
@@ -586,12 +596,14 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   Widget Function(Widget) get _decorator =>
       widget.decorator ?? (widget) => Builder(builder: (_) => widget);
 
-  bool get _dismissUnderway => widget.animationController!.status == AnimationStatus.reverse;
+  bool get _dismissUnderway =>
+      widget.animationController!.status == AnimationStatus.reverse;
 
   final GlobalKey _childKey = GlobalKey(debugLabel: 'BottomSheet child');
 
   double get _childHeight {
-    final RenderBox renderBox = _childKey.currentContext!.findRenderObject()! as RenderBox;
+    final RenderBox renderBox =
+        _childKey.currentContext!.findRenderObject()! as RenderBox;
     return renderBox.size.height;
   }
 
@@ -613,7 +625,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       // set in a declarative way using the WoltModalSheetRoute.
       setState(() {
         final pages = widget.pageListBuilderNotifier.value(context);
-        assert(pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
+        assert(
+            pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
         _pages
           ..clear()
           ..addAll(pages);
@@ -628,7 +641,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     if (_pages.isEmpty) {
       // Get the initial page list from the initially provided pageListBuilder.
       final initialPages = widget.pageListBuilderNotifier.value(context);
-      assert(initialPages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
+      assert(initialPages.isNotEmpty,
+          'pageListBuilder must return a non-empty list.');
       _pages = initialPages;
     }
   }
@@ -649,7 +663,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           late ShapeBorder shape;
           switch (_modalType) {
             case WoltModalType.bottomSheet:
-              shape = themeData?.bottomSheetShape ?? defaultThemeData.bottomSheetShape;
+              shape = themeData?.bottomSheetShape ??
+                  defaultThemeData.bottomSheetShape;
               break;
             case WoltModalType.dialog:
               shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
@@ -661,24 +676,33 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                   themeData?.enableDrag ??
                   defaultThemeData.enableDrag);
           final showDragHandle = widget.showDragHandle ??
-              (enableDrag && (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
+              (enableDrag &&
+                  (themeData?.showDragHandle ??
+                      defaultThemeData.showDragHandle));
           final pageBackgroundColor = page.backgroundColor ??
               themeData?.backgroundColor ??
               defaultThemeData.backgroundColor;
-          final minPageHeight =
-              widget.minPageHeight ?? themeData?.minPageHeight ?? defaultThemeData.minPageHeight;
-          final maxPageHeight =
-              widget.maxPageHeight ?? themeData?.maxPageHeight ?? defaultThemeData.maxPageHeight;
-          final minDialogWidth =
-              widget.minDialogWidth ?? themeData?.minDialogWidth ?? defaultThemeData.minDialogWidth;
-          final maxDialogWidth =
-              widget.maxDialogWidth ?? themeData?.maxDialogWidth ?? defaultThemeData.maxDialogWidth;
-          final shadowColor = themeData?.shadowColor ?? defaultThemeData.shadowColor;
+          final minPageHeight = widget.minPageHeight ??
+              themeData?.minPageHeight ??
+              defaultThemeData.minPageHeight;
+          final maxPageHeight = widget.maxPageHeight ??
+              themeData?.maxPageHeight ??
+              defaultThemeData.maxPageHeight;
+          final minDialogWidth = widget.minDialogWidth ??
+              themeData?.minDialogWidth ??
+              defaultThemeData.minDialogWidth;
+          final maxDialogWidth = widget.maxDialogWidth ??
+              themeData?.maxDialogWidth ??
+              defaultThemeData.maxDialogWidth;
+          final shadowColor =
+              themeData?.shadowColor ?? defaultThemeData.shadowColor;
           final surfaceTintColor = page.surfaceTintColor ??
               themeData?.surfaceTintColor ??
               defaultThemeData.surfaceTintColor;
-          final modalElevation = themeData?.modalElevation ?? defaultThemeData.modalElevation;
-          final clipBehavior = themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
+          final modalElevation =
+              themeData?.modalElevation ?? defaultThemeData.modalElevation;
+          final clipBehavior =
+              themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
           final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
               themeData?.resizeToAvoidBottomInset ??
               defaultThemeData.resizeToAvoidBottomInset;
@@ -701,7 +725,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
                     if (widget.route.barrierDismissible) {
-                      final onModalDismissedWithBarrierTap = widget.onModalDismissedWithBarrierTap;
+                      final onModalDismissedWithBarrierTap =
+                          widget.onModalDismissedWithBarrierTap;
                       if (onModalDismissedWithBarrierTap != null) {
                         onModalDismissedWithBarrierTap();
                       } else {
@@ -721,7 +746,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                     child: GestureDetector(
                       excludeFromSemantics: true,
                       onVerticalDragStart: enableDrag ? _handleDragStart : null,
-                      onVerticalDragUpdate: enableDrag ? _handleDragUpdate : null,
+                      onVerticalDragUpdate:
+                          enableDrag ? _handleDragUpdate : null,
                       onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
                       child: Material(
                         color: pageBackgroundColor,
@@ -795,7 +821,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     }
     bool isClosing = false;
     if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
-      final double flingVelocity = -details.velocity.pixelsPerSecond.dy / _childHeight;
+      final double flingVelocity =
+          -details.velocity.pixelsPerSecond.dy / _childHeight;
       if (widget.animationController!.value > 0.0) {
         widget.animationController!.fling(velocity: flingVelocity);
       }
@@ -870,7 +897,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       _pages = List<SliverWoltModalSheetPage>.from(_pages)..addAll(pages);
     } else {
       // Replace all pages beyond the current one with new pages.
-      _pages = List<SliverWoltModalSheetPage>.from(_pages.take(_currentPageIndex + 1))
+      _pages = List<SliverWoltModalSheetPage>.from(
+          _pages.take(_currentPageIndex + 1))
         ..addAll(pages);
     }
   }
@@ -1039,7 +1067,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     if (indexToStopRemoving == -1 || indexToStopRemoving == _currentPageIndex) {
       return false;
     }
-    final sublist = List<SliverWoltModalSheetPage>.from(_pages).sublist(0, indexToStopRemoving + 1);
+    final sublist = List<SliverWoltModalSheetPage>.from(_pages)
+        .sublist(0, indexToStopRemoving + 1);
     _pages = sublist;
     // Update the indexToStopRemoving if the removed page is before the current page.
     if (indexToStopRemoving < _currentPageIndex) {
@@ -1118,7 +1147,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   ///   This method does not return a value.
-  void replaceAllPages(List<SliverWoltModalSheetPage> newPages, {int? selectedPageIndex}) {
+  void replaceAllPages(List<SliverWoltModalSheetPage> newPages,
+      {int? selectedPageIndex}) {
     if (newPages.isEmpty) {
       throw ArgumentError('newPages must not be empty.');
     }
@@ -1126,7 +1156,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     // Make sure selectedPageIndex is within the bounds of the new list.
     if (selectedPageIndex != null &&
         (selectedPageIndex >= newPages.length || selectedPageIndex < 0)) {
-      throw ArgumentError('selectedPageIndex must be within the bounds of the newPages list.');
+      throw ArgumentError(
+          'selectedPageIndex must be within the bounds of the newPages list.');
     }
 
     setState(() {
