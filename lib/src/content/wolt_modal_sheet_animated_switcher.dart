@@ -30,15 +30,16 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
     required this.sheetWidth,
     required this.showDragHandle,
     Key? key,
-  })
-      : assert(pageIndex >= 0 && pageIndex < pages.length),
+  })  : assert(pageIndex >= 0 && pageIndex < pages.length),
         super(key: key);
 
   @override
-  State<WoltModalSheetAnimatedSwitcher> createState() => _WoltModalSheetAnimatedSwitcherState();
+  State<WoltModalSheetAnimatedSwitcher> createState() =>
+      _WoltModalSheetAnimatedSwitcherState();
 }
 
-class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedSwitcher>
+class _WoltModalSheetAnimatedSwitcherState
+    extends State<WoltModalSheetAnimatedSwitcher>
     with TickerProviderStateMixin {
   PaginatingWidgetsGroup? _incomingPageWidgets;
   PaginatingWidgetsGroup? _outgoingPageWidgets;
@@ -54,7 +55,9 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   bool get _hasTopBarLayer {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    return _page.hasTopBarLayer ?? themeData?.hasTopBarLayer ?? defaultThemeData.hasTopBarLayer;
+    return _page.hasTopBarLayer ??
+        themeData?.hasTopBarLayer ??
+        defaultThemeData.hasTopBarLayer;
   }
 
   late List<GlobalKey> _titleKeys;
@@ -69,7 +72,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   List<ScrollController> _scrollControllers = [];
 
   /// The [ScrollController] of the current [WoltModalSheetPage] main content.
-  ScrollController get _currentPageScrollController => _scrollControllers[_pageIndex];
+  ScrollController get _currentPageScrollController =>
+      _scrollControllers[_pageIndex];
 
   /// List of [ValueNotifier] objects, each one for the listening of the scroll position updates
   /// in each [WoltModalSheetPage] main content.
@@ -77,7 +81,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
 
   /// The current scroll position of the current [WoltModalSheetPage] main content. This is
   /// needed to create a [ScrollController] with initial scroll offset when changing pages.
-  ValueNotifier<double> get _currentPageScrollPosition => _scrollPositions[_pageIndex];
+  ValueNotifier<double> get _currentPageScrollPosition =>
+      _scrollPositions[_pageIndex];
 
   /// Subscription for discovering the state of the soft-keyboard visibility
   late StreamSubscription<bool> _softKeyboardVisibilitySubscription;
@@ -124,14 +129,17 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
 
   void _resetScrollPositions() {
     _scrollPositions.clear();
-    _scrollPositions = [for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)];
+    _scrollPositions = [
+      for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)
+    ];
   }
 
   void _resetScrollControllers() {
     _scrollControllers.clear();
     _scrollControllers = [
       for (int i = 0; i < _pagesCount; i++)
-        (_page.scrollController ?? ScrollController(initialScrollOffset: _scrollPositions[i].value))
+        (_page.scrollController ??
+            ScrollController(initialScrollOffset: _scrollPositions[i].value))
     ];
   }
 
@@ -139,7 +147,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     for (final scrollController in _scrollControllers) {
       scrollController.addListener(() {
         if (_currentPageScrollController.hasClients) {
-          _currentPageScrollPosition.value = _currentPageScrollController.position.pixels;
+          _currentPageScrollPosition.value =
+              _currentPageScrollController.position.pixels;
         }
       });
     }
@@ -148,16 +157,17 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
   void _subscribeToSoftKeyboardClosedEvent() {
     _softKeyboardVisibilitySubscription =
         KeyboardVisibilityController().onChange.listen((bool visible) async {
-          if (!visible) {
-            /// Wait for closing soft keyboard animation to finish before emitting new value.
-            await Future.delayed(
-              const Duration(milliseconds: _maxKeyboardAnimationDuration),
-            );
-            final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
-            final newEventId = lastEventId + 1;
-            _softKeyboardClosedNotifier.value = SoftKeyboardClosedEvent(eventId: newEventId);
-          }
-        });
+      if (!visible) {
+        /// Wait for closing soft keyboard animation to finish before emitting new value.
+        await Future.delayed(
+          const Duration(milliseconds: _maxKeyboardAnimationDuration),
+        );
+        final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
+        final newEventId = lastEventId + 1;
+        _softKeyboardClosedNotifier.value =
+            SoftKeyboardClosedEvent(eventId: newEventId);
+      }
+    });
   }
 
   @override
@@ -264,10 +274,11 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
 
     // An AnimationController is created and attached to this State object (with 'this' as the vsync).
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: defaultWoltModalTransitionAnimationDuration),
+      duration: const Duration(
+          milliseconds: defaultWoltModalTransitionAnimationDuration),
       vsync: this,
     )
-    // We also attach a status listener to the animation controller. When the animation is completed, it will trigger a state change.
+      // We also attach a status listener to the animation controller. When the animation is completed, it will trigger a state change.
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           setState(() {
@@ -275,7 +286,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
             // We clear the _outgoingPageWidgets, which was storing the "outgoing" page (the page we're transitioning from)
             _outgoingPageWidgets = null;
             // We ensure that the animation controller's value is set to its upper bound (which should be 1.0)
-            _animationController?.value = _animationController?.upperBound ?? 1.0;
+            _animationController?.value =
+                _animationController?.upperBound ?? 1.0;
             // We dispose of the animation controller to free up resources as we're done with this animation
             _animationController?.dispose();
             // We also set the animation controller reference to null as it's no longer needed.
@@ -307,35 +319,39 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     }
   }
 
-  PaginatingWidgetsGroup _createIncomingWidgets(AnimationController animationController) {
+  PaginatingWidgetsGroup _createIncomingWidgets(
+      AnimationController animationController) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final hasTopBarLayer = _hasTopBarLayer;
     final isTopBarLayerAlwaysVisible = _page.isTopBarLayerAlwaysVisible ??
         themeData?.isTopBarLayerAlwaysVisible ??
         defaultThemeData.isTopBarLayerAlwaysVisible;
-    final topBarTitle = WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
-    final navBarHeight =
-        _page.navBarHeight ?? themeData?.navBarHeight ?? defaultThemeData.navBarHeight;
+    final topBarTitle =
+        WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
+    final navBarHeight = _page.navBarHeight ??
+        themeData?.navBarHeight ??
+        defaultThemeData.navBarHeight;
     final WoltModalSheetAnimationStyle animationStyle =
         themeData?.animationStyle ?? defaultThemeData.animationStyle;
-    const animatedBuilderKey = ValueKey(WoltModalSheetPageTransitionState.incoming);
+    const animatedBuilderKey =
+        ValueKey(WoltModalSheetPageTransitionState.incoming);
     // If the page uses the default top bar, we should show the top bar title to be represented in
     // the middle of the navigation toolbar.
     final shouldShowTopBarTitle = hasTopBarLayer && _page.topBar == null;
     Widget? navigationToolbarMiddle;
     if (shouldShowTopBarTitle) {
       navigationToolbarMiddle =
-      isTopBarLayerAlwaysVisible || _page is NonScrollingWoltModalSheetPage
-          ? Center(child: topBarTitle)
-          : WoltModalSheetTopBarTitleFlow(
-        scrollAnimationStyle: animationStyle.scrollAnimationStyle,
-        page: _page,
-        scrollController: _currentPageScrollController,
-        titleKey: _pageTitleKey,
-        topBarTitle: topBarTitle,
-        softKeyboardClosedListenable: _softKeyboardClosedNotifier,
-      );
+          isTopBarLayerAlwaysVisible || _page is NonScrollingWoltModalSheetPage
+              ? Center(child: topBarTitle)
+              : WoltModalSheetTopBarTitleFlow(
+                  scrollAnimationStyle: animationStyle.scrollAnimationStyle,
+                  page: _page,
+                  scrollController: _currentPageScrollController,
+                  titleKey: _pageTitleKey,
+                  topBarTitle: topBarTitle,
+                  softKeyboardClosedListenable: _softKeyboardClosedNotifier,
+                );
     }
     return PaginatingWidgetsGroup(
       mainContentAnimatedBuilder: MainContentAnimatedBuilder(
@@ -343,8 +359,10 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         paginationAnimationStyle: animationStyle.paginationAnimationStyle,
         pageTransitionState: WoltModalSheetPageTransitionState.incoming,
         controller: animationController,
-        incomingOffstagedMainContentKey: _incomingOffstagedMainContentKeys[_pageIndex],
-        outgoingOffstagedMainContentKey: _outgoingOffstagedMainContentKeys[_pageIndex],
+        incomingOffstagedMainContentKey:
+            _incomingOffstagedMainContentKeys[_pageIndex],
+        outgoingOffstagedMainContentKey:
+            _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
         sheetWidth: widget.sheetWidth,
         child: _createMainContent(
@@ -364,15 +382,16 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         pageTransitionState: WoltModalSheetPageTransitionState.incoming,
         controller: animationController,
         child: hasTopBarLayer
-            ? (isTopBarLayerAlwaysVisible || _page is NonScrollingWoltModalSheetPage
-            ? WoltModalSheetTopBar(page: _page)
-            : WoltModalSheetTopBarFlow(
-          scrollAnimationStyle: animationStyle.scrollAnimationStyle,
-          page: _page,
-          scrollController: _currentPageScrollController,
-          titleKey: _pageTitleKey,
-          softKeyboardClosedListenable: _softKeyboardClosedNotifier,
-        ))
+            ? (isTopBarLayerAlwaysVisible ||
+                    _page is NonScrollingWoltModalSheetPage
+                ? WoltModalSheetTopBar(page: _page)
+                : WoltModalSheetTopBarFlow(
+                    scrollAnimationStyle: animationStyle.scrollAnimationStyle,
+                    page: _page,
+                    scrollController: _currentPageScrollController,
+                    titleKey: _pageTitleKey,
+                    softKeyboardClosedListenable: _softKeyboardClosedNotifier,
+                  ))
             : const SizedBox.shrink(),
       ),
       navigationToolbarAnimatedBuilder: NavigationToolbarAnimatedBuilder(
@@ -400,9 +419,12 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
     );
   }
 
-  PaginatingWidgetsGroup _createOutgoingWidgets(AnimationController animationController,
-      PaginatingWidgetsGroup currentWidgetsToBeOutgoing,) {
-    const animatedBuilderKey = ValueKey(WoltModalSheetPageTransitionState.outgoing);
+  PaginatingWidgetsGroup _createOutgoingWidgets(
+    AnimationController animationController,
+    PaginatingWidgetsGroup currentWidgetsToBeOutgoing,
+  ) {
+    const animatedBuilderKey =
+        ValueKey(WoltModalSheetPageTransitionState.outgoing);
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final WoltModalSheetAnimationStyle animationStyle =
@@ -413,8 +435,10 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         paginationAnimationStyle: animationStyle.paginationAnimationStyle,
         pageTransitionState: WoltModalSheetPageTransitionState.outgoing,
         controller: animationController,
-        incomingOffstagedMainContentKey: _incomingOffstagedMainContentKeys[_pageIndex],
-        outgoingOffstagedMainContentKey: _outgoingOffstagedMainContentKeys[_pageIndex],
+        incomingOffstagedMainContentKey:
+            _incomingOffstagedMainContentKeys[_pageIndex],
+        outgoingOffstagedMainContentKey:
+            _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
         sheetWidth: widget.sheetWidth,
         child: ExcludeFocus(
@@ -436,7 +460,8 @@ class _WoltModalSheetAnimatedSwitcherState extends State<WoltModalSheetAnimatedS
         paginationAnimationStyle: animationStyle.paginationAnimationStyle,
         pageTransitionState: WoltModalSheetPageTransitionState.outgoing,
         controller: animationController,
-        child: currentWidgetsToBeOutgoing.navigationToolbarAnimatedBuilder.child,
+        child:
+            currentWidgetsToBeOutgoing.navigationToolbarAnimatedBuilder.child,
       ),
       sabAnimatedBuilder: SabAnimatedBuilder(
         key: animatedBuilderKey,
