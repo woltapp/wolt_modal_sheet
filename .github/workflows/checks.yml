@@ -1,6 +1,5 @@
 name: Check
-
-define: &flutter_version "3.10.6" # Uses the minimum supported version.
+flutter_version: &flutter_version "3.10.6" # Uses the minimum supported version.
 
 on:
   # Curently, this workflow is triggered by pull request events only.
