@@ -51,6 +51,12 @@ import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 ///    Using slivers allows `SliverWoltModalSheetPage` to integrate seamlessly with
 ///    `CustomScrollView`, a widget designed to create custom scroll effects with slivers.
 class SliverWoltModalSheetPage {
+  /// An object representing the identity of this page.
+  ///
+  /// The [id] do not need to be unique among the pages. It's used to identify the page when
+  /// navigating to a specific page or popping a page.
+  final Object? id;
+
   /// Represents the widget that stands for the page title. A page title above the main content
   /// provides users with a quick understanding of what to expect from the page. As the user
   /// scrolls, this title becomes hidden, at which point the top bar title continues to serve
@@ -215,6 +221,7 @@ class SliverWoltModalSheetPage {
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
     required this.mainContentSlivers,
+    this.id,
     this.pageTitle,
     this.navBarHeight,
     this.topBarTitle,

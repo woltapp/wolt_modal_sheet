@@ -80,7 +80,10 @@ class _LargeScreenCoffeeOrderListHeader extends StatelessWidget {
       ),
       child: Text(
         '${_coffeeMakerStep.stepName} ($_count)',
-        style: Theme.of(context).textTheme.titleMedium!,
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium!
+            .copyWith(color: Colors.black),
         textAlign: TextAlign.center,
       ),
     );

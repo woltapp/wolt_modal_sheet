@@ -2,7 +2,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:playground/home/dynamic_page_properties.dart';
-import 'package:playground/home/pages/multi_page_path_name.dart';
+import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
@@ -20,45 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _isSlowAnimation = false;
   bool _isLightTheme = true;
-
-  final pageIndexNotifier = ValueNotifier(0);
-
-  late ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
-
-  void goToNextPage() => pageIndexNotifier.value = pageIndexNotifier.value + 1;
-
-  void goToPreviousPage() =>
-      pageIndexNotifier.value = pageIndexNotifier.value - 1;
-
-  void close(BuildContext context) {
-    Navigator.of(context).pop();
-    pageIndexNotifier.value = 0;
-  }
-
-  void onPathSelected(MultiPagePathName path) {
-    pageListBuilderNotifier.value = path.pageListBuilder(
-      goToNextPage: goToNextPage,
-      goToPreviousPage: goToPreviousPage,
-      close: close,
-      onMultiPagePathSelected: onPathSelected,
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    pageListBuilderNotifier = ValueNotifier<WoltModalSheetPageListBuilder>(
-      MultiPagePathName.defaultPath.pageListBuilder(
-        goToNextPage: goToNextPage,
-        goToPreviousPage: goToPreviousPage,
-        close: close,
-        onMultiPagePathSelected: (newFlowName) => onPathSelected(newFlowName),
-      ),
-    )..addListener(() {
-        // Reset page index when page list changes.
-        pageIndexNotifier.value = 0;
-      });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,20 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
               width: _buttonWidth,
               child: WoltElevatedButton(
                 onPressed: () {
-                  WoltModalSheet.showWithDynamicPath(
-                    pageIndexNotifier: pageIndexNotifier,
+                  WoltModalSheet.show(
                     context: context,
-                    pageListBuilderNotifier: pageListBuilderNotifier,
                     modalTypeBuilder: _modalTypeBuilder,
                     onModalDismissedWithDrag: () {
                       debugPrint('Bottom sheet is dismissed with drag.');
                       Navigator.of(context).pop();
-                      pageIndexNotifier.value = 0;
                     },
                     onModalDismissedWithBarrierTap: () {
                       debugPrint('Modal is dismissed with barrier tap.');
                       Navigator.of(context).pop();
-                      pageIndexNotifier.value = 0;
                     },
                     decorator: (child) {
                       return DynamicPageProperties(
@@ -130,6 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     minDialogWidth: 400,
                     minPageHeight: 0.0,
                     maxPageHeight: 0.9,
+                    pageListBuilder: (BuildContext context) {
+                      return [RootSheetPage.build(context)];
+                    },
                   );
                 },
                 child: const Text('Show Modal Sheet'),

@@ -44,6 +44,8 @@ class _WoltModalSheetAnimatedSwitcherState
   PaginatingWidgetsGroup? _incomingPageWidgets;
   PaginatingWidgetsGroup? _outgoingPageWidgets;
 
+  static const int _maxKeyboardAnimationDuration = 250;
+
   int get _pagesCount => widget.pages.length;
 
   int get _pageIndex => widget.pageIndex;
@@ -99,9 +101,7 @@ class _WoltModalSheetAnimatedSwitcherState
   /// scroll controller. Therefore, we need to manually trigger a re-paint when the keyboard is
   /// closing.
   final ValueNotifier<SoftKeyboardClosedEvent> _softKeyboardClosedNotifier =
-      ValueNotifier(
-    const SoftKeyboardClosedEvent(eventId: 0),
-  );
+      ValueNotifier(const SoftKeyboardClosedEvent(eventId: 0));
 
   bool _isForwardMove = true;
 
@@ -156,12 +156,12 @@ class _WoltModalSheetAnimatedSwitcherState
 
   void _subscribeToSoftKeyboardClosedEvent() {
     _softKeyboardVisibilitySubscription =
-        KeyboardVisibilityController().onChange.listen((
-      bool visible,
-    ) async {
+        KeyboardVisibilityController().onChange.listen((bool visible) async {
       if (!visible) {
         /// Wait for closing soft keyboard animation to finish before emitting new value.
-        await Future.delayed(const Duration(milliseconds: 250));
+        await Future.delayed(
+          const Duration(milliseconds: _maxKeyboardAnimationDuration),
+        );
         final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
         final newEventId = lastEventId + 1;
         _softKeyboardClosedNotifier.value =
@@ -181,15 +181,23 @@ class _WoltModalSheetAnimatedSwitcherState
   @override
   void didUpdateWidget(covariant WoltModalSheetAnimatedSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _isForwardMove = oldWidget.pageIndex < widget.pageIndex;
-    if (oldWidget.pages != widget.pages &&
-        oldWidget.pageIndex == widget.pageIndex) {
+    final oldPageIndex = oldWidget.pageIndex;
+    final newPageIndex = widget.pageIndex;
+    _isForwardMove = oldPageIndex < newPageIndex;
+
+    final isSamePageList = oldWidget.pages == widget.pages;
+    if (!isSamePageList) {
       _resetScrollPositions();
       _resetScrollControllers();
       _subscribeToCurrentPageScrollPositionChanges();
       _resetGlobalKeys();
     }
-    if (oldWidget.pageIndex != widget.pageIndex) {
+
+    final oldVisiblePage = oldWidget.pages[oldPageIndex];
+    final newVisiblePage = widget.pages[newPageIndex];
+    final isCurrentVisiblePageSame = oldVisiblePage == newVisiblePage;
+
+    if (!isCurrentVisiblePageSame) {
       _addPage(animate: true);
     }
   }
@@ -333,17 +341,19 @@ class _WoltModalSheetAnimatedSwitcherState
     final shouldShowTopBarTitle = hasTopBarLayer && _page.topBar == null;
     Widget? navigationToolbarMiddle;
     if (shouldShowTopBarTitle) {
-      navigationToolbarMiddle =
-          isTopBarLayerAlwaysVisible || _page is NonScrollingWoltModalSheetPage
-              ? Center(child: topBarTitle)
-              : WoltModalSheetTopBarTitleFlow(
-                  scrollAnimationStyle: animationStyle.scrollAnimationStyle,
-                  page: _page,
-                  scrollController: _currentPageScrollController,
-                  titleKey: _pageTitleKey,
-                  topBarTitle: topBarTitle,
-                  softKeyboardClosedListenable: _softKeyboardClosedNotifier,
-                );
+      if (isTopBarLayerAlwaysVisible ||
+          _page is NonScrollingWoltModalSheetPage) {
+        navigationToolbarMiddle = Center(child: topBarTitle);
+      } else {
+        navigationToolbarMiddle = WoltModalSheetTopBarTitleFlow(
+          scrollAnimationStyle: animationStyle.scrollAnimationStyle,
+          page: _page,
+          scrollController: _currentPageScrollController,
+          titleKey: _pageTitleKey,
+          topBarTitle: topBarTitle,
+          softKeyboardClosedListenable: _softKeyboardClosedNotifier,
+        );
+      }
     }
     return PaginatingWidgetsGroup(
       mainContentAnimatedBuilder: MainContentAnimatedBuilder(
