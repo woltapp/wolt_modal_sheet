@@ -1,5 +1,4 @@
 name: Check
-flutter_version: &flutter_version "3.10.6" # Uses the minimum supported version.
 
 on:
   # Curently, this workflow is triggered by pull request events only.
@@ -17,15 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: *flutter_version
-          channel: 'stable'
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       # Get Flutter version
       - name: Get Flutter version
         run: flutter --version
       # Get dependencies
       - name: Get dependencies
+        run: flutter pub get
       # Setup Melos
       - name: Setup Melos
         run: dart pub global activate melos
@@ -48,10 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: *flutter_version
-          channel: 'stable'
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       # Get Flutter version
       - name: Get Flutter version
         run: flutter --version
@@ -68,8 +68,8 @@ jobs:
       - name: Run dart format
         run: dart format --set-exit-if-changed .
       # Run melos format to find format issues in demos
-      - name: Run melos foramt
-        run: melos forkat
+      - name: Run melos format
+        run: melos format
       - name: Check if melos analyze passes
         run: echo $?
 
@@ -78,10 +78,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: *flutter_version
-          channel: 'stable'
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       # Get Flutter version
       - name: Get Flutter version
         run: flutter --version
@@ -96,6 +96,5 @@ jobs:
         run: melos bootstrap
       - name: Run tests
         run: flutter test
-     - name: Check if flutter test passes
+      - name: Check if flutter test passes
         run: echo $?
-
