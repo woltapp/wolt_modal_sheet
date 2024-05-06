@@ -69,8 +69,8 @@ class _DemoAppState extends State<DemoApp> {
         inputDecorationTheme: inputDecorationTheme,
         primaryColor: WoltColors.blue,
         switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.all(WoltColors.black),
-          trackColor: MaterialStateProperty.all(WoltColors.black),
+          thumbColor: MaterialStateProperty.all(WoltColors.white),
+          trackColor: MaterialStateProperty.all(WoltColors.white),
         ),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
