@@ -68,10 +68,9 @@ class _DemoAppState extends State<DemoApp> {
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
         primaryColor: WoltColors.blue,
-        useMaterial3: true,
         switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.all(WoltColors.blue),
-          trackColor: MaterialStateProperty.all(WoltColors.blue16),
+          thumbColor: MaterialStateProperty.all(WoltColors.black),
+          trackColor: MaterialStateProperty.all(WoltColors.black),
         ),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
@@ -83,7 +82,6 @@ class _DemoAppState extends State<DemoApp> {
         brightness: Brightness.dark,
         inputDecorationTheme: inputDecorationTheme,
         primaryColor: WoltColors.blue,
-        useMaterial3: true,
         switchTheme: SwitchThemeData(
           thumbColor: MaterialStateProperty.all(WoltColors.blue),
           trackColor: MaterialStateProperty.all(WoltColors.blue16),
