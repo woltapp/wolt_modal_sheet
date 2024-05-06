@@ -1,10 +1,13 @@
 name: Deploy to Firebase Hosting on PR
-'on': pull_request
+'on': pull_request_target
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
