@@ -81,11 +81,11 @@ for page transitions, and scrollable content within each page.
 
 You can review the usage examples of repository by clicking on the links.
 
-## [Coffee Maker Example](https://coffeemakerexample.web.app)
+### [Coffee Maker Example](https://coffeemakerexample.web.app)
 
-## [Playground Example](https://playgroundwoltexample.web.app)
+### [Playground Example](https://playgroundwoltexample.web.app)
 
-## [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)
+### [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)
 
 ## Features
 
