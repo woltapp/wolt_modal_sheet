@@ -1240,4 +1240,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     }
     return false;
   }
+
+  /// The index of the currently displayed page in the navigation stack.
+  int get currentPageIndex => _currentPageIndex;
 }
