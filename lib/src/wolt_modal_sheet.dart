@@ -652,94 +652,93 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final String routeLabel = _modalType.routeLabel(context);
-    return _decorator(
-      // The order of the notifier builders matter because we want to use the same instance of
-      // the page list whenever page index is updated.
-      ValueListenableBuilder(
-        valueListenable: widget.pageIndexNotifier,
-        builder: (context, currentPageIndex, __) {
-          final pages = _pages;
-          final page = pages[currentPageIndex];
-          late ShapeBorder shape;
-          switch (_modalType) {
-            case WoltModalType.bottomSheet:
-              shape = themeData?.bottomSheetShape ??
-                  defaultThemeData.bottomSheetShape;
-              break;
-            case WoltModalType.dialog:
-              shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
-              break;
-          }
-          final enableDrag = _modalType == WoltModalType.bottomSheet &&
-              (page.enableDrag ??
-                  widget.enableDrag ??
-                  themeData?.enableDrag ??
-                  defaultThemeData.enableDrag);
-          final showDragHandle = widget.showDragHandle ??
-              (enableDrag &&
-                  (themeData?.showDragHandle ??
-                      defaultThemeData.showDragHandle));
-          final pageBackgroundColor = page.backgroundColor ??
-              themeData?.backgroundColor ??
-              defaultThemeData.backgroundColor;
-          final minPageHeight = widget.minPageHeight ??
-              themeData?.minPageHeight ??
-              defaultThemeData.minPageHeight;
-          final maxPageHeight = widget.maxPageHeight ??
-              themeData?.maxPageHeight ??
-              defaultThemeData.maxPageHeight;
-          final minDialogWidth = widget.minDialogWidth ??
-              themeData?.minDialogWidth ??
-              defaultThemeData.minDialogWidth;
-          final maxDialogWidth = widget.maxDialogWidth ??
-              themeData?.maxDialogWidth ??
-              defaultThemeData.maxDialogWidth;
-          final shadowColor =
-              themeData?.shadowColor ?? defaultThemeData.shadowColor;
-          final surfaceTintColor = page.surfaceTintColor ??
-              themeData?.surfaceTintColor ??
-              defaultThemeData.surfaceTintColor;
-          final modalElevation =
-              themeData?.modalElevation ?? defaultThemeData.modalElevation;
-          final clipBehavior =
-              themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
-          final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
-              themeData?.resizeToAvoidBottomInset ??
-              defaultThemeData.resizeToAvoidBottomInset;
+    // The order of the notifier builders matter because we want to use the same instance of
+    // the page list whenever page index is updated.
+    return ValueListenableBuilder(
+      valueListenable: widget.pageIndexNotifier,
+      builder: (context, currentPageIndex, __) {
+        final pages = _pages;
+        final page = pages[currentPageIndex];
+        late ShapeBorder shape;
+        switch (_modalType) {
+          case WoltModalType.bottomSheet:
+            shape = themeData?.bottomSheetShape ??
+                defaultThemeData.bottomSheetShape;
+            break;
+          case WoltModalType.dialog:
+            shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
+            break;
+        }
+        final enableDrag = _modalType == WoltModalType.bottomSheet &&
+            (page.enableDrag ??
+                widget.enableDrag ??
+                themeData?.enableDrag ??
+                defaultThemeData.enableDrag);
+        final showDragHandle = widget.showDragHandle ??
+            (enableDrag &&
+                (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
+        final pageBackgroundColor = page.backgroundColor ??
+            themeData?.backgroundColor ??
+            defaultThemeData.backgroundColor;
+        final minPageHeight = widget.minPageHeight ??
+            themeData?.minPageHeight ??
+            defaultThemeData.minPageHeight;
+        final maxPageHeight = widget.maxPageHeight ??
+            themeData?.maxPageHeight ??
+            defaultThemeData.maxPageHeight;
+        final minDialogWidth = widget.minDialogWidth ??
+            themeData?.minDialogWidth ??
+            defaultThemeData.minDialogWidth;
+        final maxDialogWidth = widget.maxDialogWidth ??
+            themeData?.maxDialogWidth ??
+            defaultThemeData.maxDialogWidth;
+        final shadowColor =
+            themeData?.shadowColor ?? defaultThemeData.shadowColor;
+        final surfaceTintColor = page.surfaceTintColor ??
+            themeData?.surfaceTintColor ??
+            defaultThemeData.surfaceTintColor;
+        final modalElevation =
+            themeData?.modalElevation ?? defaultThemeData.modalElevation;
+        final clipBehavior =
+            themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
+        final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
+            themeData?.resizeToAvoidBottomInset ??
+            defaultThemeData.resizeToAvoidBottomInset;
 
-          final multiChildLayout = CustomMultiChildLayout(
-            delegate: WoltModalMultiChildLayoutDelegate(
-              contentLayoutId: contentLayoutId,
-              barrierLayoutId: barrierLayoutId,
-              modalType: _modalType,
-              minPageHeight: minPageHeight,
-              maxPageHeight: maxPageHeight,
-              minDialogWidth: minDialogWidth,
-              maxDialogWidth: maxDialogWidth,
-            ),
-            children: [
-              LayoutId(
-                id: barrierLayoutId,
-                child: GestureDetector(
-                  excludeFromSemantics: true,
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (widget.route.barrierDismissible) {
-                      final onModalDismissedWithBarrierTap =
-                          widget.onModalDismissedWithBarrierTap;
-                      if (onModalDismissedWithBarrierTap != null) {
-                        onModalDismissedWithBarrierTap();
-                      } else {
-                        Navigator.of(context).pop();
-                      }
+        final multiChildLayout = CustomMultiChildLayout(
+          delegate: WoltModalMultiChildLayoutDelegate(
+            contentLayoutId: contentLayoutId,
+            barrierLayoutId: barrierLayoutId,
+            modalType: _modalType,
+            minPageHeight: minPageHeight,
+            maxPageHeight: maxPageHeight,
+            minDialogWidth: minDialogWidth,
+            maxDialogWidth: maxDialogWidth,
+          ),
+          children: [
+            LayoutId(
+              id: barrierLayoutId,
+              child: GestureDetector(
+                excludeFromSemantics: true,
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  if (widget.route.barrierDismissible) {
+                    final onModalDismissedWithBarrierTap =
+                        widget.onModalDismissedWithBarrierTap;
+                    if (onModalDismissedWithBarrierTap != null) {
+                      onModalDismissedWithBarrierTap();
+                    } else {
+                      Navigator.of(context).pop();
                     }
-                  },
-                  child: const SizedBox.expand(),
-                ),
+                  }
+                },
+                child: const SizedBox.expand(),
               ),
-              LayoutId(
-                id: contentLayoutId,
-                child: KeyedSubtree(
+            ),
+            LayoutId(
+              id: contentLayoutId,
+              child: _decorator(
+                KeyedSubtree(
                   key: _childKey,
                   child: Semantics(
                     label: routeLabel,
@@ -772,34 +771,34 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                   ),
                 ),
               ),
-            ],
-          );
-          return Scaffold(
-            resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-            backgroundColor: Colors.transparent,
-            body: widget.useSafeArea
-                ? Stack(
-                    children: [
-                      SafeArea(child: multiChildLayout),
-                      if (_modalType == WoltModalType.bottomSheet)
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: ColoredBox(
-                            color: pageBackgroundColor,
-                            child: SizedBox(
-                              height: MediaQuery.paddingOf(context).bottom,
-                              width: double.infinity,
-                            ),
+            ),
+          ],
+        );
+        return Scaffold(
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          backgroundColor: Colors.transparent,
+          body: widget.useSafeArea
+              ? Stack(
+                  children: [
+                    SafeArea(child: multiChildLayout),
+                    if (_modalType == WoltModalType.bottomSheet)
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: ColoredBox(
+                          color: pageBackgroundColor,
+                          child: SizedBox(
+                            height: MediaQuery.paddingOf(context).bottom,
+                            width: double.infinity,
                           ),
                         ),
-                    ],
-                  )
-                : multiChildLayout,
-          );
-        },
-      ),
+                      ),
+                  ],
+                )
+              : multiChildLayout,
+        );
+      },
     );
   }
 
