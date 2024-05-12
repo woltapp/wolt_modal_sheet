@@ -27,6 +27,7 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
     required this.child,
     super.id,
     super.backgroundColor,
+    super.enableCloseDrag,
     super.enableDrag,
     super.leadingNavBarWidget,
     super.trailingNavBarWidget,

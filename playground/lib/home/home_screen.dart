@@ -78,11 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     decorator: (child) {
                       return DynamicPageProperties(
                         notifier: DynamicPagePropertiesNotifier(
-                          DynamicPagePropertiesModel(enableDrag: true),
+                          DynamicPagePropertiesModel(enableCloseDrag: true),
                         ),
                         child: child,
                       );
                     },
+                    enableDrag: true,
                     maxDialogWidth: 560,
                     minDialogWidth: 400,
                     minPageHeight: 0.0,

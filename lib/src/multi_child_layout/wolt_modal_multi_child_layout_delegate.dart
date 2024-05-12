@@ -22,6 +22,12 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   /// The type of the scrollable modal.
   final WoltModalType modalType;
 
+  /// The animation controller for drag behavior.
+  final AnimationController? dragController;
+
+  /// Whether the modal content can be dragged.
+  final bool? enableDrag;
+
   /// Creates a [WoltModalMultiChildLayoutDelegate].
   ///
   /// [maxPageHeight] represents the maximum page height in the range of [0, 1] relative to the available size.
@@ -33,6 +39,14 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   /// [barrierLayoutId] represents the layout identifier for the barrier.
   ///
   /// [modalType] represents the type of the scrollable modal.
+  ///
+  /// [minDialogWidth] represents the minimum width of the dialog.
+  ///
+  /// [maxDialogWidth] represents the maximum width of the dialog.
+  ///
+  /// [dragController] represents the animation controller for drag behavior.
+  ///
+  /// [enableDrag] represents whether the modal content can be dragged.
   WoltModalMultiChildLayoutDelegate({
     required this.maxPageHeight,
     required this.minPageHeight,
@@ -41,7 +55,10 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     required this.modalType,
     required this.minDialogWidth,
     required this.maxDialogWidth,
-  });
+    this.dragController,
+    this.enableDrag,
+  }) : assert(enableDrag != true || dragController != null,
+            'If enableDrag is true, animationController must not be null.');
 
   @override
   void performLayout(Size size) {
@@ -54,15 +71,24 @@ class WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
       barrierLayoutId,
       BoxConstraints(maxWidth: size.width, maxHeight: size.height),
     );
+    double maxHeight = enableDrag == true
+        ? (dragController!.value == 0.0
+            ? size.height * maxPageHeight
+            : dragController!.value * size.height)
+        : size.height * maxPageHeight;
+
     final modalHeight = layoutChild(
       contentLayoutId,
       BoxConstraints(
         minHeight: size.height * minPageHeight,
-        maxHeight: size.height * maxPageHeight,
+        maxHeight: maxHeight,
         maxWidth: modalWidth,
         minWidth: modalWidth,
       ),
     ).height;
+    if (enableDrag == true && dragController!.value == 0.0) {
+      dragController!.value = modalHeight / size.height;
+    }
 
     /// Position Modal Content
     positionChild(

@@ -12,15 +12,15 @@ class DynamicPagePropertiesNotifier
 /// A model class that represents the dynamic properties of a page.
 class DynamicPagePropertiesModel {
   /// Indicates whether dragging is enabled for the bottom sheet.
-  final bool enableDrag;
+  final bool enableCloseDrag;
 
   /// Creates a [DynamicPagePropertiesModel] with the provided properties.
-  DynamicPagePropertiesModel({required this.enableDrag});
+  DynamicPagePropertiesModel({required this.enableCloseDrag});
 
   /// Creates a copy of [DynamicPagePropertiesModel] with optional property updates.
-  DynamicPagePropertiesModel copyWith({bool? enableDrag}) {
+  DynamicPagePropertiesModel copyWith({bool? enableCloseDrag}) {
     return DynamicPagePropertiesModel(
-      enableDrag: enableDrag ?? this.enableDrag,
+      enableCloseDrag: enableCloseDrag ?? this.enableCloseDrag,
     );
   }
 }

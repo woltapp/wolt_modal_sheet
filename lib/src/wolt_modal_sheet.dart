@@ -11,7 +11,11 @@ const double _minFlingVelocity = 700.0;
 
 const double _closeProgressThreshold = 0.5;
 
+const double _dragThreshold = 0.3;
+
 const int defaultWoltModalTransitionAnimationDuration = 350;
+
+const int _defaultWoltModalDragAnimationDuration = 200;
 
 /// Signature for a function that builds a list of [SliverWoltModalSheetPage] based on the given [BuildContext].
 typedef WoltModalSheetPageListBuilder = List<SliverWoltModalSheetPage> Function(
@@ -31,6 +35,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.modalTypeBuilder,
     required this.animationController,
     required this.route,
+    required this.enableCloseDrag,
     required this.enableDrag,
     required this.showDragHandle,
     required this.useSafeArea,
@@ -80,6 +85,10 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   /// A boolean that determines whether the modal can be dismissed by dragging. This provides a
   /// user-friendly way to dismiss the modal and is commonly used in bottom sheet modals.
+  final bool? enableCloseDrag;
+
+  /// A boolean that determines whether the modal is vertically draggable. This enables vertical movement of the modal,
+  /// allowing users to interact and adjust the modal position on the screen vertically.
   final bool? enableDrag;
 
   /// A boolean that indicates whether a drag handle should be shown at the top of the modal.
@@ -128,7 +137,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `useRootNavigator`: Whether to use the root navigator for navigation.
   ///   - `useSafeArea`: Whether the modal should respect the safe area.
   ///   - `barrierDismissible`: Whether the modal can be dismissed by tapping the barrier.
-  ///   - `enableDrag`: Whether the modal can be dismissed by dragging.
+  ///   - `enableCloseDrag`: Whether the modal can be dismissed by dragging.
+  ///   - `enableDrag`: Whether the modal can be dragged.
   ///   - `showDragHandle`: Whether to show a handle to indicate the modal can be dragged.
   ///   - `routeSettings`: Additional settings for the modal route.
   ///   - `transitionDuration`: Duration of the transition animations.
@@ -154,6 +164,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool useRootNavigator = false,
     bool? useSafeArea,
     bool? barrierDismissible,
+    bool? enableCloseDrag,
     bool? enableDrag,
     bool? showDragHandle,
     RouteSettings? routeSettings,
@@ -178,6 +189,7 @@ class WoltModalSheet<T> extends StatefulWidget {
       useRootNavigator: useRootNavigator,
       useSafeArea: useSafeArea,
       barrierDismissible: barrierDismissible,
+      enableCloseDrag: enableCloseDrag,
       enableDrag: enableDrag,
       showDragHandle: showDragHandle,
       routeSettings: routeSettings,
@@ -212,7 +224,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `useRootNavigator`: Whether to use the root navigator for navigation.
   ///   - `useSafeArea`: Whether the modal should respect the safe area.
   ///   - `barrierDismissible`: Whether the modal can be dismissed by tapping the barrier.
-  ///   - `enableDrag`: Whether the modal can be dismissed by dragging.
+  ///   - `enableCloseDrag`: Whether the modal can be dismissed by dragging.
+  ///   - `enableDrag`: Whether the modal can be dragged.
   ///   - `showDragHandle`: Whether to show a handle to indicate the modal can be dragged.
   ///   - `routeSettings`: Additional settings for the modal route.
   ///   - `transitionDuration`: Duration of the transition animations.
@@ -239,6 +252,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool useRootNavigator = false,
     bool? useSafeArea,
     bool? barrierDismissible,
+    bool? enableCloseDrag,
     bool? enableDrag,
     bool? showDragHandle,
     RouteSettings? routeSettings,
@@ -266,6 +280,7 @@ class WoltModalSheet<T> extends StatefulWidget {
         routeSettings: routeSettings,
         transitionDuration: transitionDuration,
         barrierDismissible: barrierDismissible,
+        enableCloseDrag: enableCloseDrag,
         enableDrag: enableDrag,
         showDragHandle: showDragHandle,
         onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
@@ -587,9 +602,13 @@ class WoltModalSheet<T> extends StatefulWidget {
   }
 }
 
-class WoltModalSheetState extends State<WoltModalSheet> {
+class WoltModalSheetState extends State<WoltModalSheet>
+    with SingleTickerProviderStateMixin {
   late WoltModalType _modalType;
   List<SliverWoltModalSheetPage> _pages = [];
+
+  // The controller is used to control the vertical drag animation.
+  AnimationController? _dragAnimationController;
 
   ParametricCurve<double> animationCurve = decelerateEasing;
 
@@ -632,6 +651,13 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           ..addAll(pages);
       });
     });
+    if (widget.enableDrag ?? false) {
+      _dragAnimationController = AnimationController(
+        duration:
+            const Duration(milliseconds: _defaultWoltModalDragAnimationDuration),
+        vsync: this,
+      );
+    }
   }
 
   @override
@@ -669,13 +695,18 @@ class WoltModalSheetState extends State<WoltModalSheet> {
             shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
             break;
         }
+        final enableCloseDrag = _modalType == WoltModalType.bottomSheet &&
+            (page.enableCloseDrag ??
+                widget.enableCloseDrag ??
+                themeData?.enableCloseDrag ??
+                defaultThemeData.enableCloseDrag);
         final enableDrag = _modalType == WoltModalType.bottomSheet &&
             (page.enableDrag ??
                 widget.enableDrag ??
                 themeData?.enableDrag ??
                 defaultThemeData.enableDrag);
         final showDragHandle = widget.showDragHandle ??
-            (enableDrag &&
+            ((enableCloseDrag || enableDrag) &&
                 (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
         final pageBackgroundColor = page.backgroundColor ??
             themeData?.backgroundColor ??
@@ -714,6 +745,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
             maxPageHeight: maxPageHeight,
             minDialogWidth: minDialogWidth,
             maxDialogWidth: maxDialogWidth,
+            dragController: _dragAnimationController,
+            enableDrag: enableDrag,
           ),
           children: [
             LayoutId(
@@ -744,10 +777,17 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                     label: routeLabel,
                     child: GestureDetector(
                       excludeFromSemantics: true,
-                      onVerticalDragStart: enableDrag ? _handleDragStart : null,
-                      onVerticalDragUpdate:
-                          enableDrag ? _handleDragUpdate : null,
-                      onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                      onVerticalDragStart: enableDrag || enableCloseDrag
+                          ? _handleDragStart
+                          : null,
+                      onVerticalDragUpdate: (onVerticalDragUpdate) {
+                        enableDrag || enableCloseDrag
+                            ? _handleDragUpdate(
+                                onVerticalDragUpdate, enableDrag)
+                            : null;
+                      },
+                      onVerticalDragEnd:
+                          enableCloseDrag ? _handleDragEnd : null,
                       child: Material(
                         color: pageBackgroundColor,
                         elevation: modalElevation,
@@ -802,11 +842,22 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     );
   }
 
-  void _handleDragUpdate(DragUpdateDetails details) {
+  void _handleDragUpdate(DragUpdateDetails details, bool enableDrag) {
     if (_dismissUnderway) {
       return;
     }
-    widget.animationController!.value -= details.primaryDelta! / _childHeight;
+    if (enableDrag) {
+      double calculated = _dragAnimationController!.value -
+          details.primaryDelta! / _childHeight;
+      if (calculated > _dragThreshold || details.primaryDelta! < 0) {
+        setState(() {
+          _dragAnimationController!.value -=
+              details.primaryDelta! / _childHeight;
+        });
+      }
+    } else {
+      widget.animationController!.value -= details.primaryDelta! / _childHeight;
+    }
   }
 
   void _handleDragStart(DragStartDetails details) {
