@@ -653,8 +653,8 @@ class WoltModalSheetState extends State<WoltModalSheet>
     });
     if (widget.enableDrag ?? false) {
       _dragAnimationController = AnimationController(
-        duration:
-            const Duration(milliseconds: _defaultWoltModalDragAnimationDuration),
+        duration: const Duration(
+            milliseconds: _defaultWoltModalDragAnimationDuration),
         vsync: this,
       );
     }

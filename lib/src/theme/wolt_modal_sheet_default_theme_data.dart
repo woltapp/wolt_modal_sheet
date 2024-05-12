@@ -68,7 +68,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   /// Whether the bottom sheet can be dismissed by dragging.
   @override
   bool get enableCloseDrag => true;
-  
+
   /// Whether to enable the drag for bottom sheet.
   @override
   bool get enableDrag => false;
