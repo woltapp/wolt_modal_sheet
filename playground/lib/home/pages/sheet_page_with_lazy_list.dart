@@ -41,7 +41,7 @@ class SheetPageWithLazyList {
       ),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
-      mainContentSlivers: [
+      mainContentSliversBuilder: (_) => [
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (_, index) {

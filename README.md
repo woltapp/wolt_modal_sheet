@@ -351,7 +351,7 @@ widgets to provide flexible and efficient scrolling behaviors.
 
 ```dart
 SliverWoltModalSheetPage(
-  mainContentSlivers: [
+  mainContentSliversBuilder: (context) => [
     SliverList(
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         // Your list items
@@ -702,7 +702,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
         icon: const Icon(Icons.close),
         onPressed: Navigator.of(modalSheetContext).pop,
       ),
-      mainContentSlivers: [
+      mainContentSliversBuilder: (context) => [
         SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

@@ -64,7 +64,11 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
     super.leadingNavBarWidget,
     super.trailingNavBarWidget,
     super.topBar,
-  }) : super(mainContentSlivers: [SliverToBoxAdapter(child: child)]);
+  }) : super(
+          mainContentSliversBuilder: (context) => [
+            SliverToBoxAdapter(child: child),
+          ],
+        );
 
   WoltModalSheetPage copyWith({
     Widget? pageTitle,

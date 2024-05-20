@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
@@ -109,7 +111,15 @@ class SliverWoltModalSheetPage {
 
   /// This list of sliver widgets within the scrollable modal sheet is responsible for displaying
   /// the main content inside the [CustomScrollView] of the modal sheet.
-  final List<Widget> mainContentSlivers;
+  @Deprecated(
+      'Use mainContentSliversBuilder to gain access to BuildContext for dynamic widget creation.')
+  final List<Widget>? mainContentSlivers;
+
+  /// Similar to [mainContentSlivers] but exposes the enclosing [BuildContext].
+  /// Use this method to dynamically build the list of sliver widgets within the modal sheet
+  /// based on the available [BuildContext]. This approach is more flexible and recommended
+  /// for most use cases.
+  final List<Widget> Function(BuildContext context)? mainContentSliversBuilder;
 
   /// A [Widget] representing the hero image displayed on top of the main content. A Hero Image
   /// is positioned at the top of the main content. This widget immediately grabs the user's
@@ -220,7 +230,8 @@ class SliverWoltModalSheetPage {
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
-    required this.mainContentSlivers,
+    this.mainContentSlivers,
+    this.mainContentSliversBuilder,
     this.id,
     this.pageTitle,
     this.navBarHeight,
@@ -241,6 +252,9 @@ class SliverWoltModalSheetPage {
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
     this.resizeToAvoidBottomInset,
-  }) : assert(!(topBar != null && hasTopBarLayer == false),
-            "When topBar is provided, hasTopBarLayer must not be false");
+  })  : assert(!(topBar != null && hasTopBarLayer == false),
+            "When topBar is provided, hasTopBarLayer must not be false"),
+        assert(
+            (mainContentSlivers != null) ^ (mainContentSliversBuilder != null),
+            "Either mainContentSlivers or mainContentSliversBuilder must be provided, but not both");
 }

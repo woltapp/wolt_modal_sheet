@@ -48,7 +48,7 @@ class OfferRecommendationModalPage {
       pageTitle: const ModalSheetTitle(pageTitle),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
-      mainContentSlivers: [
+      mainContentSliversBuilder: (context) => [
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (_, index) {
