@@ -37,7 +37,7 @@ class SheetPageWithLazyList {
           onBackPressed: () => cubit.goToPage(currentPage - 1)),
       trailingNavBarWidget:
           WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
-      mainContentSlivers: [
+      mainContentSliversBuilder: (context) => [
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (_, index) {

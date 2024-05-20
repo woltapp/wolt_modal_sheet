@@ -106,7 +106,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           icon: const Icon(Icons.close),
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
-        mainContentSlivers: [
+        mainContentSliversBuilder: (context) => [
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
