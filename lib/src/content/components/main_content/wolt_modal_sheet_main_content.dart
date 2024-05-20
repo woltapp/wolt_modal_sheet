@@ -83,6 +83,7 @@ class WoltModalSheetMainContent extends StatelessWidget {
             ),
           ),
         if (page.mainContentSliversBuilder == null)
+          // ignore: deprecated_member_use_from_same_package
           ...page.mainContentSlivers!
         else
           ...page.mainContentSliversBuilder!(context),
