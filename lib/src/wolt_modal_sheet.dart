@@ -998,7 +998,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       _pages[_currentPageIndex] = newPage;
     });
   }
-  
+
   /// The index of the currently displayed page in the in-modal navigation stack.
   int get currentPageIndex => _currentPageIndex;
 }
