@@ -103,9 +103,13 @@ class SliverWoltModalSheetPage {
 
   /// This list of sliver widgets within the scrollable modal sheet is responsible for displaying
   /// the main content inside the [CustomScrollView] of the modal sheet.
-  final List<Widget> mainContentSlivers;
+  @Deprecated('Use mainContentSliversBuilder to gain access to BuildContext for dynamic widget creation.')
+  final List<Widget>? mainContentSlivers;
 
-  /// Just like [mainContentSlivers] but exposes enclosing [BuildContext]
+  /// Similar to [mainContentSlivers] but exposes the enclosing [BuildContext].
+  /// Use this method to dynamically build the list of sliver widgets within the modal sheet
+  /// based on the available [BuildContext]. This approach is more flexible and recommended
+  /// for most use cases.
   final List<Widget> Function(BuildContext context)? mainContentSliversBuilder;
 
   /// A [Widget] representing the hero image displayed on top of the main content. A Hero Image
@@ -217,7 +221,7 @@ class SliverWoltModalSheetPage {
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
-    required this.mainContentSlivers,
+    this.mainContentSlivers,
     this.mainContentSliversBuilder,
     this.pageTitle,
     this.navBarHeight,
@@ -239,5 +243,7 @@ class SliverWoltModalSheetPage {
     this.isTopBarLayerAlwaysVisible,
     this.resizeToAvoidBottomInset,
   }) : assert(!(topBar != null && hasTopBarLayer == false),
-            "When topBar is provided, hasTopBarLayer must not be false");
+            "When topBar is provided, hasTopBarLayer must not be false"), 
+       assert((mainContentSlivers != null) ^ (mainContentSliversBuilder != null),
+            "Either mainContentSlivers or mainContentSliversBuilder must be provided, but not both");
 }
