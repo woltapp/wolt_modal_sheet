@@ -456,10 +456,7 @@ particularly useful for preloading pages or preparing navigation paths for
 future steps without changing the currently displayed page.
 
 ```dart
-WoltModalSheet.addPages(context, [newPage1, newPage2, newPage3]);
 WoltModalSheet.of(context).addPages([newPage1, newPage2, newPage3]);
-
-WoltModalSheet.addPage(context, newPage1);
 WoltModalSheet.of(context).addPage(newPage1);
 ```
 
@@ -475,7 +472,6 @@ stack, this method allows you to replace any page by its identifier without
 altering the rest of the stack.
     
 ```dart
-WoltModalSheet.replacePage(context, pageId, newPage);
 WoltModalSheet.of(context).replacePage(pageId, newPage);
 ```
 
@@ -487,7 +483,6 @@ accordingly. If it is not the current page, it is removed from the stack
 without impacting the current view.
 
 ```dart
-WoltModalSheet.removePage(context, pageId);
 WoltModalSheet.of(context).removePage(pageId);
 ```
 
@@ -502,10 +497,7 @@ interactions with the currently displayed page or when making adjustments to
 previously made decisions.
 
 ```dart
-WoltModalSheet.addOrReplacePages(context, [newPage1, newPage2, newPage3]);
 WoltModalSheet.of(context).addOrReplacePages([newPage1, newPage2, newPage3]);
-
-WoltModalSheet.addOrReplacePage(context, newPage);
 WoltModalSheet.of(context).addOrReplacePage(newPage);
 ```
 
@@ -521,19 +513,15 @@ specific index in the page list, or navigate to a page by its unique identifier.
 
 ```dart
 // Move to the next page
-bool movedNext = WoltModalSheet.showNext(context);
 bool movedNext = WoltModalSheet.of(context).showNext();
 
 // Move to the previous page
-bool movedPrevious = WoltModalSheet.showPrevious(context);
 bool movedPrevious = WoltModalSheet.of(context).showPrevious();
 
 // Jump directly to a page at a specific index
-bool navigatedByIndex = WoltModalSheet.showAtIndex(context, 2);
 bool navigatedByIndex = WoltModalSheet.of(context).showAtIndex(2);
 
 // Navigate to a page by its unique identifier
-bool navigatedById = WoltModalSheet.showPageWithId(context, pageId);
 bool navigatedById = WoltModalSheet.of(context).showPageWithId(pageId);
 ```
 
@@ -542,9 +530,7 @@ Using push methods, you can add one or more new pages to the end of the
 navigation stack and navigate to the first of the newly added pages.
 
 ```dart
-WoltModalSheet.pushPages(context, [newPage1, newPage2, newPage3]);
 WoltModalSheet.of(context).pushPages([newPage1, newPage2, newPage3]);
-WoltModalSheet.pushPage(context, newPage);
 WoltModalSheet.of(context).pushPage(newPage);
 ```
 
@@ -553,7 +539,6 @@ Using pop method, you can remove the last page of the navigation stack. If the
 user is on the last page, the method will navigate to the previous page.
     
 ```dart
-bool popped = WoltModalSheet.pop(context);
 bool popped = WoltModalSheet.of(context).pop();
 ```
 
