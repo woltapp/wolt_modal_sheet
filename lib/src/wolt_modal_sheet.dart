@@ -585,6 +585,34 @@ class WoltModalSheet<T> extends StatefulWidget {
   static bool showPageWithId(BuildContext context, Object id) {
     return WoltModalSheet.of(context).showPageWithId(id);
   }
+
+  /// Updates the currently visible page in the modal sheet without pagination animation.
+  ///
+  /// This method directly modifies the properties of the current page, effectively
+  /// replacing it with the provided page instance. It's particularly useful for updating the
+  /// current page's non-widget content such as [SliverWoltModalSheetPage.enableDrag] or
+  /// [SliverWoltModalSheetPage.hasSabGradient].
+  ///
+  /// Usage Example:
+  /// ```dart
+  /// WoltModalSheet.of(context).updateCurrentPage(
+  ///   SliverWoltModalSheetPage(
+  ///     enableDrag: true,
+  ///     hasSabGradient: true,
+  ///     // additional properties
+  ///   )
+  /// );
+  /// ```
+  ///
+  /// Parameters:
+  ///   - `newPage`: The new configuration of the [SliverWoltModalSheetPage] to apply to the
+  ///   currently visible page.
+  static void updateCurrentPage(
+    BuildContext context,
+    SliverWoltModalSheetPage page,
+  ) {
+    WoltModalSheet.of(context).updateCurrentPage(page);
+  }
 }
 
 class WoltModalSheetState extends State<WoltModalSheet> {
@@ -1238,5 +1266,32 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       return true;
     }
     return false;
+  }
+
+  /// Updates the currently visible page in the modal sheet without pagination animation.
+  ///
+  /// This method directly modifies the properties of the current page, effectively
+  /// replacing it with the provided page instance. It's particularly useful for updating the
+  /// current page's non-widget content such as [SliverWoltModalSheetPage.enableDrag] or
+  /// [SliverWoltModalSheetPage.hasSabGradient].
+  ///
+  /// Usage Example:
+  /// ```dart
+  /// WoltModalSheet.of(context).updateCurrentPage(
+  ///   SliverWoltModalSheetPage(
+  ///     enableDrag: true,
+  ///     hasSabGradient: true,
+  ///     // additional properties
+  ///   )
+  /// );
+  /// ```
+  ///
+  /// Parameters:
+  ///   - `newPage`: The new configuration of the [SliverWoltModalSheetPage] to apply to the
+  ///   currently visible page.
+  void updateCurrentPage(SliverWoltModalSheetPage newPage) {
+    setState(() {
+      _pages[_currentPageIndex] = newPage;
+    });
   }
 }

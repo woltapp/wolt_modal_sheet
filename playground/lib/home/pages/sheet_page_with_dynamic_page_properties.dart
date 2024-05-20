@@ -11,8 +11,10 @@ class SheetPageWithDynamicPageProperties {
 
   static const ModalPageName pageId = ModalPageName.dynamicPageProperties;
 
-  static WoltModalSheetPage build(BuildContext context,
-      {bool isLastPage = true}) {
+  static WoltModalSheetPage build(
+    BuildContext context, {
+    bool isLastPage = true,
+  }) {
     bool useOriginalPageValues = true;
     return WoltModalSheetPage(
       id: pageId,
@@ -53,6 +55,10 @@ class SheetPageWithDynamicPageProperties {
                           dynamicPageModel?.value =
                               dynamicPageModel.value.copyWith(
                             enableDrag: newValue,
+                          );
+                          // Update the current page to reflect the changes.
+                          WoltModalSheet.of(context).updateCurrentPage(
+                            SheetPageWithDynamicPageProperties.build(context),
                           );
                           setState(() =>
                               useOriginalPageValues = !useOriginalPageValues);
