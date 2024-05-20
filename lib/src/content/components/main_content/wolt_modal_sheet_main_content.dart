@@ -82,7 +82,11 @@ class WoltModalSheetMainContent extends StatelessWidget {
               childCount: 2,
             ),
           ),
-        ...page.mainContentSlivers,
+        if (page.mainContentSliversBuilder == null)
+          // ignore: deprecated_member_use_from_same_package
+          ...page.mainContentSlivers!
+        else
+          ...page.mainContentSliversBuilder!(context),
         if (page.forceMaxHeight && !isNonScrollingPage)
           const SliverFillRemaining(
             hasScrollBody: false,
