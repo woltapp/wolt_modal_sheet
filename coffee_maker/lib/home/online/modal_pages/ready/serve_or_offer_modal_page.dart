@@ -31,7 +31,7 @@ class ServeOrOfferModalPage {
             const SizedBox(height: 8),
             Builder(builder: (context) {
               return WoltElevatedButton(
-                onPressed: () => WoltModalSheet.showNext(context),
+                onPressed: WoltModalSheet.of(context).showNext,
                 child: const Text('Offer recommendations'),
               );
             }),

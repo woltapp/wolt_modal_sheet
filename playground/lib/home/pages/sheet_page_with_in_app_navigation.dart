@@ -70,8 +70,8 @@ class _SinglePage extends WoltModalSheetPage {
               builder: (context) {
                 return WoltElevatedButton(
                   onPressed: () => isLastPage
-                      ? WoltModalSheet.removeUntil(
-                          context, RootSheetPage.pageId)
+                      ? WoltModalSheet.of(context)
+                          .removeUntil(RootSheetPage.pageId)
                       : WoltModalSheet.of(context).showNext(),
                   child: Text(isLastPage ? "Remove until root page" : "Next"),
                 );
@@ -256,7 +256,7 @@ class _ButtonForRemovePage extends StatelessWidget {
     return _PageRow(
       primaryActionButton: WoltElevatedButton(
         onPressed: () {
-          WoltModalSheet.removePage(context, RootSheetPage.pageId);
+          WoltModalSheet.of(context).removePage(RootSheetPage.pageId);
           _showMessage(context, 'Removed the previous page');
         },
         child: const Text('Remove previous page using page id'),
@@ -273,7 +273,7 @@ class _ButtonForShowAtIndex extends StatelessWidget {
     return _PageRow(
       primaryActionButton: WoltElevatedButton(
         onPressed: () {
-          WoltModalSheet.showAtIndex(context, 0);
+          WoltModalSheet.of(context).showAtIndex(0);
           _showMessage(context, 'Moved to page with index 0');
         },
         child: const Text('Show the page at index 0'),
@@ -290,7 +290,7 @@ class _ButtonForShowPageWithId extends StatelessWidget {
     return _PageRow(
       primaryActionButton: WoltElevatedButton(
         onPressed: () {
-          WoltModalSheet.showPageWithId(context, RootSheetPage.pageId);
+          WoltModalSheet.of(context).showPageWithId(RootSheetPage.pageId);
           _showMessage(
               context, 'Moved to page with id: ${RootSheetPage.pageId}');
         },
