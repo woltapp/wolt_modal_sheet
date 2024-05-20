@@ -317,274 +317,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     }());
     return woltModalSheetState!;
   }
-
-  /// Replaces the current page in the modal sheet stack with a new page.
-  ///
-  /// This method updates the navigation stack by replacing the current page with a new
-  /// page. It's particularly useful for updating the content of the current view without
-  /// disrupting the overall navigation flow.
-  ///
-  /// Parameters:
-  /// - [newPage]: The new [SliverWoltModalSheetPage] to replace the current page.
-  ///
-  /// Returns:
-  /// None.
-  static void replaceCurrentPage(
-      BuildContext context, SliverWoltModalSheetPage newPage) {
-    WoltModalSheet.of(context).replaceCurrentPage(newPage);
-  }
-
-  /// Replaces the existing navigation stack with a new list of pages.
-  ///
-  /// This method updates the navigation stack to the provided list of pages. It adjusts the
-  /// selected page index to retain the current page's relative position within the stack
-  /// as much as possible. If the `selectedPageIndex` specifies a position that exceeds the bounds of the
-  /// new list, the selected page will default to the last page in the new list. This adjustment ensures
-  /// that the navigation stack always points to a valid page.
-  ///
-  /// An error is thrown if the new list of pages (`newPages`) is empty, as the navigation stack cannot be empty.
-  ///
-  /// Parameters:
-  ///   - `newPages`: The new list of [SliverWoltModalSheetPage] to be set as the navigation stack.
-  ///   - `selectedPageIndex`: The index of the page that should be selected after the update. If
-  ///   not provided, the current selected page index will be used. If the provided index exceeds
-  ///   the bounds of the new list, the selected page will default to the last page in the new list.
-  ///
-  /// Throws:
-  ///   - [ArgumentError]: If `newPages` is empty.
-  ///
-  /// Returns:
-  ///   This method does not return a value.
-  static void replaceAllPages(
-    BuildContext context,
-    List<SliverWoltModalSheetPage> newPages, {
-    int? selectedPageIndex,
-  }) {
-    WoltModalSheet.of(context)
-        .replaceAllPages(newPages, selectedPageIndex: selectedPageIndex);
-  }
-
-  /// Adds one or more new pages to the modal sheet stack without making them the current view.
-  ///
-  /// This method appends one or multiple [SliverWoltModalSheetPage] to the navigation stack but does
-  /// not change the current page displayed. It's useful for preloading pages or managing
-  /// the stack without immediately affecting the user interface.
-  ///
-  /// Parameters:
-  /// - [pages]: The List of [SliverWoltModalSheetPage] to be added to the stack. Can also be a single page.
-  static void addPages(
-      BuildContext context, List<SliverWoltModalSheetPage> pages) {
-    WoltModalSheet.of(context).addPages(pages);
-  }
-
-  /// Overload of [addPages] for adding a single page.
-  ///
-  /// Parameters:
-  /// - [page]: The single [SliverWoltModalSheetPage] to be added to the stack.
-  static void addPage(BuildContext context, SliverWoltModalSheetPage page) {
-    addPages(context, [page]);
-  }
-
-  /// Dynamically updates the navigation stack by adding new pages or replacing subsequent pages
-  /// depending on the current page's position in the stack.
-  ///
-  /// If the current page is the last in the stack, this method appends the new pages. If the current
-  /// page is not the last, it replaces all pages after the current one with the provided list of new pages.
-  /// This approach is particularly useful in scenarios where the user's navigation path needs dynamic
-  /// updates based on interactions on the last page or when revising choices made in previous steps.
-  ///
-  /// Parameters:
-  /// - [pages]: The list of [SliverWoltModalSheetPage] to be appended or to replace existing pages.
-  ///   This can be a single page or multiple pages.
-  ///
-  /// Throws:
-  ///   - [ArgumentError]: If `pages` is empty.
-  ///
-  /// Returns:
-  /// None.
-  static void addOrReplacePages(
-      BuildContext context, List<SliverWoltModalSheetPage> pages) {
-    return WoltModalSheet.of(context).addOrReplacePages(pages);
-  }
-
-  /// Overload of [addOrReplaceLastPages] for adding a single page.
-  ///
-  /// Parameters:
-  /// - [page]: The single [SliverWoltModalSheetPage] to be added or to replace the last page.
-  ///
-  /// Returns:
-  /// None.
-  static void addOrReplacePage(
-      BuildContext context, SliverWoltModalSheetPage page) {
-    return addOrReplacePages(context, [page]);
-  }
-
-  /// Adds one or more new pages to the modal sheet stack and displays the first of the added
-  /// page list.
-  ///
-  /// This method pushes a list of [SliverWoltModalSheetPage] onto the navigation stack,
-  /// adding them to the end. It then updates the displayed page to be the first page in the newly added list,
-  /// allowing for a sequence of pages to be added and immediately interacted with.
-  ///
-  /// Parameters:
-  /// - [pages]: The list of [SliverWoltModalSheetPage] to add to the navigation stack.
-  ///
-  /// Throws:
-  ///   - [ArgumentError]: If `pages` is empty.
-  ///
-  /// Returns:
-  /// None.
-  static void pushPages(
-      BuildContext context, List<SliverWoltModalSheetPage> pages) {
-    return WoltModalSheet.of(context).pushPages(pages);
-  }
-
-  /// Adds a new page to the modal sheet stack and displays it.
-  ///
-  /// This method pushes a new [SliverWoltModalSheetPage] onto the navigation stack,
-  /// making it the visible page.
-  ///
-  /// Parameters:
-  /// - [page]: The [SliverWoltModalSheetPage] to add to the navigation stack.
-  ///
-  /// Returns:
-  /// None.
-  static void pushPage(BuildContext context, SliverWoltModalSheetPage page) {
-    return pushPages(context, [page]);
-  }
-
-  /// Removes the top page from the modal sheet stack.
-  ///
-  /// This method pops the top [SliverWoltModalSheetPage] from the navigation stack.
-  /// If there's only one page left in the stack, this operation will not remove it,
-  /// ensuring that there's always at least one page displayed.
-  ///
-  /// Returns:
-  /// - [bool]: Returns `true` if a page was successfully removed; `false` if the stack
-  ///   had only one page left.
-  static bool popPage(BuildContext context) {
-    return WoltModalSheet.of(context).popPage();
-  }
-
-  /// Removes all pages following the page identified by the specified [id].
-  ///
-  /// This method truncates the navigation stack by removing all pages after the page with the given [id].
-  /// If the page with the [id] is not found or is currently visible, no changes are made to the stack.
-  ///
-  /// Parameters:
-  ///   - [id]: Identifier of the page up to which (exclusive) pages should be retained.
-  ///
-  /// Returns:
-  ///  - `bool`: True if the pages were successfully removed; otherwise, false. This method also
-  ///  returns false if the page with the specified [id] is not found or is currently visible.
-  static bool removeUntil(BuildContext context, Object id) {
-    return WoltModalSheet.of(context).removeUntil(id);
-  }
-
-  /// Removes a specified page from the modal navigation stack based on its identifier.
-  ///
-  /// This method searches for a page with a given ID and removes it from the stack.
-  /// If the page to be removed is the current page, the method adjusts the displayed page:
-  /// if it's the first page, it transitions to the next page; otherwise, it transitions to the previous page.
-  /// If the removed page is not the current one, it is simply removed from the stack without affecting the
-  /// currently displayed page. If removing the page affects the order, the selected page index is adjusted
-  /// to maintain a valid state.
-  ///
-  /// Parameters:
-  ///   - id: The identifier of the page to remove. [SliverWoltModalSheetPage.id]
-  ///
-  /// Returns:
-  ///   - `bool`: True if the page was successfully removed; otherwise, false. This method also
-  ///     returns false if there's only one page left in the stack, as at least one page must
-  ///     always be present.
-  ///
-  /// Usage Example:
-  /// ```dart
-  /// bool result = modalSheetController.removePage(pageId);
-  /// if (result) {
-  ///   print("Page removed successfully.");
-  /// } else {
-  ///   print("Failed to remove page or page not found.");
-  /// }
-  /// ```
-  ///
-  /// This method ensures that the navigation stack's integrity is preserved by adjusting
-  /// indices appropriately and managing the visibility of pages dynamically. It updates the
-  /// state of the application to reflect these changes if necessary.
-  static bool removePage(BuildContext context, Object id) {
-    return WoltModalSheet.of(context).removePage(id);
-  }
-
-  /// Replaces a specific page identified by the [id] of the [SliverWoltModalSheetPage] with a
-  /// new page [page]. If no page with the specified [id] is found, nothing happens.
-  ///
-  /// Parameters:
-  /// - [id]: The [id] of the [SliverWoltModalSheetPage] in the stack to replace.
-  /// - [page]: The new [SliverWoltModalSheetPage] to insert in place of the old one.
-  ///
-  /// Returns:
-  /// - [bool]: Returns `true` if replacing  page was successful, `false` if no page with the
-  /// specified [id] is found.
-  static bool replacePage(
-      BuildContext context, Object id, SliverWoltModalSheetPage page) {
-    return WoltModalSheet.of(context).replacePage(id, page);
-  }
-
-  /// Advances to the next page in the modal sheet if one exists.
-  ///
-  /// This method navigates to the next page in the modal sheet's stack. If the current page is
-  /// the last one in the stack, this method will do nothing to prevent out-of-bounds errors. It
-  /// ensures that navigation requests are safely bounded within the limits of the existing pages.
-  ///
-  /// Returns:
-  /// - [bool]: Returns `true` if the navigation to the next page was successful, `false` if
-  ///   already on the last page and navigation did not occur.
-  static bool showNext(BuildContext context) {
-    return WoltModalSheet.of(context).showNext();
-  }
-
-  /// Navigates to the previous page in the modal sheet if one exists.
-  ///
-  /// This method navigates back to the previous page in the modal sheet's stack. If the current
-  /// page is the first one in the stack, this method will do nothing to ensure navigation
-  /// remains within valid bounds.
-  ///
-  /// Returns:
-  /// - [bool]: Returns `true` if the navigation to the previous page was successful, `false` if
-  ///   already on the first page and navigation did not occur.
-  static bool showPrevious(BuildContext context) {
-    return WoltModalSheet.of(context).showPrevious();
-  }
-
-  /// Navigates to a page at a specific index in the modal sheet's stack.
-  ///
-  /// This method allows for direct navigation to any page by specifying its index in the stack.
-  /// If the specified index is out of bounds, no navigation will occur.
-  ///
-  /// Parameters:
-  ///   - [index]: The index of the page to navigate to.
-  ///
-  /// Returns:
-  ///   - [bool]: Returns `true` if the navigation to the specified index was successful, `false` if
-  ///     the index is out of the navigation stack's bounds.
-  static bool showAtIndex(BuildContext context, int index) {
-    return WoltModalSheet.of(context).showAtIndex(index);
-  }
-
-  /// Navigates to a page identified by its unique identifier within the modal sheet's stack.
-  ///
-  /// This method facilitates navigation to a page based on its [SliverWoltModalSheetPage.id]. If
-  /// no page with the specified ID is found, no navigation will occur.
-  ///
-  /// Parameters:
-  ///   - [pageId]: The unique identifier of the page to navigate to.
-  ///
-  /// Returns:
-  ///   - [bool]: Returns `true` if navigation to the page was successful, `false` if no page
-  ///   with the specified ID is found in the stack.
-  static bool showPageWithId(BuildContext context, Object id) {
-    return WoltModalSheet.of(context).showPageWithId(id);
-  }
 }
 
 class WoltModalSheetState extends State<WoltModalSheet> {
@@ -1240,6 +972,33 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     return false;
   }
 
-  /// The index of the currently displayed page in the navigation stack.
+  /// Updates the currently visible page in the modal sheet without pagination animation.
+  ///
+  /// This method directly modifies the properties of the current page, effectively
+  /// replacing it with the provided page instance. It's particularly useful for updating the
+  /// current page's non-widget content such as [SliverWoltModalSheetPage.enableDrag] or
+  /// [SliverWoltModalSheetPage.hasSabGradient].
+  ///
+  /// Usage Example:
+  /// ```dart
+  /// WoltModalSheet.of(context).updateCurrentPage(
+  ///   SliverWoltModalSheetPage(
+  ///     enableDrag: true,
+  ///     hasSabGradient: true,
+  ///     // additional properties
+  ///   )
+  /// );
+  /// ```
+  ///
+  /// Parameters:
+  ///   - `newPage`: The new configuration of the [SliverWoltModalSheetPage] to apply to the
+  ///   currently visible page.
+  void updateCurrentPage(SliverWoltModalSheetPage newPage) {
+    setState(() {
+      _pages[_currentPageIndex] = newPage;
+    });
+  }
+  
+  /// The index of the currently displayed page in the in-modal navigation stack.
   int get currentPageIndex => _currentPageIndex;
 }
