@@ -1,33 +1,36 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
+import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithLazyList {
   SheetPageWithLazyList._();
 
-  static SliverWoltModalSheetPage build({
-    required VoidCallback onSabPressed,
-    required VoidCallback onBackPressed,
-    required VoidCallback onClosed,
-    bool isLastPage = true,
-  }) {
+  static const ModalPageName pageId = ModalPageName.lazyLoadingList;
+
+  static SliverWoltModalSheetPage build({bool isLastPage = true}) {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
     const heroImageHeight = 200.0;
     return SliverWoltModalSheetPage(
+      id: pageId,
       stickyActionBar: isLastPage
           ? null
           : Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: WoltElevatedButton(
-                onPressed: onSabPressed,
-                child: const Text("Next"),
-              ),
+              child: Builder(builder: (context) {
+                return WoltElevatedButton(
+                  onPressed: isLastPage
+                      ? Navigator.of(context).pop
+                      : WoltModalSheet.of(context).showNext,
+                  child: const Text("Next"),
+                );
+              }),
             ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       heroImageHeight: heroImageHeight,
-      heroImage: Stack(
-        children: const [
+      heroImage: const Stack(
+        children: [
           ColoredBox(
             color: Colors.yellow,
             child: SizedBox(height: heroImageHeight, width: double.infinity),
@@ -36,9 +39,8 @@ class SheetPageWithLazyList {
               fallbackHeight: heroImageHeight, color: Colors.yellowAccent),
         ],
       ),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackPressed),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
       mainContentSlivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(

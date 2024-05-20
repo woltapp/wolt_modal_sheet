@@ -26,6 +26,67 @@ in [Wolt](https://wolt.com/) products, this UI component offers a visually
 appealing and user-friendly modal sheet with multiple pages, motion animation
 for page transitions, and scrollable content within each page.
 
+# Table of Contents
+- [Examples](#examples)
+  * [Coffee Maker Example](#coffee-maker-example)
+  * [Playground Example](#playground-example)
+  * [Playground Navigator2 Example](#playground-navigator2-example)
+- [Features](#features)
+  * [Multi-Page Layout](#multi-page-layout)
+  * [Scrollable Content](#scrollable-content)
+  * [Responsive Design](#responsive-design)
+  * [Motion Animation](#motion-animation)
+  * [Imperative and Declarative Navigation](#imperative-and-declarative-navigation)
+  * [Dynamic Pagination](#dynamic-pagination)
+  * [State Management Integration](#state-management-integration)
+- [Understanding the page elements](#understanding-the-page-elements)
+  * [Navigation bar widgets](#navigation-bar-widgets)
+  * [Top bar and top bar title](#top-bar-and-top-bar-title)
+  * [Sticky action bar (SAB)](#sticky-action-bar--sab-)
+  * [Hero image](#hero-image)
+  * [Page Title](#page-title)
+  * [Main content](#main-content)
+- [Designer's Collaboration Guide](#designer-s-collaboration-guide)
+  * [What's Inside the Figma File](#what-s-inside-the-figma-file)
+  * [Utilizing the Figma File](#utilizing-the-figma-file)
+- [Customizable Animations](#customizable-animations)
+  * [Default Animation Style Specifications](#default-animation-style-specifications)
+  * [Example Configuration](#example-configuration)
+- [Usage of WoltModalSheet Pages](#usage-of-woltmodalsheet-pages)
+  * [SliverWoltModalSheetPage](#sliverwoltmodalsheetpage)
+  * [WoltModalSheetPage](#woltmodalsheetpage)
+  * [NonScrollingWoltModalSheetPage](#nonscrollingwoltmodalsheetpage)
+  * [Choosing between the three](#choosing-between-the-three)
+- [In-Modal Navigation](#in-modal-navigation)
+  * [Managing Navigation Stack](#managing-navigation-stack)
+    + [Adding Pages to the Stack](#adding-pages-to-the-stack)
+    + [Modifying Existing Pages](#modifying-existing-pages)
+  * [Navigation Between Pages](#navigation-between-pages)
+    + [Moving Previous or Next](#moving-previous-or-next)
+    + [Pushing Pages](#pushing-pages)
+    + [Popping Page](#popping-page)
+  * [Dynamic Navigation with ValueNotifiers](#dynamic-navigation-with-valuenotifiers)
+    + [Navigation by Page Index Notifier](#navigation-by-page-index-notifier)
+    + [Dynamic Page List Management by Page List Builder Notifier](#dynamic-page-list-management-by-page-list-builder-notifier)
+- [Getting started](#getting-started)
+- [CupertinoApp support](#cupertinoapp-support)
+- [Usage](#usage)
+  * [Example app](#example-app)
+  * [Playground app with imperative navigation](#playground-app-with-imperative-navigation)
+  * [Playground app with declarative navigation](#playground-app-with-declarative-navigation)
+  * [Coffee maker app for state management example](#coffee-maker-app-for-state-management-example)
+- [Additional information](#additional-information)
+
+## Examples
+
+You can review the usage examples of repository by clicking on the links.
+
+### [Coffee Maker Example](https://coffeemakerexample.web.app)
+
+### [Playground Example](https://playgroundwoltexample.web.app)
+
+### [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)
+
 ## Features
 
 ### Multi-Page Layout
@@ -375,52 +436,160 @@ When deciding which class to use for your modal sheet, consider the following gu
   without the need for scrollable behavior. Use this for content with fixed 
   or intrinsic dimensions that need to adapt to available vertical space.
 
-### Migration from 0.1.x to 0.2.0
+## In-Modal Navigation
 
-This section provides detailed guidance on the breaking changes introduced in
-version 0.2.0, particularly focusing on the usage of the `WoltModalSheetPage`
-class.
+The package provides in-modal navigation capabilities, allowing for dynamic 
+transitions and stack manipulations directly within the modal. This section 
+details how to utilize these features effectively in your applications.
 
-#### Changes Overview
+### Managing Navigation Stack
 
-* The previous constructors `WoltModalSheetPage.withSingleChild` and
-  `WoltModalSheetPage.withCustomSliverList` have been removed in this update.
-* We have introduced a new class, `SliverWoltModalSheetPage`, which now
-  serves as the base class for pages. This new class is intended to replace the
-  `WoltModalSheetPage.withCustomSliverList` constructor.
-* The `WoltModalSheetPage` class has been updated to extend from
-  `SliverWoltModalSheetPage`. This substitutes the `WoltModalSheetPage.
-  withSingleChild` constructor.
-* The `mainContentSlivers` property is now added to
-  `SliverWoltModalSheetPage` to replace the `sliverList` property of
-  `WoltModalSheetPage.withCustomSliverList`. This allows using list of
-  sliver widgets instead of a single sliver list in sliver pages.
+he following methods facilitate the addition, removal, and modification of 
+pages within the navigation stack. These functionalities allow you to 
+dynamically adapt the navigation stack based on user interactions without 
+disrupting the currently displayed page.
 
-#### Migration Steps
+#### Adding Pages to the Stack
 
-* If your previous implementation used `WoltModalSheetPage.withSingleChild`,
-  you can now directly transition to using `WoltModalSheetPage`.
+You can append one or more pages to the navigation stack. This feature is 
+particularly useful for preloading pages or preparing navigation paths for 
+future steps without changing the currently displayed page.
 
 ```dart
-// Before
-WoltModalSheetPage.withSingleChild(child: MyWidget());
-
-// After
-WoltModalSheetPage(child: MyWidget());
+WoltModalSheet.of(context).addPages([newPage1, newPage2, newPage3]);
+WoltModalSheet.of(context).addPage(newPage1);
 ```
 
-* If you were utilizing `WoltModalSheetPage.withCustomSliverList` for complex,
-  sliver-based content, switch to `SliverWoltModalSheetPage`. Utilize the
-  `mainContentSlivers` property to achieve a similar but more enhanced
-  functionality.
+#### Modifying Existing Pages
+
+These methods allow you to replace or remove specific pages within the stack.
+If the page being modified is currently visible, appropriate adjustments are 
+made to ensure seamless navigation.
+
+##### Replace a specific page
+When you need to update or change the content of a specific page within the 
+stack, this method allows you to replace any page by its identifier without 
+altering the rest of the stack.
+    
+```dart
+WoltModalSheet.of(context).replacePage(pageId, newPage);
+```
+
+##### Remove a specific page
+This method enables you to selectively remove a page from the navigation 
+stack using its identifier. If the page being removed is the currently 
+displayed page, it will remove the page and adjust the currently displayed page 
+accordingly. If it is not the current page, it is removed from the stack 
+without impacting the current view.
 
 ```dart
-// Before
-WoltModalSheetPage.withCustomSliverList(sliverList: MySliverList());
-
-// After
-SliverWoltModalSheetPage(mainContentSlivers: [MySliverList1(), MySliverList2()]);
+WoltModalSheet.of(context).removePage(pageId);
 ```
+
+##### Add or replace pages
+This method updates the navigation stack by either adding new pages or 
+replacing all subsequent pages depending on the position of the current page.
+If the current page is the last in the stack it simply appends the new pages.
+However, if the current page is not the last, it replaces all pages 
+following it with the new ones. This functionality is particularly useful 
+for adapting the user's navigation path dynamically based on their 
+interactions with the currently displayed page or when making adjustments to 
+previously made decisions.
+
+```dart
+WoltModalSheet.of(context).addOrReplacePages([newPage1, newPage2, newPage3]);
+WoltModalSheet.of(context).addOrReplacePage(newPage);
+```
+
+### Navigation Between Pages
+
+This subsection details the methods for moving within the modal's navigation 
+stack, allowing users to navigate through pages effectively.
+
+#### Direct navigation
+Navigate within the modal stack using specific methods to move directly to a 
+desired page. You can go to the next or previous page, jump to a page at a 
+specific index in the page list, or navigate to a page by its unique identifier.
+
+```dart
+// Move to the next page
+bool movedNext = WoltModalSheet.of(context).showNext();
+
+// Move to the previous page
+bool movedPrevious = WoltModalSheet.of(context).showPrevious();
+
+// Jump directly to a page at a specific index
+bool navigatedByIndex = WoltModalSheet.of(context).showAtIndex(2);
+
+// Navigate to a page by its unique identifier
+bool navigatedById = WoltModalSheet.of(context).showPageWithId(pageId);
+```
+
+#### Pushing Pages
+Using push methods, you can add one or more new pages to the end of the 
+navigation stack and navigate to the first of the newly added pages.
+
+```dart
+WoltModalSheet.of(context).pushPages([newPage1, newPage2, newPage3]);
+WoltModalSheet.of(context).pushPage(newPage);
+```
+
+#### Popping Page
+Using pop method, you can remove the last page of the navigation stack. If the
+user is on the last page, the method will navigate to the previous page.
+    
+```dart
+bool popped = WoltModalSheet.of(context).pop();
+```
+
+### Dynamic Navigation with ValueNotifiers
+`ValueNotifier<int> pageIndexNotifier` and 
+`ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier` can 
+also be utilized for in-modal navigation and setting the modal navigation 
+stack. These notifiers dynamically manage the visible page index 
+and the page list, enhancing flexibility in response to the state changes.
+
+#### Navigation by Page Index Notifier
+`ValueNotifier<int> pageIndexNotifier` controls the visible page index, 
+enabling transitions between pages based on user interactions or other events.
+
+```dart
+// Example of setting up a modal with navigation between pages controlled by 
+// a ValueNotifier<int>.
+final pageIndexNotifier = ValueNotifier(0); // Initializes the page index
+
+WoltModalSheet.show(
+  context: context,
+  pageListBuilder: (modalSheetContext) => [
+    PageOne(onNextButtonPressed: () => pageIndexNotifier.value = 1),
+    PageTwo(onBackButtonPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1),
+  ],
+  pageIndexNotifier: pageIndexNotifier,  // Tracks and updates the displayed page
+);
+
+```
+
+#### Dynamic Page List Management by Page List Builder Notifier
+`ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier` 
+manages updates to the modal's page list based on user interactions or other 
+app state changes. This is useful when implementing Navigator 2.0 for 
+declarative navigation scenarios. It is not suggested to mix the usage of 
+this notifier with the imperative navigation methods provided by the package.
+
+```dart
+final pageIndexNotifier = ValueNotifier(0); // Initializes the page index
+final pageListBuilderNotifier = ValueNotifier((context) => [
+  PageOne(onNextButtonPressed: () => pageIndexNotifier.value++),
+  PageTwo(onBackButtonPressed: () => pageIndexNotifier.value--),
+]);
+
+WoltModalSheet.showWithDynamicPath(
+  context: context,
+  pageListBuilderNotifier: pageListBuilderNotifier,
+  pageIndexNotifier: pageIndexNotifier,  // Dynamically updates the navigation stack
+);
+```
+
 
 ## Getting started
 
@@ -467,7 +636,7 @@ Widget build(BuildContext context) {
         child: Column(
           children: [
             ElevatedButton(
-              onPressed: () => Navigator.of(modalSheetContext).pop(),
+              onPressed: Navigator.of(modalSheetContext).pop,
               child: const SizedBox(
                 height: _buttonHeight,
                 width: double.infinity,
@@ -476,7 +645,7 @@ Widget build(BuildContext context) {
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+              onPressed: WoltModalSheet.of(modalSheetContext).showNext,
               child: const SizedBox(
                 height: _buttonHeight,
                 width: double.infinity,
@@ -518,23 +687,20 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
         ),
       ),
       heroImage: Image(
-        image: AssetImage(
-          'lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
+        image: NetworkImage(
+          'https://raw.githubusercontent.com/woltapp/wolt_modal_sheet/main/example/lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
         ),
         fit: BoxFit.cover,
       ),
       leadingNavBarWidget: IconButton(
         padding: const EdgeInsets.all(_pagePadding),
         icon: const Icon(Icons.arrow_back_rounded),
-        onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+        onPressed: WoltModalSheet.of(modalSheetContext).showPrevious,
       ),
       trailingNavBarWidget: IconButton(
         padding: const EdgeInsets.all(_pagePadding),
         icon: const Icon(Icons.close),
-        onPressed: () {
-          Navigator.of(modalSheetContext).pop();
-          pageIndexNotifier.value = 0;
-        },
+        onPressed: Navigator.of(modalSheetContext).pop,
       ),
       mainContentSlivers: [
         SliverGrid(
@@ -555,16 +721,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
             childCount: materialColorsInSliverList.length,
           ),
         ),
-        ...materialColorsInSpinner.map((e) => Shifter(child: ColorTile(color: e))).toList(),
-        SliverPadding(
-          padding: const EdgeInsets.all(_pagePadding),
-          sliver: SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: Navigator.of(modalSheetContext).pop,
-              child: const Text('Close'),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -577,6 +733,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           heroImageHeight: _heroImageHeight,
           topBarShadowColor: _lightThemeShadowColor,
           modalBarrierColor: Colors.black54,
+          mainContentScrollPhysics: ClampingScrollPhysics(),
         ),
       ],
     ),
@@ -588,6 +745,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           sabGradientColor: _darkSabGradientColor,
           dialogShape: BeveledRectangleBorder(),
           bottomSheetShape: BeveledRectangleBorder(),
+          mainContentScrollPhysics: ClampingScrollPhysics(),
         ),
       ],
     ),
@@ -597,24 +755,10 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Light Theme'),
-                  Padding(
-                    padding: const EdgeInsets.all(_pagePadding),
-                    child: Switch(
-                      value: !_isLightTheme,
-                      onChanged: (_) => setState(() => _isLightTheme = !_isLightTheme),
-                    ),
-                  ),
-                  const Text('Dark Theme'),
-                ],
-              ),
+              Row(...),
               ElevatedButton(
                 onPressed: () {
                   WoltModalSheet.show<void>(
-                    pageIndexNotifier: pageIndexNotifier,
                     context: context,
                     pageListBuilder: (modalSheetContext) {
                       final textTheme = Theme.of(context).textTheme;
@@ -624,7 +768,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       ];
                     },
                     modalTypeBuilder: (context) {
-                      final size = MediaQuery.of(context).size.width;
+                      final size = MediaQuery.sizeOf(context).width;
                       if (size < _pageBreakpoint) {
                         return WoltModalType.bottomSheet;
                       } else {
@@ -634,7 +778,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                     onModalDismissedWithBarrierTap: () {
                       debugPrint('Closed modal sheet with barrier tap');
                       Navigator.of(context).pop();
-                      pageIndexNotifier.value = 0;
                     },
                     maxDialogWidth: 560,
                     minDialogWidth: 400,
@@ -667,16 +810,7 @@ The code snippet above produces the following:
 
 The [playground](./playground/) app demonstrates how to imperatively show the
 modal sheet. The purpose of this module is to play and experiment with various
-use cases. These use cases include:
-
-- A page with a height set to be maximum regardless of the content height.
-- A page with a hero image
-- A page with a list whose items are lazily built.
-- A page with an auto-focused text field.
-- A page with a custom top bar.
-- A page without a page title nor a top bar.
-- A page whose properties are dynamically set.
-- All the pages in one flow.
+use cases.
 
 ### Playground app with declarative navigation
 
@@ -695,29 +829,27 @@ notifier provider so that the page components can be rebuilt according to the
 current state:
 
 ```dart
-  void _onCoffeeOrderSelectedInAddWaterState(BuildContext context,
-    String coffeeOrderId) {
-  final model = context.read<StoreOnlineViewModel>();
-  final pageIndexNotifier = ValueNotifier(0);
+  void _onCoffeeOrderSelectedInAddWaterState(
+      BuildContext context, String coffeeOrderId) {
+    final model = context.read<StoreOnlineViewModel>();
 
-  WoltModalSheet.show(
-    pageIndexNotifier: pageIndexNotifier,
-    context: context,
-    decorator: (child) {
-      return ChangeNotifierProvider<StoreOnlineViewModel>.value(
-        value: model,
-        builder: (_, __) => child,
-      );
-    },
-    pageListBuilderNotifier: AddWaterModalPageBuilder.build(
-      coffeeOrderId: coffeeOrderId,
-      goToPreviousPage: () =>
-      pageIndexNotifier.value = pageIndexNotifier.value - 1,
-      goToNextPage: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
-    ),
-    modalTypeBuilder: _modalTypeBuilder,
-  );
-}
+    WoltModalSheet.show(
+      context: context,
+      decorator: (child) {
+        return ChangeNotifierProvider<StoreOnlineViewModel>.value(
+          value: model,
+          builder: (_, __) => child,
+        );
+      },
+      pageListBuilder: (context) {
+        return [
+          AddWaterDescriptionModalPage.build(coffeeOrderId),
+          WaterSettingsModalPage.build(coffeeOrderId)
+        ];
+      },
+      modalTypeBuilder: _modalTypeBuilder,
+    );
+  }
 ```
 
 ![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_coffee_maker.gif?raw=true)

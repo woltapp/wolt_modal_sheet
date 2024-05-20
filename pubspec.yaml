@@ -4,8 +4,8 @@ version: 0.5.0
 repository: https://github.com/woltapp/wolt_modal_sheet
 
 environment:
-  sdk: '>=2.19.2 <4.0.0'
-  flutter: '>=3.7.2'
+  sdk: '>=3.0.6 <4.0.0'
+  flutter: 3.10.6
 
 dependencies:
   flutter:

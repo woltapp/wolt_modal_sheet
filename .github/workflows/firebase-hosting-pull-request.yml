@@ -1,13 +1,17 @@
-name: Deploy to Firebase Hosting on PR
+name: Deploy Wolt Examples on PR
 'on': pull_request_target
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - uses: subosito/flutter-action@v2.16.0
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       - run: flutter build web --release --web-renderer=canvaskit
         working-directory: ./coffee_maker
       - run: flutter build web --release --web-renderer=canvaskit

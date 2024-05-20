@@ -1,6 +1,7 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:playground/home/dynamic_page_properties.dart';
+import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// This is a page that is shown in the modal sheet to demonstrate how to change the page
@@ -8,31 +9,33 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class SheetPageWithDynamicPageProperties {
   SheetPageWithDynamicPageProperties._();
 
-  static WoltModalSheetPage build({
-    required VoidCallback onSabPressed,
-    required VoidCallback onBackPressed,
-    required VoidCallback onClosed,
-    required BuildContext context,
+  static const ModalPageName pageId = ModalPageName.dynamicPageProperties;
+
+  static WoltModalSheetPage build(
+    BuildContext context, {
     bool isLastPage = true,
   }) {
-    final dynamicPageModel = DynamicPageProperties.of(context)!;
     bool useOriginalPageValues = true;
     return WoltModalSheetPage(
+      id: pageId,
       hasSabGradient: false,
-      enableDrag: dynamicPageModel.value.enableDrag,
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: WoltElevatedButton(
-          onPressed: onSabPressed,
-          colorName: WoltColorName.green,
-          child: Text(isLastPage ? "Close" : "Next"),
-        ),
-      ),
+      enableDrag: DynamicPageProperties.of(context)?.value.enableDrag ?? false,
+      stickyActionBar: Builder(builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: WoltElevatedButton(
+            onPressed: isLastPage
+                ? Navigator.of(context).pop
+                : WoltModalSheet.of(context).showNext,
+            colorName: WoltColorName.green,
+            child: Text(isLastPage ? "Close" : "Next"),
+          ),
+        );
+      }),
       isTopBarLayerAlwaysVisible: true,
       topBarTitle: const ModalSheetTopBarTitle('Dynamic page properties'),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackPressed),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,9 +50,15 @@ class SheetPageWithDynamicPageProperties {
                       Switch(
                         value: useOriginalPageValues,
                         onChanged: (newValue) {
-                          dynamicPageModel.value =
+                          final dynamicPageModel =
+                              DynamicPageProperties.of(context);
+                          dynamicPageModel?.value =
                               dynamicPageModel.value.copyWith(
                             enableDrag: newValue,
+                          );
+                          // Update the current page to reflect the changes.
+                          WoltModalSheet.of(context).updateCurrentPage(
+                            SheetPageWithDynamicPageProperties.build(context),
                           );
                           setState(() =>
                               useOriginalPageValues = !useOriginalPageValues);
