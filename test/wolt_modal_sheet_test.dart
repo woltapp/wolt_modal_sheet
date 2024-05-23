@@ -227,7 +227,6 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(body: Center(
