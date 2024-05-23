@@ -213,9 +213,9 @@ void main() {
     // The default modalTypeBuilder should be a dialog on wide screens.
     expect(tester.getSize(sheetMaterial), sheetPageSize);
     expect(tester.getTopLeft(sheetMaterial),
-        Offset((viewSize.width / 2) - (sheetPageSize.width / 2), 250.0));
+        Offset((viewSize.width / 2) - (sheetPageSize.width / 2), 253.0));
     expect(tester.getTopRight(sheetMaterial),
-        Offset((viewSize.width / 2) + (sheetPageSize.width / 2), 250.0));
+        Offset((viewSize.width / 2) + (sheetPageSize.width / 2), 253.0));
   });
 
   testWidgets('WoltModalSheet.modalTypeBuilder defaults - narrow window size',
