@@ -5,7 +5,7 @@ enum ModalPageName {
   textField,
   noTitleNoTopBar,
   customTopBar,
-  dynamicPageProperties,
+  updatePage,
   inAppNavigation,
   flexibleLayout,
 }

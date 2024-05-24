@@ -475,6 +475,30 @@ altering the rest of the stack.
 WoltModalSheet.of(context).replacePage(pageId, newPage);
 ```
 
+##### Replace or update the current page
+
+When the current page needs to be removed from the page list and replaced by 
+a new page, with a pagination animation at the same position in the list, 
+use `replaceCurrentPage` method.
+
+```dart
+WoltModalSheet.of(context).replaceCurrentPage(newPage);
+```
+
+When the overall context or the purpose of the current page is still 
+relevant, but you need to modify specific attributes of the current page, use 
+`updateCurrentPage` method.
+
+```dart
+WoltModalSheet.of(context).updateCurrentPage((currentPage) {
+  return currentPage.copyWith(
+    enableDrag: true,
+    hasTopBarLayer: false,
+    // Other updated properties...
+  );
+});
+```
+
 ##### Remove a specific page
 This method enables you to selectively remove a page from the navigation 
 stack using its identifier. If the page being removed is the currently 
