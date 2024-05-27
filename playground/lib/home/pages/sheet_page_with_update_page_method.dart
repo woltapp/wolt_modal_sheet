@@ -70,11 +70,13 @@ class SheetPageWithUpdatePage {
                       hasTopBarLayer: newValue,
                       topBarTitle: newValue
                           ? const ModalSheetTopBarTitle('Update page')
-                          : null,
-                      leadingNavBarWidget:
-                          newValue ? const WoltModalSheetBackButton() : null,
-                      trailingNavBarWidget:
-                          newValue ? const WoltModalSheetCloseButton() : null,
+                          : const SizedBox.shrink(),
+                      leadingNavBarWidget: newValue
+                          ? const WoltModalSheetBackButton()
+                          : const SizedBox.shrink(),
+                      trailingNavBarWidget: newValue
+                          ? const WoltModalSheetCloseButton()
+                          : const SizedBox.shrink(),
                       child: const Placeholder(
                           fallbackHeight: 1200, color: Colors.pink),
                     );
