@@ -884,9 +884,10 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// });
   /// ```
   ///
-  /// Use this method if the page type is extended from [SliverWoltModalSheetPage] such as
-  /// [WoltModalSheetPage] or [NonScrollingWoltModalSheetPage] and you want to replace the main
-  /// content of the page with a single [child] Widget.
+  /// Use [SliverWoltModalSheetPage.copyWithChild] method to update the page if the page type is
+  /// extended from [SliverWoltModalSheetPage] such as [WoltModalSheetPage] or
+  /// [NonScrollingWoltModalSheetPage] and you want to replace the main content of the page with
+  /// a single [child] Widget.
   ///
   /// Example:
   /// ```dart
