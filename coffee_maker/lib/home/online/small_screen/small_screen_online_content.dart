@@ -1,9 +1,9 @@
-import 'package:coffee_maker/constants/demo_app_colors.dart';
 import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker/home/online/small_screen/small_screen_bottom_navigation_bar.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:coffee_maker/home/widgets/top_bar.dart';
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 /// A widget that represents the online content for small screens.
@@ -51,7 +51,7 @@ class _SmallScreenOnlineContentState extends State<SmallScreenOnlineContent> {
                 width: double.infinity,
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                color: DemoAppColors.black4,
+                color: WoltColors.black8,
                 child: widget._coffeeMakerStepListWidgets[
                     _selectedStepForBottomNavigationBar]!,
               ),

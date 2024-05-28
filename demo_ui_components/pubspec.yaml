@@ -12,6 +12,7 @@ dependencies:
   equatable: ^2.0.5
   collection: ^1.16.0
   wolt_responsive_layout_grid: ^0.0.3
+  google_fonts: 6.0.0
   wolt_modal_sheet:
     path: ..
 
