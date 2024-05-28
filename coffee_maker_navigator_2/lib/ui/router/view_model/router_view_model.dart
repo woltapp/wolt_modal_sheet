@@ -42,7 +42,7 @@ class RouterViewModel extends ChangeNotifier {
       final shouldShowTutorial = !onboardingService.isTutorialShown();
       state = state.copyWith(
         pages: [
-          OrdersRoutePage(),
+          const OrdersRoutePage(),
           if (shouldShowTutorial) const OnboardingModalRoutePage(),
         ],
       );
