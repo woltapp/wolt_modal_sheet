@@ -2,7 +2,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:playground/home/pages/sheet_page_with_custom_top_bar.dart';
-import 'package:playground/home/pages/sheet_page_with_dynamic_page_properties.dart';
+import 'package:playground/home/pages/sheet_page_with_update_page_method.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
 import 'package:playground/home/pages/sheet_page_with_in_app_navigation.dart';
@@ -30,7 +30,7 @@ class RootSheetPage {
         SheetPageWithInAppNavigation.build(isLastPage: false),
         SheetPageWithCustomTopBar.build(isLastPage: false),
         SheetPageWithNoPageTitleNoTopBar.build(isLastPage: false),
-        SheetPageWithDynamicPageProperties.build(context, isLastPage: true),
+        SheetPageWithUpdatePage.build(context, isLastPage: true),
       ];
 
   static WoltModalSheetPage build(BuildContext context) {
@@ -99,8 +99,8 @@ class RootSheetPage {
                       isSelected: false,
                     ),
                     WoltSelectionListItemData(
-                      title: 'Page with dynamic properties',
-                      value: SheetPageWithDynamicPageProperties.pageId,
+                      title: 'Page with updateCurrentPage method',
+                      value: SheetPageWithUpdatePage.pageId,
                       isSelected: false,
                     ),
                     WoltSelectionListItemData(
@@ -139,9 +139,8 @@ class RootSheetPage {
                     case ModalPageName.customTopBar:
                       destinationPage = SheetPageWithCustomTopBar.build();
                       break;
-                    case ModalPageName.dynamicPageProperties:
-                      destinationPage =
-                          SheetPageWithDynamicPageProperties.build(context);
+                    case ModalPageName.updatePage:
+                      destinationPage = SheetPageWithUpdatePage.build(context);
                       break;
                     case ModalPageName.flexibleLayout:
                       destinationPage = SheetPageWithNonScrollingLayout.build();

@@ -197,9 +197,7 @@ class _WoltModalSheetAnimatedSwitcherState
     final newVisiblePage = widget.pages[newPageIndex];
     final isCurrentVisiblePageSame = oldVisiblePage == newVisiblePage;
 
-    if (!isCurrentVisiblePageSame) {
-      _addPage(animate: true);
-    }
+    _addPage(animate: !isCurrentVisiblePageSame);
   }
 
   @override

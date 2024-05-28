@@ -839,14 +839,16 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     }
   }
 
-  /// Replaces the current page in the modal sheet stack with a new page.
+  /// Replaces the current page with a new one, using a pagination animation.
   ///
-  /// This method updates the navigation stack by replacing the current page with a new
-  /// page. It's particularly useful for updating the content of the current view without
-  /// disrupting the overall navigation flow.
+  /// Use this method when the current page needs to be removed from the page list and replaced
+  /// by a new page, with a pagination animation at the same position in the list.
   ///
   /// Parameters:
-  /// - [newPage]: The new [SliverWoltModalSheetPage] to replace the current page.
+  /// - [newPage]: The [SliverWoltModalSheetPage] that will replace the current page.
+  ///
+  /// Usage Note:
+  /// For a non-animated update of the current page's properties, use [updateCurrentPage].
   ///
   /// Returns:
   /// None.
@@ -854,6 +856,57 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     setState(() {
       _pages = List<SliverWoltModalSheetPage>.from(_pages);
       _pages[_currentPageIndex] = newPage; // Replace the current page
+    });
+  }
+
+  /// Updates the properties of the current page immediately, without pagination animation.
+  ///
+  /// Use this method when the context of the current page remains the same but needs modifications
+  /// to specific attributes. This is achieved through a function that takes the current page and
+  /// returns a modified version of it.
+  ///
+  /// Parameters:
+  /// - [updateFunction]: A function that takes the current [SliverWoltModalSheetPage] and returns
+  ///   a new instance with updated properties.
+  ///
+  /// Usage Note:
+  /// For replacing the current page with a new one including pagination animation, use
+  /// [replaceCurrentPage].
+  ///
+  /// Example:
+  /// ```dart
+  /// WoltModalSheet.of(context).updateCurrentPage((currentPage) {
+  ///   return currentPage.copyWith(
+  ///     enableDrag: true,
+  ///     hasTopBarLayer: false,
+  ///     // Other updated properties...
+  ///   );
+  /// });
+  /// ```
+  ///
+  /// Use [SliverWoltModalSheetPage.copyWithChild] method to update the page if the page type is
+  /// extended from [SliverWoltModalSheetPage] such as [WoltModalSheetPage] or
+  /// [NonScrollingWoltModalSheetPage] and you want to replace the main content of the page with
+  /// a single [child] Widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// WoltModalSheet.of(context).updateCurrentPage((currentPage) {
+  ///   return currentPage.copyWithChild(
+  ///     child: UpdatedChildWidget(),
+  ///     hasTopBarLayer: false,
+  ///     // Other updated properties...
+  ///   );
+  /// });
+  /// ```
+  ///
+  /// Returns:
+  /// None.
+  void updateCurrentPage(
+      SliverWoltModalSheetPage Function(SliverWoltModalSheetPage)
+          updateFunction) {
+    setState(() {
+      _pages[_currentPageIndex] = updateFunction(_pages[_currentPageIndex]);
     });
   }
 
@@ -970,33 +1023,6 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       return true;
     }
     return false;
-  }
-
-  /// Updates the currently visible page in the modal sheet without pagination animation.
-  ///
-  /// This method directly modifies the properties of the current page, effectively
-  /// replacing it with the provided page instance. It's particularly useful for updating the
-  /// current page's non-widget content such as [SliverWoltModalSheetPage.enableDrag] or
-  /// [SliverWoltModalSheetPage.hasSabGradient].
-  ///
-  /// Usage Example:
-  /// ```dart
-  /// WoltModalSheet.of(context).updateCurrentPage(
-  ///   SliverWoltModalSheetPage(
-  ///     enableDrag: true,
-  ///     hasSabGradient: true,
-  ///     // additional properties
-  ///   )
-  /// );
-  /// ```
-  ///
-  /// Parameters:
-  ///   - `newPage`: The new configuration of the [SliverWoltModalSheetPage] to apply to the
-  ///   currently visible page.
-  void updateCurrentPage(SliverWoltModalSheetPage newPage) {
-    setState(() {
-      _pages[_currentPageIndex] = newPage;
-    });
   }
 
   /// The index of the currently displayed page in the in-modal navigation stack.

@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/modal_page/non_scrolling_wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 
@@ -257,4 +259,129 @@ class SliverWoltModalSheetPage {
         assert(
             (mainContentSlivers != null) ^ (mainContentSliversBuilder != null),
             "Either mainContentSlivers or mainContentSliversBuilder must be provided, but not both");
+
+  SliverWoltModalSheetPage copyWith({
+    Object? id,
+    Widget? pageTitle,
+    Widget? topBarTitle,
+    Widget? topBar,
+    bool? hasTopBarLayer,
+    bool? isTopBarLayerAlwaysVisible,
+    List<Widget> Function(BuildContext context)? mainContentSliversBuilder,
+    Widget? heroImage,
+    double? heroImageHeight,
+    Color? backgroundColor,
+    Color? surfaceTintColor,
+    double? navBarHeight,
+    bool? forceMaxHeight,
+    ScrollController? scrollController,
+    Widget? stickyActionBar,
+    bool? hasSabGradient,
+    bool? enableDrag,
+    Color? sabGradientColor,
+    Widget? leadingNavBarWidget,
+    Widget? trailingNavBarWidget,
+    bool? resizeToAvoidBottomInset,
+    Widget? child,
+  }) {
+    return SliverWoltModalSheetPage(
+      id: id ?? this.id,
+      pageTitle: pageTitle ?? this.pageTitle,
+      topBarTitle: topBarTitle ?? this.topBarTitle,
+      topBar: topBar ?? this.topBar,
+      hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
+      isTopBarLayerAlwaysVisible:
+          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      mainContentSliversBuilder:
+          mainContentSliversBuilder ?? this.mainContentSliversBuilder,
+      heroImage: heroImage ?? this.heroImage,
+      heroImageHeight: heroImageHeight ?? this.heroImageHeight,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      surfaceTintColor: surfaceTintColor ?? this.surfaceTintColor,
+      navBarHeight: navBarHeight ?? this.navBarHeight,
+      forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
+      scrollController: scrollController ?? this.scrollController,
+      stickyActionBar: stickyActionBar ?? this.stickyActionBar,
+      hasSabGradient: hasSabGradient ?? this.hasSabGradient,
+      enableDrag: enableDrag ?? this.enableDrag,
+      sabGradientColor: sabGradientColor ?? this.sabGradientColor,
+      leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
+      trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+    );
+  }
+
+  /// Creates a [SliverWoltModalSheetPage] from a page whose main content is provided as a single
+  /// widget.
+  ///
+  /// Use this method if the page type is extended from [SliverWoltModalSheetPage] such as
+  /// [WoltModalSheetPage] or [NonScrollingWoltModalSheetPage] and you want to replace the main
+  /// content of the page with a single [child] Widget.
+  SliverWoltModalSheetPage copyWithChild({
+    Object? id,
+    Widget? pageTitle,
+    Widget? topBarTitle,
+    Widget? topBar,
+    bool? hasTopBarLayer,
+    bool? isTopBarLayerAlwaysVisible,
+    Widget? heroImage,
+    double? heroImageHeight,
+    Color? backgroundColor,
+    Color? surfaceTintColor,
+    double? navBarHeight,
+    bool? forceMaxHeight,
+    ScrollController? scrollController,
+    Widget? stickyActionBar,
+    bool? hasSabGradient,
+    bool? enableDrag,
+    Color? sabGradientColor,
+    Widget? leadingNavBarWidget,
+    Widget? trailingNavBarWidget,
+    bool? resizeToAvoidBottomInset,
+    Widget? child,
+  }) {
+    return SliverWoltModalSheetPage(
+      id: id ?? this.id,
+      pageTitle: pageTitle ?? this.pageTitle,
+      topBarTitle: topBarTitle ?? this.topBarTitle,
+      topBar: topBar ?? this.topBar,
+      hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
+      isTopBarLayerAlwaysVisible:
+          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      mainContentSliversBuilder: child == null
+          ? mainContentSliversBuilder
+          : _mainContentBuilderFromChild(child),
+      heroImage: heroImage ?? this.heroImage,
+      heroImageHeight: heroImageHeight ?? this.heroImageHeight,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      surfaceTintColor: surfaceTintColor ?? this.surfaceTintColor,
+      navBarHeight: navBarHeight ?? this.navBarHeight,
+      forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
+      scrollController: scrollController ?? this.scrollController,
+      stickyActionBar: stickyActionBar ?? this.stickyActionBar,
+      hasSabGradient: hasSabGradient ?? this.hasSabGradient,
+      enableDrag: enableDrag ?? this.enableDrag,
+      sabGradientColor: sabGradientColor ?? this.sabGradientColor,
+      leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
+      trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+    );
+  }
+
+  List<Widget> Function(BuildContext context)? _mainContentBuilderFromChild(
+      Widget child) {
+    if (this is WoltModalSheetPage) {
+      return (_) => [
+            SliverToBoxAdapter(child: child),
+          ];
+    } else if (this is NonScrollingWoltModalSheetPage) {
+      return (_) => [
+            SliverFillViewport(delegate: SliverChildListDelegate([child])),
+          ];
+    } else {
+      return mainContentSliversBuilder;
+    }
+  }
 }
