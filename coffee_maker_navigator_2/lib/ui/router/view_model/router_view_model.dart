@@ -55,11 +55,10 @@ class RouterViewModel extends ChangeNotifier {
   void _navigateToOrdersScreen({
     CoffeeMakerStep? destinationBottomNavBarTab,
   }) {
-    final destination =
-        destinationBottomNavBarTab ?? state.bottomNavigationTabInOrdersPage;
     state = state.copyWith(
-      pages: [OrdersRoutePage(destination)],
-      bottomNavigationTabInOrdersPage: destination,
+      pages: [const OrdersRoutePage()],
+      bottomNavigationTabInOrdersPage:
+          destinationBottomNavBarTab ?? state.bottomNavigationTabInOrdersPage,
     );
     notifyListeners();
   }
@@ -88,7 +87,7 @@ class RouterViewModel extends ChangeNotifier {
   void _navigateToAddWaterScreen(String coffeeOrderId) {
     state = state.copyWith(
       pages: [
-        OrdersRoutePage(state.bottomNavigationTabInOrdersPage),
+        const OrdersRoutePage(),
         AddWaterRoutePage(coffeeOrderId),
       ],
     );
@@ -173,5 +172,10 @@ class RouterViewModel extends ChangeNotifier {
 
   void onAddWaterStepEntering(String coffeeOrderId) {
     _navigateToAddWaterScreen(coffeeOrderId);
+  }
+
+  void onOrdersScreenSelectedBottomNavBarUpdated(CoffeeMakerStep selectedStep) {
+    state = state.copyWith(bottomNavigationTabInOrdersPage: selectedStep);
+    notifyListeners();
   }
 }

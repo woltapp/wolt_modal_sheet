@@ -34,17 +34,12 @@ class OrdersRoutePage extends AppRoutePage<void> {
   @override
   String get name => RouteSettingsName.orders.routeName;
 
-  final CoffeeMakerStep initialBottomNavigationTab;
-
-  OrdersRoutePage([this.initialBottomNavigationTab = CoffeeMakerStep.grind])
-      : super(key: ValueKey(initialBottomNavigationTab));
+  const OrdersRoutePage() : super(key: const ValueKey('OrdersRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
     return MaterialPageRoute<void>(
-      builder: (context) => OrdersScreen(
-        initialBottomNavigationTab: initialBottomNavigationTab,
-      ),
+      builder: (context) => const OrdersScreen(),
       settings: this,
     );
   }

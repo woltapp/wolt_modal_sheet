@@ -17,7 +17,7 @@ class RouterViewModelState {
     return RouterViewModelState(
       pages: isLoggedIn
           ? [
-              OrdersRoutePage(),
+              const OrdersRoutePage(),
               if (!isTutorialModalShown) const OnboardingModalRoutePage(),
             ]
           : const [AuthRoutePage()],
