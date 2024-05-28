@@ -2,6 +2,8 @@ import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_ste
 import 'package:coffee_maker_navigator_2/ui/add_water/view/widgets/add_water_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view/auth_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/onboarding/view/onboarding_modal_sheet_page.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/grind_or_reject_modal_page.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/reject_order_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/orders_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/router/entities/app_route_settings_name.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
@@ -116,6 +118,33 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
           context.read<RouterViewModel>().onCloseOnboardingModalSheet,
       onModalDismissedWithBarrierTap:
           context.read<RouterViewModel>().onCloseOnboardingModalSheet,
+    );
+  }
+}
+
+class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
+  @override
+  String get name => RouteSettingsName.onboarding.routeName;
+
+  final String coffeeOrderId;
+  final void Function(String orderId, [CoffeeMakerStep? newStep])
+      onCoffeeOrderStatusChange;
+
+  GrindCoffeeModalRoutePage(
+    this.coffeeOrderId,
+    this.onCoffeeOrderStatusChange,
+  ) : super(key: ValueKey('GrindCoffeeModalRoutePage-$coffeeOrderId'));
+
+  @override
+  Route<void> createRoute(BuildContext context) {
+    return WoltModalSheetRoute(
+      routeSettings: this,
+      pageListBuilderNotifier: ValueNotifier(
+        (context) => [
+          GrindOrRejectModalPage(coffeeOrderId, onCoffeeOrderStatusChange),
+          RejectOrderModalPage(coffeeOrderId, onCoffeeOrderStatusChange),
+        ],
+      ),
     );
   }
 }

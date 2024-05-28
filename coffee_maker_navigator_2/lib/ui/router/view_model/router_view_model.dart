@@ -107,6 +107,7 @@ class RouterViewModel extends ChangeNotifier {
       case RouteSettingsName.tutorials:
       case RouteSettingsName.addWater:
       case RouteSettingsName.onboarding:
+      case RouteSettingsName.grindCoffee:
         _navigateToOrdersScreen();
     }
   }
@@ -130,6 +131,7 @@ class RouterViewModel extends ChangeNotifier {
         _navigateToTutorialsScreen();
 
         return Future.value(true);
+      case GrindCoffeeModalRoutePage():
       case TutorialsRoutePage():
       case OnboardingModalRoutePage():
         _navigateToOrdersScreen();
@@ -176,6 +178,31 @@ class RouterViewModel extends ChangeNotifier {
 
   void onOrdersScreenSelectedBottomNavBarUpdated(CoffeeMakerStep selectedStep) {
     state = state.copyWith(bottomNavigationTabInOrdersPage: selectedStep);
+    notifyListeners();
+  }
+
+  void onGrindStepEntering(
+    String id,
+    void Function(String orderId, [CoffeeMakerStep? newStep])
+        onCoffeeOrderStatusChange,
+  ) {
+    state = state.copyWith(
+      pages: [
+        const OrdersRoutePage(),
+        GrindCoffeeModalRoutePage(id, onCoffeeOrderStatusChange),
+      ],
+    );
+    notifyListeners();
+  }
+
+  void onGrindStepExit({required bool hasStartedGrinding}) {
+    state = state.copyWith(
+      pages: [
+        const OrdersRoutePage(),
+      ],
+      bottomNavigationTabInOrdersPage:
+          hasStartedGrinding ? CoffeeMakerStep.addWater : CoffeeMakerStep.grind,
+    );
     notifyListeners();
   }
 }
