@@ -8,7 +8,8 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class RootSheetPage {
   RootSheetPage._();
 
-  static final ValueNotifier<bool> _isButtonEnabledNotifier = ValueNotifier(false);
+  static final ValueNotifier<bool> _isButtonEnabledNotifier =
+      ValueNotifier(false);
 
   static WoltModalSheetPage build(BuildContext context) {
     const title = 'Choose a use case';
