@@ -1,3 +1,41 @@
+## 0.6.0
+- Add coffee maker navigator 2 example to Firebase Deploy. [#214](https://github.com/woltapp/wolt_modal_sheet/pull/214)
+- Refactor updateCurrentPage method and introduce easy page update. [#213](https://github.com/woltapp/wolt_modal_sheet/pull/213)
+- Update `wolt_modal_sheet_test.dart` tests. [#212](https://github.com/woltapp/wolt_modal_sheet/pull/212)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Add Coffee Maker Demo App example with navigator 2.0 (Flutter Full Stack Conference). [#209](https://github.com/woltapp/wolt_modal_sheet/pull/209)
+- Remove duplicate methods of WoltModalSheet. [#208](https://github.com/woltapp/wolt_modal_sheet/pull/208)
+  - Fixes:
+    - [#202](https://github.com/woltapp/wolt_modal_sheet/issues/202) add getter for `atRoot`
+- Introduce updateCurrentPage method to update the currently visible page without pagination animation. [#207](https://github.com/woltapp/wolt_modal_sheet/pull/207)
+  - Fixes:
+    - [#205](https://github.com/woltapp/wolt_modal_sheet/issues/205) Dynamic Page Properties don't work
+- Expose Page index getter. [#204](https://github.com/woltapp/wolt_modal_sheet/pull/204)
+  - Fixes:
+    - [#202](https://github.com/woltapp/wolt_modal_sheet/issues/202) add getter for `atRoot`
+- fix: only decorate the content of the modal. [#203](https://github.com/woltapp/wolt_modal_sheet/pull/203)
+  - Fixes:
+    - [#201](https://github.com/woltapp/wolt_modal_sheet/issues/201) The child provided to decorator functions is larger than it should be
+- Update readme. [#197](https://github.com/woltapp/wolt_modal_sheet/pull/197)
+- Update PR deployment method. [#195](https://github.com/woltapp/wolt_modal_sheet/pull/195)
+- Update PR checks. [#192](https://github.com/woltapp/wolt_modal_sheet/pull/192)
+  - Fixes:
+    - [#190](https://github.com/woltapp/wolt_modal_sheet/issues/190) Add PR check for tests
+- Add tests PR check and improve existing checks. [#191](https://github.com/woltapp/wolt_modal_sheet/pull/191)
+  - Fixes:
+    - [#190](https://github.com/woltapp/wolt_modal_sheet/issues/190) Add PR check for tests
+- Add Enhanced Navigation Methods to WoltModalSheet. [#188](https://github.com/woltapp/wolt_modal_sheet/pull/188)
+- Bump minimum Flutter version to `3.10.6` and update Melos docs. [#187](https://github.com/woltapp/wolt_modal_sheet/pull/187)
+  - Fixes:
+    - [#183](https://github.com/woltapp/wolt_modal_sheet/issues/183) Bump minimum Flutter version required to `3.10.6`
+- Add Controller. [#179](https://github.com/woltapp/wolt_modal_sheet/pull/179)
+- Add mainContentSliversBuilder Property and Deprecation mainContentSlivers. [#177](https://github.com/woltapp/wolt_modal_sheet/pull/177)
+  - Fixes:
+    - [#176](https://github.com/woltapp/wolt_modal_sheet/issues/176) Expose mainContentSlivers's enclosing context
+- Add "Table of Contents" to `README.md`. [#175](https://github.com/woltapp/wolt_modal_sheet/pull/175)
+  - Fixes:
+    - [#174](https://github.com/woltapp/wolt_modal_sheet/issues/174) Include a "Table of Contents" in README
 ## 0.5.0
 - Added a "Designer's Collaboration Guide" section to the README, including 
   a Figma file link for streamlined design handoff and enhanced 
