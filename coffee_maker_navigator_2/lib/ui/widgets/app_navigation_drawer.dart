@@ -81,7 +81,7 @@ class AppNavigationDrawer extends StatelessWidget {
 }
 
 class _NavigationDrawerHeader extends StatelessWidget {
-  const _NavigationDrawerHeader({super.key});
+  const _NavigationDrawerHeader();
 
   @override
   Widget build(BuildContext context) {
