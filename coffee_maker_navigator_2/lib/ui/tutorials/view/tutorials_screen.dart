@@ -78,8 +78,11 @@ We're excited to assist you with the orders. To ensure you get the most out of o
                 const Align(
                   alignment: AlignmentDirectional.topStart,
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: DrawerMenuButton(),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: SafeArea(
+                      child: DrawerMenuButton(),
+                    ),
                   ),
                 ),
               ],

@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   equatable: ^2.0.5
   provider: ^6.0.5
-  shared_preferences: ^2.2.3
+  shared_preferences: ^2.2.1
   wolt_responsive_layout_grid: ^0.0.3
   flutter_simple_dependency_injection: ^2.0.0
   wolt_modal_sheet:
