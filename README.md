@@ -31,6 +31,7 @@ for page transitions, and scrollable content within each page.
   * [Coffee Maker Example](#coffee-maker-example)
   * [Playground Example](#playground-example)
   * [Playground Navigator2 Example](#playground-navigator2-example)
+  * [Coffee Maker Navigator2 Example](#coffee-maker-navigator2-example)
 - [Features](#features)
   * [Multi-Page Layout](#multi-page-layout)
   * [Scrollable Content](#scrollable-content)
@@ -86,6 +87,9 @@ You can review the usage examples of repository by clicking on the links.
 ### [Playground Example](https://playgroundwoltexample.web.app)
 
 ### [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)
+
+### [Coffee Maker Navigator2 Example](https://coffeemakernavigator2.web.app)
+
 
 ## Features
 
