@@ -8,12 +8,14 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class RootSheetPage {
   RootSheetPage._();
 
+  static final ValueNotifier<bool> _isButtonEnabledNotifier =
+      ValueNotifier(false);
+
   static WoltModalSheetPage build(BuildContext context) {
-    final ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     const title = 'Choose a use case';
     return WoltModalSheetPage(
       stickyActionBar: ValueListenableBuilder<bool>(
-        valueListenable: isButtonEnabledNotifier,
+        valueListenable: _isButtonEnabledNotifier,
         builder: (_, value, __) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -67,7 +69,7 @@ class RootSheetPage {
                 context
                     .read<RouterCubit>()
                     .onPathUpdated(selectedItemData.value);
-                isButtonEnabledNotifier.value = selectedItemData.isSelected;
+                _isButtonEnabledNotifier.value = selectedItemData.isSelected;
               },
             ),
             const _AllPagesPushWidget(),
