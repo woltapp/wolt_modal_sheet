@@ -1,8 +1,6 @@
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_order.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/grouped_coffee_orders.dart';
-import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/grind_or_reject_modal_page.dart';
-import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/reject_order_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/ready/offer_recommendation_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/ready/serve_or_offer_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/coffee_order_list_item_tile.dart';
@@ -38,8 +36,12 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
         return _CoffeeOrderListView(
           coffeeOrders: groupedCoffeeOrders.grindStateOrders,
           coffeeMakerStep: CoffeeMakerStep.grind,
-          onCoffeeOrderSelected: (id) =>
-              _onCoffeeOrderSelectedInGrindState(context, id),
+          onCoffeeOrderSelected: (id) => context
+              .read<RouterViewModel>()
+              .onGrindStepEntering(
+                id,
+                context.read<OrdersScreenViewModel>().onCoffeeOrderStatusChange,
+              ),
         );
       case CoffeeMakerStep.addWater:
         return _CoffeeOrderListView(
@@ -57,28 +59,6 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
         );
     }
   }
-}
-
-void _onCoffeeOrderSelectedInGrindState(
-    BuildContext context, String coffeeOrderId) {
-  final model = context.read<OrdersScreenViewModel>();
-
-  WoltModalSheet.show(
-    routeSettings: const RouteSettings(
-        name: CoffeeOrderListViewForStep.modalRouteSettingName),
-    context: context,
-    pageListBuilder: (context) => [
-      GrindOrRejectModalPage.build(coffeeOrderId: coffeeOrderId),
-      RejectOrderModalPage.build(coffeeOrderId: coffeeOrderId),
-    ],
-    decorator: (child) {
-      return ChangeNotifierProvider<OrdersScreenViewModel>.value(
-        value: model,
-        builder: (_, __) => child,
-      );
-    },
-    modalTypeBuilder: _modalTypeBuilder,
-  );
 }
 
 void _onCoffeeOrderSelectedInAddWaterState(
@@ -133,23 +113,26 @@ class _CoffeeOrderListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return coffeeOrders.isEmpty
         ? EmptyCoffeeOrderList(coffeeMakerStep: _coffeeMakerStep)
-        : ListView.separated(
-            itemBuilder: (_, index) {
-              final coffeeOrder = coffeeOrders[index];
-              return Column(
-                children: [
-                  if (index == 0) const SizedBox(height: 16),
-                  CoffeeOrderListItemTile(
-                    coffeeOrder: coffeeOrder,
-                    onSelected: _onCoffeeOrderSelected,
-                  ),
-                  if (index == coffeeOrders.length - 1)
-                    const SizedBox(height: 16),
-                ],
-              );
-            },
-            itemCount: coffeeOrders.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 16),
+        : ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView.separated(
+              itemBuilder: (_, index) {
+                final coffeeOrder = coffeeOrders[index];
+                return Column(
+                  children: [
+                    if (index == 0) const SizedBox(height: 16),
+                    CoffeeOrderListItemTile(
+                      coffeeOrder: coffeeOrder,
+                      onSelected: _onCoffeeOrderSelected,
+                    ),
+                    if (index == coffeeOrders.length - 1)
+                      const SizedBox(height: 16),
+                  ],
+                );
+              },
+              itemCount: coffeeOrders.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+            ),
           );
   }
 }

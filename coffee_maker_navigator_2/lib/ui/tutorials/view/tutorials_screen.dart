@@ -32,45 +32,48 @@ class TutorialsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            '''
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 600),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '''
 We're excited to assist you with the orders. To ensure you get the most out of our app, we've prepared a brief tutorial that will guide you through the features and functionalities available.
 \nLet's begin your journey to quick and easy coffee order fulfillment!
 ''',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          WoltSelectionList<CoffeeMakerStep>.singleSelect(
-                            itemTileDataGroup:
-                                const WoltSelectionListItemDataGroup(
-                              group: [
-                                WoltSelectionListItemData(
-                                  title: 'Coffee grinding',
-                                  value: CoffeeMakerStep.grind,
-                                  isSelected: false,
-                                ),
-                                WoltSelectionListItemData(
-                                  title: 'Adding water to coffee',
-                                  value: CoffeeMakerStep.addWater,
-                                  isSelected: false,
-                                ),
-                                WoltSelectionListItemData(
-                                  title: 'Serving coffee',
-                                  value: CoffeeMakerStep.ready,
-                                  isSelected: false,
-                                ),
-                              ],
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                            onSelectionUpdateInSingleSelectionList: (item) {
-                              context
-                                  .read<RouterViewModel>()
-                                  .onTutorialDetailSelected(item.value);
-                            },
-                          ),
-                        ],
+                            WoltSelectionList<CoffeeMakerStep>.singleSelect(
+                              itemTileDataGroup:
+                                  const WoltSelectionListItemDataGroup(
+                                group: [
+                                  WoltSelectionListItemData(
+                                    title: 'Coffee grinding',
+                                    value: CoffeeMakerStep.grind,
+                                    isSelected: false,
+                                  ),
+                                  WoltSelectionListItemData(
+                                    title: 'Adding water to coffee',
+                                    value: CoffeeMakerStep.addWater,
+                                    isSelected: false,
+                                  ),
+                                  WoltSelectionListItemData(
+                                    title: 'Serving coffee',
+                                    value: CoffeeMakerStep.ready,
+                                    isSelected: false,
+                                  ),
+                                ],
+                              ),
+                              onSelectionUpdateInSingleSelectionList: (item) {
+                                context
+                                    .read<RouterViewModel>()
+                                    .onTutorialDetailSelected(item.value);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

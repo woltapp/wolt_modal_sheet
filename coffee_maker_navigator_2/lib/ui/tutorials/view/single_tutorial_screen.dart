@@ -31,19 +31,22 @@ class SingleTutorialScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            coffeeMakerStep.tutorialTitle,
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            coffeeMakerStep.tutorialContent,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ],
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 800),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              coffeeMakerStep.tutorialTitle,
+                              style: Theme.of(context).textTheme.headlineLarge,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              coffeeMakerStep.tutorialContent,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

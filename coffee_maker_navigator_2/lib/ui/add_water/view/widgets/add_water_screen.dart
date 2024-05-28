@@ -71,65 +71,74 @@ class _AddWaterScreenContent extends StatelessWidget {
             height: 200,
             width: double.infinity,
           ),
-          Padding(
-            padding:
-                const EdgeInsets.all(16.0) + const EdgeInsets.only(bottom: 200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Add water to the coffee',
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Enter the details to see the quality of the water you are adding to the coffee maker.',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 24),
-                AppTextFormField(
-                  controller: TextEditingController(),
-                  textInputType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  onChanged: onWaterQuantityUpdated,
-                  onSubmitted: onWaterQuantityUpdated,
-                  inputFormatters: [
-                    /* Don't allow minus or space */
-                    FilteringTextInputFormatter.deny(RegExp(r'(\s|-+)')),
-                  ],
-                  labelText: 'Water quantity (ml)',
-                ),
-                const SizedBox(height: 16),
-                AppTextFormField(
-                  controller: TextEditingController(),
-                  textInputType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  onChanged: onWaterTemperatureUpdated,
-                  onSubmitted: onWaterTemperatureUpdated,
-                  inputFormatters: [
-                    /* Don't allow minus or space */
-                    FilteringTextInputFormatter.deny(RegExp(r'(\s|-+)')),
-                  ],
-                  labelText: 'Water temperature (°C)',
-                ),
-                WoltSelectionList<WaterSource>.singleSelect(
-                  tilePadding:
-                      const EdgeInsetsDirectional.symmetric(vertical: 8),
-                  itemTileDataGroup: WoltSelectionListItemDataGroup(
-                    group: WaterSource.values
-                        .map(
-                          (e) => WoltSelectionListItemData(
-                              title: e.label, value: e, isSelected: false),
-                        )
-                        .toList(),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0) +
+                  const EdgeInsets.only(bottom: 200),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Add water to the coffee',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
-                  onSelectionUpdateInSingleSelectionList: (item) {
-                    onWaterSourceUpdated(item.value);
-                  },
-                )
-              ],
+                  const SizedBox(height: 16),
+                  Text(
+                    'Enter the details to see the quality of the water you are adding to the coffee maker.',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 24),
+                  AppTextFormField(
+                    controller: TextEditingController(),
+                    textInputType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: onWaterQuantityUpdated,
+                    onSubmitted: onWaterQuantityUpdated,
+                    inputFormatters: [
+                      /* Don't allow minus or space */
+                      FilteringTextInputFormatter.deny(RegExp(r'(\s|-+)')),
+                    ],
+                    labelText: 'Water quantity (ml)',
+                  ),
+                  const SizedBox(height: 16),
+                  AppTextFormField(
+                    controller: TextEditingController(),
+                    textInputType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: onWaterTemperatureUpdated,
+                    onSubmitted: onWaterTemperatureUpdated,
+                    inputFormatters: [
+                      /* Don't allow minus or space */
+                      FilteringTextInputFormatter.deny(RegExp(r'(\s|-+)')),
+                    ],
+                    labelText: 'Water temperature (°C)',
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Select the water source:',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  WoltSelectionList<WaterSource>.singleSelect(
+                    tilePadding:
+                        const EdgeInsetsDirectional.symmetric(vertical: 8),
+                    itemTileDataGroup: WoltSelectionListItemDataGroup(
+                      group: WaterSource.values
+                          .map(
+                            (e) => WoltSelectionListItemData(
+                                title: e.label, value: e, isSelected: false),
+                          )
+                          .toList(),
+                    ),
+                    onSelectionUpdateInSingleSelectionList: (item) {
+                      onWaterSourceUpdated(item.value);
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -169,43 +178,46 @@ class _AddWaterScreenFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0) +
-            EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ValueListenableBuilder<String?>(
-                valueListenable: errorMessage,
-                builder: (_, message, __) {
-                  return message == null
-                      ? const SizedBox.shrink()
-                      : Padding(
-                          padding: const EdgeInsets.only(bottom: 12.0),
-                          child: _ErrorNotificationWidget(message),
-                        );
-                }),
-            WoltElevatedButton(
-              onPressed: () {
-                context.read<AddWaterViewModel>().checkValidity();
-              },
-              child: const Text('Check '),
-            ),
-            const SizedBox(height: 12),
-            ValueListenableBuilder<bool>(
-              valueListenable: isReadyToAddWater,
-              builder: (_, isEnabled, __) {
-                return WoltElevatedButton(
-                  enabled: isEnabled,
-                  onPressed: () {
-                    context.read<AddWaterViewModel>().addWater();
-                    context.read<RouterViewModel>().onAddWaterStepCompleted();
-                  },
-                  child: const Text('Add water'),
-                );
-              },
-            ),
-          ],
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 600),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0) +
+              EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ValueListenableBuilder<String?>(
+                  valueListenable: errorMessage,
+                  builder: (_, message, __) {
+                    return message == null
+                        ? const SizedBox.shrink()
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: 12.0),
+                            child: _ErrorNotificationWidget(message),
+                          );
+                  }),
+              WoltElevatedButton(
+                onPressed: () {
+                  context.read<AddWaterViewModel>().checkValidity();
+                },
+                child: const Text('Check '),
+              ),
+              const SizedBox(height: 12),
+              ValueListenableBuilder<bool>(
+                valueListenable: isReadyToAddWater,
+                builder: (_, isEnabled, __) {
+                  return WoltElevatedButton(
+                    enabled: isEnabled,
+                    onPressed: () {
+                      context.read<AddWaterViewModel>().addWater();
+                      context.read<RouterViewModel>().onAddWaterStepCompleted();
+                    },
+                    child: const Text('Add water'),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

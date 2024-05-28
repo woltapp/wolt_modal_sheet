@@ -4,6 +4,7 @@ enum RouteSettingsName {
   tutorials('tutorials'),
   singleTutorial('singleTutorial'),
   addWater('addWater'),
+  grindCoffee('grindCoffee'),
   onboarding('welcomeModal');
 
   final String routeName;

@@ -110,7 +110,8 @@ class _AppRouteObserver extends RouteObserver<PageRoute<void>> {
   void _updateSystemUIOverlayStyle(Route<void> route) {
     SystemUIAnnotationWrapper.setSystemUIOverlayStyle(
       colorScheme,
-      hasBottomNavigationBar: route.settings.name == OrdersRoutePage().name,
+      hasBottomNavigationBar:
+          route.settings.name == const OrdersRoutePage().name,
     );
   }
 }

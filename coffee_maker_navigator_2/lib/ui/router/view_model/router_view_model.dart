@@ -42,7 +42,7 @@ class RouterViewModel extends ChangeNotifier {
       final shouldShowTutorial = !onboardingService.isTutorialShown();
       state = state.copyWith(
         pages: [
-          OrdersRoutePage(),
+          const OrdersRoutePage(),
           if (shouldShowTutorial) const OnboardingModalRoutePage(),
         ],
       );
@@ -55,11 +55,10 @@ class RouterViewModel extends ChangeNotifier {
   void _navigateToOrdersScreen({
     CoffeeMakerStep? destinationBottomNavBarTab,
   }) {
-    final destination =
-        destinationBottomNavBarTab ?? state.bottomNavigationTabInOrdersPage;
     state = state.copyWith(
-      pages: [OrdersRoutePage(destination)],
-      bottomNavigationTabInOrdersPage: destination,
+      pages: [const OrdersRoutePage()],
+      bottomNavigationTabInOrdersPage:
+          destinationBottomNavBarTab ?? state.bottomNavigationTabInOrdersPage,
     );
     notifyListeners();
   }
@@ -88,7 +87,7 @@ class RouterViewModel extends ChangeNotifier {
   void _navigateToAddWaterScreen(String coffeeOrderId) {
     state = state.copyWith(
       pages: [
-        OrdersRoutePage(state.bottomNavigationTabInOrdersPage),
+        const OrdersRoutePage(),
         AddWaterRoutePage(coffeeOrderId),
       ],
     );
@@ -108,6 +107,7 @@ class RouterViewModel extends ChangeNotifier {
       case RouteSettingsName.tutorials:
       case RouteSettingsName.addWater:
       case RouteSettingsName.onboarding:
+      case RouteSettingsName.grindCoffee:
         _navigateToOrdersScreen();
     }
   }
@@ -131,6 +131,7 @@ class RouterViewModel extends ChangeNotifier {
         _navigateToTutorialsScreen();
 
         return Future.value(true);
+      case GrindCoffeeModalRoutePage():
       case TutorialsRoutePage():
       case OnboardingModalRoutePage():
         _navigateToOrdersScreen();
@@ -173,5 +174,35 @@ class RouterViewModel extends ChangeNotifier {
 
   void onAddWaterStepEntering(String coffeeOrderId) {
     _navigateToAddWaterScreen(coffeeOrderId);
+  }
+
+  void onOrdersScreenSelectedBottomNavBarUpdated(CoffeeMakerStep selectedStep) {
+    state = state.copyWith(bottomNavigationTabInOrdersPage: selectedStep);
+    notifyListeners();
+  }
+
+  void onGrindStepEntering(
+    String id,
+    void Function(String orderId, [CoffeeMakerStep? newStep])
+        onCoffeeOrderStatusChange,
+  ) {
+    state = state.copyWith(
+      pages: [
+        const OrdersRoutePage(),
+        GrindCoffeeModalRoutePage(id, onCoffeeOrderStatusChange),
+      ],
+    );
+    notifyListeners();
+  }
+
+  void onGrindStepExit({required bool hasStartedGrinding}) {
+    state = state.copyWith(
+      pages: [
+        const OrdersRoutePage(),
+      ],
+      bottomNavigationTabInOrdersPage:
+          hasStartedGrinding ? CoffeeMakerStep.addWater : CoffeeMakerStep.grind,
+    );
+    notifyListeners();
   }
 }

@@ -19,35 +19,41 @@ class AuthScreen extends StatelessWidget {
               builder: (context, _) {
                 return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Image(
-                        image: AssetImage('lib/assets/images/dash_coffee.webp'),
-                        fit: BoxFit.cover,
-                      ),
-                      Text('Welcome to Coffee Maker!',
-                          style: textTheme.titleLarge!),
-                      const SizedBox(height: 50),
-                      const AppTextFormField(
-                        labelText: 'Username',
-                        textInputType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: 20),
-                      const AppTextFormField(
-                        labelText: 'Password',
-                        obscureText: true,
-                        autocorrect: false,
-                        textInputType: TextInputType.visiblePassword,
-                      ),
-                      const SizedBox(height: 30),
-                      WoltElevatedButton(
-                        onPressed: () => context
-                            .read<AuthScreenViewModel>()
-                            .logIn('email', 'password'),
-                        child: const Text('Sign in'),
-                      ),
-                    ],
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Image(
+                          image:
+                              AssetImage('lib/assets/images/dash_coffee.webp'),
+                          fit: BoxFit.cover,
+                          height: 216,
+                          width: 384,
+                        ),
+                        Text('Welcome to Coffee Maker!',
+                            style: textTheme.titleLarge!),
+                        const SizedBox(height: 50),
+                        const AppTextFormField(
+                          labelText: 'Username',
+                          textInputType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 20),
+                        const AppTextFormField(
+                          labelText: 'Password',
+                          obscureText: true,
+                          autocorrect: false,
+                          textInputType: TextInputType.visiblePassword,
+                        ),
+                        const SizedBox(height: 30),
+                        WoltElevatedButton(
+                          onPressed: () => context
+                              .read<AuthScreenViewModel>()
+                              .logIn('email', 'password'),
+                          child: const Text('Sign in'),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),
