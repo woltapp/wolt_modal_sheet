@@ -902,7 +902,9 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   /// None.
-  void updateCurrentPage(SliverWoltModalSheetPage Function(SliverWoltModalSheetPage) updateFunction) {
+  void updateCurrentPage(
+      SliverWoltModalSheetPage Function(SliverWoltModalSheetPage)
+          updateFunction) {
     setState(() {
       _pages[_currentPageIndex] = updateFunction(_pages[_currentPageIndex]);
     });

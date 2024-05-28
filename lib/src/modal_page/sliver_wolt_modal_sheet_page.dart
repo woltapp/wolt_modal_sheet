@@ -256,7 +256,8 @@ class SliverWoltModalSheetPage {
     this.resizeToAvoidBottomInset,
   })  : assert(!(topBar != null && hasTopBarLayer == false),
             "When topBar is provided, hasTopBarLayer must not be false"),
-        assert((mainContentSlivers != null) ^ (mainContentSliversBuilder != null),
+        assert(
+            (mainContentSlivers != null) ^ (mainContentSliversBuilder != null),
             "Either mainContentSlivers or mainContentSliversBuilder must be provided, but not both");
 
   SliverWoltModalSheetPage copyWith({
@@ -289,8 +290,10 @@ class SliverWoltModalSheetPage {
       topBarTitle: topBarTitle ?? this.topBarTitle,
       topBar: topBar ?? this.topBar,
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
-      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
-      mainContentSliversBuilder: mainContentSliversBuilder ?? this.mainContentSliversBuilder,
+      isTopBarLayerAlwaysVisible:
+          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      mainContentSliversBuilder:
+          mainContentSliversBuilder ?? this.mainContentSliversBuilder,
       heroImage: heroImage ?? this.heroImage,
       heroImageHeight: heroImageHeight ?? this.heroImageHeight,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -304,7 +307,8 @@ class SliverWoltModalSheetPage {
       sabGradientColor: sabGradientColor ?? this.sabGradientColor,
       leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
     );
   }
 
@@ -343,8 +347,11 @@ class SliverWoltModalSheetPage {
       topBarTitle: topBarTitle ?? this.topBarTitle,
       topBar: topBar ?? this.topBar,
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
-      isTopBarLayerAlwaysVisible: isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
-      mainContentSliversBuilder: child == null ? mainContentSliversBuilder : _mainContentBuilderFromChild(child),
+      isTopBarLayerAlwaysVisible:
+          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
+      mainContentSliversBuilder: child == null
+          ? mainContentSliversBuilder
+          : _mainContentBuilderFromChild(child),
       heroImage: heroImage ?? this.heroImage,
       heroImageHeight: heroImageHeight ?? this.heroImageHeight,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -358,19 +365,21 @@ class SliverWoltModalSheetPage {
       sabGradientColor: sabGradientColor ?? this.sabGradientColor,
       leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
     );
   }
 
-  List<Widget> Function(BuildContext context)? _mainContentBuilderFromChild(Widget child) {
+  List<Widget> Function(BuildContext context)? _mainContentBuilderFromChild(
+      Widget child) {
     if (this is WoltModalSheetPage) {
       return (_) => [
-        SliverToBoxAdapter(child: child),
-      ];
+            SliverToBoxAdapter(child: child),
+          ];
     } else if (this is NonScrollingWoltModalSheetPage) {
       return (_) => [
-        SliverFillViewport(delegate: SliverChildListDelegate([child])),
-      ];
+            SliverFillViewport(delegate: SliverChildListDelegate([child])),
+          ];
     } else {
       return mainContentSliversBuilder;
     }
