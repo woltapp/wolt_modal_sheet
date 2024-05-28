@@ -17,6 +17,8 @@ jobs:
       - run: flutter build web --release --web-renderer=canvaskit
         working-directory: ./coffee_maker
       - run: flutter build web --release --web-renderer=canvaskit
+        working-directory: ./coffee_maker_navigator_2
+      - run: flutter build web --release --web-renderer=canvaskit
         working-directory: ./playground
       - run: flutter build web --release --web-renderer=canvaskit
         working-directory: ./playground_navigator2
