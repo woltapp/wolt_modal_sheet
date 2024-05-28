@@ -44,6 +44,21 @@
         }
       ],
       "target": "playground_navigator2"
+    },
+    {
+      "public": "coffee_maker_navigator_2/build/web",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "target": "coffeemakernavigator2"
     }
   ]
 }
