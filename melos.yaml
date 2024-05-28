@@ -3,6 +3,7 @@ repository: https://github.com/woltapp/wolt_modal_sheet
 
 packages:
   - coffee_maker
+  - coffee_maker_navigator_2
   - demo_ui_components
   - playground
   - playground_navigator2
