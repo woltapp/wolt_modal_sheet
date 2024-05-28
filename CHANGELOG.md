@@ -1,4 +1,5 @@
 ## 0.6.0
+- Fix navigator_2_playground_example by Use static value notifier for button enabled listener. [#216](https://github.com/woltapp/wolt_modal_sheet/pull/216)
 - Add coffee maker navigator 2 example to Firebase Deploy. [#214](https://github.com/woltapp/wolt_modal_sheet/pull/214)
 - Refactor updateCurrentPage method and introduce easy page update. [#213](https://github.com/woltapp/wolt_modal_sheet/pull/213)
 - Update `wolt_modal_sheet_test.dart` tests. [#212](https://github.com/woltapp/wolt_modal_sheet/pull/212)
