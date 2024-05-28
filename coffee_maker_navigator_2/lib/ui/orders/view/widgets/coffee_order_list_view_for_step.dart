@@ -113,23 +113,26 @@ class _CoffeeOrderListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return coffeeOrders.isEmpty
         ? EmptyCoffeeOrderList(coffeeMakerStep: _coffeeMakerStep)
-        : ListView.separated(
-            itemBuilder: (_, index) {
-              final coffeeOrder = coffeeOrders[index];
-              return Column(
-                children: [
-                  if (index == 0) const SizedBox(height: 16),
-                  CoffeeOrderListItemTile(
-                    coffeeOrder: coffeeOrder,
-                    onSelected: _onCoffeeOrderSelected,
-                  ),
-                  if (index == coffeeOrders.length - 1)
-                    const SizedBox(height: 16),
-                ],
-              );
-            },
-            itemCount: coffeeOrders.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 16),
+        : ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView.separated(
+              itemBuilder: (_, index) {
+                final coffeeOrder = coffeeOrders[index];
+                return Column(
+                  children: [
+                    if (index == 0) const SizedBox(height: 16),
+                    CoffeeOrderListItemTile(
+                      coffeeOrder: coffeeOrder,
+                      onSelected: _onCoffeeOrderSelected,
+                    ),
+                    if (index == coffeeOrders.length - 1)
+                      const SizedBox(height: 16),
+                  ],
+                );
+              },
+              itemCount: coffeeOrders.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+            ),
           );
   }
 }

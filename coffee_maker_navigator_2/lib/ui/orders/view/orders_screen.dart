@@ -52,14 +52,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     ),
                     Expanded(
                       child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          color: WoltColors.black8,
-                          child: IndexedStack(
-                            index: selectedBottomNavigationTab.index,
-                            children: _stepLists,
-                          )),
+                        alignment: Alignment.topCenter,
+                        width: double.infinity,
+                        height: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        color: WoltColors.black8,
+                        child: IndexedStack(
+                          index: selectedBottomNavigationTab.index,
+                          children: _stepLists,
+                        ),
+                      ),
                     ),
                   ],
                 ),
