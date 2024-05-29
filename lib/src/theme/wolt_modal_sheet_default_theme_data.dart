@@ -12,7 +12,6 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   /// to indicate elevation for the modal sheet page. The [surfaceTintColor] is applied to the
   /// modal sheet background color, top bar color, and the sticky action bar wrapper colors.
   ///
-  /// {@template flutter.material.material.surfaceTintColor}
   /// Material Design 3 introduced a new way for some components to indicate
   /// their elevation by using a surface tint color overlay on top of the
   /// base material [color]. This overlay is painted with an opacity that is
