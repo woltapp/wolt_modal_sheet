@@ -16,3 +16,4 @@ export 'src/utils/drawer_menu_button.dart';
 export 'src/utils/system_ui_annotation_wrapper.dart';
 export 'src/theme_data/app_theme_data.dart';
 export 'src/text/app_text_form_field.dart';
+export 'src/utils/modal_component_safe_area_wrapper.dart';

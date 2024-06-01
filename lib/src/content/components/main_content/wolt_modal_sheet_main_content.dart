@@ -87,7 +87,8 @@ class WoltModalSheetMainContent extends StatelessWidget {
           ...page.mainContentSlivers!
         else
           ...page.mainContentSliversBuilder!(context),
-        if (page.forceMaxHeight && !isNonScrollingPage)
+        if (woltModalType.shouldForceContentToMaxHeight ||
+            (page.forceMaxHeight && !isNonScrollingPage))
           const SliverFillRemaining(
             hasScrollBody: false,
             child: SizedBox.shrink(),

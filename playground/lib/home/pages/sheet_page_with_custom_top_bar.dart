@@ -18,6 +18,7 @@ class SheetPageWithCustomTopBar {
       id: pageId,
       backgroundColor: WoltColors.blue8,
       forceMaxHeight: true,
+      useSafeArea: false,
       stickyActionBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Builder(builder: (context) {
@@ -38,6 +39,7 @@ class SheetPageWithCustomTopBar {
           onBackPressed: WoltModalSheet.of(context).showPrevious,
         );
       }),
+      navBarHeight: 96.0,
       pageTitle: const ModalSheetTitle('Page with custom top bar'),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,21 +77,23 @@ class _CustomTopBar extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(child: ModalSheetTitle('Feeling lucky?')),
-          Expanded(
-            child: Padding(
-              padding: _searchBarPadding,
-              child: IconButton(
-                onPressed: () {},
-                tooltip: 'Search',
-                icon: const Icon(Icons.search),
+      child: ModalComponentSafeAreaWrapper(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Center(child: ModalSheetTitle('Feeling lucky?')),
+            Expanded(
+              child: Padding(
+                padding: _searchBarPadding,
+                child: IconButton(
+                  onPressed: () {},
+                  tooltip: 'Search',
+                  icon: const Icon(Icons.search),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

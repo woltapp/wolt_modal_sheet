@@ -1,3 +1,4 @@
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 class ModalSheetTopBarTitle extends StatelessWidget {
@@ -7,6 +8,8 @@ class ModalSheetTopBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: Theme.of(context).textTheme.titleSmall);
+    return ModalComponentSafeAreaWrapper(
+      child: Text(text, style: Theme.of(context).textTheme.titleSmall),
+    );
   }
 }

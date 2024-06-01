@@ -13,7 +13,7 @@ class GrindOrRejectModalPage extends WoltModalSheetPage {
   ) : super(
           child: const Padding(
             padding:
-                EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 48),
+                EdgeInsets.only(bottom: (2 * WoltElevatedButton.defaultHeight) + 48),
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: ModalSheetContentText(

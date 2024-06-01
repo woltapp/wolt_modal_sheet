@@ -14,6 +14,7 @@ class SheetPageWithLazyList {
     const heroImageHeight = 200.0;
     return SliverWoltModalSheetPage(
       id: pageId,
+      useSafeArea: false,
       stickyActionBar: isLastPage
           ? null
           : Padding(
@@ -29,6 +30,8 @@ class SheetPageWithLazyList {
             ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       heroImageHeight: heroImageHeight,
+      // Considering the safe ara height
+      navBarHeight: 96,
       heroImage: const Stack(
         children: [
           ColoredBox(

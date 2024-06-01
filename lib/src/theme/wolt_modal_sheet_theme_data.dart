@@ -35,6 +35,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.mainContentScrollPhysics,
     this.animationStyle,
     this.resizeToAvoidBottomInset,
+    this.useSafeArea,
   });
 
   /// The color of the surface tint overlay applied to the material color
@@ -169,6 +170,10 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   /// Defaults to true.
   final bool? resizeToAvoidBottomInset;
 
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  final bool? useSafeArea;
+
   @override
   WoltModalSheetThemeData copyWith({
     Color? backgroundColor,
@@ -197,6 +202,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     ScrollPhysics? mainContentScrollPhysics,
     WoltModalSheetAnimationStyle? animationStyle,
     bool? resizeToAvoidBottomInset,
+    bool? useSafeArea,
   }) {
     return WoltModalSheetThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -228,6 +234,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       animationStyle: animationStyle ?? this.animationStyle,
       resizeToAvoidBottomInset:
           resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      useSafeArea: useSafeArea ?? this.useSafeArea,
     );
   }
 
@@ -270,6 +277,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       mainContentScrollPhysics:
           t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
       animationStyle: t < 0.5 ? animationStyle : other.animationStyle,
+      useSafeArea: t < 0.5 ? useSafeArea : other.useSafeArea,
     );
   }
 }

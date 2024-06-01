@@ -132,27 +132,16 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   bool get isTopBarLayerAlwaysVisible => false;
 
-  /// The minimum width of the dialog.
-  @override
-  double get minDialogWidth => 400;
-
-  /// The maximum width of the dialog.
-  @override
-  double get maxDialogWidth => 560;
-
-  /// The minimum height of the page.
-  @override
-  double get minPageHeight => 0.0;
-
-  /// The maximum height of the page.
-  @override
-  double get maxPageHeight => 0.9;
-
   /// Overrides the default value for [WoltModalSheet] clipBehavior.
   ///
   /// Defaults to [Clip.antiAliasWithSaveLayer].
   @override
   Clip get clipBehavior => Clip.antiAliasWithSaveLayer;
+
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  @override
+  bool get useSafeArea => true;
 
   /// Motion animation styles for both pagination and page scrolling.
   @override

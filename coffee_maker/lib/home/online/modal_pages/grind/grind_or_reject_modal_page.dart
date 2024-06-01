@@ -43,7 +43,7 @@ class GrindOrRejectModalPage {
       ),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(
-        padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 48),
+        padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.defaultHeight) + 48),
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child:

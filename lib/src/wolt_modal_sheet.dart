@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
-import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_modal_safe_area_filling.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const double _minFlingVelocity = 700.0;
@@ -34,10 +34,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.enableDrag,
     required this.showDragHandle,
     required this.useSafeArea,
-    this.minDialogWidth,
-    this.maxDialogWidth,
-    this.minPageHeight,
-    this.maxPageHeight,
     super.key,
   });
 
@@ -88,20 +84,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   /// A boolean that determines whether the modal should avoid system UI intrusions such as the
   /// notch and system gesture areas.
-  final bool useSafeArea;
-
-  /// The minimum width that the modal can shrink to when displayed as a dialog.
-  final double? minDialogWidth;
-
-  /// The maximum width that the modal can expand to when displayed as a dialog.
-  final double? maxDialogWidth;
-
-  /// The minimum height that the modal pages can shrink to.
-  final double? minPageHeight;
-
-  /// The maximum height that the modal pages can expand to.
-  final double? maxPageHeight;
-
+  final bool? useSafeArea;
   static const ParametricCurve<double> animationCurve = decelerateEasing;
 
   @override
@@ -163,10 +146,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     AnimationController? transitionAnimationController,
     AnimatedWidget? bottomSheetTransitionAnimation,
     AnimatedWidget? dialogTransitionAnimation,
-    double? minDialogWidth,
-    double? maxDialogWidth,
-    double? minPageHeight,
-    double? maxPageHeight,
     Color? modalBarrierColor,
   }) {
     return WoltModalSheet.showWithDynamicPath(
@@ -187,10 +166,6 @@ class WoltModalSheet<T> extends StatefulWidget {
       transitionAnimationController: transitionAnimationController,
       bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
       dialogTransitionAnimation: dialogTransitionAnimation,
-      minDialogWidth: minDialogWidth,
-      maxDialogWidth: maxDialogWidth,
-      minPageHeight: minPageHeight,
-      maxPageHeight: maxPageHeight,
       modalBarrierColor: modalBarrierColor,
     );
   }
@@ -321,6 +296,14 @@ class WoltModalSheet<T> extends StatefulWidget {
 
 class WoltModalSheetState extends State<WoltModalSheet> {
   late WoltModalType _modalType;
+
+  WoltModalType? get modalType {
+    if (context.mounted) {
+      return _modalType;
+    }
+    return null;
+  }
+
   List<SliverWoltModalSheetPage> _pages = [];
 
   ParametricCurve<double> animationCurve = decelerateEasing;
@@ -388,17 +371,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       builder: (context, currentPageIndex, __) {
         final pages = _pages;
         final page = pages[currentPageIndex];
-        late ShapeBorder shape;
-        switch (_modalType) {
-          case WoltModalType.bottomSheet:
-            shape = themeData?.bottomSheetShape ??
-                defaultThemeData.bottomSheetShape;
-            break;
-          case WoltModalType.dialog:
-            shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
-            break;
-        }
-        final enableDrag = _modalType == WoltModalType.bottomSheet &&
+        final enableDrag = _modalType.isDragEnabled &&
             (page.enableDrag ??
                 widget.enableDrag ??
                 themeData?.enableDrag ??
@@ -406,23 +379,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         final showDragHandle = widget.showDragHandle ??
             (enableDrag &&
                 (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
+        final shadowColor =
+            themeData?.shadowColor ?? defaultThemeData.shadowColor;
         final pageBackgroundColor = page.backgroundColor ??
             themeData?.backgroundColor ??
             defaultThemeData.backgroundColor;
-        final minPageHeight = widget.minPageHeight ??
-            themeData?.minPageHeight ??
-            defaultThemeData.minPageHeight;
-        final maxPageHeight = widget.maxPageHeight ??
-            themeData?.maxPageHeight ??
-            defaultThemeData.maxPageHeight;
-        final minDialogWidth = widget.minDialogWidth ??
-            themeData?.minDialogWidth ??
-            defaultThemeData.minDialogWidth;
-        final maxDialogWidth = widget.maxDialogWidth ??
-            themeData?.maxDialogWidth ??
-            defaultThemeData.maxDialogWidth;
-        final shadowColor =
-            themeData?.shadowColor ?? defaultThemeData.shadowColor;
         final surfaceTintColor = page.surfaceTintColor ??
             themeData?.surfaceTintColor ??
             defaultThemeData.surfaceTintColor;
@@ -433,16 +394,21 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
             themeData?.resizeToAvoidBottomInset ??
             defaultThemeData.resizeToAvoidBottomInset;
+        final useSafeArea = page.useSafeArea ??
+            widget.useSafeArea ??
+            themeData?.useSafeArea ??
+            defaultThemeData.useSafeArea;
+        final safeAreaColor = Theme.of(context).useMaterial3
+            ? ElevationOverlay.applySurfaceTint(
+                pageBackgroundColor, surfaceTintColor, modalElevation)
+            : ElevationOverlay.applyOverlay(
+                context, pageBackgroundColor, modalElevation);
 
         final multiChildLayout = CustomMultiChildLayout(
-          delegate: WoltModalMultiChildLayoutDelegate(
+          delegate: _WoltModalMultiChildLayoutDelegate(
             contentLayoutId: contentLayoutId,
             barrierLayoutId: barrierLayoutId,
             modalType: _modalType,
-            minPageHeight: minPageHeight,
-            maxPageHeight: maxPageHeight,
-            minDialogWidth: minDialogWidth,
-            maxDialogWidth: maxDialogWidth,
           ),
           children: [
             LayoutId(
@@ -482,17 +448,24 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                         elevation: modalElevation,
                         surfaceTintColor: surfaceTintColor,
                         shadowColor: shadowColor,
-                        shape: shape,
+                        shape: _modalType.shapeBorder,
                         clipBehavior: clipBehavior,
                         child: LayoutBuilder(
                           builder: (_, constraints) {
-                            return WoltModalSheetAnimatedSwitcher(
+                            final child = WoltModalSheetAnimatedSwitcher(
                               woltModalType: _modalType,
                               pageIndex: currentPageIndex,
                               pages: pages,
                               sheetWidth: constraints.maxWidth,
                               showDragHandle: showDragHandle,
                             );
+                            return useSafeArea
+                                ? WoltModalSafeAreaFilling(
+                                    modalType: _modalType,
+                                    safeAreaColor: safeAreaColor,
+                                    child: child,
+                                  )
+                                : child;
                           },
                         ),
                       ),
@@ -506,24 +479,13 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         return Scaffold(
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           backgroundColor: Colors.transparent,
-          body: widget.useSafeArea
-              ? Stack(
-                  children: [
-                    SafeArea(child: multiChildLayout),
-                    if (_modalType == WoltModalType.bottomSheet)
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: ColoredBox(
-                          color: pageBackgroundColor,
-                          child: SizedBox(
-                            height: MediaQuery.paddingOf(context).bottom,
-                            width: double.infinity,
-                          ),
-                        ),
-                      ),
-                  ],
+          body: useSafeArea
+              ? SafeArea(
+                  top: !_modalType.isTopSafeAreaFilled,
+                  bottom: !_modalType.isBottomSafeAreaFilled,
+                  left: !_modalType.isStartSafeAreaFilled,
+                  right: !_modalType.isEndSafeAreaFilled,
+                  child: multiChildLayout,
                 )
               : multiChildLayout,
         );
@@ -1037,4 +999,39 @@ class WoltModalSheetState extends State<WoltModalSheet> {
 
   /// The index of the currently displayed page in the in-modal navigation stack.
   int get currentPageIndex => _currentPageIndex;
+}
+
+class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
+  final String contentLayoutId;
+  final String barrierLayoutId;
+  final WoltModalType modalType;
+
+  _WoltModalMultiChildLayoutDelegate({
+    required this.contentLayoutId,
+    required this.barrierLayoutId,
+    required this.modalType,
+  });
+
+  @override
+  void performLayout(Size size) {
+    layoutChild(
+      barrierLayoutId,
+      BoxConstraints(maxWidth: size.width, maxHeight: size.height),
+    );
+    final modalContentSize = layoutChild(
+      contentLayoutId,
+      modalType.modalContentBoxConstraints(size),
+    );
+    positionChild(barrierLayoutId, Offset.zero);
+    positionChild(
+      contentLayoutId,
+      modalType.modalContentOffset(size, modalContentSize),
+    );
+  }
+
+  @override
+  bool shouldRelayout(
+      covariant _WoltModalMultiChildLayoutDelegate oldDelegate) {
+    return oldDelegate.modalType != modalType;
+  }
 }

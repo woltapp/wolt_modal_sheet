@@ -66,7 +66,7 @@ class OfferRecommendationModalPage {
                     16,
                     16,
                     16,
-                    index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
+                    index == tileCount - 1 ? WoltElevatedButton.defaultHeight * 2 : 0,
                   ),
                   child: ExtraRecommendationTile(
                     recommendation: recommendation,

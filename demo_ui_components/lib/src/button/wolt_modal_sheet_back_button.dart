@@ -1,4 +1,5 @@
 import 'package:demo_ui_components/src/button/wolt_circular_elevated_button.dart';
+import 'package:demo_ui_components/src/utils/modal_component_safe_area_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -9,16 +10,19 @@ class WoltModalSheetBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(start: 16),
-      child: Semantics(
-        label: semanticsLabel(context),
-        container: true,
-        button: true,
-        child: ExcludeSemantics(
-          child: WoltCircularElevatedButton(
-            onPressed: onBackPressed ?? WoltModalSheet.of(context).showPrevious,
-            icon: Icons.arrow_back_rounded,
+    return ModalComponentSafeAreaWrapper(
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(start: 16),
+        child: Semantics(
+          label: semanticsLabel(context),
+          container: true,
+          button: true,
+          child: ExcludeSemantics(
+            child: WoltCircularElevatedButton(
+              onPressed:
+                  onBackPressed ?? WoltModalSheet.of(context).showPrevious,
+              icon: Icons.arrow_back_rounded,
+            ),
           ),
         ),
       ),

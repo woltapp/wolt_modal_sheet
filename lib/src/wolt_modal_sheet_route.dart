@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-double _defaultModalTypeBreakPoint = 768.0;
+double _defaultSmallModalTypeBreakPoint = 767.0;
+double _defaultMediumModalTypeBreakPoint = 1399.0;
 
 WoltModalTypeBuilder _defaultModalTypeBuilder = (context) {
-  return MediaQuery.sizeOf(context).width < _defaultModalTypeBreakPoint
-      ? WoltModalType.bottomSheet
-      : WoltModalType.dialog;
+  final width = MediaQuery.sizeOf(context).width;
+  if (width <= _defaultSmallModalTypeBreakPoint) {
+    return WoltModalType.bottomSheet();
+  } else if (width <= _defaultMediumModalTypeBreakPoint) {
+    return WoltModalType.dialog();
+  } else {
+    return WoltModalType.sideSheet();
+  }
 };
 
 class WoltModalSheetRoute<T> extends PageRoute<T> {
@@ -39,12 +45,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
             transitionDuration ?? const Duration(milliseconds: 300),
         _barrierDismissible = barrierDismissible ?? true,
         _modalTypeBuilder = modalTypeBuilder ?? _defaultModalTypeBuilder,
-        _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
-        _dialogTransitionAnimation = dialogTransitionAnimation,
-        _minDialogWidth = minDialogWidth,
-        _maxDialogWidth = maxDialogWidth,
-        _minPageHeight = minPageHeight,
-        _maxPageHeight = maxPageHeight,
         super(settings: routeSettings);
 
   Widget Function(Widget)? decorator;
@@ -68,18 +68,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final bool? _showDragHandle;
 
   final bool _useSafeArea;
-
-  final AnimatedWidget? _bottomSheetTransitionAnimation;
-
-  final AnimatedWidget? _dialogTransitionAnimation;
-
-  final double? _minDialogWidth;
-
-  final double? _maxDialogWidth;
-
-  final double? _minPageHeight;
-
-  final double? _maxPageHeight;
 
   /// Specifies the color of the modal barrier that darkens everything below the
   /// bottom sheet.
@@ -129,10 +117,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       enableDrag: _enableDrag,
       showDragHandle: _showDragHandle,
       useSafeArea: _useSafeArea,
-      minDialogWidth: _minDialogWidth,
-      maxDialogWidth: _maxDialogWidth,
-      minPageHeight: _minPageHeight,
-      maxPageHeight: _maxPageHeight,
     );
   }
 
@@ -144,29 +128,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Widget child,
   ) {
     final modalType = _modalTypeBuilder(context);
-    const easeCurve = Curves.ease;
-    switch (modalType) {
-      case WoltModalType.bottomSheet:
-        return _bottomSheetTransitionAnimation ??
-            SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(0.0, 1.0),
-                  end: Offset.zero,
-                ).chain(CurveTween(curve: easeCurve)),
-              ),
-              child: child,
-            );
-      case WoltModalType.dialog:
-        return _dialogTransitionAnimation ??
-            ScaleTransition(
-              scale: animation.drive(Tween(
-                begin: 0.9,
-                end: 1.0,
-              ).chain(CurveTween(curve: easeCurve))),
-              child: child,
-            );
-    }
+    return modalType.buildTransitions(
+        context, animation, secondaryAnimation, child);
   }
 
   @override

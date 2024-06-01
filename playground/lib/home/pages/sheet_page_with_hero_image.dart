@@ -15,6 +15,7 @@ class SheetPageWithHeroImage {
         image: AssetImage('lib/assets/images/hero_image.jpg'),
         fit: BoxFit.cover,
       ),
+      useSafeArea: false,
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Builder(builder: (context) {
@@ -26,6 +27,7 @@ class SheetPageWithHeroImage {
           );
         }),
       ),
+      topBarTitle: const ModalSheetTopBarTitle('Page with a hero image'),
       pageTitle: const ModalSheetTitle('Page with a hero image'),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),

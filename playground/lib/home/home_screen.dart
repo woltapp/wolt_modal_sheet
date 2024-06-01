@@ -1,11 +1,14 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:playground/home/custom_sheets/floating_bottom_sheet.dart';
+import 'package:playground/home/custom_sheets/top_notification_sheet.dart';
+import 'package:playground/home/pages/custom_sheet_pages/new_order_notification_page.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
-const double _buttonWidth = 200.0;
+const double _buttonWidth = 250.0;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({required this.onThemeBrightnessChanged, super.key});
@@ -74,30 +77,54 @@ class _HomeScreenState extends State<HomeScreen> {
                       debugPrint('Modal is dismissed with barrier tap.');
                       Navigator.of(context).pop();
                     },
-                    maxDialogWidth: 560,
-                    minDialogWidth: 400,
-                    minPageHeight: 0.0,
-                    maxPageHeight: 0.9,
                     pageListBuilder: (BuildContext context) {
                       return [RootSheetPage.build(context)];
                     },
                   );
                 },
-                child: const Text('Show Modal Sheet'),
+                child: const Text('Show ALC Wolt Modal Sheet'),
               ),
             ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: _buttonWidth,
+              child: WoltElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show(
+                    useSafeArea: false,
+                    barrierDismissible: false,
+                    context: context,
+                    modalTypeBuilder: (_) => const TopNotificationModalSheet(),
+                    pageListBuilder: (_) => [NewOrderNotificationPage()],
+                  );
+                },
+                child: const Text('Show Custom Modal Sheet'),
+              ),
+            )
           ],
         );
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          WoltModalSheet.show(
+            useSafeArea: false,
+            barrierDismissible: false,
+            context: context,
+            modalTypeBuilder: (_) => const FloatingBottomSheet(),
+            pageListBuilder: (_) => [NewOrderNotificationPage()],
+          );
+        },
+        child: const Icon(Icons.notifications_active),
+      )
     );
   }
 
   WoltModalType _modalTypeBuilder(BuildContext context) {
     switch (context.screenSize) {
       case WoltScreenSize.small:
-        return WoltModalType.bottomSheet;
+        return WoltModalType.bottomSheet();
       case WoltScreenSize.large:
-        return WoltModalType.dialog;
+        return WoltModalType.sideSheet();
     }
   }
 }
