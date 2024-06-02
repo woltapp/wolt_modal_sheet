@@ -69,8 +69,7 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
       child: InkWell(
         onTap: _onTap,
         child: Padding(
-          padding:
-              widget.tilePadding ?? const EdgeInsets.symmetric(vertical: 16),
+          padding: widget.tilePadding ?? const EdgeInsets.all(16.0),
           child: Row(
             crossAxisAlignment:
                 widget.tileCrossAxisAlignment ?? CrossAxisAlignment.start,
