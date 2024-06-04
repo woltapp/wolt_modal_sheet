@@ -4,12 +4,38 @@ import 'package:flutter/material.dart';
 
 /// Enum representing the type of the modal.
 enum WoltModalType {
-  bottomSheet,
-  dialog;
+  bottomSheet(
+    isTopSafeAreaFilled: false,
+    isBottomSafeAreaFilled: true,
+    isStartSafeAreaFilled: false,
+    isEndSafeAreaFilled: false,
+  ),
+  dialog(
+    isTopSafeAreaFilled: false,
+    isBottomSafeAreaFilled: true,
+    isStartSafeAreaFilled: false,
+    isEndSafeAreaFilled: false,
+  );
 
-  const WoltModalType();
+  const WoltModalType({
+    required this.isBottomSafeAreaFilled,
+    required this.isTopSafeAreaFilled,
+    required this.isStartSafeAreaFilled,
+    required this.isEndSafeAreaFilled,
+  });
 
-  /// Returns the width of the modal content based on the total [totalWidth].
+  final bool isBottomSafeAreaFilled;
+  final bool isTopSafeAreaFilled;
+  final bool isStartSafeAreaFilled;
+  final bool isEndSafeAreaFilled;
+
+  /// Provides a semantic label for accessibility purposes based on the modal type.
+  ///
+  /// Accessibility labels help screen readers describe the function of the modal to users with
+  /// visual impairments.
+  ///
+  /// Parameters:
+  /// - [context]: The build context used to access MaterialLocalizations.
   ///
   /// The [totalWidth] represents the total available width for the modal.
   double modalContentWidth(

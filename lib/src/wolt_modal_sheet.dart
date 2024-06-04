@@ -5,6 +5,7 @@ import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.
 import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_modal_safe_area_filling.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const double _minFlingVelocity = 700.0;
@@ -88,7 +89,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   /// A boolean that determines whether the modal should avoid system UI intrusions such as the
   /// notch and system gesture areas.
-  final bool useSafeArea;
+  final bool? useSafeArea;
 
   /// The minimum width that the modal can shrink to when displayed as a dialog.
   final double? minDialogWidth;
@@ -436,6 +437,15 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
             themeData?.resizeToAvoidBottomInset ??
             defaultThemeData.resizeToAvoidBottomInset;
+        final useSafeArea = page.useSafeArea ??
+            widget.useSafeArea ??
+            themeData?.useSafeArea ??
+            defaultThemeData.useSafeArea;
+        final safeAreaColor = Theme.of(context).useMaterial3
+            ? ElevationOverlay.applySurfaceTint(
+                pageBackgroundColor, surfaceTintColor, modalElevation)
+            : ElevationOverlay.applyOverlay(
+                context, pageBackgroundColor, modalElevation);
 
         final multiChildLayout = CustomMultiChildLayout(
           delegate: WoltModalMultiChildLayoutDelegate(
@@ -489,13 +499,20 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                         clipBehavior: clipBehavior,
                         child: LayoutBuilder(
                           builder: (_, constraints) {
-                            return WoltModalSheetAnimatedSwitcher(
+                            final child = WoltModalSheetAnimatedSwitcher(
                               woltModalType: _modalType,
                               pageIndex: currentPageIndex,
                               pages: pages,
                               sheetWidth: constraints.maxWidth,
                               showDragHandle: showDragHandle,
                             );
+                            return useSafeArea
+                                ? WoltModalSafeAreaFilling(
+                                    modalType: _modalType,
+                                    safeAreaColor: safeAreaColor,
+                                    child: child,
+                                  )
+                                : child;
                           },
                         ),
                       ),
@@ -509,24 +526,13 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         return Scaffold(
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           backgroundColor: Colors.transparent,
-          body: widget.useSafeArea
-              ? Stack(
-                  children: [
-                    SafeArea(child: multiChildLayout),
-                    if (_modalType == WoltModalType.bottomSheet)
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: ColoredBox(
-                          color: pageBackgroundColor,
-                          child: SizedBox(
-                            height: MediaQuery.paddingOf(context).bottom,
-                            width: double.infinity,
-                          ),
-                        ),
-                      ),
-                  ],
+          body: useSafeArea
+              ? SafeArea(
+                  top: !_modalType.isTopSafeAreaFilled,
+                  bottom: !_modalType.isBottomSafeAreaFilled,
+                  left: !_modalType.isStartSafeAreaFilled,
+                  right: !_modalType.isEndSafeAreaFilled,
+                  child: multiChildLayout,
                 )
               : multiChildLayout,
         );

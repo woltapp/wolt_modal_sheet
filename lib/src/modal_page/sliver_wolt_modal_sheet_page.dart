@@ -229,6 +229,10 @@ class SliverWoltModalSheetPage {
   /// The default value is set in [WoltModalSheetDefaultThemeData.resizeToAvoidBottomInset].
   final bool? resizeToAvoidBottomInset;
 
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  final bool? useSafeArea;
+
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
     this.mainContentSlivers,
@@ -253,6 +257,7 @@ class SliverWoltModalSheetPage {
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
     this.resizeToAvoidBottomInset,
+    this.useSafeArea,
   })  : assert(!(topBar != null && hasTopBarLayer == false),
             "When topBar is provided, hasTopBarLayer must not be false"),
         assert(
@@ -308,6 +313,7 @@ class SliverWoltModalSheetPage {
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
       resizeToAvoidBottomInset:
           resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      useSafeArea: useSafeArea ?? this.useSafeArea,
     );
   }
 
@@ -338,6 +344,7 @@ class SliverWoltModalSheetPage {
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
     bool? resizeToAvoidBottomInset,
+    bool? useSafeArea,
     Widget? child,
   }) {
     return SliverWoltModalSheetPage(
@@ -366,6 +373,7 @@ class SliverWoltModalSheetPage {
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
       resizeToAvoidBottomInset:
           resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      useSafeArea: useSafeArea ?? this.useSafeArea,
     );
   }
 

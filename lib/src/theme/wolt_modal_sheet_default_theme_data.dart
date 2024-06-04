@@ -154,6 +154,11 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   Clip get clipBehavior => Clip.antiAliasWithSaveLayer;
 
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  @override
+  bool get useSafeArea => true;
+
   /// Motion animation styles for both pagination and page scrolling.
   @override
   WoltModalSheetAnimationStyle get animationStyle =>
