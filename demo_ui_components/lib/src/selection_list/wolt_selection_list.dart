@@ -150,7 +150,7 @@ class _WoltSelectionListState<T> extends State<WoltSelectionList<T>> {
                 },
               );
       },
-      separatorBuilder: (_, __) => const Divider(),
+      separatorBuilder: (_, __) => const Divider(height: 1.0),
       itemCount: _itemTileDataGroup.itemTileCount,
     );
   }
