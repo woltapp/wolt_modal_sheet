@@ -57,7 +57,7 @@ class RootSheetPage {
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: Builder(builder: (context) {
         return Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
+          padding: const EdgeInsets.fromLTRB(0, 16, 0, 120),
           child: Column(
             children: [
               WoltSelectionList<ModalPageName?>.singleSelect(
