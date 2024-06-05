@@ -536,7 +536,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       setState(() {
         final pages = widget.pageListBuilderNotifier.value(context);
         assert(
-        pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
+            pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
         _pages
           ..clear()
           ..addAll(pages);
