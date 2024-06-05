@@ -1,3 +1,7 @@
+## 0.6.1
+- Fix value notifier in WoltModalSheet state is not disposed properly. [#221](https://github.com/woltapp/wolt_modal_sheet/pull/227)
+  - Fixes:
+    - [#226](https://github.com/woltapp/wolt_modal_sheet/issues/226) setState() called after dispose error in version 0.6.0 (not present in version 0.5.0) #226
 ## 0.6.0
 - Fix navigator_2_playground_example by Use static value notifier for button enabled listener. [#216](https://github.com/woltapp/wolt_modal_sheet/pull/216)
 - Add coffee maker navigator 2 example to Firebase Deploy. [#214](https://github.com/woltapp/wolt_modal_sheet/pull/214)
