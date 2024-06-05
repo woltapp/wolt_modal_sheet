@@ -352,18 +352,15 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   @override
   void initState() {
     super.initState();
-    widget.pageListBuilderNotifier.addListener(() {
-      // Update the page list whenever the notifier changes. This is useful when the page list is
-      // set in a declarative way using the WoltModalSheetRoute.
-      setState(() {
-        final pages = widget.pageListBuilderNotifier.value(context);
-        assert(
-            pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
-        _pages
-          ..clear()
-          ..addAll(pages);
-      });
-    });
+    widget.pageListBuilderNotifier
+        .addListener(_onPageListBuilderNotifierValueUpdated);
+  }
+
+  @override
+  void dispose() {
+    widget.pageListBuilderNotifier
+        .removeListener(_onPageListBuilderNotifierValueUpdated);
+    super.dispose();
   }
 
   @override
@@ -532,6 +529,19 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         );
       },
     );
+  }
+
+  void _onPageListBuilderNotifierValueUpdated() {
+    if (context.mounted) {
+      setState(() {
+        final pages = widget.pageListBuilderNotifier.value(context);
+        assert(
+        pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
+        _pages
+          ..clear()
+          ..addAll(pages);
+      });
+    }
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
