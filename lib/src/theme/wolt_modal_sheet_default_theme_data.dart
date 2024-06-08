@@ -132,27 +132,35 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   bool get isTopBarLayerAlwaysVisible => false;
 
-  /// The minimum width of the dialog.
-  @override
-  double get minDialogWidth => 400;
-
-  /// The maximum width of the dialog.
-  @override
-  double get maxDialogWidth => 560;
-
-  /// The minimum height of the page.
-  @override
-  double get minPageHeight => 0.0;
-
-  /// The maximum height of the page.
-  @override
-  double get maxPageHeight => 0.9;
-
   /// Overrides the default value for [WoltModalSheet] clipBehavior.
   ///
   /// Defaults to [Clip.antiAliasWithSaveLayer].
   @override
   Clip get clipBehavior => Clip.antiAliasWithSaveLayer;
+
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  @override
+  bool get useSafeArea => true;
+
+  /// A builder function that determines the [WoltModalType] based on the provided BuildContext.
+  /// This allows responsive design to switch between modal types as the screen size changes. For
+  /// example, in large screens, the modal can be displayed as a dialog, while on smaller
+  /// screens, it can be displayed as a bottom sheet.
+  @override
+  WoltModalTypeBuilder get modalTypeBuilder => (context) {
+        double smallModalTypeBreakPoint = 767.0;
+        double mediumModalTypeBreakPoint = 1399.0;
+
+        final width = MediaQuery.sizeOf(context).width;
+        if (width <= smallModalTypeBreakPoint) {
+          return WoltModalType.bottomSheet();
+        } else if (width <= mediumModalTypeBreakPoint) {
+          return WoltModalType.dialog();
+        } else {
+          return WoltModalType.sideSheet();
+        }
+      };
 
   /// Motion animation styles for both pagination and page scrolling.
   @override

@@ -35,6 +35,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.mainContentScrollPhysics,
     this.animationStyle,
     this.resizeToAvoidBottomInset,
+    this.useSafeArea,
+    this.modalTypeBuilder,
   });
 
   /// The color of the surface tint overlay applied to the material color
@@ -169,35 +171,46 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
   /// Defaults to true.
   final bool? resizeToAvoidBottomInset;
 
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  final bool? useSafeArea;
+
+  /// A builder function that determines the [WoltModalType] based on the provided BuildContext.
+  /// This allows responsive design to switch between modal types as the screen size changes. For
+  /// example, in large screens, the modal can be displayed as a dialog, while on smaller
+  /// screens, it can be displayed as a bottom sheet.
+  final WoltModalTypeBuilder? modalTypeBuilder;
+
   @override
-  WoltModalSheetThemeData copyWith({
-    Color? backgroundColor,
-    double? modalElevation,
-    Color? modalBarrierColor,
-    ShapeBorder? bottomSheetShape,
-    ShapeBorder? dialogShape,
-    bool? showDragHandle,
-    Color? dragHandleColor,
-    Size? dragHandleSize,
-    Color? topBarShadowColor,
-    double? topBarElevation,
-    double? heroImageHeight,
-    bool? hasSabGradient,
-    double? sabGradientHeight,
-    double? navBarHeight,
-    bool? hasTopBarLayer,
-    bool? isTopBarLayerAlwaysVisible,
-    double? minDialogWidth,
-    double? maxDialogWidth,
-    double? minPageHeight,
-    double? maxPageHeight,
-    Color? surfaceTintColor,
-    Color? shadowColor,
-    Clip? clipBehavior,
-    ScrollPhysics? mainContentScrollPhysics,
-    WoltModalSheetAnimationStyle? animationStyle,
-    bool? resizeToAvoidBottomInset,
-  }) {
+  WoltModalSheetThemeData copyWith(
+      {Color? backgroundColor,
+      double? modalElevation,
+      Color? modalBarrierColor,
+      ShapeBorder? bottomSheetShape,
+      ShapeBorder? dialogShape,
+      bool? showDragHandle,
+      Color? dragHandleColor,
+      Size? dragHandleSize,
+      Color? topBarShadowColor,
+      double? topBarElevation,
+      double? heroImageHeight,
+      bool? hasSabGradient,
+      double? sabGradientHeight,
+      double? navBarHeight,
+      bool? hasTopBarLayer,
+      bool? isTopBarLayerAlwaysVisible,
+      double? minDialogWidth,
+      double? maxDialogWidth,
+      double? minPageHeight,
+      double? maxPageHeight,
+      Color? surfaceTintColor,
+      Color? shadowColor,
+      Clip? clipBehavior,
+      ScrollPhysics? mainContentScrollPhysics,
+      WoltModalSheetAnimationStyle? animationStyle,
+      bool? resizeToAvoidBottomInset,
+      bool? useSafeArea,
+      WoltModalTypeBuilder? modalTypeBuilder}) {
     return WoltModalSheetThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       modalElevation: modalElevation ?? this.modalElevation,
@@ -228,6 +241,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       animationStyle: animationStyle ?? this.animationStyle,
       resizeToAvoidBottomInset:
           resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      useSafeArea: useSafeArea ?? this.useSafeArea,
+      modalTypeBuilder: modalTypeBuilder ?? this.modalTypeBuilder,
     );
   }
 
@@ -270,6 +285,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       mainContentScrollPhysics:
           t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
       animationStyle: t < 0.5 ? animationStyle : other.animationStyle,
+      useSafeArea: t < 0.5 ? useSafeArea : other.useSafeArea,
+      modalTypeBuilder: modalTypeBuilder,
     );
   }
 }

@@ -188,19 +188,15 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       modalTypeBuilder: (context) {
                         final size = MediaQuery.sizeOf(context).width;
                         if (size < _pageBreakpoint) {
-                          return WoltModalType.bottomSheet;
+                          return WoltModalType.sideSheet();
                         } else {
-                          return WoltModalType.dialog;
+                          return WoltModalType.sideSheet();
                         }
                       },
                       onModalDismissedWithBarrierTap: () {
                         debugPrint('Closed modal sheet with barrier tap');
                         Navigator.of(context).pop();
                       },
-                      maxDialogWidth: 560,
-                      minDialogWidth: 400,
-                      minPageHeight: 0.0,
-                      maxPageHeight: 0.9,
                     );
                   },
                   child: const SizedBox(
