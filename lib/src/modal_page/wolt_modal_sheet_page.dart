@@ -70,3 +70,50 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
           ],
         );
 }
+
+class WoltModalSheetPageSafeArea extends SliverWoltModalSheetPage {
+  /// Whether to avoid system intrusions on the left.
+  final bool left;
+
+  /// Whether to avoid system intrusions at the top of the screen, typically the
+  /// system status bar.
+  final bool top;
+
+  /// Whether to avoid system intrusions on the right.
+  final bool right;
+
+  /// Whether to avoid system intrusions on the bottom side of the screen.
+  final bool bottom;
+
+  WoltModalSheetPageSafeArea({
+    this.left = true,
+    this.top = true,
+    this.right = true,
+    this.bottom = true,
+    required WoltModalSheetPage page,
+  }) : super(
+          id: page.id,
+          pageTitle: page.pageTitle,
+          navBarHeight: page.navBarHeight,
+          topBarTitle: page.topBarTitle,
+          heroImage: page.heroImage,
+          heroImageHeight: page.heroImageHeight,
+          backgroundColor: page.backgroundColor,
+          surfaceTintColor: page.surfaceTintColor,
+          hasSabGradient: page.hasSabGradient,
+          sabGradientColor: page.sabGradientColor,
+          enableDrag: page.enableDrag,
+          forceMaxHeight: page.forceMaxHeight,
+          resizeToAvoidBottomInset: page.resizeToAvoidBottomInset,
+          isTopBarLayerAlwaysVisible: page.isTopBarLayerAlwaysVisible,
+          hasTopBarLayer: page.hasTopBarLayer,
+          scrollController: page.scrollController,
+          stickyActionBar: page.stickyActionBar,
+          leadingNavBarWidget: page.leadingNavBarWidget,
+          trailingNavBarWidget: page.trailingNavBarWidget,
+          topBar: page.topBar,
+          mainContentSliversBuilder: (context) => [
+            SliverToBoxAdapter(child: page.child),
+          ],
+        );
+}

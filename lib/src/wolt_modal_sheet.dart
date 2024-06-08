@@ -486,13 +486,44 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                         clipBehavior: clipBehavior,
                         child: LayoutBuilder(
                           builder: (_, constraints) {
-                            return WoltModalSheetAnimatedSwitcher(
+                            final Widget switcherWudget =
+                                WoltModalSheetAnimatedSwitcher(
                               woltModalType: _modalType,
                               pageIndex: currentPageIndex,
                               pages: pages,
                               sheetWidth: constraints.maxWidth,
                               showDragHandle: showDragHandle,
                             );
+
+                            if (page is WoltModalSheetPageSafeArea) {
+                              return Stack(
+                                children: [
+                                  SafeArea(
+                                    top: page.top,
+                                    bottom: page.bottom,
+                                    left: page.left,
+                                    right: page.right,
+                                    child: switcherWudget,
+                                  ),
+                                  if (_modalType == WoltModalType.bottomSheet)
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: ColoredBox(
+                                        color: pageBackgroundColor,
+                                        child: SizedBox(
+                                          height: MediaQuery.paddingOf(context)
+                                              .bottom,
+                                          width: double.infinity,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                            }
+
+                            return switcherWudget;
                           },
                         ),
                       ),
