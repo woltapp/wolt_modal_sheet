@@ -523,7 +523,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                               );
                             }
 
-                            return switcherWudget;
+                            return switcherWidget;
                           },
                         ),
                       ),
