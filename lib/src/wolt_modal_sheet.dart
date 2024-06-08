@@ -486,7 +486,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                         clipBehavior: clipBehavior,
                         child: LayoutBuilder(
                           builder: (_, constraints) {
-                            final Widget switcherWudget =
+                            final Widget switcherWidget =
                                 WoltModalSheetAnimatedSwitcher(
                               woltModalType: _modalType,
                               pageIndex: currentPageIndex,
@@ -503,7 +503,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                                     bottom: page.bottom,
                                     left: page.left,
                                     right: page.right,
-                                    child: switcherWudget,
+                                    child: switcherWidget,
                                   ),
                                   if (_modalType == WoltModalType.bottomSheet)
                                     Positioned(
