@@ -92,8 +92,6 @@ class _DemoAppState extends State<DemoApp> {
           WoltModalSheetThemeData(
             modalBarrierColor: Colors.white12,
             sabGradientColor: _darkSabGradientColor,
-            dialogShape: BeveledRectangleBorder(),
-            bottomSheetShape: BeveledRectangleBorder(),
           ),
         ],
       ),
