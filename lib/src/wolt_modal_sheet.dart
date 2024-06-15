@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
-import 'package:wolt_modal_sheet/src/multi_child_layout/wolt_modal_multi_child_layout_delegate.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -34,10 +33,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.enableDrag,
     required this.showDragHandle,
     required this.useSafeArea,
-    this.minDialogWidth,
-    this.maxDialogWidth,
-    this.minPageHeight,
-    this.maxPageHeight,
     super.key,
   });
 
@@ -88,20 +83,7 @@ class WoltModalSheet<T> extends StatefulWidget {
 
   /// A boolean that determines whether the modal should avoid system UI intrusions such as the
   /// notch and system gesture areas.
-  final bool useSafeArea;
-
-  /// The minimum width that the modal can shrink to when displayed as a dialog.
-  final double? minDialogWidth;
-
-  /// The maximum width that the modal can expand to when displayed as a dialog.
-  final double? maxDialogWidth;
-
-  /// The minimum height that the modal pages can shrink to.
-  final double? minPageHeight;
-
-  /// The maximum height that the modal pages can expand to.
-  final double? maxPageHeight;
-
+  final bool? useSafeArea;
   static const ParametricCurve<double> animationCurve = decelerateEasing;
 
   @override
@@ -135,12 +117,6 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `onModalDismissedWithBarrierTap`: Callback for when the modal is dismissed by tapping the barrier.
   ///   - `onModalDismissedWithDrag`: Callback for when the modal is dismissed by dragging.
   ///   - `transitionAnimationController`: Controller for custom transition animations.
-  ///   - `bottomSheetTransitionAnimation`: Custom animation widget for bottom sheet transitions.
-  ///   - `dialogTransitionAnimation`: Custom animation widget for dialog transitions.
-  ///   - `minDialogWidth`: Minimum width for the modal when displayed as a dialog.
-  ///   - `maxDialogWidth`: Maximum width for the modal when displayed as a dialog.
-  ///   - `minPageHeight`: Minimum height of the modal pages.
-  ///   - `maxPageHeight`: Maximum height of the modal pages.
   ///   - `modalBarrierColor`: Color of the modal barrier.
   ///
   /// Returns:
@@ -161,12 +137,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     VoidCallback? onModalDismissedWithBarrierTap,
     VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
-    AnimatedWidget? bottomSheetTransitionAnimation,
-    AnimatedWidget? dialogTransitionAnimation,
-    double? minDialogWidth,
-    double? maxDialogWidth,
-    double? minPageHeight,
-    double? maxPageHeight,
     Color? modalBarrierColor,
   }) {
     return WoltModalSheet.showWithDynamicPath(
@@ -185,12 +155,6 @@ class WoltModalSheet<T> extends StatefulWidget {
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       transitionAnimationController: transitionAnimationController,
-      bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
-      dialogTransitionAnimation: dialogTransitionAnimation,
-      minDialogWidth: minDialogWidth,
-      maxDialogWidth: maxDialogWidth,
-      minPageHeight: minPageHeight,
-      maxPageHeight: maxPageHeight,
       modalBarrierColor: modalBarrierColor,
     );
   }
@@ -219,12 +183,6 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `onModalDismissedWithBarrierTap`: Callback for when the modal is dismissed by tapping the barrier.
   ///   - `onModalDismissedWithDrag`: Callback for when the modal is dismissed by dragging.
   ///   - `transitionAnimationController`: Controller for custom transition animations.
-  ///   - `bottomSheetTransitionAnimation`: Custom animation widget for bottom sheet transitions.
-  ///   - `dialogTransitionAnimation`: Custom animation widget for dialog transitions.
-  ///   - `minDialogWidth`: Minimum width for the modal when displayed as a dialog.
-  ///   - `maxDialogWidth`: Maximum width for the modal when displayed as a dialog.
-  ///   - `minPageHeight`: Minimum height of the modal pages.
-  ///   - `maxPageHeight`: Maximum height of the modal pages.
   ///   - `modalBarrierColor`: Color of the modal barrier.
   ///
   /// Returns:
@@ -246,17 +204,10 @@ class WoltModalSheet<T> extends StatefulWidget {
     VoidCallback? onModalDismissedWithBarrierTap,
     VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
-    AnimatedWidget? bottomSheetTransitionAnimation,
-    AnimatedWidget? dialogTransitionAnimation,
-    double? minDialogWidth,
-    double? maxDialogWidth,
-    double? minPageHeight,
-    double? maxPageHeight,
     Color? modalBarrierColor,
   }) {
     final NavigatorState navigator =
         Navigator.of(context, rootNavigator: useRootNavigator);
-    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     return navigator.push<T>(
       WoltModalSheetRoute<T>(
         decorator: decorator,
@@ -264,7 +215,6 @@ class WoltModalSheet<T> extends StatefulWidget {
         pageListBuilderNotifier: pageListBuilderNotifier,
         modalTypeBuilder: modalTypeBuilder,
         routeSettings: routeSettings,
-        transitionDuration: transitionDuration,
         barrierDismissible: barrierDismissible,
         enableDrag: enableDrag,
         showDragHandle: showDragHandle,
@@ -272,13 +222,7 @@ class WoltModalSheet<T> extends StatefulWidget {
         onModalDismissedWithDrag: onModalDismissedWithDrag,
         transitionAnimationController: transitionAnimationController,
         useSafeArea: useSafeArea,
-        bottomSheetTransitionAnimation: bottomSheetTransitionAnimation,
-        dialogTransitionAnimation: dialogTransitionAnimation,
-        maxDialogWidth: maxDialogWidth,
-        minDialogWidth: minDialogWidth,
-        maxPageHeight: maxPageHeight,
-        minPageHeight: minPageHeight,
-        modalBarrierColor: modalBarrierColor ?? themeData?.modalBarrierColor,
+        modalBarrierColor: modalBarrierColor,
       ),
     );
   }
@@ -321,6 +265,9 @@ class WoltModalSheet<T> extends StatefulWidget {
 
 class WoltModalSheetState extends State<WoltModalSheet> {
   late WoltModalType _modalType;
+
+  WoltModalType get modalType => _modalType;
+
   List<SliverWoltModalSheetPage> _pages = [];
 
   ParametricCurve<double> animationCurve = decelerateEasing;
@@ -380,49 +327,24 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final String routeLabel = _modalType.routeLabel(context);
-    // The order of the notifier builders matter because we want to use the same instance of
-    // the page list whenever page index is updated.
     return ValueListenableBuilder(
       valueListenable: widget.pageIndexNotifier,
       builder: (context, currentPageIndex, __) {
         final pages = _pages;
         final page = pages[currentPageIndex];
-        late ShapeBorder shape;
-        switch (_modalType) {
-          case WoltModalType.bottomSheet:
-            shape = themeData?.bottomSheetShape ??
-                defaultThemeData.bottomSheetShape;
-            break;
-          case WoltModalType.dialog:
-            shape = themeData?.dialogShape ?? defaultThemeData.dialogShape;
-            break;
-        }
-        final enableDrag = _modalType == WoltModalType.bottomSheet &&
-            (page.enableDrag ??
-                widget.enableDrag ??
-                themeData?.enableDrag ??
-                defaultThemeData.enableDrag);
+        final enableDrag = page.enableDrag ??
+            _modalType.isDragEnabled ??
+            widget.enableDrag ??
+            themeData?.enableDrag ??
+            defaultThemeData.enableDrag;
         final showDragHandle = widget.showDragHandle ??
             (enableDrag &&
                 (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
+        final shadowColor =
+            themeData?.shadowColor ?? defaultThemeData.shadowColor;
         final pageBackgroundColor = page.backgroundColor ??
             themeData?.backgroundColor ??
             defaultThemeData.backgroundColor;
-        final minPageHeight = widget.minPageHeight ??
-            themeData?.minPageHeight ??
-            defaultThemeData.minPageHeight;
-        final maxPageHeight = widget.maxPageHeight ??
-            themeData?.maxPageHeight ??
-            defaultThemeData.maxPageHeight;
-        final minDialogWidth = widget.minDialogWidth ??
-            themeData?.minDialogWidth ??
-            defaultThemeData.minDialogWidth;
-        final maxDialogWidth = widget.maxDialogWidth ??
-            themeData?.maxDialogWidth ??
-            defaultThemeData.maxDialogWidth;
-        final shadowColor =
-            themeData?.shadowColor ?? defaultThemeData.shadowColor;
         final surfaceTintColor = page.surfaceTintColor ??
             themeData?.surfaceTintColor ??
             defaultThemeData.surfaceTintColor;
@@ -433,16 +355,21 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
             themeData?.resizeToAvoidBottomInset ??
             defaultThemeData.resizeToAvoidBottomInset;
+        final useSafeArea = page.useSafeArea ??
+            widget.useSafeArea ??
+            themeData?.useSafeArea ??
+            defaultThemeData.useSafeArea;
+        final safeAreaColor = Theme.of(context).useMaterial3
+            ? ElevationOverlay.applySurfaceTint(
+                pageBackgroundColor, surfaceTintColor, modalElevation)
+            : ElevationOverlay.applyOverlay(
+                context, pageBackgroundColor, modalElevation);
 
         final multiChildLayout = CustomMultiChildLayout(
-          delegate: WoltModalMultiChildLayoutDelegate(
+          delegate: _WoltModalMultiChildLayoutDelegate(
             contentLayoutId: contentLayoutId,
             barrierLayoutId: barrierLayoutId,
             modalType: _modalType,
-            minPageHeight: minPageHeight,
-            maxPageHeight: maxPageHeight,
-            minDialogWidth: minDialogWidth,
-            maxDialogWidth: maxDialogWidth,
           ),
           children: [
             LayoutId(
@@ -470,7 +397,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                 KeyedSubtree(
                   key: _childKey,
                   child: Semantics(
-                    label: routeLabel,
+                    label: _modalType.routeLabel(context),
                     child: GestureDetector(
                       excludeFromSemantics: true,
                       onVerticalDragStart: enableDrag ? _handleDragStart : null,
@@ -482,7 +409,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                         elevation: modalElevation,
                         surfaceTintColor: surfaceTintColor,
                         shadowColor: shadowColor,
-                        shape: shape,
+                        shape: _modalType.shapeBorder,
                         clipBehavior: clipBehavior,
                         child: LayoutBuilder(
                           builder: (_, constraints) {
@@ -506,26 +433,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         return Scaffold(
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           backgroundColor: Colors.transparent,
-          body: widget.useSafeArea
-              ? Stack(
-                  children: [
-                    SafeArea(child: multiChildLayout),
-                    if (_modalType == WoltModalType.bottomSheet)
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: ColoredBox(
-                          color: pageBackgroundColor,
-                          child: SizedBox(
-                            height: MediaQuery.paddingOf(context).bottom,
-                            width: double.infinity,
-                          ),
-                        ),
-                      ),
-                  ],
-                )
-              : multiChildLayout,
+          body: _modalType.decoratePage(
+            context,
+            multiChildLayout,
+            useSafeArea,
+            safeAreaColor,
+          ),
         );
       },
     );
@@ -1037,4 +950,39 @@ class WoltModalSheetState extends State<WoltModalSheet> {
 
   /// The index of the currently displayed page in the in-modal navigation stack.
   int get currentPageIndex => _currentPageIndex;
+}
+
+class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
+  final String contentLayoutId;
+  final String barrierLayoutId;
+  final WoltModalType modalType;
+
+  _WoltModalMultiChildLayoutDelegate({
+    required this.contentLayoutId,
+    required this.barrierLayoutId,
+    required this.modalType,
+  });
+
+  @override
+  void performLayout(Size size) {
+    layoutChild(
+      barrierLayoutId,
+      BoxConstraints(maxWidth: size.width, maxHeight: size.height),
+    );
+    final modalContentSize = layoutChild(
+      contentLayoutId,
+      modalType.layoutModal(size),
+    );
+    positionChild(barrierLayoutId, Offset.zero);
+    positionChild(
+      contentLayoutId,
+      modalType.positionModal(size, modalContentSize),
+    );
+  }
+
+  @override
+  bool shouldRelayout(
+      covariant _WoltModalMultiChildLayoutDelegate oldDelegate) {
+    return oldDelegate.modalType != modalType;
+  }
 }
