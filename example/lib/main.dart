@@ -147,8 +147,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
             topBarShadowColor: _darkThemeShadowColor,
             modalBarrierColor: Colors.white12,
             sabGradientColor: _darkSabGradientColor,
-            dialogShape: BeveledRectangleBorder(),
-            bottomSheetShape: BeveledRectangleBorder(),
             mainContentScrollPhysics: ClampingScrollPhysics(),
           ),
         ],
@@ -188,19 +186,23 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       modalTypeBuilder: (context) {
                         final size = MediaQuery.sizeOf(context).width;
                         if (size < _pageBreakpoint) {
-                          return WoltModalType.bottomSheet;
+                          return _isLightTheme
+                              ? const WoltBottomSheetType()
+                              : const WoltBottomSheetType().copyWith(
+                                  shapeBorder: const BeveledRectangleBorder(),
+                                );
                         } else {
-                          return WoltModalType.dialog;
+                          return _isLightTheme
+                              ? const WoltDialogType()
+                              : const WoltDialogType().copyWith(
+                                  shapeBorder: const BeveledRectangleBorder(),
+                                );
                         }
                       },
                       onModalDismissedWithBarrierTap: () {
                         debugPrint('Closed modal sheet with barrier tap');
                         Navigator.of(context).pop();
                       },
-                      maxDialogWidth: 560,
-                      minDialogWidth: 400,
-                      minPageHeight: 0.0,
-                      maxPageHeight: 0.9,
                     );
                   },
                   child: const SizedBox(

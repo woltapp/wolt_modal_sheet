@@ -1,81 +1,124 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/modal_type/wolt_alert_dialog_type.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-/// Enum representing the type of the modal.
-enum WoltModalType {
-  bottomSheet,
-  dialog;
+export 'wolt_bottom_sheet_type.dart';
+export 'wolt_dialog_type.dart';
+export 'wolt_side_sheet_type.dart';
 
-  const WoltModalType();
+/// An abstract base class for creating different types of modals within a UI.
+///
+/// To create specific modal types, extend this class and provide concrete implementations
+/// of the required methods and properties.
+abstract class WoltModalType {
+  /// Creates a [WoltModalType] instance.
+  const WoltModalType({
+    this.shapeBorder = const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+    ),
+    this.isDragToDismissEnabled = false,
+    this.forceMaxHeight = false,
+    this.transitionDuration = const Duration(milliseconds: 300),
+    this.reverseTransitionDuration = const Duration(milliseconds: 300),
+  });
 
-  /// Returns the width of the modal content based on the total [totalWidth].
+  /// Creates the default bottom sheet modal.
+  factory WoltModalType.bottomSheet() => const WoltBottomSheetType();
+
+  /// Creates the default dialog modal.
+  factory WoltModalType.dialog() => const WoltDialogType();
+
+  /// Creates the default side sheet modal.
+  factory WoltModalType.sideSheet() => const WoltSideSheetType();
+
+  /// Creates the default alert dialog modal.
+  factory WoltModalType.alertDialog() => const WoltAlertDialogType();
+
+  /// The duration of the modal's forward transition animation.
   ///
-  /// The [totalWidth] represents the total available width for the modal.
-  double modalContentWidth(
-    double totalWidth, {
-    required double minDialogWidth,
-    required double maxDialogWidth,
-  }) {
-    double calculatedWidth;
-    switch (this) {
-      case WoltModalType.bottomSheet:
-        return totalWidth;
-      case WoltModalType.dialog:
-        const totalColumnCount = 5;
-        final columnWidth = totalWidth / totalColumnCount;
-        calculatedWidth = 2 * columnWidth;
-        return min(max(calculatedWidth, minDialogWidth), maxDialogWidth);
-    }
-  }
-
-  /// Returns the x offset of the modal content based on the total [totalWidth].
+  /// Also see:
   ///
-  /// The [totalWidth] represents the total available width for the modal.
-  double xOffsetOfModalContent(
-    double totalWidth, {
-    required double minDialogWidth,
-    required double maxDialogWidth,
-  }) {
-    switch (this) {
-      case WoltModalType.bottomSheet:
-        return 0;
-      case WoltModalType.dialog:
-        return (totalWidth -
-                modalContentWidth(
-                  totalWidth,
-                  minDialogWidth: minDialogWidth,
-                  maxDialogWidth: maxDialogWidth,
-                )) /
-            2;
-    }
-  }
+  /// * [reverseTransitionDuration], which specifies the duration of the transition
+  /// when played in reverse. By default, both durations are same.
+  final Duration transitionDuration;
 
-  /// Returns the y offset of the modal content based on the total [totalHeight] and [modalHeight].
+  /// The duration of the modal's reverse transition animation.
   ///
-  /// The [totalHeight] represents the total available height for the modal.
-  /// The [modalHeight] represents the height of the modal content.
-  double yOffsetOfModalContent(double totalHeight, double modalHeight) {
-    switch (this) {
-      case WoltModalType.bottomSheet:
-        return totalHeight - modalHeight;
-      case WoltModalType.dialog:
-        return (totalHeight - modalHeight) / 2;
-    }
-  }
+  /// By default, set to the same value as [transitionDuration].
+  final Duration reverseTransitionDuration;
 
-  /// Returns the semantic label to be used for accessibility purposes based on the modal type.
+  /// The border shape of the modal.
   ///
-  /// [context] is the BuildContext used to access MaterialLocalizations.
-  String routeLabel(BuildContext context) {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-    switch (this) {
-      case WoltModalType.bottomSheet:
-        // TODO: Add support for bottomSheetLabel once minimum supported version allows // return localizations.bottomSheetLabel;
-        return localizations.dialogLabel;
-      case WoltModalType.dialog:
-        return localizations.dialogLabel;
-    }
-  }
+  /// This property can define a rounded, rectangular, or custom border shape based on
+  /// the modal type.
+  final ShapeBorder shapeBorder;
+
+  /// Determines whether the modal is draggable.
+  ///
+  /// If set to `true`, the modal can be dismissed by dragging.
+  final bool? isDragToDismissEnabled;
+
+  /// Forces the modal content to use the maximum available height if set to `true`.
+  ///
+  /// This is useful for modals like side sheets that need to occupy the full screen height.
+  final bool forceMaxHeight;
+
+  /// Defines the constraints for the modal based on the available screen size.
+  ///
+  /// Implement this method to specify the modal's sizing within the route screen.
+  ///
+  /// Returns a [BoxConstraints] object that defines the modal's dimensions.
+  BoxConstraints layoutModal(Size availableSize);
+
+  /// Determines the modal's position within the route screen.
+  ///
+  /// Implement this method to specify the position of the modal. The position is specified as an
+  /// [Offset] from the top-left corner of the container.
+  ///
+  /// Returns an [Offset] representing the modal's starting position.
+  Offset positionModal(Size availableSize, Size modalContentSize);
+
+  /// Provides an accessibility label for the modal.
+  ///
+  /// Implement this method to return a string that describes the modal type for screen readers.
+  /// [MaterialLocalizations] provides the default labels for common modal types. For example:
+  /// MaterialLocalizations.of(context).bottomSheetLabel
+  String routeLabel(BuildContext context);
+
+  /// Animates the modal's appearance.
+  ///
+  /// Override this method to define custom animation effects for the modal's entry and exit.
+  /// The [animation] controls the modal's visibility, and the [secondaryAnimation] coordinates
+  /// with other routes' transitions.
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  );
+
+  /// Applies additional decorations to the modal pqge content.
+  ///
+  /// This method can be overridden to provide custom decorations such as safe area padding
+  /// adjustments inside the modal page content. By default, it does not apply any decoration.
+  /// See the [WoltBottomSheetType] for an example of how overriding this method could be used to
+  /// fill the bottom safe area.
+  Widget decoratePageContent(
+    BuildContext context,
+    Widget child,
+    bool useSafeArea,
+  ) =>
+      child;
+
+  /// Applies additional decorations to the modal content.
+  ///
+  /// This method can be overridden to provide custom decorations such as safe area padding
+  /// adjustments around the modal including the barrier. By default, it applies safe area
+  /// constraints if [useSafeArea] is `true`.
+  Widget decorateModal(
+    BuildContext context,
+    Widget modal,
+    bool useSafeArea,
+  ) =>
+      useSafeArea ? SafeArea(child: modal) : modal;
 }

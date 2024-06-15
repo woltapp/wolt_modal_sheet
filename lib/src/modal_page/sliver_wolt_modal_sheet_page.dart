@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/modal_page/non_scrolling_wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
+import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_type.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 
@@ -229,6 +230,10 @@ class SliverWoltModalSheetPage {
   /// The default value is set in [WoltModalSheetDefaultThemeData.resizeToAvoidBottomInset].
   final bool? resizeToAvoidBottomInset;
 
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  final bool? useSafeArea;
+
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
     this.mainContentSlivers,
@@ -253,6 +258,7 @@ class SliverWoltModalSheetPage {
     this.hasTopBarLayer,
     this.isTopBarLayerAlwaysVisible,
     this.resizeToAvoidBottomInset,
+    this.useSafeArea,
   })  : assert(!(topBar != null && hasTopBarLayer == false),
             "When topBar is provided, hasTopBarLayer must not be false"),
         assert(
@@ -281,6 +287,7 @@ class SliverWoltModalSheetPage {
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
     bool? resizeToAvoidBottomInset,
+    bool? useSafeArea,
     Widget? child,
   }) {
     return SliverWoltModalSheetPage(
@@ -308,6 +315,7 @@ class SliverWoltModalSheetPage {
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
       resizeToAvoidBottomInset:
           resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      useSafeArea: useSafeArea ?? this.useSafeArea,
     );
   }
 
@@ -338,6 +346,7 @@ class SliverWoltModalSheetPage {
     Widget? leadingNavBarWidget,
     Widget? trailingNavBarWidget,
     bool? resizeToAvoidBottomInset,
+    bool? useSafeArea,
     Widget? child,
   }) {
     return SliverWoltModalSheetPage(
@@ -366,6 +375,7 @@ class SliverWoltModalSheetPage {
       trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
       resizeToAvoidBottomInset:
           resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      useSafeArea: useSafeArea ?? this.useSafeArea,
     );
   }
 
