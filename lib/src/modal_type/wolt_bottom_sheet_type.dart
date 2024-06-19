@@ -71,7 +71,7 @@ class WoltBottomSheetType extends WoltModalType {
   ///
   /// Returns an [Offset] representing the starting position of the modal.
   @override
-  Offset positionModal(Size availableSize, Size modalContentSize) {
+  Offset positionModal(Size availableSize, Size modalContentSize, _) {
     return Offset(0, max(0.0, availableSize.height - modalContentSize.height));
   }
 

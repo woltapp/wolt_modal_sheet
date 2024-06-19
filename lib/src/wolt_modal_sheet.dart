@@ -365,6 +365,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
             contentLayoutId: contentLayoutId,
             barrierLayoutId: barrierLayoutId,
             modalType: _modalType,
+            textDirection: Directionality.of(context),
           ),
           children: [
             LayoutId(
@@ -951,11 +952,13 @@ class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
   final String contentLayoutId;
   final String barrierLayoutId;
   final WoltModalType modalType;
+  final TextDirection textDirection;
 
   _WoltModalMultiChildLayoutDelegate({
     required this.contentLayoutId,
     required this.barrierLayoutId,
     required this.modalType,
+    required this.textDirection,
   });
 
   @override
@@ -971,7 +974,7 @@ class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
     positionChild(barrierLayoutId, Offset.zero);
     positionChild(
       contentLayoutId,
-      modalType.positionModal(size, modalContentSize),
+      modalType.positionModal(size, modalContentSize, textDirection),
     );
   }
 

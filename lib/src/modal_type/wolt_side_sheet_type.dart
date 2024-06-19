@@ -61,20 +61,17 @@ class WoltSideSheetType extends WoltModalType {
     );
   }
 
-  /// Calculates the position of the modal within the screen to ensure it is aligned correctly
-  /// with the screen's edge.
-  ///
-  /// This method positions the modal to slide in from the side, aligning its edge with the
-  /// edge of the screen.
-  ///
-  /// [availableSize] The size of the parent container or screen.
-  /// [modalContentSize] The actual size of the modal, which might be less than the maximum
-  /// depending on content.
-  ///
-  /// Returns the starting offset for the modal, ensuring it is positioned correctly.
+  /// Calculates the position of the modal within the screen based on text direction.
+  /// This ensures correct alignment with the screen's edge appropriate for the text direction.
   @override
-  Offset positionModal(Size availableSize, Size modalContentSize) {
-    final xOffset = max(0.0, availableSize.width - modalContentSize.width);
+  Offset positionModal(
+    Size availableSize,
+    Size modalContentSize,
+    TextDirection textDirection,
+  ) {
+    final xOffset = textDirection == TextDirection.rtl
+        ? 0.0
+        : max(0.0, availableSize.width - modalContentSize.width);
     return Offset(xOffset, 0);
   }
 
@@ -116,17 +113,7 @@ class WoltSideSheetType extends WoltModalType {
   ) =>
       modal;
 
-  /// Defines the transition animation for the side sheet's appearance, using a slide motion from the side.
-  ///
-  /// This method customizes how the modal enters the screen, emphasizing a smooth lateral movement
-  /// that enhances the user's experience by providing a natural and unobtrusive entry for the modal.
-  ///
-  /// [context] The build context.
-  /// [animation] The primary animation controller for the modal's appearance.
-  /// [secondaryAnimation] The animation for the route being pushed on top of this route.
-  /// [child]: The content widget to be animated.
-  ///
-  /// Returns a transition widget that manages the animation of the side sheet's entrance.
+  /// Animates the modal's appearance with a slide transition adjusted for text direction.
   @override
   Widget buildTransitions(
     BuildContext context,
@@ -134,10 +121,14 @@ class WoltSideSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    bool isRtl = Directionality.of(context) == TextDirection.rtl;
+    Offset beginOffset =
+        isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0);
+
     return SlideTransition(
       position: animation.drive(
         Tween(
-          begin: const Offset(1.0, 0.0),
+          begin: beginOffset,
           end: Offset.zero,
         ).chain(CurveTween(curve: Curves.ease)),
       ),

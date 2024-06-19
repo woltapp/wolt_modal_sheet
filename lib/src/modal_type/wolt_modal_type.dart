@@ -76,7 +76,11 @@ abstract class WoltModalType {
   /// [Offset] from the top-left corner of the container.
   ///
   /// Returns an [Offset] representing the modal's starting position.
-  Offset positionModal(Size availableSize, Size modalContentSize);
+  Offset positionModal(
+    Size availableSize,
+    Size modalContentSize,
+    TextDirection textDirection,
+  );
 
   /// Provides an accessibility label for the modal.
   ///

@@ -8,9 +8,14 @@ const double _contentWidth = 300.0;
 const double _breakPoint = 524.0;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({required this.onThemeBrightnessChanged, super.key});
+  const HomeScreen({
+    required this.onThemeBrightnessChanged,
+    required this.onDirectionalityChanged,
+    super.key,
+  });
 
   final void Function(bool) onThemeBrightnessChanged;
+  final void Function(TextDirection) onDirectionalityChanged;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isSlowAnimation = false;
   bool _isLightTheme = true;
   _Responsiveness _selectedResponsiveness = _Responsiveness.auto;
+  TextDirection _selectedDirection = TextDirection.ltr;
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +84,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Light Theme'),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Switch(
                           value: !_isLightTheme,
                           onChanged: (bool newValue) {
@@ -96,6 +102,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Text('Dark Theme'),
                     ],
                   ),
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('LTR'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Switch(
+                          value: _selectedDirection == TextDirection.rtl,
+                          onChanged: (bool newValue) {
+                            _selectedDirection = newValue
+                                ? TextDirection.rtl
+                                : TextDirection.ltr;
+                            widget.onDirectionalityChanged(_selectedDirection);
+                          },
+                        ),
+                      ),
+                      const Text('RTL'),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
                   SizedBox(
                     width: _contentWidth,
                     child: WoltElevatedButton(

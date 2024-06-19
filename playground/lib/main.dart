@@ -2,6 +2,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:playground/home/home_screen.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -26,6 +27,7 @@ class DemoApp extends StatefulWidget {
 
 class _DemoAppState extends State<DemoApp> {
   bool _isLightTheme = true;
+  TextDirection _direction = TextDirection.ltr;
 
   @override
   void initState() {
@@ -95,12 +97,26 @@ class _DemoAppState extends State<DemoApp> {
           ),
         ],
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      locale: _direction == TextDirection.ltr
+          ? const Locale('en')
+          : const Locale('he'),
+      supportedLocales: const [
+        Locale('en', ''), // English
+        Locale('he', ''), // Hebrew
+      ],
       debugShowCheckedModeBanner: false,
       home: HomeScreen(
-        onThemeBrightnessChanged: (bool isLightTheme) => setState(
-          () => _isLightTheme = isLightTheme,
-        ),
-      ),
+          onThemeBrightnessChanged: (bool isLightTheme) => setState(
+                () => _isLightTheme = isLightTheme,
+              ),
+          onDirectionalityChanged: (TextDirection direction) {
+            setState(() => _direction = direction);
+          }),
     );
   }
 }

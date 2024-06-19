@@ -84,7 +84,7 @@ class WoltDialogType extends WoltModalType {
   ///
   /// Returns an [Offset] that centers the dialog within the available space.
   @override
-  Offset positionModal(Size availableSize, Size modalContentSize) {
+  Offset positionModal(Size availableSize, Size modalContentSize, _) {
     final xOffset =
         max(0.0, (availableSize.width - modalContentSize.width) / 2);
     final yOffset =
