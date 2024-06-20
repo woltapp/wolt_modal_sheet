@@ -148,16 +148,11 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     return animationController!;
   }
 
-  WoltModalTypeBuilder _determineCurrentModalTypeBuilder(BuildContext context) {
-    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
-    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    return _modalTypeBuilder ??
-        themeData?.modalTypeBuilder ??
-        defaultThemeData.modalTypeBuilder;
-  }
-
   WoltModalType _determineCurrentModalType(BuildContext context) {
-    final modalTypeBuilder = _determineCurrentModalTypeBuilder(context);
-    return modalTypeBuilder(context);
+    final builder = Theme.of(context)
+            .extension<WoltModalSheetThemeData>()
+            ?.modalTypeBuilder ??
+        WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
+    return builder(context);
   }
 }

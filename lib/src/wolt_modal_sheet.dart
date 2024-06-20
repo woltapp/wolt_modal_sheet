@@ -64,7 +64,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   /// This allows responsive design to switch between modal types as the screen size changes. For
   /// example, in large screens, the modal can be displayed as a dialog, while on smaller
   /// screens, it can be displayed as a bottom sheet.
-  final WoltModalTypeBuilder modalTypeBuilder;
+  final WoltModalTypeBuilder? modalTypeBuilder;
 
   /// An optional AnimationController that can be used to control modal animations externally,
   /// providing fine-grained control over the modal's presentation and dismissal animations.
@@ -264,10 +264,6 @@ class WoltModalSheet<T> extends StatefulWidget {
 }
 
 class WoltModalSheetState extends State<WoltModalSheet> {
-  late WoltModalType _modalType;
-
-  WoltModalType get modalType => _modalType;
-
   List<SliverWoltModalSheetPage> _pages = [];
 
   ParametricCurve<double> animationCurve = decelerateEasing;
@@ -313,7 +309,6 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _modalType = widget.modalTypeBuilder(context);
     if (_pages.isEmpty) {
       // Get the initial page list from the initially provided pageListBuilder.
       final initialPages = widget.pageListBuilderNotifier.value(context);
@@ -327,6 +322,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final modalType = _currentModalType();
     return ValueListenableBuilder(
       valueListenable: widget.pageIndexNotifier,
       builder: (context, currentPageIndex, __) {
@@ -334,7 +330,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         final page = pages[currentPageIndex];
         final enableDrag = page.enableDrag ??
             widget.enableDrag ??
-            _modalType.isDragToDismissEnabled ??
+            modalType.isDragToDismissEnabled ??
             themeData?.enableDrag ??
             defaultThemeData.enableDrag;
         final showDragHandle = widget.showDragHandle ??
@@ -364,7 +360,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           delegate: _WoltModalMultiChildLayoutDelegate(
             contentLayoutId: contentLayoutId,
             barrierLayoutId: barrierLayoutId,
-            modalType: _modalType,
+            modalType: modalType,
             textDirection: Directionality.of(context),
           ),
           children: [
@@ -393,7 +389,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                 KeyedSubtree(
                   key: _childKey,
                   child: Semantics(
-                    label: _modalType.routeLabel(context),
+                    label: modalType.routeLabel(context),
                     child: GestureDetector(
                       excludeFromSemantics: true,
                       onVerticalDragStart: enableDrag ? _handleDragStart : null,
@@ -405,14 +401,14 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                         elevation: modalElevation,
                         surfaceTintColor: surfaceTintColor,
                         shadowColor: shadowColor,
-                        shape: _modalType.shapeBorder,
+                        shape: modalType.shapeBorder,
                         clipBehavior: clipBehavior,
                         child: LayoutBuilder(
                           builder: (_, constraints) {
-                            return _modalType.decoratePageContent(
+                            return modalType.decoratePageContent(
                               context,
                               WoltModalSheetAnimatedSwitcher(
-                                woltModalType: _modalType,
+                                woltModalType: modalType,
                                 pageIndex: currentPageIndex,
                                 pages: pages,
                                 sheetWidth: constraints.maxWidth,
@@ -433,8 +429,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         return Scaffold(
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           backgroundColor: Colors.transparent,
-          body:
-              _modalType.decorateModal(context, multiChildLayout, useSafeArea),
+          body: modalType.decorateModal(
+            context,
+            multiChildLayout,
+            useSafeArea,
+          ),
         );
       },
     );
@@ -502,6 +501,15 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         Navigator.pop(context);
       }
     }
+  }
+
+  WoltModalType _currentModalType() {
+    final builder = widget.modalTypeBuilder ??
+        Theme.of(context)
+            .extension<WoltModalSheetThemeData>()
+            ?.modalTypeBuilder ??
+        WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
+    return builder(context);
   }
 
   /// Adds one or more new pages to the modal sheet stack without making them the current view.
