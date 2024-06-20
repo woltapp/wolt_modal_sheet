@@ -3,13 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
-import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_modal_sheet_content_gesture_detector.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
-
-const double _minFlingVelocity = 700.0;
-
-const double _closeProgressThreshold = 0.5;
 
 const int defaultWoltModalTransitionAnimationDuration = 350;
 
@@ -29,7 +25,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.onModalDismissedWithDrag,
     required this.decorator,
     required this.modalTypeBuilder,
-    required this.animationController,
+    required this.transitionAnimationController,
     required this.route,
     required this.enableDrag,
     required this.showDragHandle,
@@ -68,8 +64,8 @@ class WoltModalSheet<T> extends StatefulWidget {
   final WoltModalTypeBuilder? modalTypeBuilder;
 
   /// An optional AnimationController that can be used to control modal animations externally,
-  /// providing fine-grained control over the modal's presentation and dismissal animations.
-  final AnimationController? animationController;
+  /// providing fine-grained control over the modal's enter and exit animations.
+  final AnimationController? transitionAnimationController;
 
   /// The modal sheet route associated with this modal.
   final WoltModalSheetRoute<T> route;
@@ -267,21 +263,10 @@ class WoltModalSheet<T> extends StatefulWidget {
 class WoltModalSheetState extends State<WoltModalSheet> {
   List<SliverWoltModalSheetPage> _pages = [];
 
-  ParametricCurve<double> animationCurve = decelerateEasing;
-
   Widget Function(Widget) get _decorator =>
       widget.decorator ?? (widget) => Builder(builder: (_) => widget);
 
-  bool get _dismissUnderway =>
-      widget.animationController!.status == AnimationStatus.reverse;
-
-  final GlobalKey _childKey = GlobalKey(debugLabel: 'BottomSheet child');
-
-  double get _childHeight {
-    final RenderBox renderBox =
-        _childKey.currentContext!.findRenderObject()! as RenderBox;
-    return renderBox.size.height;
-  }
+  final GlobalKey _childKey = GlobalKey(debugLabel: 'Modal sheet child');
 
   static const barrierLayoutId = 'barrierLayoutId';
 
@@ -337,6 +322,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
             themeData?.enableDrag ??
             defaultThemeData.enableDrag;
         final showDragHandle = widget.showDragHandle ??
+            modalType.showDragHandle ??
             (enableDrag &&
                 (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
         final shadowColor =
@@ -393,12 +379,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
                   key: _childKey,
                   child: Semantics(
                     label: modalType.routeLabel(context),
-                    child: GestureDetector(
-                      excludeFromSemantics: true,
-                      onVerticalDragStart: enableDrag ? _handleDragStart : null,
-                      onVerticalDragUpdate:
-                          enableDrag ? _handleDragUpdate : null,
-                      onVerticalDragEnd: enableDrag ? _handleDragEnd : null,
+                    child: WoltModalSheetContentGestureDetector(
+                      route: widget.route,
+                      enableDrag: enableDrag,
+                      modalContentKey: _childKey,
+                      onModalDismissedWithDrag: widget.onModalDismissedWithDrag,
+                      modalType: modalType,
                       child: Material(
                         color: pageBackgroundColor,
                         elevation: modalElevation,
@@ -452,57 +438,6 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           ..clear()
           ..addAll(pages);
       });
-    }
-  }
-
-  void _handleDragUpdate(DragUpdateDetails details) {
-    if (_dismissUnderway) {
-      return;
-    }
-    widget.animationController!.value -= details.primaryDelta! / _childHeight;
-  }
-
-  void _handleDragStart(DragStartDetails details) {
-    // Allow the bottom sheet to track the user's finger accurately.
-    animationCurve = Curves.linear;
-  }
-
-  void _handleDragEnd(DragEndDetails details) {
-    if (_dismissUnderway) {
-      return;
-    }
-    bool isClosing = false;
-    if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
-      final double flingVelocity =
-          -details.velocity.pixelsPerSecond.dy / _childHeight;
-      if (widget.animationController!.value > 0.0) {
-        widget.animationController!.fling(velocity: flingVelocity);
-      }
-      if (flingVelocity < 0.0) {
-        isClosing = true;
-      }
-    } else if (widget.animationController!.value < _closeProgressThreshold) {
-      if (widget.animationController!.value > 0.0) {
-        widget.animationController!.fling(velocity: -1.0);
-      }
-      isClosing = true;
-    } else {
-      widget.animationController!.forward();
-    }
-
-    // Allow the bottom sheet to animate smoothly from its current position.
-    animationCurve = BottomSheetSuspendedCurve(
-      widget.route.animation!.value,
-      curve: animationCurve,
-    );
-
-    if (isClosing && widget.route.isCurrent) {
-      final onModalDismissedWithDrag = widget.onModalDismissedWithDrag;
-      if (onModalDismissedWithDrag != null) {
-        onModalDismissedWithDrag();
-      } else {
-        Navigator.pop(context);
-      }
     }
   }
 

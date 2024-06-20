@@ -8,16 +8,15 @@ class WoltDialogType extends WoltModalType {
   /// Creates a [WoltDialogType] with specified styles and behaviors.
   const WoltDialogType({
     ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool? isDragEnabled = false,
     bool forceMaxHeight = false,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
   }) : super(
           shapeBorder: shapeBorder,
-          isDragToDismissEnabled: isDragEnabled,
           forceMaxHeight: forceMaxHeight,
           transitionDuration: transitionDuration,
           reverseTransitionDuration: reverseTransitionDuration,
+          showDragHandle: false,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 200);
@@ -124,14 +123,12 @@ class WoltDialogType extends WoltModalType {
   /// new class.
   WoltDialogType copyWith({
     ShapeBorder? shapeBorder,
-    bool? isDragToDismissEnabled,
     bool? forceMaxHeight,
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
   }) {
     return WoltDialogType(
       shapeBorder: shapeBorder ?? this.shapeBorder,
-      isDragEnabled: isDragToDismissEnabled ?? this.isDragToDismissEnabled,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:

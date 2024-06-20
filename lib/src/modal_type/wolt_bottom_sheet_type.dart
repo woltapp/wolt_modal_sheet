@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_dismiss_direction.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A customizable bottom sheet modal that extends [WoltModalType].
@@ -12,16 +13,21 @@ class WoltBottomSheetType extends WoltModalType {
   /// Creates a [WoltBottomSheetType] with optional customizations.
   const WoltBottomSheetType({
     ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool? isDragEnabled = true,
+    bool? showDragHandle,
     bool forceMaxHeight = false,
+    WoltModalDismissDirection? dismissDirection =
+        WoltModalDismissDirection.down,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
+    minFlingVelocity = 700.0,
   }) : super(
           shapeBorder: shapeBorder,
-          isDragToDismissEnabled: isDragEnabled,
           forceMaxHeight: forceMaxHeight,
           transitionDuration: transitionDuration,
           reverseTransitionDuration: reverseTransitionDuration,
+          dismissDirection: dismissDirection,
+          minFlingVelocity: minFlingVelocity,
+          showDragHandle: showDragHandle,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 250);
@@ -153,18 +159,22 @@ class WoltBottomSheetType extends WoltModalType {
   /// completely new class.
   WoltBottomSheetType copyWith({
     ShapeBorder? shapeBorder,
-    bool? isDragToDismissEnabled,
+    bool? showDragHandle,
     bool? forceMaxHeight,
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
+    WoltModalDismissDirection? dismissDirection,
+    double? minFlingVelocity,
   }) {
     return WoltBottomSheetType(
       shapeBorder: shapeBorder ?? this.shapeBorder,
-      isDragEnabled: isDragToDismissEnabled ?? this.isDragToDismissEnabled,
+      showDragHandle: showDragHandle ?? this.showDragHandle,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:
           reverseTransitionDuration ?? this.reverseTransitionDuration,
+      dismissDirection: dismissDirection ?? this.dismissDirection,
+      minFlingVelocity: minFlingVelocity ?? this.minFlingVelocity,
     );
   }
 }

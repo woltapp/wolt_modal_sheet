@@ -50,10 +50,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   /// bottom sheet.
   final Color? modalBarrierColor;
 
-  /// The animation controller that controls the bottom sheet's entrance and
+  /// The animation controller that controls the modal sheet's entrance and
   /// exit animations.
   ///
-  /// The BottomSheet widget will manipulate the position of this animation, it
+  /// The [WoltModalSheet] widget will manipulate the position of this animation, it
   /// is not just a passive observer.
   final AnimationController? _transitionAnimationController;
 
@@ -88,7 +88,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       modalTypeBuilder: _determineCurrentModalType,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
-      animationController: animationController,
+      transitionAnimationController: animationController,
       enableDrag: _enableDrag,
       showDragHandle: _showDragHandle,
       useSafeArea: _useSafeArea,

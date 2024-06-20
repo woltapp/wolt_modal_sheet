@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_dismiss_direction.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A customizable side sheet modal that extends [WoltModalType].
@@ -8,16 +9,20 @@ class WoltSideSheetType extends WoltModalType {
   /// Constructs a [WoltSideSheetType].
   const WoltSideSheetType({
     ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool? isDragEnabled = false,
     bool forceMaxHeight = true,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
+    WoltModalDismissDirection? dismissDirection =
+        WoltModalDismissDirection.endToStart,
+    double minFlingVelocity = 365.0,
   }) : super(
           shapeBorder: shapeBorder,
-          isDragToDismissEnabled: isDragEnabled,
+          showDragHandle: false,
           forceMaxHeight: forceMaxHeight,
           transitionDuration: transitionDuration,
           reverseTransitionDuration: reverseTransitionDuration,
+          dismissDirection: dismissDirection,
+          minFlingVelocity: minFlingVelocity,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 250);
@@ -142,18 +147,20 @@ class WoltSideSheetType extends WoltModalType {
   /// new class.
   WoltSideSheetType copyWith({
     ShapeBorder? shapeBorder,
-    bool? isDragToDismissEnabled,
     bool? forceMaxHeight,
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
+    WoltModalDismissDirection? dismissDirection,
+    double? minFlingVelocity,
   }) {
     return WoltSideSheetType(
       shapeBorder: shapeBorder ?? this.shapeBorder,
-      isDragEnabled: isDragToDismissEnabled ?? this.isDragToDismissEnabled,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:
           reverseTransitionDuration ?? this.reverseTransitionDuration,
+      dismissDirection: dismissDirection ?? this.dismissDirection,
+      minFlingVelocity: minFlingVelocity ?? this.minFlingVelocity,
     );
   }
 }
