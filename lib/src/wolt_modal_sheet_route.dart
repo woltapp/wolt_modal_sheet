@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
 
 class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
@@ -102,7 +103,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Widget child,
   ) {
     final modalType = _determineCurrentModalType(context);
-    print('modalType: $modalType');
     return modalType.buildTransitions(
         context, animation, secondaryAnimation, child);
   }
@@ -146,11 +146,6 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   }
 
   WoltModalType _determineCurrentModalType(BuildContext context) {
-    final builder = _modalTypeBuilder ??
-        Theme.of(context)
-            .extension<WoltModalSheetThemeData>()
-            ?.modalTypeBuilder ??
-        WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
-    return builder(context);
+    return WoltModalTypeUtils.currentModalType(_modalTypeBuilder, context);
   }
 }

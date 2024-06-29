@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/bottom_sheet_suspended_curve.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const double _minFlingVelocity = 700.0;
@@ -322,7 +323,9 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final modalType = _currentModalType();
+    final modalType =
+        WoltModalTypeUtils.currentModalType(widget.modalTypeBuilder, context);
+
     return ValueListenableBuilder(
       valueListenable: widget.pageIndexNotifier,
       builder: (context, currentPageIndex, __) {
@@ -501,15 +504,6 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         Navigator.pop(context);
       }
     }
-  }
-
-  WoltModalType _currentModalType() {
-    final builder = widget.modalTypeBuilder ??
-        Theme.of(context)
-            .extension<WoltModalSheetThemeData>()
-            ?.modalTypeBuilder ??
-        WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
-    return builder(context);
   }
 
   /// Adds one or more new pages to the modal sheet stack without making them the current view.
