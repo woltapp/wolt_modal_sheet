@@ -156,9 +156,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   WoltModalType _modalTypeBuilder(BuildContext context) {
     switch (context.screenSize) {
       case WoltScreenSize.small:
-        return WoltModalType.bottomSheet;
+        return WoltModalType.bottomSheet();
       case WoltScreenSize.large:
-        return WoltModalType.dialog;
+        return WoltModalType.dialog();
     }
   }
 }

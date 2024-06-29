@@ -48,18 +48,6 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   Color get modalBarrierColor => Colors.black54;
 
-  /// The shape of the bottom sheet.
-  @override
-  ShapeBorder get bottomSheetShape => const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28.0)),
-      );
-
-  /// The shape of the dialog.
-  @override
-  ShapeBorder get dialogShape => const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-      );
-
   /// Whether to show the drag handle.
   @override
   bool get showDragHandle => enableDrag;
@@ -110,16 +98,6 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   double get sabGradientHeight => 24.0;
 
-  /// The color of the gentle gradient overlay that is rendered above the [stickyActionBar]. The
-  /// purpose of this gradient is to visually suggest to the user that additional content might
-  /// be present below the action bar.
-  ///
-  /// If [hasSabGradient] set to `true`, a gradient from this color to transparent is rendered
-  /// right above the [stickyActionBar]. If `false`, no gradient is rendered. By default, it's
-  /// value is to page background color.
-  @override
-  Color get sabGradientColor => backgroundColor;
-
   /// The height of the navigation bar.
   @override
   double get navBarHeight => 72.0;
@@ -132,27 +110,25 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   bool get isTopBarLayerAlwaysVisible => false;
 
-  /// The minimum width of the dialog.
-  @override
-  double get minDialogWidth => 400;
-
-  /// The maximum width of the dialog.
-  @override
-  double get maxDialogWidth => 560;
-
-  /// The minimum height of the page.
-  @override
-  double get minPageHeight => 0.0;
-
-  /// The maximum height of the page.
-  @override
-  double get maxPageHeight => 0.9;
-
   /// Overrides the default value for [WoltModalSheet] clipBehavior.
   ///
   /// Defaults to [Clip.antiAliasWithSaveLayer].
   @override
   Clip get clipBehavior => Clip.antiAliasWithSaveLayer;
+
+  /// A boolean that determines whether the modal should avoid system UI intrusions such as the
+  /// notch and system gesture areas.
+  @override
+  bool get useSafeArea => true;
+
+  @override
+  WoltModalTypeBuilder get modalTypeBuilder => (context) {
+        final width = MediaQuery.sizeOf(context).width;
+        if (width < 524.0) {
+          return WoltModalType.bottomSheet();
+        }
+        return WoltModalType.dialog();
+      };
 
   /// Motion animation styles for both pagination and page scrolling.
   @override
