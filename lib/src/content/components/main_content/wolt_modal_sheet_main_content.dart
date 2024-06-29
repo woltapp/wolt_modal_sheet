@@ -46,6 +46,8 @@ class WoltModalSheetMainContent extends StatelessWidget {
         ? navBarHeight
         : 0.0;
     final isNonScrollingPage = page is NonScrollingWoltModalSheetPage;
+    final shouldFillRemaining = woltModalType.forceMaxHeight ||
+        (page.forceMaxHeight && !isNonScrollingPage);
     final scrollView = CustomScrollView(
       shrinkWrap: true,
       physics: themeData?.mainContentScrollPhysics ??
@@ -87,8 +89,7 @@ class WoltModalSheetMainContent extends StatelessWidget {
           ...page.mainContentSlivers!
         else
           ...page.mainContentSliversBuilder!(context),
-        if (woltModalType.forceMaxHeight ||
-            (page.forceMaxHeight && !isNonScrollingPage))
+        if (shouldFillRemaining)
           const SliverFillRemaining(
             hasScrollBody: false,
             child: SizedBox.shrink(),
