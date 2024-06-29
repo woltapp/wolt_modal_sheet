@@ -53,7 +53,6 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
 
     return GestureDetector(
       excludeFromSemantics: true,
-      // Handle drag gestures based on the specified dismiss direction
       onVerticalDragUpdate: (details) => canDragToDismiss && isVertical
           ? _handleVerticalDragUpdate(details)
           : null,
@@ -132,85 +131,90 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
     }
   }
 
-  // Handle horizontal drag updates
   void _handleHorizontalDragUpdate(
       BuildContext context, DragUpdateDetails details) {
     if (_isDismissUnderway || _isDismissed) {
       return;
     }
 
-    // Apply the drag update to the animation controller value
     final delta = -details.primaryDelta! / _childWidth;
     switch (_dismissDirection) {
       case WoltModalDismissDirection.startToEnd:
         if (Directionality.of(context) == TextDirection.ltr) {
-          _animationController.value += delta;
-        } else {
           _animationController.value -= delta;
+        } else {
+          _animationController.value += delta;
         }
         break;
       case WoltModalDismissDirection.endToStart:
         if (Directionality.of(context) == TextDirection.ltr) {
-          _animationController.value -= delta;
-        } else {
           _animationController.value += delta;
+        } else {
+          _animationController.value -= delta;
         }
         break;
       default:
-        _animationController.value += delta;
         break;
     }
   }
 
-  // Handle horizontal drag end
   void _handleHorizontalDragEnd(BuildContext context, DragEndDetails details) {
     if (_isDismissed || _isDismissUnderway) {
       return;
     }
 
-    final horizontalVelocity = details.velocity.pixelsPerSecond.dx.abs();
+    bool isClosing = false;
+    bool isDraggingToEnd = details.velocity.pixelsPerSecond.dx > 0;
+    bool isDraggingToStart = details.velocity.pixelsPerSecond.dx < 0;
+    final isDismissToStart =
+        _dismissDirection == WoltModalDismissDirection.endToStart;
+    final isDismissToEnd =
+        _dismissDirection == WoltModalDismissDirection.startToEnd;
+    final double flingVelocity =
+        details.velocity.pixelsPerSecond.dx / _childWidth;
 
-    if (horizontalVelocity >= _minFlingVelocity) {
-      double visualVelocity = details.velocity.pixelsPerSecond.dx / _childWidth;
+    if (details.velocity.pixelsPerSecond.dx.abs() >= _minFlingVelocity) {
       final directionality = Directionality.of(context);
-      switch (directionality) {
-        case TextDirection.rtl:
-          if (_dismissDirection == WoltModalDismissDirection.startToEnd) {
-            _animationController.fling(velocity: -visualVelocity);
-          } else {
-            _animationController.fling(velocity: visualVelocity);
-          }
-          break;
-        case TextDirection.ltr:
-          if (_dismissDirection == WoltModalDismissDirection.startToEnd) {
-            _animationController.fling(velocity: visualVelocity);
-          } else {
-            _animationController.fling(velocity: -visualVelocity);
-          }
-          break;
-      }
 
-      switch (_dismissDirection) {
-        case WoltModalDismissDirection.startToEnd:
-          if (Directionality.of(context) == TextDirection.ltr) {
-            _animationController.fling(velocity: visualVelocity);
-          } else {
-            _animationController.fling(velocity: -visualVelocity);
+      if (directionality == TextDirection.rtl) {
+        if (isDraggingToEnd && isDismissToEnd) {
+          _animationController.fling(velocity: -flingVelocity);
+          if (flingVelocity < 0.0) {
+            isClosing = true;
           }
-          break;
-        case WoltModalDismissDirection.endToStart:
-          if (Directionality.of(context) == TextDirection.ltr) {
-            _animationController.fling(velocity: -visualVelocity);
-          } else {
-            _animationController.fling(velocity: visualVelocity);
+        } else if (isDraggingToStart && isDismissToStart) {
+          _animationController.fling(velocity: flingVelocity);
+          if (flingVelocity > 0.0) {
+            isClosing = true;
           }
-          break;
-        default:
-          _animationController.fling(velocity: visualVelocity);
-          break;
+        }
+      } else {
+        if (isDraggingToEnd && isDismissToEnd) {
+          _animationController.fling(velocity: flingVelocity);
+          if (flingVelocity > 0.0) {
+            isClosing = true;
+          }
+        } else if (isDraggingToStart && isDismissToStart) {
+          _animationController.fling(velocity: -flingVelocity);
+          if (flingVelocity < 0.0) {
+            isClosing = true;
+          }
+        }
       }
     } else if (_animationController.value < 0.5) {
       _animationController.fling(velocity: -1.0);
+      isClosing = true;
+    } else {
+      _animationController.forward();
+    }
+
+    if (isClosing && route.isCurrent) {
+      final onModalDismissedWithDrag = this.onModalDismissedWithDrag;
+      if (onModalDismissedWithDrag != null) {
+        onModalDismissedWithDrag();
+      } else {
+        Navigator.pop(context);
+      }
     }
   }
 }
