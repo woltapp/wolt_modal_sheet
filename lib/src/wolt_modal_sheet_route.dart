@@ -128,8 +128,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Duration get reverseTransitionDuration =>
-      _determineCurrentModalType(navigator!.context).reverseTransitionDuration;
+  Duration get reverseTransitionDuration {
+    return _determineCurrentModalType(navigator!.context)
+        .reverseTransitionDuration;
+  }
 
   @override
   AnimationController createAnimationController() {

@@ -126,9 +126,8 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
         final width = MediaQuery.sizeOf(context).width;
         if (width < 524.0) {
           return WoltModalType.bottomSheet();
-        } else {
-          return WoltModalType.dialog();
         }
+        return WoltModalType.dialog();
       };
 
   /// Motion animation styles for both pagination and page scrolling.

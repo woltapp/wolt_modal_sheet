@@ -45,10 +45,10 @@ class WoltDialogType extends WoltModalType {
   @override
   BoxConstraints layoutModal(Size availableSize) {
     const padding = 48.0;
-    double width;
-    final availableWidth = availableSize.width;
     const verticalBreakpoint = 360.0 + padding;
     const horizontalBreakpoint = 524.0 + padding;
+    final availableWidth = availableSize.width;
+    double width;
     if (availableWidth > horizontalBreakpoint) {
       width = 524.0;
     } else {
@@ -63,14 +63,13 @@ class WoltDialogType extends WoltModalType {
         minHeight: 360,
         maxHeight: max(360, availableHeight * 0.8),
       );
-    } else {
-      return BoxConstraints(
-        minWidth: width,
-        maxWidth: width,
-        minHeight: availableHeight * 0.8,
-        maxHeight: availableHeight * 0.8,
-      );
     }
+    return BoxConstraints(
+      minWidth: width,
+      maxWidth: width,
+      minHeight: availableHeight * 0.8,
+      maxHeight: availableHeight * 0.8,
+    );
   }
 
   /// Calculates the central position of the dialog within its parent container.
