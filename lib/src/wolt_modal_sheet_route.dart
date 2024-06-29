@@ -79,18 +79,12 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    final modalTypeBuilder = _modalTypeBuilder ??
-        Theme.of(context)
-            .extension<WoltModalSheetThemeData>()
-            ?.modalTypeBuilder ??
-        WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
-
     return WoltModalSheet(
       route: this,
       decorator: decorator,
       pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
       pageListBuilderNotifier: pageListBuilderNotifier,
-      modalTypeBuilder: modalTypeBuilder,
+      modalTypeBuilder: _determineCurrentModalType,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       animationController: animationController,
@@ -108,6 +102,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Widget child,
   ) {
     final modalType = _determineCurrentModalType(context);
+    print('modalType: $modalType');
     return modalType.buildTransitions(
         context, animation, secondaryAnimation, child);
   }
@@ -151,7 +146,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   }
 
   WoltModalType _determineCurrentModalType(BuildContext context) {
-    final builder = Theme.of(context)
+    final builder = _modalTypeBuilder ??
+        Theme.of(context)
             .extension<WoltModalSheetThemeData>()
             ?.modalTypeBuilder ??
         WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
