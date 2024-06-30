@@ -147,7 +147,7 @@ such as Bloc and Provider
 
 ## Design Guidelines
 
-This document outlines the design guidelines for the modal sheet component, including breakpoints, safe areas, and behavior across different devices as per our design system specs and Material 3 guidelines.
+This section outlines the design guidelines for the modal sheet component, including breakpoints, safe areas, scroll logic, and behavior across different devices. The guidelines are based on the Wolt design system specs.
 
 ### Overview
 
@@ -162,6 +162,8 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 - **Breakpoint Small**: 524px ≤ Width < 768px
 - **Breakpoint XSmall**: Width < 524px
 
+<img width="1594" alt="Screenshot 2024-06-30 at 15 16 37" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/3b726642-a878-49ba-8a48-3359d87bf318">
+
 #### Modal Types
 
 - **Alert**: Used for critical information that requires immediate attention.
@@ -171,6 +173,7 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 - **Full Bottom Sheet**: Used to present content that requires full screen height.
 
 ### Safe Areas
+The Modal Sheet supports safe areas for all compatible devices. See below the safe area considerations.
 
 #### iOS
 
@@ -200,27 +203,51 @@ The modal sheet component adjusts its layout based on the following breakpoints:
         - Top: Varies with notch (retrieved using DisplayCutout API)
         - Bottom: Varies (on-screen navigation bars, if any)
 
+### Scroll Logic
+
+The modal sheet component supports different scrolling behaviors to ensure usability and accessibility of the content:
+
+- **Non-scrollable Modals**: For content that fits within the viewport, no scrolling is required. The entire modal content is visible without interaction.
+- **Scrollable Modals**: When content exceeds the viewport height, the modal becomes scrollable. Users can scroll through the content while the modal's header and action buttons remain fixed for easy access.
+
+#### Scroll Logic Layouts
+
+- **Short Content**: Displayed fully within the viewport without scrolling.
+- **Medium Content**: Scrolls vertically if the content exceeds the available height but keeps action buttons fixed at the bottom.
+- **Long Content**: Utilizes full vertical scrolling. The header remains sticky at the top while action buttons are sticky at the bottom for continuous access.
+
 ### Modal Sheet Layouts
 
 #### Alert
 - Used to display information requiring immediate user attention.
 - Adapts to different breakpoints to ensure visibility and accessibility.
+- Must be dismissed by user interaction to ensure the alert is acknowledged.
 
 #### Dialog
 - Used for single user actions or state change information (success, errors).
 - Scales with breakpoints to maintain usability.
+- Provides clear actions for users to acknowledge or dismiss the dialog.
 
 #### Side Sheet
 - Used to focus users' attention on specific tasks while keeping context visible.
-- Expands to full height in medium and large breakpoints.
+- Spans the full height of the viewport.
+- Is modal and blocks other interactions until dismissed.
 
 #### Bottom Sheet
 - Provides additional options or actions without leaving the current context.
 - Auto height adjustment for optimal content display.
+- Can be modal or persistent. Modal bottom sheets are dismissed by a user action, while persistent ones remain until manually dismissed.
 
 #### Full Bottom Sheet
 - Utilized for content that requires full screen height.
 - Appears as an overlay, occupying the entire vertical viewport.
+- Ideal for complex tasks that require more space and user attention.
+
+### Design Considerations
+
+- **Accessibility**: Ensure all modal sheets are accessible by supporting screen readers and keyboard navigation. It is important to add close affordances either as a close button in the navigation bar and an additional screen reader close affordance as part of the scrim (grayed area).
+- **Visibility**: Modals have a clear visual distinction from the background to ensure they are easily noticeable.
+- **Responsiveness**: Modals adapt seamlessly to different screen sizes and orientations.
 
 ### Example Implementations
 
@@ -228,7 +255,13 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 - Modals should be translucent, ensuring the background remains visible to provide context.
 
 #### Breakpoint Adaptation
-- Ensure modals adapt to various breakpoints seamlessly to maintain usability and accessibility across different devices and screen sizes.
+- Modals adapt to various breakpoints seamlessly to maintain usability and accessibility across different devices and screen sizes.
+
+<img width="1379" alt="Screenshot 2024-06-30 at 15 17 13" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/239abe11-f5e5-4bea-8fd6-41857ff3229e">
+
+### Conclusion
+
+Following these guidelines will ensure that the modal sheet component is consistent, accessible, and user-friendly across all platforms and devices. These guidelines are based on best practices and standards to provide a seamless user experience.
 
 ## Understanding the page elements
 
