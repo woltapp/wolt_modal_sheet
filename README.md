@@ -58,7 +58,6 @@ for page transitions, and scrollable content within each page.
   * [Example Implementations](#example-implementations)
     + [On Media Example](#on-media-example)
     + [Breakpoint Adaptation](#breakpoint-adaptation)
-  * [Conclusion](#conclusion)
 - [Understanding the page elements](#understanding-the-page-elements)
   * [Navigation bar widgets](#navigation-bar-widgets)
   * [Top bar and top bar title](#top-bar-and-top-bar-title)
@@ -283,10 +282,6 @@ The modal sheet component supports different scrolling behaviors to ensure usabi
 - Modals adapt to various breakpoints seamlessly to maintain usability and accessibility across different devices and screen sizes.
 
 <img width="1379" alt="Screenshot 2024-06-30 at 15 17 13" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/239abe11-f5e5-4bea-8fd6-41857ff3229e">
-
-### Conclusion
-
-Following these guidelines will ensure that the modal sheet component is consistent, accessible, and user-friendly across all platforms and devices. These guidelines are based on best practices and standards to provide a seamless user experience.
 
 ## Understanding the page elements
 
