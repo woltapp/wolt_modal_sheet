@@ -145,6 +145,91 @@ such as Bloc and Provider
 </br>
 </br>
 
+## Design Guidelines
+
+This document outlines the design guidelines for the modal sheet component, including breakpoints, safe areas, and behavior across different devices as per our design system specs and Material 3 guidelines.
+
+### Overview
+
+The modal sheet component is used to display critical information or interactive elements to users in a non-intrusive way. This component adapts to different screen sizes and orientations, ensuring a consistent and accessible user experience.
+
+### Breakpoints
+
+The modal sheet component adjusts its layout based on the following breakpoints:
+
+- **Breakpoint Large**: Width ≥ 1400px
+- **Breakpoint Medium**: 768px ≤ Width < 1400px
+- **Breakpoint Small**: 524px ≤ Width < 768px
+- **Breakpoint XSmall**: Width < 524px
+
+#### Modal Types
+
+- **Alert**: Used for critical information that requires immediate attention.
+- **Dialog**: Used for single user actions or to convey information related to changes in state (success, errors).
+- **Side Sheet**: Used to focus users' attention on a specific task while keeping the context visible.
+- **Bottom Sheet**: Used for additional options or actions.
+- **Full Bottom Sheet**: Used to present content that requires full screen height.
+
+### Safe Areas
+
+#### iOS
+
+1. **iPhone without Notch**:
+    - Status Bar Height: 20 points
+    - Safe Area Insets:
+        - Top: 20 points
+        - Bottom: 0 points (unless there's a home indicator)
+
+2. **iPhone with Notch (iPhone X and later)**:
+    - Status Bar Height: 44 points (varies with device)
+    - Safe Area Insets:
+        - Top: 44 points
+        - Bottom: 34 points (home indicator area)
+
+#### Android
+
+1. **Standard Devices**:
+    - Status Bar Height: Approximately 24 dp (varies with screen density and device)
+    - Safe Area Insets:
+        - Top: 24 dp (status bar)
+        - Bottom: Varies (on-screen navigation bars, if any)
+
+2. **Devices with Notch (Display Cutout)**:
+    - Status Bar Height: Varies depending on the notch size
+    - Safe Area Insets:
+        - Top: Varies with notch (retrieved using DisplayCutout API)
+        - Bottom: Varies (on-screen navigation bars, if any)
+
+### Modal Sheet Layouts
+
+#### Alert
+- Used to display information requiring immediate user attention.
+- Adapts to different breakpoints to ensure visibility and accessibility.
+
+#### Dialog
+- Used for single user actions or state change information (success, errors).
+- Scales with breakpoints to maintain usability.
+
+#### Side Sheet
+- Used to focus users' attention on specific tasks while keeping context visible.
+- Expands to full height in medium and large breakpoints.
+
+#### Bottom Sheet
+- Provides additional options or actions without leaving the current context.
+- Auto height adjustment for optimal content display.
+
+#### Full Bottom Sheet
+- Utilized for content that requires full screen height.
+- Appears as an overlay, occupying the entire vertical viewport.
+
+### Example Implementations
+
+#### On Media Example
+- Modals should be translucent, ensuring the background remains visible to provide context.
+
+#### Breakpoint Adaptation
+- Ensure modals adapt to various breakpoints seamlessly to maintain usability and accessibility across different devices and screen sizes.
+
 ## Understanding the page elements
 
 Each element within the WoltModalSheet has a role to play, offering context,
