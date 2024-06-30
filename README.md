@@ -40,6 +40,8 @@ for page transitions, and scrollable content within each page.
   * [Imperative and Declarative Navigation](#imperative-and-declarative-navigation)
   * [Dynamic Pagination](#dynamic-pagination)
   * [State Management Integration](#state-management-integration)
+- [Design Guidelines]()
+  * []()
 - [Understanding the page elements](#understanding-the-page-elements)
   * [Navigation bar widgets](#navigation-bar-widgets)
   * [Top bar and top bar title](#top-bar-and-top-bar-title)
@@ -162,7 +164,7 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 - **Breakpoint Small**: 524px ≤ Width < 768px
 - **Breakpoint XSmall**: Width < 524px
 
-<img width="1594" alt="Screenshot 2024-06-30 at 15 16 37" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/3b726642-a878-49ba-8a48-3359d87bf318">
+<img width="1158" alt="Screenshot 2024-06-30 at 17 15 49" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/7dd39e47-8045-45a5-b03b-c62da805bc5f">
 
 #### Modal Types
 
