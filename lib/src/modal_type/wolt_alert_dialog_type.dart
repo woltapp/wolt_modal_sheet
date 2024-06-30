@@ -41,13 +41,27 @@ class WoltAlertDialogType extends WoltDialogType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringInterval = Interval(100.0 / 250.0, 1.0, curve: Curves.linear);
+    const exitingInterval = Interval(0.0, 100.0 / 300.0, curve: Curves.linear);
+
+    const enteringCubic = Cubic(0.2, 0.6, 0.4, 1.0);
+    const exitingCubic = Cubic(0.5, 0, 0.7, 0.2);
+
+    final interval = isClosing ? exitingInterval : enteringInterval;
+    final reverseInterval = isClosing ? enteringInterval : exitingInterval;
+
+    final cubic = isClosing ? exitingCubic : enteringCubic;
+    final reverseCubic = isClosing ? enteringCubic : exitingCubic;
+
     final alphaAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: animation,
-      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
-      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+      curve: interval,
+      reverseCurve: reverseInterval,
     ));
 
     final scaleAnimation = Tween<double>(
@@ -55,8 +69,8 @@ class WoltAlertDialogType extends WoltDialogType {
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: animation,
-      curve: const Cubic(0.2, 0.6, 0.4, 1.0), // Cubic for enter
-      reverseCurve: const Cubic(0.5, 0, 0.7, 0.2), // Cubic for exit
+      curve: cubic,
+      reverseCurve: reverseCubic,
     ));
 
     return ScaleTransition(
