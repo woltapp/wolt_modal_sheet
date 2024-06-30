@@ -140,14 +140,22 @@ class WoltBottomSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringCubic = Cubic(0.1, 0.8, 0.2, 1.0);
+    const exitingCubic = Cubic(0.5, 0, 0.7, 0.2);
+
+    final cubic = isClosing ? exitingCubic : enteringCubic;
+    final reverseCubic = isClosing ? enteringCubic : exitingCubic;
+
     final positionAnimation = Tween<Offset>(
       begin: const Offset(0.0, 1.0),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(
         parent: animation,
-        curve: const Cubic(0.1, 0.8, 0.2, 1.0), // Cubic for enter
-        reverseCurve: const Cubic(0.5, 0, 0.7, 0.2), // Cubic for exit
+        curve: cubic,
+        reverseCurve: reverseCubic,
       ),
     );
 

@@ -105,13 +105,21 @@ class WoltDialogType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringInterval = Interval(0.0, 100.0 / 300.0, curve: Curves.linear);
+    const exitingInterval = Interval(100.0 / 250.0, 1.0, curve: Curves.linear);
+
+    final interval = isClosing ? exitingInterval : enteringInterval;
+    final reverseInterval = isClosing ? enteringInterval : exitingInterval;
+
     final alphaAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: animation,
-      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
-      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+      curve: interval,
+      reverseCurve: reverseInterval,
     ));
 
     return FadeTransition(

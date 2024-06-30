@@ -128,23 +128,41 @@ class WoltSideSheetType extends WoltModalType {
   ) {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringInterval = Interval(0.0, 100.0 / 300.0, curve: Curves.linear);
+    const exitingInterval = Interval(100.0 / 250.0, 1.0, curve: Curves.linear);
+
+    const enteringCubic = Cubic(0.2, 0.6, 0.4, 1.0);
+    const exitingCubic = Cubic(0.5, 0, 0.7, 0.2);
+
+    final interval = isClosing ? exitingInterval : enteringInterval;
+    final reverseInterval = isClosing ? enteringInterval : exitingInterval;
+
+    final cubic = isClosing ? exitingCubic : enteringCubic;
+    final reverseCubic = isClosing ? enteringCubic : exitingCubic;
+
+    // Define the alpha animation for entering
     final alphaAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
-      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
-    ));
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: interval,
+        reverseCurve: reverseInterval,
+      ),
+    );
 
+    // Define the position animation for entering
     final positionAnimation = Tween<Offset>(
       begin: isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(
         parent: animation,
-        curve: const Cubic(0.2, 0.6, 0.4, 1.0), // Cubic for enter
-        reverseCurve: const Cubic(0.5, 0, 0.7, 0.2), // Cubic for exit
+        curve: cubic,
+        reverseCurve: reverseCubic,
       ),
     );
 
