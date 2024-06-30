@@ -135,6 +135,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : const WoltDialogType().copyWith(
                                     shapeBorder: const BeveledRectangleBorder(),
                                   );
+                            final woltAlertDialogType = _isLightTheme
+                                ? const WoltAlertDialogType()
+                                : const WoltDialogType().copyWith(
+                                    shapeBorder: const BeveledRectangleBorder(),
+                                  );
                             final bottomSheetType = _isLightTheme
                                 ? const WoltBottomSheetType()
                                 : const WoltBottomSheetType().copyWith(
@@ -148,6 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             switch (_selectedResponsiveness) {
                               case _Responsiveness.alwaysDialog:
                                 return woltDialogType;
+                              case _Responsiveness.alwaysAlertDialog:
+                                return woltAlertDialogType;
                               case _Responsiveness.alwaysBottomSheet:
                                 return bottomSheetType;
                               case _Responsiveness.alwaysSideSheet:
@@ -187,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 enum _Responsiveness {
   alwaysDialog('Always dialog'),
+  alwaysAlertDialog('Always alert dialog'),
   alwaysBottomSheet('Always bottom sheet'),
   alwaysSideSheet('Always side sheet'),
   auto('Auto');

@@ -17,13 +17,54 @@ class WoltAlertDialogType extends WoltDialogType {
     } else {
       width = availableWidth - padding; // adjust for very small screens
     }
-    final height = availableSize.height * 0.8;
 
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
-      minHeight: height,
-      maxHeight: height,
+      minHeight: 0,
+      maxHeight: availableSize.height * 0.8,
+    );
+  }
+
+  /// Defines a transition animation for the alert dialog's appearance.
+  ///
+  /// [context] is the build context.
+  /// [animation] is the primary animation controller for the dialog's appearance.
+  /// [secondaryAnimation] manages the coordination with other routes' transitions.
+  /// [child] is the content widget to be animated.
+  ///
+  /// Returns a transition widget that manages the dialog's transition animation.
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final alphaAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animation,
+      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
+      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+    ));
+
+    final scaleAnimation = Tween<double>(
+      begin: 0.6,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animation,
+      curve: const Cubic(0.2, 0.6, 0.4, 1.0), // Cubic for enter
+      reverseCurve: const Cubic(0.5, 0, 0.7, 0.2), // Cubic for exit
+    ));
+
+    return ScaleTransition(
+      scale: scaleAnimation,
+      child: FadeTransition(
+        opacity: alphaAnimation,
+        child: child,
+      ),
     );
   }
 }

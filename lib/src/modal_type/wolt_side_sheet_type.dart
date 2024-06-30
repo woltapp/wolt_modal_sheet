@@ -25,7 +25,7 @@ class WoltSideSheetType extends WoltModalType {
           minFlingVelocity: minFlingVelocity,
         );
 
-  static const Duration _defaultEnterDuration = Duration(milliseconds: 250);
+  static const Duration _defaultEnterDuration = Duration(milliseconds: 300);
   static const Duration _defaultExitDuration = Duration(milliseconds: 250);
   static const ShapeBorder _defaultShapeBorder = RoundedRectangleBorder(
     borderRadius: BorderRadiusDirectional.only(
@@ -126,18 +126,34 @@ class WoltSideSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    bool isRtl = Directionality.of(context) == TextDirection.rtl;
-    Offset beginOffset =
-        isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0);
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
 
-    return SlideTransition(
-      position: animation.drive(
-        Tween(
-          begin: beginOffset,
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.ease)),
+    final alphaAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animation,
+      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
+      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+    ));
+
+    final positionAnimation = Tween<Offset>(
+      begin: isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Cubic(0.2, 0.6, 0.4, 1.0), // Cubic for enter
+        reverseCurve: const Cubic(0.5, 0, 0.7, 0.2), // Cubic for exit
       ),
-      child: child,
+    );
+
+    return FadeTransition(
+      opacity: alphaAnimation,
+      child: SlideTransition(
+        position: positionAnimation,
+        child: child,
+      ),
     );
   }
 

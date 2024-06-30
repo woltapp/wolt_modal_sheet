@@ -70,7 +70,7 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
   }
 
   void _handleVerticalDragUpdate(DragUpdateDetails details) {
-    if (_isDismissUnderway) {
+    if (_isDismissUnderway || _isDismissed) {
       return;
     }
 
@@ -83,7 +83,7 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
   }
 
   void _handleVerticalDragEnd(BuildContext context, DragEndDetails details) {
-    if (_isDismissUnderway) {
+    if (_isDismissUnderway || _isDismissed) {
       return;
     }
     bool isClosing = false;
