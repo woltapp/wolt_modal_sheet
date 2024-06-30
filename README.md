@@ -27,10 +27,10 @@ appealing and user-friendly modal sheet with multiple pages, motion animation
 for page transitions, and scrollable content within each page.
 
 - [Examples](#examples)
-  * [[Coffee Maker Example](https://coffeemakerexample.web.app)](#-coffee-maker-example--https---coffeemakerexamplewebapp-)
-  * [[Playground Example](https://playgroundwoltexample.web.app)](#-playground-example--https---playgroundwoltexamplewebapp-)
-  * [[Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)](#-playground-navigator2-example--https---playgroundnavigator2woltexamplewebapp-)
-  * [[Coffee Maker Navigator2 Example](https://coffeemakernavigator2.web.app)](#-coffee-maker-navigator2-example--https---coffeemakernavigator2webapp-)
+  * [Coffee Maker Example](#coffee-maker-example)
+  * [Playground Example](#playground-example)
+  * [Playground Navigator2 Example](#playground-navigator2-example)
+  * [Coffee Maker Navigator2 Example](#coffee-maker-navigator2-example)
 - [Features](#features)
   * [Multi-Page Layout](#multi-page-layout)
   * [Scrollable Content](#scrollable-content)
