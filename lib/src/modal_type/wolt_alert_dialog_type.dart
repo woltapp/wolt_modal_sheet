@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltAlertDialogType extends WoltDialogType {
@@ -6,16 +9,18 @@ class WoltAlertDialogType extends WoltDialogType {
 
   @override
   BoxConstraints layoutModal(Size availableSize) {
-    const padding = 32.0;
+    late double width;
     final availableWidth = availableSize.width;
-    double width = availableWidth > 523.0 ? 312.0 : availableWidth - padding;
+    final screenType = WoltBreakpoints.getScreenTypeForWidth(availableWidth);
 
-    if (availableWidth > 523.0) {
-      width = 312.0; // optimal width for larger screens
-    } else if (availableWidth > 240.0) {
-      width = 240.0; // standard width for moderate screens
-    } else {
-      width = availableWidth - padding; // adjust for very small screens
+    switch (screenType) {
+      case WoltBreakpoints.xsmall:
+        width = min(280, availableWidth - WoltDialogType.minPadding);
+      case WoltBreakpoints.small:
+        width = 280;
+      case WoltBreakpoints.medium:
+      case WoltBreakpoints.large:
+        width = 404;
     }
 
     return BoxConstraints(

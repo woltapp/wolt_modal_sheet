@@ -1,10 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A customizable dialog modal that extends [WoltModalType].
 class WoltDialogType extends WoltModalType {
+  /// Minimum distance around the modal content and the screen edges.
+  static const minPadding = 48.0;
+
   /// Creates a [WoltDialogType] with specified styles and behaviors.
   const WoltDialogType({
     ShapeBorder shapeBorder = _defaultShapeBorder,
@@ -43,18 +47,22 @@ class WoltDialogType extends WoltModalType {
   /// Returns [BoxConstraints] that define the maximum and minimum dimensions of the dialog.
   @override
   BoxConstraints layoutModal(Size availableSize) {
-    const padding = 48.0;
-    const verticalBreakpoint = 360.0 + padding;
-    const horizontalBreakpoint = 524.0 + padding;
-    final availableWidth = availableSize.width;
-    double width;
+    const double minModalHeight = 360.0;
+    final double minModalWidth = WoltBreakpoints.small.minValue;
+    const double verticalBreakpoint = minModalHeight + minPadding;
+    final double horizontalBreakpoint = minModalWidth + minPadding;
+
+    final double availableWidth = availableSize.width;
+    final double availableHeight = availableSize.height;
+
+    late double width;
+
     if (availableWidth > horizontalBreakpoint) {
-      width = 524.0;
+      width = minModalWidth;
     } else {
-      width = max(0, availableWidth - padding);
+      width = max(0, availableWidth - minPadding);
     }
 
-    final availableHeight = availableSize.height;
     if (availableHeight >= verticalBreakpoint) {
       return BoxConstraints(
         minWidth: width,

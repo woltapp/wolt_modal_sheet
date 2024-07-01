@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A customizable side sheet modal that extends [WoltModalType].
@@ -56,7 +57,8 @@ class WoltSideSheetType extends WoltModalType {
   /// Returns [BoxConstraints] that dictate the maximum and minimum size of the side sheet.
   @override
   BoxConstraints layoutModal(Size availableSize) {
-    final width = min(524.0, max(0.0, availableSize.width - 32.0));
+    final width = min(
+        WoltBreakpoints.small.minValue, max(0.0, availableSize.width - 32.0));
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
