@@ -200,7 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: WoltElevatedButton(
                         onPressed: () {
                           WoltModalSheet.show(
-                            barrierDismissible: false,
                             context: context,
                             modalTypeBuilder: (_) =>
                                 const TopNotificationSheetType(),
@@ -220,7 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             WoltModalSheet.show(
-              barrierDismissible: false,
               context: context,
               modalTypeBuilder: (_) => const FloatingBottomSheetType(),
               pageListBuilder: (_) => [NewOrderNotificationPage()],
