@@ -186,7 +186,7 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 - **Breakpoint Small**: 524px ≤ Width < 768px
 - **Breakpoint XSmall**: Width < 524px
 
-<img width="1158" alt="Screenshot 2024-06-30 at 17 15 49" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/7dd39e47-8045-45a5-b03b-c62da805bc5f">
+![Breakpoints](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/breakpoints_design_guidelines.png?raw=true)
 
 #### Modal Types
 
@@ -277,10 +277,10 @@ The modal sheet component supports different scrolling behaviors to ensure usabi
 #### On Media Example
 - Modals should be translucent, ensuring the background remains visible to provide context.
 
+![On Media](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/on_media_design_guidelines.png?raw=true)
+
 #### Breakpoint Adaptation
 - Modals adapt to various breakpoints seamlessly to maintain usability and accessibility across different devices and screen sizes.
-
-<img width="1379" alt="Screenshot 2024-06-30 at 15 17 13" src="https://github.com/yarneo/wolt_modal_sheet/assets/4066863/239abe11-f5e5-4bea-8fd6-41857ff3229e">
 
 ## Understanding the page elements
 
