@@ -15,12 +15,14 @@ class WoltDialogType extends WoltModalType {
     bool forceMaxHeight = false,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
+    bool? barrierDismissible,
   }) : super(
           shapeBorder: shapeBorder,
           forceMaxHeight: forceMaxHeight,
           transitionDuration: transitionDuration,
           reverseTransitionDuration: reverseTransitionDuration,
           showDragHandle: false,
+          barrierDismissible: barrierDismissible,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 300);
@@ -145,6 +147,7 @@ class WoltDialogType extends WoltModalType {
     bool? forceMaxHeight,
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
+    bool? barrierDismissible,
   }) {
     return WoltDialogType(
       shapeBorder: shapeBorder ?? this.shapeBorder,
@@ -152,6 +155,7 @@ class WoltDialogType extends WoltModalType {
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:
           reverseTransitionDuration ?? this.reverseTransitionDuration,
+      barrierDismissible: barrierDismissible ?? this.barrierDismissible,
     );
   }
 

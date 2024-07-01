@@ -5,7 +5,7 @@ import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltAlertDialogType extends WoltDialogType {
-  const WoltAlertDialogType();
+  const WoltAlertDialogType() : super(barrierDismissible: false);
 
   @override
   BoxConstraints layoutModal(Size availableSize) {

@@ -15,6 +15,7 @@ class TopNotificationSheetType extends WoltModalType {
           dismissDirection: WoltModalDismissDirection.up,
           showDragHandle: false,
           closeProgressThreshold: 0.8,
+          barrierDismissible: false,
         );
 
   @override

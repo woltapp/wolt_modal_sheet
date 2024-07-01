@@ -22,7 +22,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
         _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
-        _barrierDismissible = barrierDismissible ?? true,
+        _barrierDismissible = barrierDismissible,
         _modalTypeBuilder = modalTypeBuilder,
         super(settings: routeSettings);
 
@@ -34,7 +34,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final WoltModalTypeBuilder? _modalTypeBuilder;
 
-  late final bool _barrierDismissible;
+  final bool? _barrierDismissible;
 
   final VoidCallback? onModalDismissedWithBarrierTap;
 
@@ -58,7 +58,10 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final AnimationController? _transitionAnimationController;
 
   @override
-  bool get barrierDismissible => _barrierDismissible;
+  bool get barrierDismissible =>
+      _barrierDismissible ??
+      _determineCurrentModalType(navigator!.context).barrierDismissible ??
+      true;
 
   /// The value of false was chosen to indicate that the modal route does not fully obscure the
   /// underlying content. This allows for a translucent effect, where the content beneath the
