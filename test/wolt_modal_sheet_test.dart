@@ -83,7 +83,7 @@ void main() {
             onModalDismissedWithDrag: () {},
             decorator: null,
             modalTypeBuilder: (_) => WoltModalType.bottomSheet(),
-            animationController: null,
+            transitionAnimationController: null,
             route: WoltModalSheetRoute<void>(
                 pageListBuilderNotifier: pageListBuilderNotifier),
             enableDrag: null,
@@ -124,7 +124,7 @@ void main() {
             onModalDismissedWithDrag: () {},
             decorator: null,
             modalTypeBuilder: (_) => WoltModalType.bottomSheet(),
-            animationController: null,
+            transitionAnimationController: null,
             route: WoltModalSheetRoute<void>(
                 pageListBuilderNotifier: pageListBuilderNotifier),
             enableDrag: null,

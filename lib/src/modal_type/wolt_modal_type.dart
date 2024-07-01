@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/modal_type/wolt_alert_dialog_type.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 export 'wolt_bottom_sheet_type.dart';
+export 'wolt_alert_dialog_type.dart';
 export 'wolt_dialog_type.dart';
 export 'wolt_side_sheet_type.dart';
 
@@ -16,10 +16,13 @@ abstract class WoltModalType {
     this.shapeBorder = const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(16)),
     ),
-    this.isDragToDismissEnabled = false,
+    this.showDragHandle,
+    this.dismissDirection,
     this.forceMaxHeight = false,
     this.transitionDuration = const Duration(milliseconds: 300),
     this.reverseTransitionDuration = const Duration(milliseconds: 300),
+    this.minFlingVelocity = 700.0,
+    this.closeProgressThreshold = 0.5,
   });
 
   /// Creates the default bottom sheet modal.
@@ -53,15 +56,32 @@ abstract class WoltModalType {
   /// the modal type.
   final ShapeBorder shapeBorder;
 
-  /// Determines whether the modal is draggable.
-  ///
-  /// If set to `true`, the modal can be dismissed by dragging.
-  final bool? isDragToDismissEnabled;
+  /// Depending on the value of [dismissDirection], determines whether the modal is draggable.
+  bool? get isDragToDismissEnabled {
+    if (dismissDirection == null) return null;
+    return dismissDirection != WoltModalDismissDirection.none;
+  }
+
+  /// Determines whether the modal should show a drag handle on the top centered position.
+  final bool? showDragHandle;
+
+  /// The direction in which the modal can be dismissed when drag to dismiss is enabled.
+  final WoltModalDismissDirection? dismissDirection;
+
+  /// The minimum velocity required for a drag gesture to be considered a fling.
+  final double minFlingVelocity;
 
   /// Forces the modal content to use the maximum available height if set to `true`.
   ///
   /// This is useful for modals like side sheets that need to occupy the full screen height.
   final bool forceMaxHeight;
+
+  /// Threshold value for determining when the modal should close during a drag gesture.
+  /// If the animation's progress value falls below this threshold during a drag,
+  /// the modal will be dismissed. The value should be between 0.0 and 1.0, where:
+  /// - A higher value (closer to 1.0) means the modal will be easier to dismiss.
+  /// - A lower value (closer to 0.0) means the modal will be harder to dismiss
+  final double closeProgressThreshold;
 
   /// Defines the constraints for the modal based on the available screen size.
   ///

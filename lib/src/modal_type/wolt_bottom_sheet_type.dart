@@ -12,20 +12,25 @@ class WoltBottomSheetType extends WoltModalType {
   /// Creates a [WoltBottomSheetType] with optional customizations.
   const WoltBottomSheetType({
     ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool? isDragEnabled = true,
+    bool? showDragHandle,
     bool forceMaxHeight = false,
+    WoltModalDismissDirection? dismissDirection =
+        WoltModalDismissDirection.down,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
+    minFlingVelocity = 700.0,
   }) : super(
           shapeBorder: shapeBorder,
-          isDragToDismissEnabled: isDragEnabled,
           forceMaxHeight: forceMaxHeight,
           transitionDuration: transitionDuration,
           reverseTransitionDuration: reverseTransitionDuration,
+          dismissDirection: dismissDirection,
+          minFlingVelocity: minFlingVelocity,
+          showDragHandle: showDragHandle,
         );
 
-  static const Duration _defaultEnterDuration = Duration(milliseconds: 250);
-  static const Duration _defaultExitDuration = Duration(milliseconds: 200);
+  static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
+  static const Duration _defaultExitDuration = Duration(milliseconds: 250);
   static const ShapeBorder _defaultShapeBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
   );
@@ -119,9 +124,7 @@ class WoltBottomSheetType extends WoltModalType {
             )
           : modal;
 
-  /// Defines the animation for the modal's appearance with a vertical slide transition.
-  ///
-  /// This method customizes how the modal enters the screen, emphasizing a smooth and natural motion from the bottom to the top.
+  /// Defines the animation for the modal's appearance.
   ///
   /// [context] is the build context.
   /// [animation] is the primary animation controller for the modal's appearance.
@@ -136,13 +139,27 @@ class WoltBottomSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return SlideTransition(
-      position: animation.drive(
-        Tween(
-          begin: const Offset(0.0, 1.0),
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.ease)),
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringCubic = Cubic(0.1, 0.8, 0.2, 1.0);
+    const exitingCubic = Cubic(0.5, 0, 0.7, 0.2);
+
+    final cubic = isClosing ? exitingCubic : enteringCubic;
+    final reverseCubic = isClosing ? enteringCubic : exitingCubic;
+
+    final positionAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: cubic,
+        reverseCurve: reverseCubic,
       ),
+    );
+
+    return SlideTransition(
+      position: positionAnimation,
       child: child,
     );
   }
@@ -153,18 +170,22 @@ class WoltBottomSheetType extends WoltModalType {
   /// completely new class.
   WoltBottomSheetType copyWith({
     ShapeBorder? shapeBorder,
-    bool? isDragToDismissEnabled,
+    bool? showDragHandle,
     bool? forceMaxHeight,
     Duration? transitionDuration,
     Duration? reverseTransitionDuration,
+    WoltModalDismissDirection? dismissDirection,
+    double? minFlingVelocity,
   }) {
     return WoltBottomSheetType(
       shapeBorder: shapeBorder ?? this.shapeBorder,
-      isDragEnabled: isDragToDismissEnabled ?? this.isDragToDismissEnabled,
+      showDragHandle: showDragHandle ?? this.showDragHandle,
       forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:
           reverseTransitionDuration ?? this.reverseTransitionDuration,
+      dismissDirection: dismissDirection ?? this.dismissDirection,
+      minFlingVelocity: minFlingVelocity ?? this.minFlingVelocity,
     );
   }
 }
