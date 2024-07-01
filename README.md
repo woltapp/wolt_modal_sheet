@@ -23,7 +23,7 @@
 WoltModalSheet is designed to revolutionize the use of Flutter modal sheets.
 Built with Wolt-grade design quality and used extensively
 in [Wolt](https://wolt.com/) products, this UI component offers a visually
-appealing and user-friendly modal sheet with multiple pages, motion animation
+appealing and user-friendly modal sheet with multiple pages, motion
 for page transitions, and scrollable content within each page.
 
 - [Examples](#examples)
@@ -35,44 +35,10 @@ for page transitions, and scrollable content within each page.
   * [Multi-Page Layout](#multi-page-layout)
   * [Scrollable Content](#scrollable-content)
   * [Responsive Design](#responsive-design)
-  * [Motion Animation](#motion-animation)
+  * [Motion](#motion)
   * [Imperative and Declarative Navigation](#imperative-and-declarative-navigation)
   * [Dynamic Pagination](#dynamic-pagination)
   * [State Management Integration](#state-management-integration)
-- [Design Guidelines](#design-guidelines)
-  * [Overview](#overview)
-  * [Breakpoints](#breakpoints)
-    + [Modal Types](#modal-types)
-  * [Safe Areas](#safe-areas)
-    + [iOS](#ios)
-    + [Android](#android)
-  * [Scroll Logic](#scroll-logic)
-    + [Scroll Logic Layouts](#scroll-logic-layouts)
-  * [Modal Sheet Layouts](#modal-sheet-layouts)
-    + [Alert](#alert)
-    + [Dialog](#dialog)
-    + [Side Sheet](#side-sheet)
-    + [Bottom Sheet](#bottom-sheet)
-    + [Full Bottom Sheet](#full-bottom-sheet)
-  * [Design Considerations](#design-considerations)
-  * [Example Implementations](#example-implementations)
-    + [On Media Example](#on-media-example)
-    + [Breakpoint Adaptation](#breakpoint-adaptation)
-- [Understanding the page elements](#understanding-the-page-elements)
-  * [Navigation bar widgets](#navigation-bar-widgets)
-  * [Top bar and top bar title](#top-bar-and-top-bar-title)
-  * [Sticky action bar (SAB)](#sticky-action-bar--sab-)
-  * [Hero image](#hero-image)
-  * [Page Title](#page-title)
-  * [Main content](#main-content)
-- [Designer's Collaboration Guide](#designer-s-collaboration-guide)
-  * [What's Inside the Figma File](#what-s-inside-the-figma-file)
-  * [Utilizing the Figma File](#utilizing-the-figma-file)
-- [Customizable Animations](#customizable-animations)
-  * [Default Animation Style Specifications](#default-animation-style-specifications)
-    + [Pagination Animation](#pagination-animation)
-    + [Scrolling Animation](#scrolling-animation)
-  * [Example Configuration](#example-configuration)
 - [Usage of WoltModalSheet Pages](#usage-of-woltmodalsheet-pages)
   * [SliverWoltModalSheetPage](#sliverwoltmodalsheetpage)
   * [WoltModalSheetPage](#woltmodalsheetpage)
@@ -93,13 +59,43 @@ for page transitions, and scrollable content within each page.
   * [Dynamic Navigation with ValueNotifiers](#dynamic-navigation-with-valuenotifiers)
     + [Navigation by Page Index Notifier](#navigation-by-page-index-notifier)
     + [Dynamic Page List Management by Page List Builder Notifier](#dynamic-page-list-management-by-page-list-builder-notifier)
-- [Getting started](#getting-started)
-- [CupertinoApp support](#cupertinoapp-support)
+- [Design Guidelines](#design-guidelines)
+  * [Overview](#overview)
+  * [Breakpoints](#breakpoints)
+    + [Modal Types](#modal-types)
+  * [Safe Areas](#safe-areas)
+    + [iOS](#ios)
+    + [Android](#android)
+  * [Scroll Logic](#scroll-logic)
+    + [Scroll Logic Layouts](#scroll-logic-layouts)
+  * [Modal Sheet Layouts](#modal-sheet-layouts)
+    + [Alert](#alert)
+    + [Dialog](#dialog)
+    + [Side Sheet](#side-sheet)
+    + [Bottom Sheet](#bottom-sheet)
+    + [Full Bottom Sheet](#full-bottom-sheet)
+  * [Design Considerations](#design-considerations)
+- [Understanding the page elements](#understanding-the-page-elements)
+  * [Navigation bar widgets](#navigation-bar-widgets)
+  * [Top bar and top bar title](#top-bar-and-top-bar-title)
+  * [Sticky action bar (SAB)](#sticky-action-bar--sab-)
+  * [Hero image](#hero-image)
+  * [Page Title](#page-title)
+  * [Main content](#main-content)
+- [Designer's Collaboration Guide](#designer-s-collaboration-guide)
+  * [What's Inside the Figma File](#what-s-inside-the-figma-file)
+  * [Utilizing the Figma File](#utilizing-the-figma-file)
+- [Customizable Animations](#customizable-animations)
+  * [Default Animation Style Specifications](#default-animation-style-specifications)
+    + [Pagination Animation](#pagination-animation)
+    + [Scrolling Animation](#scrolling-animation)
+  * [Example Configuration](#example-configuration)
 - [Usage](#usage)
   * [Example app](#example-app)
   * [Playground app with imperative navigation](#playground-app-with-imperative-navigation)
   * [Playground app with declarative navigation](#playground-app-with-declarative-navigation)
   * [Coffee maker app for state management example](#coffee-maker-app-for-state-management-example)
+  * [CupertinoApp support](#cupertinoapp-support)
 - [Additional information](#additional-information)
 
 ## Examples
@@ -138,9 +134,9 @@ conditions.
 
 ![Adaptability to different screen sizes in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_responsive.gif?raw=true)
 
-### Motion Animation
+### Motion
 
-Engage users with dynamic motion animation for page transitions and scrolling.
+Engage users with dynamic motion for page transitions and scrolling.
 
 | Pagination                                                                                                 | Scrolling                                                                                             |
 | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -168,313 +164,6 @@ to manage the state among the page components to be used with popular libraries
 such as Bloc and Provider
 </br>
 </br>
-
-## Design Guidelines
-
-This section outlines the design guidelines for the modal sheet component, including breakpoints, safe areas, scroll logic, and behavior across different devices. The guidelines are based on the Wolt design system specs.
-
-### Overview
-
-The modal sheet component is used to display critical information or interactive elements to users in a non-intrusive way. This component adapts to different screen sizes and orientations, ensuring a consistent and accessible user experience.
-
-### Breakpoints
-
-The modal sheet component adjusts its layout based on the following breakpoints:
-
-- **Breakpoint Large**: Width ≥ 1400px
-- **Breakpoint Medium**: 768px ≤ Width < 1400px
-- **Breakpoint Small**: 524px ≤ Width < 768px
-- **Breakpoint XSmall**: Width < 524px
-
-![Breakpoints](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/breakpoints_design_guidelines.png?raw=true)
-
-#### Modal Types
-
-- **Alert**: Used for critical information that requires immediate attention.
-- **Dialog**: Used for single user actions or to convey information related to changes in state (success, errors).
-- **Side Sheet**: Used to focus users' attention on a specific task while keeping the context visible.
-- **Bottom Sheet**: Used for additional options or actions, and can be used instead of a dialog in smaller screen sizes.
-- **Full Bottom Sheet**: Used to present content that requires full screen height, and can be used instead of a side sheet in smaller screen sizes.
-
-### Safe Areas
-The Modal Sheet supports safe areas for all compatible devices. See below the safe area considerations.
-
-#### iOS
-
-1. **iPhone without Notch**:
-    - Status Bar Height: 20 points
-    - Safe Area Insets:
-        - Top: 20 points
-        - Bottom: 0 points (unless there's a home indicator)
-
-2. **iPhone with Notch (iPhone X and later)**:
-    - Status Bar Height: 44 points (varies with device)
-    - Safe Area Insets:
-        - Top: 44 points
-        - Bottom: 34 points (home indicator area)
-
-#### Android
-
-1. **Standard Devices**:
-    - Status Bar Height: Approximately 24 dp (varies with screen density and device)
-    - Safe Area Insets:
-        - Top: 24 dp (status bar)
-        - Bottom: Varies (on-screen navigation bars, if any)
-
-2. **Devices with Notch (Display Cutout)**:
-    - Status Bar Height: Varies depending on the notch size
-    - Safe Area Insets:
-        - Top: Varies with notch (retrieved using DisplayCutout API)
-        - Bottom: Varies (on-screen navigation bars, if any)
-
-### Scroll Logic
-
-The modal sheet component supports different scrolling behaviors to ensure usability and accessibility of the content:
-
-- **Non-scrollable Modals**: For content that fits within the viewport, no scrolling is required. The entire modal content is visible without interaction.
-- **Scrollable Modals**: When content exceeds the viewport height, the modal becomes scrollable. Users can scroll through the content while the modal's header and action buttons remain fixed for easy access.
-
-#### Scroll Logic Layouts
-
-- **Short Content**: Displayed fully within the viewport without scrolling.
-- **Medium Content**: Scrolls vertically if the content exceeds the available height but keeps action buttons fixed at the bottom.
-- **Long Content**: Utilizes full vertical scrolling. The header remains sticky at the top while action buttons are sticky at the bottom for continuous access.
-
-### Modal Sheet Layouts
-
-#### Alert
-- Used to display information requiring immediate user attention.
-- Adapts to different breakpoints to ensure visibility and accessibility.
-- Must be dismissed by user interaction to ensure the alert is acknowledged.
-
-#### Dialog
-- Should be dedicated to completing a single task or state change information (success, errors).
-- Scales with breakpoints to maintain usability.
-- Provides clear actions for users to acknowledge or dismiss the dialog.
-
-#### Side Sheet
-- Used to focus users' attention on specific tasks while keeping context visible.
-- Spans the full height of the viewport.
-
-#### Bottom Sheet
-- Provides additional options or actions without leaving the current context.
-- Auto height adjustment for optimal content display.
-- Can be modal or persistent. Modal bottom sheets are dismissed by a user action, while persistent ones remain until manually dismissed.
-
-#### Full Bottom Sheet
-- Utilized for content that requires full screen height.
-- Appears as an overlay, occupying the entire vertical viewport.
-- Ideal for complex tasks that require more space and user attention.
-
-### Design Considerations
-
-- **Accessibility**: Ensure all modal sheets are accessible by supporting screen readers and keyboard navigation. It is important to add close affordances either as a close button in the navigation bar and an additional screen reader close affordance as part of the scrim (grayed area).
-- **Visibility**: Modals have a clear visual distinction from the background to ensure they are easily noticeable.
-- **Responsiveness**: Modals adapt seamlessly to different screen sizes and orientations.
-
-### Example Implementations
-
-#### On Media Example
-- Modals should be translucent, ensuring the background remains visible to provide context.
-
-![On Media](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/on_media_design_guidelines.png?raw=true)
-
-#### Breakpoint Adaptation
-- Modals adapt to various breakpoints seamlessly to maintain usability and accessibility across different devices and screen sizes.
-
-## Understanding the page elements
-
-Each element within the WoltModalSheet has a role to play, offering context,
-navigational assistance, and explicit action prompts to the user. By
-understanding these elements and their roles, you can fully harness the power of
-WoltModalSheet and create an intuitive and engaging user experience.
-
-The structure is organized across layers on the z-axis:
-
-<li><b>Main Content Layer</b>: The fundamental content of the page,
-including the optional page title, optional hero image, and the main content,
-which may be scrollable.</li>
-<li><b>Top Bar Layer</b>: Further above the main content layer, this layer
-with the filled color includes the top bar title and may become hidden or
-sticky based on scroll position and specific properties.</li>
-<li><b>Navigation Bar Layer</b>: Sitting at the top of the top bar layer on
-z-axis, this transparent-background layer contains navigational widgets for
-the interface, such as back or close buttons.</li>
-<li><b>Sticky Action Bar Layer</b>: Positioned at the top of the z axis,
-this layer guides the user towards the next step, uses an optional gentle
-gradient on top to hint that there is more content below ready for scrolling.</li>
-</br>
-
-![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.png?raw=true)
-</br>
-
-By employing these various layers, you can create an interactive and visually
-appealing interface that resonates with users. Each layer contributes to the
-overall coherence of the page, serving a specific purpose and enhancing the
-overall user experience.
-</br>
-
-![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.jpeg?raw=true)
-
-### Navigation bar widgets
-
-The navigation bar has a transparent background, and resides at the top of
-the sheet, situated directly above the top bar on the z-axis. It includes
-two specific widgets: the leading and the trailing. The leading widget
-usually functions as the back button, enabling users to navigate to the
-previous page. The trailing widget often serves as the close button, utilized to
-close the modal sheet. The middle area is reserved and left empty for the
-visibility of the top bar title.
-</br>
-</br>
-The navigation bar widgets provide clear and intuitive navigational control,
-differentiating themselves from the top bar by focusing specifically on
-directional navigation within the interface.
-
-### Top bar and top bar title
-
-The top bar layer sits above the main content layer and below the navigation
-bar layer in z axis. It helps users grasping the context by displaying an
-optional title. In scenarios where the sheet is filled with content
-requiring scrolling, the top bar becomes visible as the user scrolls, and
-replaces the page title. At this point, the top bar adopts a 'sticky'
-position at the top, guaranteeing consistent visibility.
-</br>
-</br>
-The top bar widget has a flexible design. When `hasTopBarLayer` is set to
-false, the top bar and the top bar title will not be shown. If
-`isTopBarLayerAlwaysVisible` set to true, the top bar will be always visible
-regardless of the scroll position.
-</br>
-</br>
-A custom top bar widget can be provided using the `topBar` field. In this
-case, the `topBarTitle` field will be ignored, and will not be displayed.
-</br>
-</br>
-The navigation bar widgets overlay above the top bar, and when the default
-top bar widget is used in the page, the top bar title is symmetrically
-framed between the leading and trailing navigation bar widgets.
-
-### Sticky action bar (SAB)
-
-The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to
-the bottom of the view, the SAB elevates above the content with an optional
-gentle gradient. This position guarantees that the action remains visible, subtly
-hinting to the user that there is more content to be explored below the fold
-by scrolling.
-
-### Hero image
-
-An optional Hero Image can be positioned at the top of the main content. This
-element immediately grabs the user's attention, effectively conveying the
-primary theme or message of the content.
-
-### Page Title
-
-An optional page title above the main content provides users with a quick
-understanding of what to expect from the page. As the user scrolls, this title
-becomes hidden, at which point the top bar title continues to serve this
-context-providing purpose.
-
-### Main content
-
-The main content delivers information according to the user need. It can be
-scrollable to handle larger content. The content is built lazily to improve the
-performance.
-
-Here is an example that shows all the modal sheet elements in use:
-
-![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
-
-## Designer's Collaboration Guide
-
-To ensure seamless collaboration between designers and developers, we have 
-provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-Modal-Sheet-Specs?type=design&node-id=7%3A514&mode=design&t=NULXGTxl2YvnawyH-1) dedicated to the WoltModalSheet package. This resource aims to guide designers through the process of creating and handing over designs that leverage the WoltModalSheet's capabilities effectively.
-
-### What's Inside the Figma File
-
-- **Example Design Specifications**: Detailed design guidelines and 
-  specifications mirroring those used internally at Wolt. These specs 
-  illustrate how to prepare designs for development handoff, ensuring a 
-  smooth transition from design to implementation.
-
-- **Modal Types Specifications**: This section showcases specifications for 
-  different modal types, including dialog and bottom sheet modals. It covers 
-  essential details like dimensions, layout of elements, and visual 
-  arrangements, providing clear instructions for replicating these styles in 
-  your projects.
-
-- **Motion Animation Specs for Modal Interactions**: To complement the 
-  static design aspects, this section demonstrates motion animation 
-  specifications for pagination and scrolling interactions. It includes 
-  guidelines for animating transitions between modal sheet pages and within 
-  the content scroll, enabling designers to specify dynamic, engaging user 
-  experiences.
-
-### Utilizing the Figma File
-
-By integrating this Figma file into your design process, you can:
-
-- **Align on Design Language**: Ensure that your application's design 
-  language and the modal sheet's functionality are in harmony, providing a 
-  consistent user experience.
-
-- **Facilitate Design Handoff**: Use the provided specifications as a 
-  reference point for design handoff, minimizing misunderstandings and 
-  streamlining the development process.
-
-- **Inspire Creative Solutions**: Leverage the examples and specifications 
-  as a source of inspiration for implementing innovative design solutions.
-
-## Customizable Animations
-
-Developers can customize the page scrolling and pagination animations by
-providing an instance of  `WoltModalSheetAnimationStyle` class to 
-`WoltModalSheetThemeData`.
-
-### Default Animation Style Specifications
-
-#### Pagination Animation
-
-![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/pagination_modal_sheet.png?raw=true)
-
-#### Scrolling Animation
-
-![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/scrolling_modal_sheet.png?raw=true)
-
-### Example Configuration
-
-```dart
-WoltModalSheetThemeData(
-  animationStyle: WoltModalSheetAnimationStyle(
-    paginationAnimationStyle: WoltModalSheetPaginationAnimationStyle(
-      mainContentIncomingOpacityCurve: const Interval(
-        150 / 350,
-        350 / 350,
-        curve: Curves.linear,
-      ),
-      modalSheetHeightTransitionCurve: const Interval(
-        0 / 350,
-        300 / 350,
-        curve: Curves.fastOutSlowIn,
-      ),
-      incomingSabOpacityCurve: const Interval(
-        100 / 350,
-        300 / 350,
-        curve: Curves.linear,
-      ),
-      // Define additional pagination animation styles as needed.
-    ),
-    scrollAnimationStyle: WoltModalSheetScrollAnimationStyle(
-      heroImageScaleStart: 1.0,
-      heroImageScaleEnd: 0.9,
-      topBarTitleTranslationYInPixels: 8.0,
-      topBarTranslationYInPixels: 4.0,
-      // Define additional scroll animation styles as needed.
-    ),
-  ),
-),
-```
 
 ## Usage of WoltModalSheet Pages
 
@@ -704,7 +393,7 @@ Using pop method, you can remove the last page of the navigation stack. If the
 user is on the last page, the method will navigate to the previous page.
     
 ```dart
-bool popped = WoltModalSheet.of(context).pop();
+bool popped = WoltModalSheet.of(context).popPage();
 ```
 
 ### Dynamic Navigation with ValueNotifiers
@@ -755,27 +444,245 @@ WoltModalSheet.showWithDynamicPath(
 );
 ```
 
+## Design Guidelines
 
-## Getting started
+This section outlines the design guidelines for the modal sheet component, including breakpoints, safe areas, scroll logic, and behavior across different devices. The guidelines are based on the Wolt design system specs.
 
-To use this plugin, add wolt_modal_sheet as a dependency in your pubspec.yaml
-file.
+### Overview
 
-## CupertinoApp support
+The modal sheet component is used to display critical information or interactive elements to users in a non-intrusive way. This component adapts to different screen sizes and orientations, ensuring a consistent and accessible user experience.
 
-In the package, certain Material widgets rely on retrieving Material localizations information
-from the widget tree. However, Material localizations are not inherently available in CupertinoApp,
-leading to potential errors. To mitigate this issue, if your application utilizes CupertinoApp
-rather than MaterialApp, it is needed to incorporate a default Material localization delegate
-into your application configuration.
+### Breakpoints
+
+The modal sheet component adjusts its layout based on the following breakpoints:
+
+- **Breakpoint Large**: Width ≥ 1400px
+- **Breakpoint Medium**: 768px ≤ Width < 1400px
+- **Breakpoint Small**: 524px ≤ Width < 768px
+- **Breakpoint XSmall**: Width < 524px
+
+![Breakpoints](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/breakpoints_design_guidelines.png?raw=true)
+
+#### Modal Types
+
+- **Alert**: Used for critical information that requires immediate attention.
+- **Dialog**: Used for single user actions or to convey information related to changes in state (success, errors).
+- **Side Sheet**: Used to focus users' attention on a specific task while keeping the context visible.
+- **Bottom Sheet**: Used for additional options or actions, and can be used instead of a dialog in smaller screen sizes.
+
+### Modal Sheet Layouts
+
+#### Alert
+- Used to display information requiring immediate user attention like showing a QR code.
+- Must be dismissed by user interaction to ensure the alert is acknowledged.
+
+#### Dialog
+- Should be dedicated to completing a single task or state change information (success, errors).
+- Provides clear actions for users to acknowledge or dismiss the dialog.
+- We recommend to use dialogs in small,medium and large windows sizes.
+
+#### Side Sheet
+- Use when users need to provide input or to display a list of controls, like filters.
+- We recommend to use side sheets in small,medium and large windows sizes.
+
+#### Bottom Sheet
+- Provides additional options or actions without leaving the current context.
+- In xsmall windows use bottom sheets, instead of side-sheets or dialogs.
+- We recommend to use bottom sheets only in xsmall window size.
+
+## Understanding the page elements
+
+Each element within the WoltModalSheet has a role to play, offering context,
+navigational assistance, and explicit action prompts to the user. By
+understanding these elements and their roles, you can fully harness the power of
+WoltModalSheet and create an intuitive and engaging user experience.
+
+The structure is organized across layers on the z-axis:
+
+<li><b>Main Content Layer</b>: The fundamental content of the page,
+including the optional page title, optional hero image, and the main content,
+which may be scrollable.</li>
+<li><b>Top Bar Layer</b>: Further above the main content layer, this layer
+with the filled color includes the top bar title and may become hidden or
+sticky based on scroll position and specific properties.</li>
+<li><b>Navigation Bar Layer</b>: Sitting at the top of the top bar layer on
+z-axis, this transparent-background layer contains navigational widgets for
+the interface, such as back or close buttons.</li>
+<li><b>Sticky Action Bar Layer</b>: Positioned at the top of the z axis,
+this layer guides the user towards the next step, uses an optional gentle
+gradient on top to hint that there is more content below ready for scrolling.</li>
+</br>
+
+![Modal sheet page layers](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/modal_sheet_page.png?raw=true)
+</br>
+
+By employing these various layers, you can create an interactive and visually
+appealing interface that resonates with users. Each layer contributes to the
+overall coherence of the page, serving a specific purpose and enhancing the
+overall user experience.
+</br>
+
+![Modal sheet elements breakdown](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_elements.jpeg?raw=true)
+
+### Navigation bar widgets
+
+The navigation bar has a transparent background, and resides at the top of
+the sheet, situated directly above the top bar on the z-axis. It includes
+two specific widgets: the leading and the trailing. The leading widget
+usually functions as the back button, enabling users to navigate to the
+previous page. The trailing widget often serves as the close button, utilized to
+close the modal sheet. The middle area is reserved and left empty for the
+visibility of the top bar title.
+</br>
+</br>
+The navigation bar widgets provide clear and intuitive navigational control,
+differentiating themselves from the top bar by focusing specifically on
+directional navigation within the interface.
+
+### Top bar and top bar title
+
+The top bar layer sits above the main content layer and below the navigation
+bar layer in z axis. It helps users grasping the context by displaying an
+optional title. In scenarios where the sheet is filled with content
+requiring scrolling, the top bar becomes visible as the user scrolls, and
+replaces the page title. At this point, the top bar adopts a 'sticky'
+position at the top, guaranteeing consistent visibility.
+</br>
+</br>
+The top bar widget has a flexible design. When `hasTopBarLayer` is set to
+false, the top bar and the top bar title will not be shown. If
+`isTopBarLayerAlwaysVisible` set to true, the top bar will be always visible
+regardless of the scroll position.
+</br>
+</br>
+A custom top bar widget can be provided using the `topBar` field. In this
+case, the `topBarTitle` field will be ignored, and will not be displayed.
+</br>
+</br>
+The navigation bar widgets overlay above the top bar, and when the default
+top bar widget is used in the page, the top bar title is symmetrically
+framed between the leading and trailing navigation bar widgets.
+
+### Sticky action bar (SAB)
+
+The Sticky Action Bar (SAB) guides the user towards the next step. Anchored to
+the bottom of the view, the SAB elevates above the content with an optional
+gentle gradient. This position guarantees that the action remains visible, subtly
+hinting to the user that there is more content to be explored below the fold
+by scrolling.
+
+### Hero image
+
+An optional Hero Image can be positioned at the top of the main content. This
+element immediately grabs the user's attention, effectively conveying the
+primary theme or message of the content.
+
+### Page Title
+
+An optional page title above the main content provides users with a quick
+understanding of what to expect from the page. As the user scrolls, this title
+becomes hidden, at which point the top bar title continues to serve this
+context-providing purpose.
+
+### Main content
+
+The main content delivers information according to the user need. It can be
+scrollable to handle larger content. The content is built lazily to improve the
+performance.
+
+Here is an example that shows all the modal sheet elements in use:
+
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
+
+## Designer's Collaboration Guide
+
+To ensure seamless collaboration between designers and developers, we have 
+provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-Modal-Sheet-Specs?type=design&node-id=7%3A514&mode=design&t=NULXGTxl2YvnawyH-1) dedicated to the WoltModalSheet package. This resource aims to guide designers through the process of creating and handing over designs that leverage the WoltModalSheet's capabilities effectively.
+
+### What's Inside the Figma File
+
+- **Example Design Specifications**: Detailed design guidelines and 
+  specifications mirroring those used internally at Wolt. These specs 
+  illustrate how to prepare designs for development handoff, ensuring a 
+  smooth transition from design to implementation.
+
+- **Modal Types Specifications**: This section showcases specifications for 
+  different modal types, including dialog and bottom sheet modals. It covers 
+  essential details like dimensions, layout of elements, and visual 
+  arrangements, providing clear instructions for replicating these styles in 
+  your projects.
+
+- **Motion Specs for Modal Interactions**: To complement the 
+  static design aspects, this section demonstrates motion 
+  specifications for pagination and scrolling interactions. It includes 
+  guidelines for animating transitions between modal sheet pages and within 
+  the content scroll, enabling designers to specify dynamic, engaging user 
+  experiences.
+
+### Utilizing the Figma File
+
+By integrating this Figma file into your design process, you can:
+
+- **Align on Design Language**: Ensure that your application's design 
+  language and the modal sheet's functionality are in harmony, providing a 
+  consistent user experience.
+
+- **Facilitate Design Handoff**: Use the provided specifications as a 
+  reference point for design handoff, minimizing misunderstandings and 
+  streamlining the development process.
+
+- **Inspire Creative Solutions**: Leverage the examples and specifications 
+  as a source of inspiration for implementing innovative design solutions.
+
+## Customizable Animations
+
+Developers can customize the page scrolling and pagination animations by
+providing an instance of  `WoltModalSheetAnimationStyle` class to 
+`WoltModalSheetThemeData`.
+
+### Default Animation Style Specifications
+
+#### Pagination Animation
+
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/pagination_modal_sheet.png?raw=true)
+
+#### Scrolling Animation
+
+![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/scrolling_modal_sheet.png?raw=true)
+
+### Example Configuration
 
 ```dart
-CupertinoApp(
-  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-    DefaultMaterialLocalizations.delegate,
-],)
+WoltModalSheetThemeData(
+  animationStyle: WoltModalSheetAnimationStyle(
+    paginationAnimationStyle: WoltModalSheetPaginationAnimationStyle(
+      mainContentIncomingOpacityCurve: const Interval(
+        150 / 350,
+        350 / 350,
+        curve: Curves.linear,
+      ),
+      modalSheetHeightTransitionCurve: const Interval(
+        0 / 350,
+        300 / 350,
+        curve: Curves.fastOutSlowIn,
+      ),
+      incomingSabOpacityCurve: const Interval(
+        100 / 350,
+        300 / 350,
+        curve: Curves.linear,
+      ),
+      // Define additional pagination animation styles as needed.
+    ),
+    scrollAnimationStyle: WoltModalSheetScrollAnimationStyle(
+      heroImageScaleStart: 1.0,
+      heroImageScaleEnd: 0.9,
+      topBarTitleTranslationYInPixels: 8.0,
+      topBarTranslationYInPixels: 4.0,
+      // Define additional scroll animation styles as needed.
+    ),
+  ),
+),
 ```
-To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
 
 ## Usage
 
@@ -1018,6 +925,22 @@ current state:
 ```
 
 ![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_coffee_maker.gif?raw=true)
+
+### CupertinoApp support
+
+In the package, certain Material widgets rely on retrieving Material localizations information
+from the widget tree. However, Material localizations are not inherently available in CupertinoApp,
+leading to potential errors. To mitigate this issue, if your application utilizes CupertinoApp
+rather than MaterialApp, it is needed to incorporate a default Material localization delegate
+into your application configuration.
+
+```dart
+CupertinoApp(
+  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+    DefaultMaterialLocalizations.delegate,
+],)
+```
+To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
 
 ## Additional information
 
