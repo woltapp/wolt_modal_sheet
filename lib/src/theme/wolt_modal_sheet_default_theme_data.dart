@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 @immutable
@@ -124,7 +125,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   WoltModalTypeBuilder get modalTypeBuilder => (context) {
         final width = MediaQuery.sizeOf(context).width;
-        if (width < 524.0) {
+        if (width < WoltBreakpoints.small.minValue) {
           return WoltModalType.bottomSheet();
         }
         return WoltModalType.dialog();
