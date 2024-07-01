@@ -30,8 +30,8 @@ class WoltBottomSheetType extends WoltModalType {
           showDragHandle: showDragHandle,
         );
 
-  static const Duration _defaultEnterDuration = Duration(milliseconds: 250);
-  static const Duration _defaultExitDuration = Duration(milliseconds: 200);
+  static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
+  static const Duration _defaultExitDuration = Duration(milliseconds: 250);
   static const ShapeBorder _defaultShapeBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
   );
@@ -125,9 +125,7 @@ class WoltBottomSheetType extends WoltModalType {
             )
           : modal;
 
-  /// Defines the animation for the modal's appearance with a vertical slide transition.
-  ///
-  /// This method customizes how the modal enters the screen, emphasizing a smooth and natural motion from the bottom to the top.
+  /// Defines the animation for the modal's appearance.
   ///
   /// [context] is the build context.
   /// [animation] is the primary animation controller for the modal's appearance.
@@ -142,13 +140,27 @@ class WoltBottomSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return SlideTransition(
-      position: animation.drive(
-        Tween(
-          begin: const Offset(0.0, 1.0),
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.ease)),
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringCubic = Cubic(0.1, 0.8, 0.2, 1.0);
+    const exitingCubic = Cubic(0.5, 0, 0.7, 0.2);
+
+    final cubic = isClosing ? exitingCubic : enteringCubic;
+    final reverseCubic = isClosing ? enteringCubic : exitingCubic;
+
+    final positionAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: cubic,
+        reverseCurve: reverseCubic,
       ),
+    );
+
+    return SlideTransition(
+      position: positionAnimation,
       child: child,
     );
   }

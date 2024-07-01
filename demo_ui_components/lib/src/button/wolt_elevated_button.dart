@@ -9,17 +9,19 @@ class WoltElevatedButton extends StatelessWidget {
     this.enabled = true,
     this.colorName = WoltColorName.blue,
     this.theme = WoltElevatedButtonTheme.primary,
+    this.height = defaultHeight,
     required this.onPressed,
     required this.child,
   });
 
-  static const height = 56.0;
+  static const defaultHeight = 56.0;
 
   final WoltColorName colorName;
   final WoltElevatedButtonTheme theme;
   final bool enabled;
   final VoidCallback onPressed;
   final Widget child;
+  final double height;
 
   @override
   Widget build(BuildContext context) {

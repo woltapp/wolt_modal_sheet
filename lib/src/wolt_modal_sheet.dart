@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_animated_modal_barrier.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_modal_sheet_content_gesture_detector.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -355,21 +356,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           children: [
             LayoutId(
               id: barrierLayoutId,
-              child: GestureDetector(
-                excludeFromSemantics: true,
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  if (widget.route.barrierDismissible) {
-                    final onModalDismissedWithBarrierTap =
-                        widget.onModalDismissedWithBarrierTap;
-                    if (onModalDismissedWithBarrierTap != null) {
-                      onModalDismissedWithBarrierTap();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
-                  }
-                },
-                child: const SizedBox.expand(),
+              child: WoltAnimatedModalBarrier(
+                animationController: widget.route.animationController!,
+                barrierDismissible: widget.route.barrierDismissible,
+                onModalDismissedWithBarrierTap:
+                    widget.onModalDismissedWithBarrierTap,
               ),
             ),
             LayoutId(

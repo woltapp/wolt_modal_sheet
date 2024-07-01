@@ -69,30 +69,24 @@ class _DemoAppState extends State<DemoApp> {
       theme: ThemeData.light().copyWith(
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
-        primaryColor: WoltColors.blue,
         useMaterial3: true,
-        switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.all(WoltColors.blue),
-          trackColor: MaterialStateProperty.all(WoltColors.blue16),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: WoltColors.blue),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
-            modalBarrierColor: Colors.black54,
+            modalBarrierColor: Color(0x52000000),
+            surfaceTintColor: Colors.transparent,
           ),
         ],
       ),
       darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
         brightness: Brightness.dark,
         inputDecorationTheme: inputDecorationTheme,
-        primaryColor: WoltColors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF009DE0)),
         useMaterial3: true,
-        switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.all(WoltColors.blue),
-          trackColor: MaterialStateProperty.all(WoltColors.blue16),
-        ),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
-            modalBarrierColor: Colors.white12,
+            backgroundColor: Color(0xFF242424),
+            modalBarrierColor: Color(0x52000000),
             sabGradientColor: _darkSabGradientColor,
           ),
         ],

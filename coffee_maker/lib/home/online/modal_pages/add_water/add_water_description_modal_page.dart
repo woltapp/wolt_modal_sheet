@@ -47,7 +47,8 @@ class AddWaterDescriptionModalPage {
         return WoltModalSheetCloseButton(onClosed: Navigator.of(context).pop);
       }),
       child: const Padding(
-        padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 8),
+        padding:
+            EdgeInsets.only(bottom: (2 * WoltElevatedButton.defaultHeight) + 8),
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: ModalSheetContentText(

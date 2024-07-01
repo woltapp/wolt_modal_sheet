@@ -25,7 +25,7 @@ class WoltSideSheetType extends WoltModalType {
           minFlingVelocity: minFlingVelocity,
         );
 
-  static const Duration _defaultEnterDuration = Duration(milliseconds: 250);
+  static const Duration _defaultEnterDuration = Duration(milliseconds: 300);
   static const Duration _defaultExitDuration = Duration(milliseconds: 250);
   static const ShapeBorder _defaultShapeBorder = RoundedRectangleBorder(
     borderRadius: BorderRadiusDirectional.only(
@@ -126,18 +126,52 @@ class WoltSideSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    bool isRtl = Directionality.of(context) == TextDirection.rtl;
-    Offset beginOffset =
-        isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0);
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
 
-    return SlideTransition(
-      position: animation.drive(
-        Tween(
-          begin: beginOffset,
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.ease)),
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringInterval = Interval(0.0, 100.0 / 300.0, curve: Curves.linear);
+    const exitingInterval = Interval(100.0 / 250.0, 1.0, curve: Curves.linear);
+
+    const enteringCubic = Cubic(0.2, 0.6, 0.4, 1.0);
+    const exitingCubic = Cubic(0.5, 0, 0.7, 0.2);
+
+    final interval = isClosing ? exitingInterval : enteringInterval;
+    final reverseInterval = isClosing ? enteringInterval : exitingInterval;
+
+    final cubic = isClosing ? exitingCubic : enteringCubic;
+    final reverseCubic = isClosing ? enteringCubic : exitingCubic;
+
+    // Define the alpha animation for entering
+    final alphaAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: interval,
+        reverseCurve: reverseInterval,
       ),
-      child: child,
+    );
+
+    // Define the position animation for entering
+    final positionAnimation = Tween<Offset>(
+      begin: isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: cubic,
+        reverseCurve: reverseCubic,
+      ),
+    );
+
+    return FadeTransition(
+      opacity: alphaAnimation,
+      child: SlideTransition(
+        position: positionAnimation,
+        child: child,
+      ),
     );
   }
 

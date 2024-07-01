@@ -19,8 +19,8 @@ class WoltDialogType extends WoltModalType {
           showDragHandle: false,
         );
 
-  static const Duration _defaultEnterDuration = Duration(milliseconds: 200);
-  static const Duration _defaultExitDuration = Duration(milliseconds: 200);
+  static const Duration _defaultEnterDuration = Duration(milliseconds: 300);
+  static const Duration _defaultExitDuration = Duration(milliseconds: 250);
   static const ShapeBorder _defaultShapeBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(16)),
   );
@@ -92,9 +92,6 @@ class WoltDialogType extends WoltModalType {
 
   /// Defines a transition animation for the dialog's appearance.
   ///
-  /// This method customizes how the dialog enters the screen, using animation to smoothly
-  /// transition.
-  ///
   /// [context] is the build context.
   /// [animation] is the primary animation controller for the dialog's appearance.
   /// [secondaryAnimation] manages the coordination with other routes' transitions.
@@ -108,11 +105,25 @@ class WoltDialogType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
+    final isClosing = animation.status == AnimationStatus.reverse;
+
+    const enteringInterval = Interval(0.0, 100.0 / 300.0, curve: Curves.linear);
+    const exitingInterval = Interval(100.0 / 250.0, 1.0, curve: Curves.linear);
+
+    final interval = isClosing ? exitingInterval : enteringInterval;
+    final reverseInterval = isClosing ? enteringInterval : exitingInterval;
+
+    final alphaAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animation,
+      curve: interval,
+      reverseCurve: reverseInterval,
+    ));
+
     return FadeTransition(
-      opacity: CurvedAnimation(
-        parent: animation,
-        curve: Curves.linear,
-      ),
+      opacity: alphaAnimation,
       child: child,
     );
   }
