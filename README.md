@@ -193,8 +193,8 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 - **Alert**: Used for critical information that requires immediate attention.
 - **Dialog**: Used for single user actions or to convey information related to changes in state (success, errors).
 - **Side Sheet**: Used to focus users' attention on a specific task while keeping the context visible.
-- **Bottom Sheet**: Used for additional options or actions.
-- **Full Bottom Sheet**: Used to present content that requires full screen height.
+- **Bottom Sheet**: Used for additional options or actions, and can be used instead of a dialog in smaller screen sizes.
+- **Full Bottom Sheet**: Used to present content that requires full screen height, and can be used instead of a side sheet in smaller screen sizes.
 
 ### Safe Areas
 The Modal Sheet supports safe areas for all compatible devices. See below the safe area considerations.
@@ -248,14 +248,13 @@ The modal sheet component supports different scrolling behaviors to ensure usabi
 - Must be dismissed by user interaction to ensure the alert is acknowledged.
 
 #### Dialog
-- Used for single user actions or state change information (success, errors).
+- Should be dedicated to completing a single task or state change information (success, errors).
 - Scales with breakpoints to maintain usability.
 - Provides clear actions for users to acknowledge or dismiss the dialog.
 
 #### Side Sheet
 - Used to focus users' attention on specific tasks while keeping context visible.
 - Spans the full height of the viewport.
-- Is modal and blocks other interactions until dismissed.
 
 #### Bottom Sheet
 - Provides additional options or actions without leaving the current context.
