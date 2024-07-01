@@ -32,9 +32,9 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
       _dismissDirection != WoltModalDismissDirection.none;
 
   bool get _isDismissUnderway =>
-      route.animationController!.status == AnimationStatus.reverse;
+      _animationController.status == AnimationStatus.reverse;
 
-  bool get _isDismissed => route.animationController!.isDismissed;
+  bool get _isDismissed => _animationController.isDismissed;
 
   RenderBox get _renderBox =>
       modalContentKey.currentContext!.findRenderObject()! as RenderBox;
