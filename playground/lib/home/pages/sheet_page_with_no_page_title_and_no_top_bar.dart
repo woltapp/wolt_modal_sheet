@@ -6,7 +6,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class SheetPageWithNoPageTitleNoTopBar {
   SheetPageWithNoPageTitleNoTopBar._();
 
-  static const ModalPageName pageId = ModalPageName.lazyLoadingList;
+  static const ModalPageName pageId = ModalPageName.noTitleNoTopBar;
 
   static WoltModalSheetPage build({
     bool isLastPage = true,

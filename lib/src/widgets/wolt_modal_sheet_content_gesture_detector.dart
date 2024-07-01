@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_dismiss_direction.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
-
-const double _closeProgressThreshold = 0.5;
 
 class WoltModalSheetContentGestureDetector extends StatelessWidget {
   const WoltModalSheetContentGestureDetector({
@@ -112,7 +109,7 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
       }
     }
 
-    if (_animationController.value < _closeProgressThreshold) {
+    if (_animationController.value < modalType.closeProgressThreshold) {
       if (_animationController.value > 0.0) {
         _animationController.fling(velocity: -1.0);
       }
@@ -201,7 +198,7 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
           }
         }
       }
-    } else if (_animationController.value < 0.5) {
+    } else if (_animationController.value < modalType.closeProgressThreshold) {
       _animationController.fling(velocity: -1.0);
       isClosing = true;
     } else {

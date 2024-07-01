@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/src/modal_type/wolt_modal_dismiss_direction.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 export 'wolt_bottom_sheet_type.dart';
@@ -23,6 +22,7 @@ abstract class WoltModalType {
     this.transitionDuration = const Duration(milliseconds: 300),
     this.reverseTransitionDuration = const Duration(milliseconds: 300),
     this.minFlingVelocity = 700.0,
+    this.closeProgressThreshold = 0.5,
   });
 
   /// Creates the default bottom sheet modal.
@@ -75,6 +75,13 @@ abstract class WoltModalType {
   ///
   /// This is useful for modals like side sheets that need to occupy the full screen height.
   final bool forceMaxHeight;
+
+  /// Threshold value for determining when the modal should close during a drag gesture.
+  /// If the animation's progress value falls below this threshold during a drag,
+  /// the modal will be dismissed. The value should be between 0.0 and 1.0, where:
+  /// - A higher value (closer to 1.0) means the modal will be easier to dismiss.
+  /// - A lower value (closer to 0.0) means the modal will be harder to dismiss
+  final double closeProgressThreshold;
 
   /// Defines the constraints for the modal based on the available screen size.
   ///
