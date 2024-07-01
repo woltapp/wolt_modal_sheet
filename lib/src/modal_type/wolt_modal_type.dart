@@ -23,6 +23,7 @@ abstract class WoltModalType {
     this.reverseTransitionDuration = const Duration(milliseconds: 300),
     this.minFlingVelocity = 700.0,
     this.closeProgressThreshold = 0.5,
+    this.barrierDismissible,
   });
 
   /// Creates the default bottom sheet modal.
@@ -82,6 +83,9 @@ abstract class WoltModalType {
   /// - A higher value (closer to 1.0) means the modal will be easier to dismiss.
   /// - A lower value (closer to 0.0) means the modal will be harder to dismiss
   final double closeProgressThreshold;
+
+  // Whether the modal can be dismissed by tapping the barrier.
+  final bool? barrierDismissible;
 
   /// Defines the constraints for the modal based on the available screen size.
   ///
