@@ -1,3 +1,27 @@
+## 0.7.0
+- Adjust dialog enter animation distance [#249](https://github.com/woltapp/wolt_modal_sheet/pull/249) by [ulusoyca](https://github.com/ulusoyca)
+- Adjustment: Readme updated for version 0.7.0 part 2 [#248](https://github.com/woltapp/wolt_modal_sheet/pull/248) by [durannumit](https://github.com/durannumit)
+- Adjustment: Readme updated for version 0.7.0 [#247](https://github.com/woltapp/wolt_modal_sheet/pull/247) by [durannumit](https://github.com/durannumit)
+- Fix: Wolt dialog type position animation updated [#246](https://github.com/woltapp/wolt_modal_sheet/pull/246) by [durannumit](https://github.com/durannumit)
+- Fix: Prevent dismiss on barrier tap for alert dialog [#245](https://github.com/woltapp/wolt_modal_sheet/pull/245) by [durannumit](https://github.com/durannumit)
+- Introduce: Breakpoints and fix dialog layout calculations [#243](https://github.com/woltapp/wolt_modal_sheet/pull/243) by [durannumit](https://github.com/durannumit)
+- Fix: Updated enter/exit animations for modal types [#242](https://github.com/woltapp/wolt_modal_sheet/pull/242) by [durannumit](https://github.com/durannumit)
+- Add custom modal type examples to the playground app [#241](https://github.com/woltapp/wolt_modal_sheet/pull/241) by [ulusoyca](https://github.com/ulusoyca)
+- Add design guidelines documentation to readme. [#240](https://github.com/woltapp/wolt_modal_sheet/pull/240) by [yarneo](https://github.com/yarneo)
+- Redesign enter exit animations for modal types [#239](https://github.com/woltapp/wolt_modal_sheet/pull/239) by [ulusoyca](https://github.com/ulusoyca)
+- Customize enable drag and drag direction for modal types [#238](https://github.com/woltapp/wolt_modal_sheet/pull/238) by [ulusoyca](https://github.com/ulusoyca)
+- Feature: Refactor modal types and introduce side sheet  [#235](https://github.com/woltapp/wolt_modal_sheet/pull/235) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#170](https://github.com/woltapp/wolt_modal_sheet/issues/170) Add change width of dialog or BTS
+    - [#224](https://github.com/woltapp/wolt_modal_sheet/issues/224) Sab gradient color does not default to background color
+    - [#229](https://github.com/woltapp/wolt_modal_sheet/issues/229) Set page transition animation duration
+    - [#25](https://github.com/woltapp/wolt_modal_sheet/issues/25) Add side sheet modal type
+- Prepare 0.6.1 [#228](https://github.com/woltapp/wolt_modal_sheet/pull/228) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#226](https://github.com/woltapp/wolt_modal_sheet/issues/226) `setState()` called after dispose error in version 0.6.0 (not present in version 0.5.0) 
+- Dispose value notifier in WoltModalSheet [#227](https://github.com/woltapp/wolt_modal_sheet/pull/227) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#226](https://github.com/woltapp/wolt_modal_sheet/issues/226) `setState()` called after dispose error in version 0.6.0 (not present in version 0.5.0) 
 ## 0.6.1
 - Fix value notifier in WoltModalSheet state is not disposed properly. [#221](https://github.com/woltapp/wolt_modal_sheet/pull/227)
   - Fixes:
