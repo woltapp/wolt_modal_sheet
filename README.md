@@ -62,13 +62,7 @@ for page transitions, and scrollable content within each page.
 - [Design Guidelines](#design-guidelines)
   * [Overview](#overview)
   * [Breakpoints](#breakpoints)
-    + [Modal Types](#modal-types)
-  * [Safe Areas](#safe-areas)
-    + [iOS](#ios)
-    + [Android](#android)
-  * [Scroll Logic](#scroll-logic)
-    + [Scroll Logic Layouts](#scroll-logic-layouts)
-  * [Modal Sheet Layouts](#modal-sheet-layouts)
+  * [Modal Types](#modal-types)
     + [Alert](#alert)
     + [Dialog](#dialog)
     + [Side Sheet](#side-sheet)
@@ -463,26 +457,19 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 
 ![Breakpoints](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/breakpoints_design_guidelines.png?raw=true)
 
-#### Modal Types
-
-- **Alert**: Used for critical information that requires immediate attention.
-- **Dialog**: Used for single user actions or to convey information related to changes in state (success, errors).
-- **Side Sheet**: Used to focus users' attention on a specific task while keeping the context visible.
-- **Bottom Sheet**: Used for additional options or actions, and can be used instead of a dialog in smaller screen sizes.
-
-### Modal Sheet Layouts
+### Modal Types
 
 #### Alert
-- Used to display information requiring immediate user attention like showing a QR code.
+- Used for critical information that requires immediate attention.
 - Must be dismissed by user interaction to ensure the alert is acknowledged.
 
 #### Dialog
-- Should be dedicated to completing a single task or state change information (success, errors).
+- Used for single user actions or to convey information related to changes in state (success, errors).
 - Provides clear actions for users to acknowledge or dismiss the dialog.
 - We recommend to use dialogs in small,medium and large windows sizes.
 
 #### Side Sheet
-- Use when users need to provide input or to display a list of controls, like filters.
+- Used to focus users' attention on a specific task while keeping the context visible.
 - We recommend to use side sheets in small,medium and large windows sizes.
 
 #### Bottom Sheet
