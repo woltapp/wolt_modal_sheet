@@ -20,30 +20,30 @@
 
 # WoltModalSheet
 
-WoltModalSheet is designed to revolutionize the use of Flutter modal sheets.
-Built with Wolt-grade design quality and used extensively
-in [Wolt](https://wolt.com/) products, this UI component offers a visually
-appealing and user-friendly modal sheet with multiple pages, motion
+WoltModalSheet is designed to revolutionize the use of modal sheets in 
+Flutter apps. Built with Wolt-grade design quality and used extensively
+in [Wolt](https://wolt.com/) products, this UI component offers a visually 
+appealing and highly customizable modal sheets with multiple pages, motion 
 for page transitions, and scrollable content within each page.
 
 - [Examples](#examples)
-  * [Coffee Maker Example](#coffee-maker-example)
-  * [Playground Example](#playground-example)
-  * [Playground Navigator2 Example](#playground-navigator2-example)
-  * [Coffee Maker Navigator2 Example](#coffee-maker-navigator2-example)
 - [Features](#features)
   * [Multi-Page Layout](#multi-page-layout)
   * [Scrollable Content](#scrollable-content)
   * [Responsive Design](#responsive-design)
+  * [Custom Modal Types](#custom-modal-types)
   * [Motion](#motion)
   * [Imperative and Declarative Navigation](#imperative-and-declarative-navigation)
   * [Dynamic Pagination](#dynamic-pagination)
   * [State Management Integration](#state-management-integration)
+- [Modal Types](#modal-types)
+  * [Defining Custom Modal Types](#defining-custom-modal-types)
+  * [Modal Type Responsiveness](#modal-type-responsiveness)
+  * [Migration from v0.6.0 to v0.7.0](#migration-from-v060-to-v070)
 - [Usage of WoltModalSheet Pages](#usage-of-woltmodalsheet-pages)
   * [SliverWoltModalSheetPage](#sliverwoltmodalsheetpage)
   * [WoltModalSheetPage](#woltmodalsheetpage)
   * [NonScrollingWoltModalSheetPage](#nonscrollingwoltmodalsheetpage)
-  * [Choosing between the three](#choosing-between-the-three)
 - [In-Modal Navigation](#in-modal-navigation)
   * [Managing Navigation Stack](#managing-navigation-stack)
     + [Adding Pages to the Stack](#adding-pages-to-the-stack)
@@ -63,22 +63,19 @@ for page transitions, and scrollable content within each page.
   * [Overview](#overview)
   * [Breakpoints](#breakpoints)
   * [Modal Types](#modal-types)
-    + [Alert](#alert)
+    + [Alert Dialog](#alert-dialog)
     + [Dialog](#dialog)
     + [Side Sheet](#side-sheet)
     + [Bottom Sheet](#bottom-sheet)
-    + [Full Bottom Sheet](#full-bottom-sheet)
-  * [Design Considerations](#design-considerations)
 - [Understanding the page elements](#understanding-the-page-elements)
   * [Navigation bar widgets](#navigation-bar-widgets)
   * [Top bar and top bar title](#top-bar-and-top-bar-title)
-  * [Sticky action bar (SAB)](#sticky-action-bar--sab-)
+  * [Sticky action bar (SAB)](#sticky-action-bar-sab)
   * [Hero image](#hero-image)
   * [Page Title](#page-title)
   * [Main content](#main-content)
-- [Designer's Collaboration Guide](#designer-s-collaboration-guide)
-  * [What's Inside the Figma File](#what-s-inside-the-figma-file)
-  * [Utilizing the Figma File](#utilizing-the-figma-file)
+- [Designer's Collaboration Guide](#designer-collaboration-guide)
+  * [What's Inside the Figma File](#what-is-inside-the-figma-file)
 - [Customizable Animations](#customizable-animations)
   * [Default Animation Style Specifications](#default-animation-style-specifications)
     + [Pagination Animation](#pagination-animation)
@@ -94,7 +91,8 @@ for page transitions, and scrollable content within each page.
 
 ## Examples
 
-You can review the usage examples of repository by clicking on the links.
+You can see how the package is used in the example apps included in the 
+repository by clicking the links below:
 
 ### [Coffee Maker Example](https://coffeemakerexample.web.app)
 
@@ -103,7 +101,6 @@ You can review the usage examples of repository by clicking on the links.
 ### [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)
 
 ### [Coffee Maker Navigator2 Example](https://coffeemakernavigator2.web.app)
-
 
 ## Features
 
@@ -115,18 +112,24 @@ Traverse through numerous pages within a single sheet.
 
 ### Scrollable Content
 
-Greater flexibility with scrollable content per page, accommodating large
-content effortlessly.
+Easily accommodates large content by using scrollable pages.
 
 ![Scroll with ease in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_scrolling.gif?raw=true)
 
 ### Responsive Design
 
-The modal sheet adjusts to fit all screen sizes, appearing as a dialog on larger
-screens and as a bottom sheet on smaller screens, guided by user-specified
+The modal sheet is responsive, appearing as a dialog or side sheet on large 
+screens and as a bottom sheet on small screens, guided by user-specified 
 conditions.
 
-![Adaptability to different screen sizes in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_responsive.gif?raw=true)
+![Adaptability to different screen sizes in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_type_builder.gif?raw=true)
+
+### Custom Modal Types
+
+The package offers four customizable modal types: bottom sheet, dialog, side 
+sheet, and alert dialog. It also supports creating entirely custom modal types.
+
+![Custom modal types in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_custom_modals.gif?raw=true)
 
 ### Motion
 
@@ -138,7 +141,7 @@ Engage users with dynamic motion for page transitions and scrolling.
 
 ### Imperative and Declarative Navigation
 
-The library showcases examples of both imperative and declarative navigation
+The package showcases examples of both imperative and declarative navigation
 patterns to display modal sheet on screen.
 
 ![Illustration of imperative and declarative navigation in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_navigator_2.gif?raw=true)
@@ -151,27 +154,201 @@ User input can dynamically shape the modal sheet's page list.
 
 ### State Management Integration
 
-Pages in the Wolt Modal Sheet offer a customizable look and the page components
+Pages in the Wolt Modal Sheet offer a customizable look. The page components 
 are provided with an instance of WoltModalSheetPage class. The API provides a
-way
-to manage the state among the page components to be used with popular libraries
-such as Bloc and Provider
+way to manage the state among the page components to be used with popular 
+libraries such as Bloc and Provider.
 </br>
 </br>
+
+## Modal Types
+
+The package provides four modal types which can be 
+instantiated as follows:
+- Bottom sheet: `WoltBottomSheetType()` or `WoltModalType.bottomSheet()`   
+- Dialog: `WoltDialogType()` or `WoltModalType.dialog()`
+- Side sheet: `WoltSideSheetType()` or `WoltModalType.sideSheet()`
+- Alert dialog: `WoltAlertDialogType()` or `WoltModalType.alertDialog()` 
+
+These modal types are designed according to the Wolt design system specs and 
+can be customized to suit your application's design language by extending 
+these classes. For example:
+
+```dart
+class MyCustomBottomSheetType extends WoltBottomSheetType {
+  const MyCustomBottomSheetType()
+      : super(
+          shapeBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
+          showDragHandle: false,
+          barrierDismissible: false,
+        );
+}
+```
+
+Alternatively, you can change the modal properties with the `copyWith method:
+
+```dart
+WoltModalSheet.show(
+  context: context,
+  modalTypeBuilder: (_) => WoltModalType.bottomSheet().copyWith(barrierDismissible: false),
+);
+```
+
+### Defining Custom Modal Types
+
+Custom modal types can be defined by extending the abstract `WoltModalType` 
+class. This approach allows you to create modal types that align with your 
+design language and application requirements. 
+
+To define a custom modal type, you need to override the following methods:
+- `routeLabel`: Provides an accessibility label for the modal.
+- `layoutModal`: Returns the constraints for the modal layout.
+- `positionModal`: Returns the offset for the modal position from the 
+  top-left corner of the route screen.
+- `buildTransitions`: Allows defining custom animation effects for the modal's 
+  entry and exit.
+
+Additionally, you can override the following properties:
+- `shapeBorder`: Defines the shape of the modal.
+- `dismissDirection`: Specifies the direction in which the modal can be 
+  dismissed. The dismiss direction can be set to `up`, `down`, `startToEnd`, 
+  or `endToStart`.
+- `showDragHandle`: Determines whether the modal displays a drag handle on top.
+- `closeProgressThreshold`: Sets the threshold for closing the modal.
+- `barrierDismissible`: Determines whether the modal can be dismissed by 
+  tapping outside the modal.
+- `enableDrag`: Enables or disables dragging the modal.
+- `minFlingVelocity`: Sets the minimum fling velocity required for a drag 
+  gesture to be considered a fling.
+- `transitionDuration` and `reverseTransitionDuration`: Specifies the 
+  duration of the modal's entry and exit animations.
+- `forceMaxHeight`: Forces the modal content to have a maximum height. 
+  Useful for modal types such as side sheets.
+
+Example:
+
+```dart
+class TopNotificationSheetType extends WoltModalType {
+  final EdgeInsetsDirectional padding;
+
+  const TopNotificationSheetType({
+    this.padding = const EdgeInsetsDirectional.all(32.0),
+  }) : super(
+          shapeBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
+          dismissDirection: WoltModalDismissDirection.up,
+          showDragHandle: false,
+          closeProgressThreshold: 0.8,
+          barrierDismissible: false,
+        );
+
+  @override
+  String routeLabel(BuildContext context) {
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    return localizations.dialogLabel;
+  }
+
+  @override
+  BoxConstraints layoutModal(Size availableSize) {
+    final availableWidth = availableSize.width;
+    double width = availableWidth > 523.0 ? 312.0 : availableWidth - padding.end;
+    return BoxConstraints(
+      minWidth: width,
+      maxWidth: width,
+      minHeight: 0,
+      maxHeight: availableSize.height * 0.6,
+    );
+  }
+
+  @override
+  Offset positionModal(
+      Size availableSize, Size modalContentSize, TextDirection textDirection) {
+    final xOffset = max(0.0, (availableSize.width - modalContentSize.width) / 2);
+    final yOffset = padding.top;
+    return Offset(xOffset, yOffset);
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final alphaAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animation,
+      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
+      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+    ));
+
+    return FadeTransition(
+      opacity: alphaAnimation,
+      child: SlideTransition(
+        position: animation.drive(
+          Tween(
+            begin: const Offset(0.0, -1.0),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.easeOutQuad)),
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+```
+
+The above code creates this custom modal type:
+
+![Custom modal type](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_custom_modal_type.gif?raw=true)
+
+### Modal Type Responsiveness
+
+The modal type's layout, position, transition animations, and more can be 
+customized dynamically based on the available screen size.
+
+```dart
+WoltModalSheet.show(
+  context: context,
+  modalTypeBuilder: (BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width < 523) {
+      return WoltModalType.bottomSheet();
+    } else if (width < 800) {
+      return WoltModalType.dialog();
+    } else {
+      return WoltModalType.sideSheet();
+    },
+    ...
+},
+```
+The above code snippet produces the following modal types based on the
+dynamical screen width:
+
+![Responsive modals](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_type_builder.gif?raw=true)
+
+### Migration from v0.6.0 to v0.7.0
+
+- WoltModalType.bottomSheet is now WoltModalType.bottomSheet()
+- WoltModalType.dialog is now WoltModalType.dialog()
+- The `transitionDuration`, `bottomSheetTransitionAnimation`, 
+  `dialogTransitionAnimation`,`minDialogWidth`,`maxDialogWidth`, 
+  `minPageHeight`,`maxPageHeight` are removed from `WoltModalSheet.show()`. 
+  These values can be set in `WoltBottomSheetType`, `WoltDialogType` or a 
+  custom modal type instead.
 
 ## Usage of WoltModalSheet Pages
 
 The WoltModalSheet library provides three primary classes for constructing 
 modal sheet pages: `WoltModalSheetPage`, `SliverWoltModalSheetPage`, and 
-`NonScrollingWoltModalSheetPage`. Understanding the use cases and 
-functionalities of these classes is key to creating performant, 
-easy-to-construct modal sheets.
+`NonScrollingWoltModalSheetPage`.
 
 ### SliverWoltModalSheetPage
 
-`SliverWoltModalSheetPage` is designed for complex and dynamic content 
-layouts within a modal sheet. It leverages the power of Flutter's Sliver 
-widgets to provide flexible and efficient scrolling behaviors.
+`SliverWoltModalSheetPage` is designed for layouts requiring the use of 
+`Sliver` widgets, such as lists, grids, and other scrollable content within 
+a modal sheet.
 
 ```dart
 SliverWoltModalSheetPage(
@@ -189,17 +366,10 @@ SliverWoltModalSheetPage(
 
 ### WoltModalSheetPage
 
-WoltModalSheetPage provides a simpler alternative for pages that primarily 
-consist of a single widget or a straightforward layout. It automatically 
-wraps the child widget in a SliverToBoxAdapter, making it suitable for use 
-in sliver-based scrollable layouts.
-
-Key Features:
-* Simplicity: Ideal for single-widget content or basic layouts.
-* No Sliver Overhead: Automatically handles the wrapping of non-sliver 
-  widgets into slivers.
-* Ease of Use: Simplifies the process of creating modal sheet pages without 
-  needing to deal with slivers directly.
+WoltModalSheetPage simplifies the process of creating modal sheet pages 
+without needing to deal with slivers directly. This class is ideal for 
+straightforward widgets that don't require the advanced capabilities of 
+slivers and are not lazily built.
 
  ```dart
 WoltModalSheetPage(
@@ -214,22 +384,8 @@ WoltModalSheetPage(
 `NonScrollingWoltModalSheetPage` is designed to display content which is 
 flexible in height but unlikely to require scrolling. This class is ideal 
 for content that adapts to the available vertical space within the modal 
-sheet's maximum height, but is unlikely to exceed that height and require 
-scrolling.
-
-Key Features:
-* Adaptability: Designed for content with flexible height but fixed or 
-intrinsic dimensions.
-* Flex Layout: Can utilize the Flex layout model of a Column for effective 
-  space management.
-* Non-Scrolling: Best for content that fits within the modal sheet's maximum 
-  height without needing scrolling.
-
-*Warning:* If there is a risk that the content's height might exceed the modal 
-sheet's maximum height, leading to overflow, it is recommended to use 
-SliverWoltModalSheetPage or WoltModalSheetPage instead. These classes 
-provide scrolling capabilities to handle larger content effectively using 
-slivers.
+sheet's maximum height. The main content can utilize the Flex layout model 
+of a Column for space management.
 
  ```dart
 NonScrollingWoltModalSheetPage(
@@ -238,27 +394,6 @@ NonScrollingWoltModalSheetPage(
 )
 
  ```
-
-This class extends SliverWoltModalSheetPage, offering a streamlined approach 
-to handle non-scrolling content within a modal sheet.
-
-### Choosing between the three
-When deciding which class to use for your modal sheet, consider the following guidelines:
-
-* WoltModalSheetPage: Choose this for simpler content layouts, especially 
-  when working with a single widget. It's best suited for straightforward 
-  layouts that don't require the complexities of Slivers.
-
-* SliverWoltModalSheetPage: Opt for this class when your modal sheet
-  requires complex scrolling behaviors or needs to display a long list of
-  items. It's ideal for dynamic content layouts that benefit from the advanced
-  capabilities of Flutter's Sliver widgets.
-
-* NonScrollingWoltModalSheetPage: This class is best when your content is 
-  flexible in height but unlikely to require scrolling. It’s perfect for 
-  modal sheets where the content fits within the modal's maximum height 
-  without the need for scrollable behavior. Use this for content with fixed 
-  or intrinsic dimensions that need to adapt to available vertical space.
 
 ## In-Modal Navigation
 
@@ -440,15 +575,16 @@ WoltModalSheet.showWithDynamicPath(
 
 ## Design Guidelines
 
-This section outlines the design guidelines for the modal sheet component, including breakpoints, safe areas, scroll logic, and behavior across different devices. The guidelines are based on the Wolt design system specs.
+This section outlines the design guidelines for the modal sheet component, including breakpoints and behavior across different devices. The guidelines are based on the Wolt design system specs.
 
 ### Overview
 
-The modal sheet component is used to display critical information or interactive elements to users in a non-intrusive way. This component adapts to different screen sizes and orientations, ensuring a consistent and accessible user experience.
+The modal sheet component is used to display critical information or interactive elements to users in a non-intrusive way. This component adapts to different screen sizes and orientations.
 
 ### Breakpoints
 
-The modal sheet component adjusts its layout based on the following breakpoints:
+The modal sheet component adjusts its layout and positioning based on the 
+following breakpoints:
 
 - **Breakpoint Large**: Width ≥ 1400px
 - **Breakpoint Medium**: 768px ≤ Width < 1400px
@@ -459,23 +595,23 @@ The modal sheet component adjusts its layout based on the following breakpoints:
 
 ### Modal Types
 
-#### Alert
+#### Alert Dialog
 - Used for critical information that requires immediate attention.
 - Must be dismissed by user interaction to ensure the alert is acknowledged.
 
 #### Dialog
 - Used for single user actions or to convey information related to changes in state (success, errors).
 - Provides clear actions for users to acknowledge or dismiss the dialog.
-- We recommend to use dialogs in small,medium and large windows sizes.
+- We recommend to use dialogs in small, medium and large windows sizes.
 
 #### Side Sheet
 - Used to focus users' attention on a specific task while keeping the context visible.
-- We recommend to use side sheets in small,medium and large windows sizes.
+- We recommend to use side sheets in small, medium and large windows sizes.
 
 #### Bottom Sheet
 - Provides additional options or actions without leaving the current context.
-- In xsmall windows use bottom sheets, instead of side-sheets or dialogs.
-- We recommend to use bottom sheets only in xsmall window size.
+- We recommend to use bottom sheets only in xsmall window size. The side 
+  sheet and dialog content should be shown in a bottom sheet in xsmall window.
 
 ## Understanding the page elements
 
@@ -581,12 +717,12 @@ Here is an example that shows all the modal sheet elements in use:
 
 ![Modal sheet elements in use](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/bottom_sheet_example.jpeg?raw=true)
 
-## Designer's Collaboration Guide
+## Designer Collaboration Guide
 
 To ensure seamless collaboration between designers and developers, we have 
-provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-Modal-Sheet-Specs?type=design&node-id=7%3A514&mode=design&t=NULXGTxl2YvnawyH-1) dedicated to the WoltModalSheet package. This resource aims to guide designers through the process of creating and handing over designs that leverage the WoltModalSheet's capabilities effectively.
+provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-Modal-Sheet-Specs?type=design&node-id=7%3A514&mode=design&t=NULXGTxl2YvnawyH-1) dedicated to the package. This resource aims to guide designers through the process of creating and handing over designs that leverage the WoltModalSheet's capabilities effectively.
 
-### What's Inside the Figma File
+### What is inside the Figma File
 
 - **Example Design Specifications**: Detailed design guidelines and 
   specifications mirroring those used internally at Wolt. These specs 
@@ -594,10 +730,10 @@ provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-M
   smooth transition from design to implementation.
 
 - **Modal Types Specifications**: This section showcases specifications for 
-  different modal types, including dialog and bottom sheet modals. It covers 
-  essential details like dimensions, layout of elements, and visual 
-  arrangements, providing clear instructions for replicating these styles in 
-  your projects.
+  different modal types, including dialog, alert dialog, side sheet, bottom 
+  sheet modals. It covers essential details like dimensions, layout of 
+  elements, and visual arrangements, providing clear instructions for 
+  replicating these styles in your projects.
 
 - **Motion Specs for Modal Interactions**: To complement the 
   static design aspects, this section demonstrates motion 
@@ -605,21 +741,6 @@ provided a [Figma file](https://www.figma.com/file/jRQUhvi44bkUxRxSWGhSXO/Wolt-M
   guidelines for animating transitions between modal sheet pages and within 
   the content scroll, enabling designers to specify dynamic, engaging user 
   experiences.
-
-### Utilizing the Figma File
-
-By integrating this Figma file into your design process, you can:
-
-- **Align on Design Language**: Ensure that your application's design 
-  language and the modal sheet's functionality are in harmony, providing a 
-  consistent user experience.
-
-- **Facilitate Design Handoff**: Use the provided specifications as a 
-  reference point for design handoff, minimizing misunderstandings and 
-  streamlining the development process.
-
-- **Inspire Creative Solutions**: Leverage the examples and specifications 
-  as a source of inspiration for implementing innovative design solutions.
 
 ## Customizable Animations
 
@@ -685,8 +806,6 @@ extension.
 ```dart
 @override
 Widget build(BuildContext context) {
-  final pageIndexNotifier = ValueNotifier(0);
-
   SliverWoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
     return WoltModalSheetPage(
       hasSabGradient: false,
@@ -838,10 +957,6 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
                       debugPrint('Closed modal sheet with barrier tap');
                       Navigator.of(context).pop();
                     },
-                    maxDialogWidth: 560,
-                    minDialogWidth: 400,
-                    minPageHeight: 0.0,
-                    maxPageHeight: 0.9,
                   );
                 },
                 child: const SizedBox(
@@ -913,6 +1028,12 @@ current state:
 
 ![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_coffee_maker.gif?raw=true)
 
+### Coffee maker app with Navigator 2.0
+
+The [coffee_maker_navigator2](./coffee_maker_navigator2/) app demonstrates 
+how to manage app navigation including the modal sheet withNavigator 2.0 by 
+applying the MVVM pattern with the Provide state management package.
+
 ### CupertinoApp support
 
 In the package, certain Material widgets rely on retrieving Material localizations information
@@ -923,22 +1044,19 @@ into your application configuration.
 
 ```dart
 CupertinoApp(
-  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-    DefaultMaterialLocalizations.delegate,
-],)
+  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[DefaultMaterialLocalizations.delegate],
+)
 ```
 To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
 
 ## Additional information
 
 * <b>Design Philosophy</b>: Dive into the creative thought process behind
-  WoltModalSheet's
-  functionality [in our blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design)
-  . Explore how we tackled the
-  design challenges to create an intuitive and responsive
-  experience.
+  WoltModalSheet's functionality [in our blog post](https://careers.wolt.com/en/blog/engineering/an-overview-of-the-multi-page-scrollable-bottom-sheet-ui-design)
+  . Explore how we tackled the design challenges to create an intuitive and 
+  responsive experience.
 * <b>Insights from FlutterCon'23
-  talk</b>: We delved into both the design and developmental facets of this
+  talk</b>: We delved into both the design and developmental facets of this 
   package at the FlutterCon'23 conference. Catch the
   enlightening [recording of his talk](https://www.droidcon.com/2023/08/07/the-art-of-responsive-modals-building-a-multi-page-sheet-in-flutter/)
   to understand the nuances.
