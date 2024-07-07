@@ -20,6 +20,7 @@ class WoltBottomSheetType extends WoltModalType {
     Duration reverseTransitionDuration = _defaultExitDuration,
     minFlingVelocity = 700.0,
     bool? barrierDismissible,
+    closeProgressThreshold = 0.5,
   }) : super(
           shapeBorder: shapeBorder,
           forceMaxHeight: forceMaxHeight,
@@ -29,6 +30,7 @@ class WoltBottomSheetType extends WoltModalType {
           minFlingVelocity: minFlingVelocity,
           showDragHandle: showDragHandle,
           barrierDismissible: barrierDismissible,
+          closeProgressThreshold: closeProgressThreshold,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
@@ -179,6 +181,7 @@ class WoltBottomSheetType extends WoltModalType {
     WoltModalDismissDirection? dismissDirection,
     double? minFlingVelocity,
     bool? barrierDismissible,
+    double? closeProgressThreshold,
   }) {
     return WoltBottomSheetType(
       shapeBorder: shapeBorder ?? this.shapeBorder,
@@ -190,6 +193,8 @@ class WoltBottomSheetType extends WoltModalType {
       dismissDirection: dismissDirection ?? this.dismissDirection,
       minFlingVelocity: minFlingVelocity ?? this.minFlingVelocity,
       barrierDismissible: barrierDismissible ?? this.barrierDismissible,
+      closeProgressThreshold:
+          closeProgressThreshold ?? this.closeProgressThreshold,
     );
   }
 }
