@@ -1,3 +1,11 @@
+## 0.7.1
+- Fix: Dialog and bottom sheet minimum height is not respected to modal content min height [#260](https://github.com/woltapp/wolt_modal_sheet/pull/260) by [ulusoyca](https://github.com/ulusoyca)
+- Adjustment: Add Last Commit badge to readme [#258](https://github.com/woltapp/wolt_modal_sheet/pull/258) by [durannumit](https://github.com/durannumit)
+  - Fixes:
+    - [#256](https://github.com/woltapp/wolt_modal_sheet/issues/256) Add Last Commit badge to Readme
+- Feature: Extend close progress threshold for different types [#257](https://github.com/woltapp/wolt_modal_sheet/pull/257) by [durannumit](https://github.com/durannumit)
+  - Fixes:
+    - [#253](https://github.com/woltapp/wolt_modal_sheet/issues/253) Add closeProgressThreshold to default modal type constructor methods
 ## 0.7.0
 - Adjust dialog enter animation distance [#249](https://github.com/woltapp/wolt_modal_sheet/pull/249) by [ulusoyca](https://github.com/ulusoyca)
 - Adjustment: Readme updated for version 0.7.0 part 2 [#248](https://github.com/woltapp/wolt_modal_sheet/pull/248) by [durannumit](https://github.com/durannumit)
