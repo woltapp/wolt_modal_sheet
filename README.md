@@ -10,6 +10,7 @@
     <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/popularity/wolt_modal_sheet" alt="Pub popularity"></a>
     <br>    
     <a href="https://github.com/woltapp/wolt_modal_sheet"><img src="https://img.shields.io/github/stars/woltapp/wolt_modal_sheet?style=social" alt="Repo stars"></a>
+    <a href="https://github.com/woltapp/wolt_modal_sheet/commits/main"><img src="https://img.shields.io/github/last-commit/woltapp/wolt_modal_sheet/main?logo=git" alt="Last Commit"></a>
     <a href="https://github.com/woltapp/wolt_modal_sheet/pulls"><img src="https://img.shields.io/github/issues-pr/woltapp/wolt_modal_sheet" alt="Repo PRs"></a>
     <a href="https://github.com/woltapp/wolt_modal_sheet/issues?q=is%3Aissue+is%3Aopen"><img src="https://img.shields.io/github/issues/woltapp/wolt_modal_sheet" alt="Repo issues"></a>
     <a href="https://github.com/woltapp/wolt_modal_sheet/graphs/contributors"><img src="https://badgen.net/github/contributors/woltapp/wolt_modal_sheet" alt="Contributors"></a>
