@@ -7,5 +7,6 @@ enum ModalPageName {
   customTopBar,
   updatePage,
   inAppNavigation,
+  minHeight,
   flexibleLayout,
 }

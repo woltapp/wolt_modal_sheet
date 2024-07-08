@@ -69,14 +69,14 @@ class WoltDialogType extends WoltModalType {
       return BoxConstraints(
         minWidth: width,
         maxWidth: width,
-        minHeight: 360,
+        minHeight: 0,
         maxHeight: max(360, availableHeight * 0.8),
       );
     }
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
-      minHeight: availableHeight * 0.8,
+      minHeight: 0,
       maxHeight: availableHeight * 0.8,
     );
   }

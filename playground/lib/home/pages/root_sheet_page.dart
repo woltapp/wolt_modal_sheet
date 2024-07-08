@@ -2,6 +2,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:playground/home/pages/sheet_page_with_custom_top_bar.dart';
+import 'package:playground/home/pages/sheet_page_with_min_height.dart';
 import 'package:playground/home/pages/sheet_page_with_update_page_method.dart';
 import 'package:playground/home/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground/home/pages/sheet_page_with_hero_image.dart';
@@ -27,6 +28,7 @@ class RootSheetPage {
         SheetPageWithHeroImage.build(isLastPage: false),
         SheetPageWithLazyList.build(isLastPage: false),
         SheetPageWithTextField.build(isLastPage: false),
+        SheetPageWithMinHeight.build(isLastPage: false),
         SheetPageWithInAppNavigation.build(isLastPage: false),
         SheetPageWithCustomTopBar.build(isLastPage: false),
         SheetPageWithNoPageTitleNoTopBar.build(isLastPage: false),
@@ -76,6 +78,11 @@ class RootSheetPage {
                     WoltSelectionListItemData(
                       title: 'Page with lazy loading list',
                       value: SheetPageWithLazyList.pageId,
+                      isSelected: false,
+                    ),
+                    WoltSelectionListItemData(
+                      title: 'Page with min height constraint',
+                      value: SheetPageWithMinHeight.pageId,
                       isSelected: false,
                     ),
                     WoltSelectionListItemData(
@@ -131,6 +138,9 @@ class RootSheetPage {
                       break;
                     case ModalPageName.textField:
                       destinationPage = SheetPageWithTextField.build();
+                      break;
+                    case ModalPageName.minHeight:
+                      destinationPage = SheetPageWithMinHeight.build();
                       break;
                     case ModalPageName.noTitleNoTopBar:
                       destinationPage =
