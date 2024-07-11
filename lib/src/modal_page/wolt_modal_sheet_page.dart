@@ -43,6 +43,7 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
 
   /// Creates a [WoltModalSheetPage] with a single child main content.
   WoltModalSheetPage({
+    super.key,
     required this.child,
     super.id,
     super.pageTitle,

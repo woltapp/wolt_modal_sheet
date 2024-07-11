@@ -24,6 +24,7 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   NonScrollingWoltModalSheetPage({
+    super.key,
     required this.child,
     super.id,
     super.backgroundColor,
