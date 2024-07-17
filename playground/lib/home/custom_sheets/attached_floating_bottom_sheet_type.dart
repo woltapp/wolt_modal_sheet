@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -17,12 +19,14 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
           transitionDuration: _defaultEnterDuration,
           reverseTransitionDuration: _defaultExitDuration,
         ) {
-    _anchorPosition =
-        (anchorKey.currentContext?.findRenderObject() as RenderBox?)
-            ?.localToGlobal(Offset.zero);
+    final renderBox =
+        anchorKey.currentContext?.findRenderObject() as RenderBox?;
+    _anchorPosition = renderBox?.localToGlobal(Offset.zero);
+    _anchorSize = renderBox?.size;
   }
 
   late final Offset? _anchorPosition;
+  late final Size? _anchorSize;
   final Alignment alignment;
 
   @override
@@ -31,15 +35,23 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
     final anchorPosition = _anchorPosition;
     if (anchorPosition == null) {
       // Return the Center Offset by the size of the modal content
+      // If no position found
       return availableSize.center(Offset.zero) -
           Offset(modalContentSize.width, modalContentSize.height) / 2;
     } else {
-      final offsetPosition = anchorPosition -
-          Offset(modalContentSize.width, modalContentSize.height) / 2 -
-          Offset(alignment.x / 2 * modalContentSize.width,
-              alignment.y / 2 * modalContentSize.height);
+      final modalOffset = Offset(
+        (alignment.x / 2 + 0.5) * modalContentSize.width,
+        (alignment.y / 2 + 0.5) * modalContentSize.height,
+      );
+      final anchorSize = _anchorSize ?? Size.zero;
 
-      return offsetPosition;
+      final anchorOffset = Offset(
+        (alignment.x / 2 + 0.5) * anchorSize.width,
+        (alignment.y / 2 + 0.5) * anchorSize.height,
+      );
+
+      // Position the Modal based on Anchor Position plus the
+      return anchorPosition + anchorOffset - modalOffset;
     }
   }
 
@@ -53,10 +65,44 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
   @override
   BoxConstraints layoutModal(Size availableSize) {
     const padding = 32.0;
-    final availableWidth = availableSize.width;
+
+    // Calculate Available Space based on Anchor Position
+    final double availableWidth;
+    final double availableHeight;
+    final position = _anchorPosition;
+
+    if (position == null) {
+      availableWidth = availableSize.width;
+      availableHeight = availableSize.height;
+    } else {
+      if (alignment.x == -1 || alignment.x == 1) {
+        if (alignment.x == 1) {
+          // Modal is Left of the Anchor
+          availableWidth = position.dx;
+        } else {
+          // Modal is Right of the Anchor
+          availableWidth = availableSize.width - position.dx;
+        }
+      } else {
+        availableWidth = min(position.dx, availableSize.width - position.dx);
+      }
+
+      if (alignment.y == -1 || alignment.y == 1) {
+        if (alignment.y == 1) {
+          // Modal is Top of the Anchor
+          availableHeight = position.dy;
+        } else {
+          // Modal is Bottom of the Anchor
+          availableHeight = availableSize.height - position.dy;
+        }
+      } else {
+        availableHeight = min(position.dy, availableSize.height - position.dy);
+      }
+    }
+
     double width = availableWidth > 523.0 ? 312.0 : availableWidth - padding;
 
-    if (availableWidth > 523.0) {
+    if (availableWidth > 312) {
       width = 312.0;
     } else if (availableWidth > 240.0) {
       width = 240.0;
@@ -68,7 +114,7 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
       minWidth: width,
       maxWidth: width,
       minHeight: 0,
-      maxHeight: availableSize.height * 0.8,
+      maxHeight: min(availableHeight, availableSize.height * 0.8),
     );
   }
 
