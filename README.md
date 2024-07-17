@@ -95,13 +95,13 @@ for page transitions, and scrollable content within each page.
 You can see how the package is used in the example apps included in the 
 repository by clicking the links below:
 
-### [Coffee Maker Example](https://coffeemakerexample.web.app)
+### [Coffee Maker Example](https://coffeemakerexample.web.app) - [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker)
 
-### [Playground Example](https://playgroundwoltexample.web.app)
+### [Playground Example](https://playgroundwoltexample.web.app) - [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground)
 
-### [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app)
+### [Playground Navigator2 Example](https://playgroundnavigator2woltexample.web.app) - [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground_navigator2)
 
-### [Coffee Maker Navigator2 Example](https://coffeemakernavigator2.web.app)
+### [Coffee Maker Navigator2 Example](https://coffeemakernavigator2.web.app) - [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker_navigator_2)
 
 ## Features
 
