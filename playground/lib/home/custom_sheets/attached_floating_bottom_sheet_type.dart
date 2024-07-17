@@ -33,7 +33,12 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
   Offset positionModal(
       Size availableSize, Size modalContentSize, TextDirection textDirection) {
     final anchorPosition = _anchorPosition;
-    if (anchorPosition == null) {
+    final isOffscreen = anchorPosition == null ||
+        anchorPosition.dx < 0 ||
+        anchorPosition.dx > availableSize.width ||
+        anchorPosition.dy < 0 ||
+        anchorPosition.dy > availableSize.height;
+    if (isOffscreen) {
       // Return the Center Offset by the size of the modal content
       // If no position found
       return availableSize.center(Offset.zero) -
