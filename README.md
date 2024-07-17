@@ -104,7 +104,7 @@ repository by clicking the links below:
 ### Playground Navigator2 Example
 [Web App](https://playgroundnavigator2woltexample.web.app), [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground_navigator2)
 
-### [Coffee Maker Navigator2 Example]
+### Coffee Maker Navigator2 Example
 [Web App](https://coffeemakernavigator2.web.app), [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker_navigator_2)
 
 ## Features
