@@ -26,6 +26,8 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 /// ## Considerations
 /// - The [anchorKey] must be applied to a widget that is already in the widget tree for the
 ///   modal to position itself correctly.
+///
+/// Created by ABausG (https://github.com/abausg)
 class AttachedFloatingBottomSheetType extends WoltModalType {
   static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
   static const Duration _defaultExitDuration = Duration(milliseconds: 300);
