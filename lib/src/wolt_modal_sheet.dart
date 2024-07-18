@@ -110,7 +110,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `barrierDismissible`: Whether the modal can be dismissed by tapping the barrier.
   ///   - `enableDrag`: Whether the modal can be dismissed by dragging.
   ///   - `showDragHandle`: Whether to show a handle to indicate the modal can be dragged.
-  ///   - `routeSettings`: Additional settings for the modal route.
+  ///   - `settings`: Additional settings for the modal route.
   ///   - `transitionDuration`: Duration of the transition animations.
   ///   - `onModalDismissedWithBarrierTap`: Callback for when the modal is dismissed by tapping the barrier.
   ///   - `onModalDismissedWithDrag`: Callback for when the modal is dismissed by dragging.
@@ -130,7 +130,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool? barrierDismissible,
     bool? enableDrag,
     bool? showDragHandle,
-    RouteSettings? routeSettings,
+    RouteSettings? settings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     VoidCallback? onModalDismissedWithDrag,
@@ -148,7 +148,7 @@ class WoltModalSheet<T> extends StatefulWidget {
       barrierDismissible: barrierDismissible,
       enableDrag: enableDrag,
       showDragHandle: showDragHandle,
-      routeSettings: routeSettings,
+      settings: settings,
       transitionDuration: transitionDuration,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
@@ -176,7 +176,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `barrierDismissible`: Whether the modal can be dismissed by tapping the barrier.
   ///   - `enableDrag`: Whether the modal can be dismissed by dragging.
   ///   - `showDragHandle`: Whether to show a handle to indicate the modal can be dragged.
-  ///   - `routeSettings`: Additional settings for the modal route.
+  ///   - `settings`: Additional settings for the modal route.
   ///   - `transitionDuration`: Duration of the transition animations.
   ///   - `onModalDismissedWithBarrierTap`: Callback for when the modal is dismissed by tapping the barrier.
   ///   - `onModalDismissedWithDrag`: Callback for when the modal is dismissed by dragging.
@@ -197,7 +197,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool? barrierDismissible,
     bool? enableDrag,
     bool? showDragHandle,
-    RouteSettings? routeSettings,
+    RouteSettings? settings,
     Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     VoidCallback? onModalDismissedWithDrag,
@@ -212,7 +212,7 @@ class WoltModalSheet<T> extends StatefulWidget {
         pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
         pageListBuilderNotifier: pageListBuilderNotifier,
         modalTypeBuilder: modalTypeBuilder,
-        routeSettings: routeSettings,
+        settings: settings,
         barrierDismissible: barrierDismissible,
         enableDrag: enableDrag,
         showDragHandle: showDragHandle,
