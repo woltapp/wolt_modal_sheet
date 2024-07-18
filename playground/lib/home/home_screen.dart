@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   anchorKey: _attachedAppBarKey,
                   alignment: Alignment.topLeft,
                 ),
-                pageListBuilder: (_) => [AdjustTimeNotificationPage()],
+                pageListBuilder: (_) => [NewOrderNotificationPage()],
               );
             },
           ),
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   alignment: Alignment.bottomCenter,
                                 ),
                                 pageListBuilder: (_) =>
-                                    [AdjustTimeNotificationPage()],
+                                    [NewOrderNotificationPage()],
                               );
                             },
                           ),
