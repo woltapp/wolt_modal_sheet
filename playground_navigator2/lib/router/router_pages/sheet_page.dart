@@ -25,7 +25,7 @@ class SheetPage extends Page<void> {
       onModalDismissedWithBarrierTap: () {
         context.read<RouterCubit>().closeSheet();
       },
-      routeSettings: this,
+      settings: this,
     );
   }
 

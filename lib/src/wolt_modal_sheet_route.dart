@@ -17,14 +17,14 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     bool? useSafeArea,
     bool? barrierDismissible,
     AnimationController? transitionAnimationController,
-    RouteSettings? routeSettings,
+    RouteSettings? settings,
   })  : _enableDrag = enableDrag,
         _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
         _barrierDismissible = barrierDismissible,
         _modalTypeBuilder = modalTypeBuilder,
-        super(settings: routeSettings);
+        super(settings: settings);
 
   Widget Function(Widget)? decorator;
 
