@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:playground/home/custom_sheets/attached_floating_bottom_sheet_type.dart';
 import 'package:playground/home/custom_sheets/floating_bottom_sheet_type.dart';
 import 'package:playground/home/custom_sheets/top_notification_sheet_type.dart';
-import 'package:playground/home/pages/custom_sheet_pages/adjust_time_notification_page.dart';
 import 'package:playground/home/pages/custom_sheet_pages/new_order_notification_page.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -48,9 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 context: context,
                 modalTypeBuilder: (_) => AttachedFloatingBottomSheetType(
                   anchorKey: _attachedAppBarKey,
-                  alignment: Directionality.of(context) == TextDirection.ltr
-                      ? Alignment.topLeft
-                      : Alignment.topRight,
                 ),
                 pageListBuilder: (_) => [NewOrderNotificationPage()],
               );
@@ -158,7 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 modalTypeBuilder: (_) =>
                                     AttachedFloatingBottomSheetType(
                                   anchorKey: _attachedRandomKey,
-                                  alignment: Alignment.bottomCenter,
                                 ),
                                 pageListBuilder: (_) =>
                                     [NewOrderNotificationPage()],
