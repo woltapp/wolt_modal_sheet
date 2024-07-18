@@ -3,10 +3,41 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+/// A [WoltModalType] that displays a floating bottom sheet which is dynamically positioned
+/// relative to an anchor widget identified by [anchorKey]. This modal type allows for a
+/// customizable presentation of content in relation to a specific UI element, enhancing
+/// contextual awareness for the user.
+///
+/// ## Usage
+/// This modal type is designed to be used when there is a need to display information or
+/// actions related to a specific element on the screen. For example, it can be used to
+/// show detailed information about an item in a list or to present actions related to
+/// a specific UI component.
+///
+/// ## Positioning
+/// The modal is positioned based on the location and size of the anchor widget. The
+/// [alignment] parameter determines the modal's position relative to the anchor. If the
+/// anchor widget cannot be found (e.g., if the key is not applied to any existing widget),
+/// the modal will be centered on the screen.
+///
+/// The modal automatically adjusts its size and position to ensure it fits within the
+/// available screen space while respecting the specified alignment relative to the anchor
+/// widget. This behavior ensures that the modal remains accessible and visually connected
+/// to the context it relates to.
+///
+/// ## Considerations
+/// - The [anchorKey] must be applied to a widget that is already in the widget tree for the
+///   modal to position itself correctly.
 class AttachedFloatingBottomSheetType extends WoltModalType {
   static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
   static const Duration _defaultExitDuration = Duration(milliseconds: 300);
 
+  /// Creates an AttachedFloatingBottomSheetType
+  ///
+  /// [anchorKey] is the key of the widget that the bottom sheet will be attached to. Apply this key to the Widget where the Sheet should be attached to
+  /// [alignment] is the alignment of the bottom sheet to the anchor. Default is [Alignment.center]
+  ///
+  /// If the anchor is not found, the bottom sheet will be centered on the screen
   AttachedFloatingBottomSheetType({
     required GlobalKey anchorKey,
     this.alignment = Alignment.center,
