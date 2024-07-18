@@ -48,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 context: context,
                 modalTypeBuilder: (_) => AttachedFloatingBottomSheetType(
                   anchorKey: _attachedAppBarKey,
-                  alignment: Alignment.topLeft,
+                  alignment: Directionality.of(context) == TextDirection.ltr
+                      ? Alignment.topLeft
+                      : Alignment.topRight,
                 ),
                 pageListBuilder: (_) => [NewOrderNotificationPage()],
               );
