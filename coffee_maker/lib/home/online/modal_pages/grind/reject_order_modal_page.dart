@@ -1,14 +1,15 @@
 import 'package:coffee_maker/home/online/modal_pages/grind/reject_order_reason.dart';
-import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class RejectOrderModalPage {
   RejectOrderModalPage._();
 
-  static WoltModalSheetPage build({required String coffeeOrderId}) {
+  static WoltModalSheetPage build({
+    required String coffeeOrderId,
+    required VoidCallback onRejectOrderTapped,
+  }) {
     final buttonEnabledListener = ValueNotifier(false);
 
     return WoltModalSheetPage(
@@ -18,12 +19,8 @@ class RejectOrderModalPage {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Builder(builder: (context) {
-              final model = context.read<StoreOnlineViewModel>();
               return WoltElevatedButton(
-                onPressed: () {
-                  model.onCoffeeOrderStatusChange(coffeeOrderId);
-                  Navigator.pop(context);
-                },
+                onPressed: onRejectOrderTapped,
                 theme: WoltElevatedButtonTheme.secondary,
                 colorName: WoltColorName.red,
                 enabled: isEnabled,

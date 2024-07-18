@@ -1,15 +1,16 @@
 import 'package:coffee_maker/home/online/modal_pages/ready/extra_recommendation.dart';
 import 'package:coffee_maker/home/online/modal_pages/ready/extra_recommendation_tile.dart';
-import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class OfferRecommendationModalPage {
   OfferRecommendationModalPage._();
 
-  static SliverWoltModalSheetPage build({required String coffeeOrderId}) {
+  static SliverWoltModalSheetPage build({
+    required String coffeeOrderId,
+    required VoidCallback onServeWithRecommendation,
+  }) {
     final selectedItemCountListener = ValueNotifier(0);
     const pageTitle = 'Recommendations';
     const allRecommendations = ExtraRecommendation.values;
@@ -30,17 +31,11 @@ class OfferRecommendationModalPage {
           }
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Builder(builder: (context) {
-              final model = context.read<StoreOnlineViewModel>();
-              return WoltElevatedButton(
-                onPressed: () {
-                  model.onCoffeeOrderStatusChange(coffeeOrderId);
-                  Navigator.pop(context);
-                },
-                enabled: count > 0,
-                child: Text(buttonText),
-              );
-            }),
+            child: WoltElevatedButton(
+              onPressed: onServeWithRecommendation,
+              enabled: count > 0,
+              child: Text(buttonText),
+            ),
           );
         },
       ),

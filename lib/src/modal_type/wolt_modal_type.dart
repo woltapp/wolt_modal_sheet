@@ -125,7 +125,7 @@ abstract class WoltModalType {
     Widget child,
   );
 
-  /// Applies additional decorations to the modal pqge content.
+  /// Applies additional decorations to the modal page content.
   ///
   /// This method can be overridden to provide custom decorations such as safe area padding
   /// adjustments inside the modal page content. By default, it does not apply any decoration.

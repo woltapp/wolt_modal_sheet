@@ -1,16 +1,16 @@
-import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/home/online/modal_pages/add_water/widgets/water_quantity_temperature_input.dart';
 import 'package:coffee_maker/home/online/modal_pages/add_water/widgets/water_source_list.dart';
-import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WaterSettingsModalPage {
   WaterSettingsModalPage._();
 
-  static WoltModalSheetPage build(String coffeeOrderId) {
+  static WoltModalSheetPage build(
+    String coffeeOrderId, {
+    required VoidCallback onFinishAddingWater,
+  }) {
     final buttonEnabledListener = ValueNotifier(false);
     const pageTitle = 'Water settings';
 
@@ -20,18 +20,11 @@ class WaterSettingsModalPage {
         builder: (_, isEnabled, __) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Builder(builder: (context) {
-              final model = context.read<StoreOnlineViewModel>();
-              return WoltElevatedButton(
-                onPressed: () {
-                  model.onCoffeeOrderStatusChange(
-                      coffeeOrderId, CoffeeMakerStep.ready);
-                  Navigator.pop(context);
-                },
-                enabled: isEnabled,
-                child: const Text('Finish adding water'),
-              );
-            }),
+            child: WoltElevatedButton(
+              onPressed: onFinishAddingWater,
+              enabled: isEnabled,
+              child: const Text('Finish adding water'),
+            ),
           );
         },
       ),

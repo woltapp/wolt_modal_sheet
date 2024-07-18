@@ -1015,7 +1015,7 @@ current state:
 
     WoltModalSheet.show(
       context: context,
-      decorator: (child) {
+      pageContentDecorator: (child) {
         return ChangeNotifierProvider<StoreOnlineViewModel>.value(
           value: model,
           builder: (_, __) => child,
