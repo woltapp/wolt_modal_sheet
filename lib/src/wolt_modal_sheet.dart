@@ -275,13 +275,6 @@ class WoltModalSheet<T> extends StatefulWidget {
 class WoltModalSheetState extends State<WoltModalSheet> {
   List<SliverWoltModalSheetPage> _pages = [];
 
-  Widget Function(Widget) get _pageContentDecorator =>
-      widget.pageContentDecorator ??
-      (widget) => Builder(builder: (_) => widget);
-
-  Widget Function(Widget) get _modalDecorator =>
-      widget.modalDecorator ?? (widget) => Builder(builder: (_) => widget);
-
   final GlobalKey _childKey = GlobalKey(debugLabel: 'Modal sheet child');
 
   static const barrierLayoutId = 'barrierLayoutId';
@@ -327,115 +320,119 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     final modalType =
         WoltModalTypeUtils.currentModalType(widget.modalTypeBuilder, context);
 
-    return _modalDecorator(
-      ValueListenableBuilder(
-        valueListenable: widget.pageIndexNotifier,
-        builder: (context, currentPageIndex, __) {
-          final pages = _pages;
-          final page = pages[currentPageIndex];
-          final enableDrag = page.enableDrag ??
-              widget.enableDrag ??
-              modalType.isDragToDismissEnabled ??
-              themeData?.enableDrag ??
-              defaultThemeData.enableDrag;
-          final showDragHandle = widget.showDragHandle ??
-              modalType.showDragHandle ??
-              (enableDrag &&
-                  (themeData?.showDragHandle ??
-                      defaultThemeData.showDragHandle));
-          final shadowColor =
-              themeData?.shadowColor ?? defaultThemeData.shadowColor;
-          final pageBackgroundColor = page.backgroundColor ??
-              themeData?.backgroundColor ??
-              defaultThemeData.backgroundColor;
-          final surfaceTintColor = page.surfaceTintColor ??
-              themeData?.surfaceTintColor ??
-              defaultThemeData.surfaceTintColor;
-          final modalElevation =
-              themeData?.modalElevation ?? defaultThemeData.modalElevation;
-          final clipBehavior =
-              themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
-          final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
-              themeData?.resizeToAvoidBottomInset ??
-              defaultThemeData.resizeToAvoidBottomInset;
-          final useSafeArea = page.useSafeArea ??
-              widget.useSafeArea ??
-              themeData?.useSafeArea ??
-              defaultThemeData.useSafeArea;
+    Widget modalContent = ValueListenableBuilder(
+      valueListenable: widget.pageIndexNotifier,
+      builder: (context, currentPageIndex, __) {
+        final pages = _pages;
+        final page = pages[currentPageIndex];
+        final enableDrag = page.enableDrag ??
+            widget.enableDrag ??
+            modalType.isDragToDismissEnabled ??
+            themeData?.enableDrag ??
+            defaultThemeData.enableDrag;
+        final showDragHandle = widget.showDragHandle ??
+            modalType.showDragHandle ??
+            (enableDrag &&
+                (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
+        final shadowColor =
+            themeData?.shadowColor ?? defaultThemeData.shadowColor;
+        final pageBackgroundColor = page.backgroundColor ??
+            themeData?.backgroundColor ??
+            defaultThemeData.backgroundColor;
+        final surfaceTintColor = page.surfaceTintColor ??
+            themeData?.surfaceTintColor ??
+            defaultThemeData.surfaceTintColor;
+        final modalElevation =
+            themeData?.modalElevation ?? defaultThemeData.modalElevation;
+        final clipBehavior =
+            themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
+        final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
+            themeData?.resizeToAvoidBottomInset ??
+            defaultThemeData.resizeToAvoidBottomInset;
+        final useSafeArea = page.useSafeArea ??
+            widget.useSafeArea ??
+            themeData?.useSafeArea ??
+            defaultThemeData.useSafeArea;
 
-          final multiChildLayout = CustomMultiChildLayout(
-            delegate: _WoltModalMultiChildLayoutDelegate(
-              contentLayoutId: contentLayoutId,
-              barrierLayoutId: barrierLayoutId,
+        Widget pageContent = KeyedSubtree(
+          key: _childKey,
+          child: Semantics(
+            label: modalType.routeLabel(context),
+            child: WoltModalSheetContentGestureDetector(
+              route: widget.route,
+              enableDrag: enableDrag,
+              modalContentKey: _childKey,
+              onModalDismissedWithDrag: widget.onModalDismissedWithDrag,
               modalType: modalType,
-              textDirection: Directionality.of(context),
-            ),
-            children: [
-              LayoutId(
-                id: barrierLayoutId,
-                child: WoltAnimatedModalBarrier(
-                  animationController: widget.route.animationController!,
-                  barrierDismissible: widget.route.barrierDismissible,
-                  onModalDismissedWithBarrierTap:
-                      widget.onModalDismissedWithBarrierTap,
-                ),
-              ),
-              LayoutId(
-                id: contentLayoutId,
-                child: _pageContentDecorator(
-                  KeyedSubtree(
-                    key: _childKey,
-                    child: Semantics(
-                      label: modalType.routeLabel(context),
-                      child: WoltModalSheetContentGestureDetector(
-                        route: widget.route,
-                        enableDrag: enableDrag,
-                        modalContentKey: _childKey,
-                        onModalDismissedWithDrag:
-                            widget.onModalDismissedWithDrag,
-                        modalType: modalType,
-                        child: Material(
-                          color: pageBackgroundColor,
-                          elevation: modalElevation,
-                          surfaceTintColor: surfaceTintColor,
-                          shadowColor: shadowColor,
-                          shape: modalType.shapeBorder,
-                          clipBehavior: clipBehavior,
-                          child: LayoutBuilder(
-                            builder: (_, constraints) {
-                              return modalType.decoratePageContent(
-                                context,
-                                WoltModalSheetAnimatedSwitcher(
-                                  woltModalType: modalType,
-                                  pageIndex: currentPageIndex,
-                                  pages: pages,
-                                  sheetWidth: constraints.maxWidth,
-                                  showDragHandle: showDragHandle,
-                                ),
-                                useSafeArea,
-                              );
-                            },
-                          ),
-                        ),
+              child: Material(
+                color: pageBackgroundColor,
+                elevation: modalElevation,
+                surfaceTintColor: surfaceTintColor,
+                shadowColor: shadowColor,
+                shape: modalType.shapeBorder,
+                clipBehavior: clipBehavior,
+                child: LayoutBuilder(
+                  builder: (_, constraints) {
+                    return modalType.decoratePageContent(
+                      context,
+                      WoltModalSheetAnimatedSwitcher(
+                        woltModalType: modalType,
+                        pageIndex: currentPageIndex,
+                        pages: pages,
+                        sheetWidth: constraints.maxWidth,
+                        showDragHandle: showDragHandle,
                       ),
-                    ),
-                  ),
+                      useSafeArea,
+                    );
+                  },
                 ),
               ),
-            ],
-          );
-          return Scaffold(
-            resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-            backgroundColor: Colors.transparent,
-            body: modalType.decorateModal(
-              context,
-              multiChildLayout,
-              useSafeArea,
             ),
-          );
-        },
-      ),
+          ),
+        );
+
+        final multiChildLayout = CustomMultiChildLayout(
+          delegate: _WoltModalMultiChildLayoutDelegate(
+            contentLayoutId: contentLayoutId,
+            barrierLayoutId: barrierLayoutId,
+            modalType: modalType,
+            textDirection: Directionality.of(context),
+          ),
+          children: [
+            LayoutId(
+              id: barrierLayoutId,
+              child: WoltAnimatedModalBarrier(
+                animationController: widget.route.animationController!,
+                barrierDismissible: widget.route.barrierDismissible,
+                onModalDismissedWithBarrierTap:
+                    widget.onModalDismissedWithBarrierTap,
+              ),
+            ),
+            LayoutId(
+              id: contentLayoutId,
+              child: widget.pageContentDecorator != null
+                  ? widget.pageContentDecorator!(pageContent)
+                  : pageContent,
+            ),
+          ],
+        );
+        return Scaffold(
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          backgroundColor: Colors.transparent,
+          body: modalType.decorateModal(
+            context,
+            multiChildLayout,
+            useSafeArea,
+          ),
+        );
+      },
     );
+
+    if (widget.modalDecorator != null) {
+      modalContent = widget.modalDecorator!(modalContent);
+    }
+
+    return modalContent;
   }
 
   void _onPageListBuilderNotifierValueUpdated() {
