@@ -71,7 +71,7 @@ void _onCoffeeOrderSelectedInReadyState(
   final model = context.read<OrdersScreenViewModel>();
 
   WoltModalSheet.show(
-    routeSettings: const RouteSettings(
+    settings: const RouteSettings(
         name: CoffeeOrderListViewForStep.modalRouteSettingName),
     context: context,
     pageListBuilder: (context) => [

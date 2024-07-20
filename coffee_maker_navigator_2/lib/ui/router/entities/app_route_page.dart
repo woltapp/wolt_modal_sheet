@@ -110,7 +110,7 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
   @override
   Route<void> createRoute(BuildContext context) {
     return WoltModalSheetRoute(
-      routeSettings: this,
+      settings: this,
       pageListBuilderNotifier: ValueNotifier(
         (context) => [OnboardingModalSheetPage()],
       ),
@@ -138,7 +138,7 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
   @override
   Route<void> createRoute(BuildContext context) {
     return WoltModalSheetRoute(
-      routeSettings: this,
+      settings: this,
       pageListBuilderNotifier: ValueNotifier(
         (context) => [
           GrindOrRejectModalPage(coffeeOrderId, onCoffeeOrderStatusChange),
