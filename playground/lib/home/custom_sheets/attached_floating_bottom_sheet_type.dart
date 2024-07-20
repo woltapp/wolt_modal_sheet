@@ -99,7 +99,7 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
 
   @override
   BoxConstraints layoutModal(Size availableSize) {
-    const padding = 32.0;
+    const padding = 4.0;
 
     // Calculate Available Space based on Anchor Position
     final double availableWidth;
@@ -158,16 +158,7 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
       }
     }
 
-    double width = availableWidth > 523.0 ? 312.0 : availableWidth - padding;
-
-    if (availableWidth > 312) {
-      width = 312.0;
-    } else if (availableWidth > 240.0) {
-      width = 240.0;
-    } else {
-      width = availableWidth * 0.7;
-    }
-
+    final width = min(availableWidth - padding, 312.0);
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
