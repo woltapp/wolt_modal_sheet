@@ -40,7 +40,15 @@ for page transitions, and scrollable content within each page.
 - [Modal Types](#modal-types)
   * [Defining Custom Modal Types](#defining-custom-modal-types)
   * [Modal Type Responsiveness](#modal-type-responsiveness)
-  * [Migration from v0.6.0 to v0.7.0](#migration-from-v060-to-v070)
+- [Decorating modal types, modal, and pages](#decorating-modal-types-modal-and-pages)
+  * [Decoration Approaches](#decoration-approaches)
+    + [Modal Type Level Decoration](#modal-type-level-decoration)
+    + [Modal Level Decoration](#modal-level-decoration)
+  * [Types of Decoration](#types-of-decoration)
+    + [Page Content Decoration](#page-content-decoration)
+    + [Modal Decoration](#modal-decoration)
+      - [Why use modalDecorator for state management?](#why-use-modaldecorator-for-state-management)
+  * [Migration to v0.8.0](#migration-to-v080)
 - [Usage of WoltModalSheet Pages](#usage-of-woltmodalsheet-pages)
   * [SliverWoltModalSheetPage](#sliverwoltmodalsheetpage)
   * [WoltModalSheetPage](#woltmodalsheetpage)
@@ -334,15 +342,115 @@ dynamical screen width:
 
 ![Responsive modals](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_type_builder.gif?raw=true)
 
-### Migration from v0.6.0 to v0.7.0
+## Decorating modal types, modal, and pages
+WoltModalSheet uses the decorator pattern, which is a structural design 
+pattern allowing dynamic addition of behavior to individual objects. In 
+Flutter, this is typically achieved by wrapping widgets with other widgets, 
+enhancing or modifying their behavior.
 
-- WoltModalType.bottomSheet is now WoltModalType.bottomSheet()
-- WoltModalType.dialog is now WoltModalType.dialog()
-- The `transitionDuration`, `bottomSheetTransitionAnimation`, 
-  `dialogTransitionAnimation`,`minDialogWidth`,`maxDialogWidth`, 
-  `minPageHeight`,`maxPageHeight` are removed from `WoltModalSheet.show()`. 
-  These values can be set in `WoltBottomSheetType`, `WoltDialogType` or a 
-  custom modal type instead.
+### Decoration Approaches
+
+Decoration can be achieved at both the modal type level and the modal level.
+
+#### Modal Type Level Decoration
+
+The modal type level decoration is applied to all modals of the same type. 
+To decorate at the modal type level, you extend the corresponding 
+`WoltModalType` class and override the related methods.
+
+Example:
+
+```dart
+class MyCustomBottomSheetType extends WoltBottomSheetType {
+  const MyCustomBottomSheetType() : super();
+
+  @override
+  Widget decoratePageContent(BuildContext context, Widget child, bool useSafeArea) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: child,
+    );
+  }
+
+  @override
+  Widget decorateModal(BuildContext context, Widget modal, bool useSafeArea) {
+    return useSafeArea ? SafeArea(child: modal) : modal;
+  }
+}
+```
+
+#### Modal Level Decoration
+
+Decoration at the modal level is applied when using the modal and can be 
+applied to all modal types when the modal sheet is visible. This is done 
+through the `pageContentDecorator` and `modalDecorator`.
+
+Example:
+
+```dart
+WoltModalSheet.show(
+  context: context,
+  pageContentDecorator: (widget) => Align(
+      alignment: Alignment.bottomCenter,
+      child: ClipRRect(
+        ..., // Your clipRRect properties
+        child: BackdropFilter(
+          ..., // Your backdrop filter properties
+          child: widget,
+        ),
+    ),
+  ),
+  modalDecorator: (child) {
+    // Wrap the modal with `ChangeNotifierProvider` to manage the state of 
+    // the entire pages.
+    return ChangeNotifierProvider<StoreOnlineViewModel>.value(
+      value: viewModel,
+      builder: (_, __) => child,
+    );
+  },
+  pageListBuilder: (context) => [
+    // Your pages here
+  ],
+);
+```
+
+### Types of Decoration
+
+#### Page Content Decoration
+
+- Purpose: Applies additional decorations to the modal page content only, 
+  excluding the barrier.
+- Usage: Useful for modifying or enhancing the appearance and behavior of 
+  the modal content without affecting the surrounding barrier.
+
+```dart
+Widget Function(Widget)? pageContentDecorator;
+```
+
+#### Modal Decoration
+
+- Purpose: Applies additional decorations to the entire modal, including the 
+  barrier and the page content.
+- Usage: Useful for wrapping the entire modal with a widget that manages the 
+  state of the entire pages.
+
+```dart
+Widget Function(Widget)? modalDecorator;
+```
+
+##### Why use modalDecorator for state management?
+
+When managing the state across the entire modal, such as providing a
+ChangeNotifierProvider for state management, it is important to wrap the
+entire modal rather than just the page content. This ensures that the state
+is accessible throughout the entire modal lifecycle and all its components.
+
+### Migration to v0.8.0
+
+Versions before the v0.6.0 release used the `decorator` field to decorate as 
+`modalDecorator`. In release v0.6.0 and later, the `decorator` field was 
+used as `pageContentDecorator`. In v0.8.0, the `decorator` field was removed 
+and replaced with `pageContentDecorator` and `modalDecorator`.
 
 ## Usage of WoltModalSheet Pages
 
@@ -1015,7 +1123,7 @@ current state:
 
     WoltModalSheet.show(
       context: context,
-      decorator: (child) {
+      pageContentDecorator: (child) {
         return ChangeNotifierProvider<StoreOnlineViewModel>.value(
           value: model,
           builder: (_, __) => child,

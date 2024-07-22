@@ -81,7 +81,8 @@ void main() {
             pageIndexNotifier: ValueNotifier(0),
             onModalDismissedWithBarrierTap: () {},
             onModalDismissedWithDrag: () {},
-            decorator: null,
+            pageContentDecorator: null,
+            modalDecorator: null,
             modalTypeBuilder: (_) => WoltModalType.bottomSheet(),
             transitionAnimationController: null,
             route: WoltModalSheetRoute<void>(
@@ -122,7 +123,8 @@ void main() {
             pageIndexNotifier: ValueNotifier(0),
             onModalDismissedWithBarrierTap: () {},
             onModalDismissedWithDrag: () {},
-            decorator: null,
+            pageContentDecorator: null,
+            modalDecorator: null,
             modalTypeBuilder: (_) => WoltModalType.bottomSheet(),
             transitionAnimationController: null,
             route: WoltModalSheetRoute<void>(

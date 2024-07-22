@@ -1,14 +1,14 @@
-import 'package:coffee_maker/entities/coffee_maker_step.dart';
-import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class GrindOrRejectModalPage {
   GrindOrRejectModalPage._();
 
-  static WoltModalSheetPage build({required String coffeeOrderId}) {
+  static WoltModalSheetPage build({
+    required String coffeeOrderId,
+    required VoidCallback onGrindCoffeeTapped,
+  }) {
     return WoltModalSheetPage(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -23,17 +23,10 @@ class GrindOrRejectModalPage {
               );
             }),
             const SizedBox(height: 8),
-            Builder(builder: (context) {
-              final model = context.read<StoreOnlineViewModel>();
-              return WoltElevatedButton(
-                onPressed: () {
-                  model.onCoffeeOrderStatusChange(
-                      coffeeOrderId, CoffeeMakerStep.addWater);
-                  Navigator.pop(context);
-                },
-                child: const Text('Start grinding'),
-              );
-            }),
+            WoltElevatedButton(
+              onPressed: onGrindCoffeeTapped,
+              child: const Text('Start grinding'),
+            ),
           ],
         ),
       ),

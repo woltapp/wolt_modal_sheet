@@ -93,17 +93,30 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
 
   void _onCoffeeOrderSelectedInGrindState(
       BuildContext context, String coffeeOrderId) {
-    final model = context.read<StoreOnlineViewModel>();
+    final viewModel = context.read<StoreOnlineViewModel>();
 
     WoltModalSheet.show(
       context: context,
       pageListBuilder: (context) => [
-        GrindOrRejectModalPage.build(coffeeOrderId: coffeeOrderId),
-        RejectOrderModalPage.build(coffeeOrderId: coffeeOrderId),
+        GrindOrRejectModalPage.build(
+          coffeeOrderId: coffeeOrderId,
+          onGrindCoffeeTapped: () {
+            viewModel.onCoffeeOrderStatusChange(
+                coffeeOrderId, CoffeeMakerStep.addWater);
+            Navigator.pop(context);
+          },
+        ),
+        RejectOrderModalPage.build(
+          coffeeOrderId: coffeeOrderId,
+          onRejectOrderTapped: () {
+            viewModel.onCoffeeOrderStatusChange(coffeeOrderId);
+            Navigator.pop(context);
+          },
+        ),
       ],
-      decorator: (child) {
+      modalDecorator: (child) {
         return ChangeNotifierProvider<StoreOnlineViewModel>.value(
-          value: model,
+          value: viewModel,
           builder: (_, __) => child,
         );
       },
@@ -113,20 +126,33 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
 
   void _onCoffeeOrderSelectedInAddWaterState(
       BuildContext context, String coffeeOrderId) {
-    final model = context.read<StoreOnlineViewModel>();
+    final viewModel = context.read<StoreOnlineViewModel>();
 
     WoltModalSheet.show(
       context: context,
-      decorator: (child) {
+      modalDecorator: (child) {
         return ChangeNotifierProvider<StoreOnlineViewModel>.value(
-          value: model,
+          value: viewModel,
           builder: (_, __) => child,
         );
       },
       pageListBuilder: (context) {
         return [
-          AddWaterDescriptionModalPage.build(coffeeOrderId),
-          WaterSettingsModalPage.build(coffeeOrderId)
+          AddWaterDescriptionModalPage.build(
+            coffeeOrderId,
+            onCancelOrder: () {
+              viewModel.onCoffeeOrderStatusChange(coffeeOrderId);
+              Navigator.pop(context);
+            },
+          ),
+          WaterSettingsModalPage.build(
+            coffeeOrderId,
+            onFinishAddingWater: () {
+              viewModel.onCoffeeOrderStatusChange(
+                  coffeeOrderId, CoffeeMakerStep.ready);
+              Navigator.pop(context);
+            },
+          ),
         ];
       },
       modalTypeBuilder: _modalTypeBuilder,
@@ -135,17 +161,30 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
 
   void _onCoffeeOrderSelectedInReadyState(
       BuildContext context, String coffeeOrderId) {
-    final model = context.read<StoreOnlineViewModel>();
+    final viewModel = context.read<StoreOnlineViewModel>();
 
     WoltModalSheet.show(
       context: context,
-      pageListBuilder: (context) => [
-        ServeOrOfferModalPage.build(coffeeOrderId: coffeeOrderId),
-        OfferRecommendationModalPage.build(coffeeOrderId: coffeeOrderId)
-      ],
-      decorator: (child) {
+      pageListBuilder: (context) {
+        return [
+          ServeOrOfferModalPage.build(
+            coffeeOrderId: coffeeOrderId,
+            onServeCoffeeTapped: () {
+              viewModel.onCoffeeOrderStatusChange(coffeeOrderId);
+              Navigator.pop(context);
+            },
+          ),
+          OfferRecommendationModalPage.build(
+              coffeeOrderId: coffeeOrderId,
+              onServeWithRecommendation: () {
+                viewModel.onCoffeeOrderStatusChange(coffeeOrderId);
+                Navigator.pop(context);
+              }),
+        ];
+      },
+      modalDecorator: (child) {
         return ChangeNotifierProvider<StoreOnlineViewModel>.value(
-          value: model,
+          value: viewModel,
           builder: (_, __) => child,
         );
       },

@@ -78,7 +78,7 @@ void _onCoffeeOrderSelectedInReadyState(
       ServeOrOfferModalPage.build(coffeeOrderId: coffeeOrderId),
       OfferRecommendationModalPage.build(coffeeOrderId: coffeeOrderId)
     ],
-    decorator: (child) {
+    pageContentDecorator: (child) {
       return ChangeNotifierProvider<OrdersScreenViewModel>.value(
         value: model,
         builder: (_, __) => child,

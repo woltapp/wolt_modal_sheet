@@ -1,13 +1,14 @@
-import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class AddWaterDescriptionModalPage {
   AddWaterDescriptionModalPage._();
 
-  static WoltModalSheetPage build(String coffeeOrderId) {
+  static WoltModalSheetPage build(
+    String coffeeOrderId, {
+    required VoidCallback onCancelOrder,
+  }) {
     return WoltModalSheetPage(
       heroImage: const Image(
         image: AssetImage('lib/assets/images/add_water_description.png'),
@@ -18,13 +19,8 @@ class AddWaterDescriptionModalPage {
         child: Column(
           children: [
             Builder(builder: (context) {
-              final model = context.read<StoreOnlineViewModel>();
-
               return WoltElevatedButton(
-                onPressed: () {
-                  model.onCoffeeOrderStatusChange(coffeeOrderId);
-                  Navigator.pop(context);
-                },
+                onPressed: onCancelOrder,
                 theme: WoltElevatedButtonTheme.secondary,
                 child: const Text('Cancel order'),
               );
