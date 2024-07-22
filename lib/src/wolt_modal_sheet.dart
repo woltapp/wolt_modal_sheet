@@ -402,7 +402,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
             LayoutId(
               id: barrierLayoutId,
               child: WoltAnimatedModalBarrier(
-                animationController: widget.route.animationController!,
+                animationController: widget.route.animationController ??
+                    widget.route.createAnimationController(),
                 barrierDismissible: widget.route.barrierDismissible,
                 onModalDismissedWithBarrierTap:
                     widget.onModalDismissedWithBarrierTap,
