@@ -1,6 +1,7 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:playground/home/custom_sheets/attached_floating_bottom_sheet_type.dart';
 import 'package:playground/home/custom_sheets/floating_bottom_sheet_type.dart';
 import 'package:playground/home/custom_sheets/top_notification_sheet_type.dart';
 import 'package:playground/home/pages/custom_sheet_pages/new_order_notification_page.dart';
@@ -30,11 +31,27 @@ class _HomeScreenState extends State<HomeScreen> {
   _Responsiveness _selectedResponsiveness = _Responsiveness.auto;
   TextDirection _selectedDirection = TextDirection.ltr;
 
+  final GlobalKey _attachedAppBarKey = GlobalKey();
+  final GlobalKey _attachedRandomKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Wolt Modal Sheet Playground'),
+          leading: IconButton(
+            key: _attachedAppBarKey,
+            icon: const Icon(Icons.anchor),
+            onPressed: () {
+              WoltModalSheet.show(
+                context: context,
+                modalTypeBuilder: (_) => AttachedFloatingBottomSheetType(
+                  anchorKey: _attachedAppBarKey,
+                ),
+                pageListBuilder: (_) => [NewOrderNotificationPage()],
+              );
+            },
+          ),
           actions: [
             WoltCircularElevatedButton(
               onPressed: () {
@@ -110,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Expanded(child: SizedBox.shrink()),
                         const Text('LTR'),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -125,6 +143,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const Text('RTL'),
+                        Expanded(
+                            child: Center(
+                          child: IconButton(
+                            key: _attachedRandomKey,
+                            icon: const Icon(Icons.anchor),
+                            onPressed: () {
+                              WoltModalSheet.show(
+                                context: context,
+                                modalTypeBuilder: (_) =>
+                                    AttachedFloatingBottomSheetType(
+                                  anchorKey: _attachedRandomKey,
+                                ),
+                                pageListBuilder: (_) =>
+                                    [NewOrderNotificationPage()],
+                              );
+                            },
+                          ),
+                        ))
                       ],
                     ),
                     const SizedBox(height: 16),
