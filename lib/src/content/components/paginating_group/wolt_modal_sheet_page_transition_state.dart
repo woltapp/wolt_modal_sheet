@@ -68,14 +68,13 @@ enum WoltModalSheetPageTransitionState {
     required double sheetWidth,
     required double screenWidth,
     required bool isForwardMove,
-    required bool isLTR, // New parameter to determine the text direction
+    required TextDirection textDirection,
   }) {
-    // Determine the direction multiplier based on isLTR and isForwardMove.
-    final directionMultiplier = (isLTR ? 1 : -1) * (isForwardMove ? 1 : -1);
+    final directionMultiplier = (textDirection == TextDirection.ltr ? 1 : -1) *
+        (isForwardMove ? 1 : -1);
 
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
-        // Calculate the incoming begin offset using directionMultiplier.
         final incomingBeginOffset =
             Offset(sheetWidth * 0.3 * directionMultiplier / screenWidth, 0);
 
@@ -91,7 +90,6 @@ enum WoltModalSheetPageTransitionState {
         );
 
       case WoltModalSheetPageTransitionState.outgoing:
-        // Calculate the outgoing end offset using directionMultiplier.
         final outgoingEndOffset =
             Offset(sheetWidth * 0.3 * -directionMultiplier / screenWidth, 0);
 
