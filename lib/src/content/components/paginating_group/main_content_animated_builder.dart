@@ -77,6 +77,7 @@ class _MainContentAnimatedBuilderState
                 sheetWidth: widget.sheetWidth,
                 screenWidth: screenWidth,
                 isForwardMove: widget.forwardMove,
+                textDirection: Directionality.of(context),
               ),
               child: widget.child,
             ),
