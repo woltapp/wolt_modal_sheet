@@ -1,3 +1,16 @@
+## 0.8.0
+- Fix: Consider directionality for pagination animation [#272](https://github.com/woltapp/wolt_modal_sheet/pull/272) by [ulusoyca](https://github.com/ulusoyca)
+  - Issue:
+    - [#266](https://github.com/woltapp/wolt_modal_sheet/issues/266) Transition direction for pages ( rtl - ltr )
+- Fix existing tests [#270](https://github.com/woltapp/wolt_modal_sheet/pull/270) by [TahaTesser](https://github.com/TahaTesser)
+- Breaking Change: Renamed WoltModalSheetRoute routeSettings to settings [#268](https://github.com/woltapp/wolt_modal_sheet/pull/268) by [durannumit](https://github.com/durannumit)
+  - Issue:
+    - [#198](https://github.com/woltapp/wolt_modal_sheet/issues/198) Rename [WoltModalSheetRoute.routeSettings] fields as [WoltModalSheetRoute.settings]
+- Breaking Change: Introduce modal and page content decorators [#267](https://github.com/woltapp/wolt_modal_sheet/pull/267) by [ulusoyca](https://github.com/ulusoyca)
+- Example app: Add attached sheet example to playground app [#265](https://github.com/woltapp/wolt_modal_sheet/pull/265) by [ABausG](https://github.com/ABausG)
+- Added source codes of example projects to Readme [#264](https://github.com/woltapp/wolt_modal_sheet/pull/264) by [durannumit](https://github.com/durannumit)
+  - Issue:
+    - [#263](https://github.com/woltapp/wolt_modal_sheet/issues/263) Add links to repositories in ReadMe for showcase apps.
 ## 0.7.1
 - Fix: Dialog and bottom sheet minimum height is not respected to modal content min height [#260](https://github.com/woltapp/wolt_modal_sheet/pull/260) by [ulusoyca](https://github.com/ulusoyca)
 - Adjustment: Add Last Commit badge to readme [#258](https://github.com/woltapp/wolt_modal_sheet/pull/258) by [durannumit](https://github.com/durannumit)
