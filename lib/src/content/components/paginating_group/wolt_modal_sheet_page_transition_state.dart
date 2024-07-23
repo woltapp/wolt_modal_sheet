@@ -60,17 +60,25 @@ enum WoltModalSheetPageTransitionState {
     }
   }
 
+  /// Returns an animation for the main content slide position based on the
+  /// provided parameters, supporting both LTR and RTL directions.
   Animation<Offset> mainContentSlidePosition(
     AnimationController controller,
     WoltModalSheetPaginationAnimationStyle style, {
     required double sheetWidth,
     required double screenWidth,
     required bool isForwardMove,
+    required bool isLTR, // New parameter to determine the text direction
   }) {
+    // Determine the direction multiplier based on isLTR and isForwardMove.
+    final directionMultiplier = (isLTR ? 1 : -1) * (isForwardMove ? 1 : -1);
+
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
-        final incomingBeginOffset = Offset(
-            sheetWidth * 0.3 * (isForwardMove ? 1 : -1) / screenWidth, 0);
+        // Calculate the incoming begin offset using directionMultiplier.
+        final incomingBeginOffset =
+            Offset(sheetWidth * 0.3 * directionMultiplier / screenWidth, 0);
+
         return Tween<Offset>(
           begin:
               style.incomingMainContentSlideBeginOffset ?? incomingBeginOffset,
@@ -81,16 +89,19 @@ enum WoltModalSheetPageTransitionState {
             curve: style.mainContentIncomingSlidePositionCurve,
           ),
         );
+
       case WoltModalSheetPageTransitionState.outgoing:
-        final outgoingEndOffset = Offset(
-            sheetWidth * 0.3 * (isForwardMove ? -1 : 1) / screenWidth, 0);
+        // Calculate the outgoing end offset using directionMultiplier.
+        final outgoingEndOffset =
+            Offset(sheetWidth * 0.3 * -directionMultiplier / screenWidth, 0);
+
         return Tween<Offset>(
           begin: style.outgoingMainContentSlideBeginOffset,
           end: style.outgoingMainContentSlideEndOffset ?? outgoingEndOffset,
         ).animate(
           CurvedAnimation(
             parent: controller,
-            curve: style.mainContentIncomingSlidePositionCurve,
+            curve: style.mainContentOutgoingSlidePositionCurve,
           ),
         );
     }

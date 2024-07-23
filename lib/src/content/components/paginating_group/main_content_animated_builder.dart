@@ -77,6 +77,7 @@ class _MainContentAnimatedBuilderState
                 sheetWidth: widget.sheetWidth,
                 screenWidth: screenWidth,
                 isForwardMove: widget.forwardMove,
+                isLTR: Directionality.of(context) == TextDirection.ltr,
               ),
               child: widget.child,
             ),
