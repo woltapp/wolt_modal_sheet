@@ -345,8 +345,8 @@ dynamical screen width:
 ## Decorating modal types, modal, and pages
 WoltModalSheet uses the decorator pattern, which is a structural design 
 pattern allowing dynamic addition of behavior to individual objects. In 
-Flutter, this is typically achieved by wrapping widgets with other widgets, 
-enhancing or modifying their behavior.
+Flutter, this is typically achieved by wrapping widgets with other widgets 
+to enhance or modify their behavior.
 
 ### Decoration Approaches
 
@@ -355,8 +355,8 @@ Decoration can be achieved at both the modal type level and the modal level.
 #### Modal Type Level Decoration
 
 The modal type level decoration is applied to all modals of the same type. 
-To decorate at the modal type level, you extend the corresponding 
-`WoltModalType` class and override the related methods.
+To decorate at the modal type level, the corresponding `WoltModalType` class 
+should be extended and the related methods should be overridden.
 
 Example:
 
@@ -402,15 +402,27 @@ WoltModalSheet.show(
   ),
   modalDecorator: (child) {
     // Wrap the modal with `ChangeNotifierProvider` to manage the state of 
-    // the entire pages.
-    return ChangeNotifierProvider<StoreOnlineViewModel>.value(
-      value: viewModel,
-      builder: (_, __) => child,
+    // the entire pages in the modal.
+    return ChangeNotifierProvider<StoreOnlineViewModel>(
+      builder: (_, __) => StoreOnlineViewModel(),
+      child: child,
     );
   },
-  pageListBuilder: (context) => [
-    // Your pages here
-  ],
+  pageListBuilder: (context) {
+    final viewModel = context.read<StoreOnlineViewModel>();
+    return [
+      WoltModalSheetPage(
+        child: FirstPageContent(viewModel.data),
+        pageTitle: Text('First Page Title'),
+        // Other properties...
+      ),
+      WoltModalSheetPage(
+        child: SecondPageContent(viewModel.data),
+        pageTitle: Text('Second Page Title'),
+        // Other properties...
+      ),
+    ];
+  },
 );
 ```
 
@@ -421,7 +433,8 @@ WoltModalSheet.show(
 - Purpose: Applies additional decorations to the modal page content only, 
   excluding the barrier.
 - Usage: Useful for modifying or enhancing the appearance and behavior of 
-  the modal content without affecting the surrounding barrier.
+  the modal content without affecting the surrounding barrier and the 
+  placement of the modal on the screen.
 
 ```dart
 Widget Function(Widget)? pageContentDecorator;
@@ -440,8 +453,8 @@ Widget Function(Widget)? modalDecorator;
 
 ##### Why use modalDecorator for state management?
 
-When managing the state across the entire modal, such as providing a
-ChangeNotifierProvider for state management, it is important to wrap the
+When managing the state across the entire modal, for example by providing a 
+[ChangeNotifierProvider](https://pub.dev/documentation/provider/latest/provider/ChangeNotifierProvider-class.html) for state management, it is important to wrap the
 entire modal rather than just the page content. This ensures that the state
 is accessible throughout the entire modal lifecycle and all its components.
 
