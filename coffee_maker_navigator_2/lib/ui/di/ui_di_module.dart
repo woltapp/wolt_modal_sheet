@@ -13,36 +13,12 @@ class UiDiModule {
       (i) => AuthScreenViewModel(authService: i.get()),
     );
 
-    /// Orders
-    DependencyInjection.bind<OrdersScreenViewModel>(
-      (i) => OrdersScreenViewModel(ordersService: i.get()),
-    );
-
     /// Add Water
     DependencyInjection.bind<AddWaterViewModel>(
       (i) => AddWaterViewModel(
         addWaterService: i.get(),
         ordersService: i.get(),
       ),
-    );
-
-    /// Router
-    DependencyInjection.bind<RouterViewModel>(
-      (i) {
-        final bool isLoggedIn =
-            DependencyInjection.get<AuthService>().authStateListenable.value ??
-                false;
-
-        final bool isTutorialShown =
-            DependencyInjection.get<OnboardingService>().isTutorialShown();
-
-        return RouterViewModel(
-          authService: i.get(),
-          onboardingService: i.get(),
-          isUserLoggedIn: isLoggedIn,
-          isTutorialShown: isTutorialShown,
-        );
-      },
     );
   }
 }

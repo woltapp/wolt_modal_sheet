@@ -1,7 +1,6 @@
-import 'package:coffee_maker_navigator_2/di/dependency_injection.dart';
-import 'package:coffee_maker_navigator_2/di/di/containers.dart';
+import 'package:coffee_maker_navigator_2/di/di/dependency_containers/orders_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/di/injector.dart';
-import 'package:coffee_maker_navigator_2/di/di/widget_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/di/dependency_container_subscriber.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/coffee_order_list_view_for_step.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/orders_screen_bottom_navigation_bar.dart';
@@ -24,7 +23,7 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen>
-    with IContainerSubscriber<OrdersDependencies, OrdersScreen> {
+    with DependencyContainerSubscriber<OrdersDependencyContainer, OrdersScreen> {
   final List<Widget> _stepLists = [
     const GrindStepList(),
     const AddWaterStepList(),
@@ -35,7 +34,7 @@ class _OrdersScreenState extends State<OrdersScreen>
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<OrdersScreenViewModel>(
       create: (context) => Injector.of(context)
-          .getContainer<OrdersDependencies>()
+          .getContainer<OrdersDependencyContainer>()
           .createOrderScreenViewModel(),
       builder: (context, _) {
         final viewModel = context.watch<OrdersScreenViewModel>();
