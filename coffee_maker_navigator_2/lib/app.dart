@@ -20,7 +20,7 @@ class _CoffeeMakerAppState extends State<CoffeeMakerApp> {
   @override
   void initState() {
     super.initState();
-    _containerManager = DependencyContainerManager();
+    _containerManager = DependencyContainerManager.instance;
     _appLevelDependencyContainer =
         _containerManager.getContainer<AppLevelDependencyContainer>();
   }
