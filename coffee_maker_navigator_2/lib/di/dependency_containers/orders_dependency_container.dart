@@ -20,6 +20,7 @@ class OrdersDependencyContainer extends SyncDependencyContainer {
   }
 
   OrdersScreenViewModel createOrderScreenViewModel() {
-    return OrdersScreenViewModel(ordersService: _ordersService);
+    // Mikhail: How do we make sure that the onInit method calling is not forgotten?
+    return OrdersScreenViewModel(ordersService: _ordersService)..onInit();
   }
 }
