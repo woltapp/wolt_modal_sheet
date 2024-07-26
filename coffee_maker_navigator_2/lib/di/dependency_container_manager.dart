@@ -1,6 +1,11 @@
 import 'package:coffee_maker_navigator_2/di/dependency_containers/app_level_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_container.dart';
 
+/// A typedef for the factory function responsible for creating instances
+/// of dependency containers.
+typedef DependencyContainerFactory = DependencyContainer Function(
+    AppLevelDependencyContainer);
+
 /// The `DependencyContainerManager` is a singleton class responsible for managing
 /// the lifecycle of dependency containers in the application.
 ///
@@ -22,8 +27,7 @@ class DependencyContainerManager {
   // The key is the type of the dependency container, and the value is a function
   // that takes an existing [AppLevelDependencies] and returns a new instance of a
   // [DependencyContainer] for the specified type [T].
-  final _containerFactories =
-      <Type, DependencyContainer Function(AppLevelDependencyContainer)>{};
+  final _containerFactories = <Type, DependencyContainerFactory>{};
 
   // A map that tracks the subscribers for each container type.
   final _containerSubscribers = <Type, Set<Object>>{};
@@ -58,8 +62,7 @@ class DependencyContainerManager {
   /// a new instance of a [DependencyContainer] for the specified type [T].
   ///
   /// MIKHAIL: Should this take AppLevelDependencyContainer?
-  void registerContainerFactory<T>(
-      DependencyContainer Function(AppLevelDependencyContainer) factory) {
+  void registerContainerFactory<T>(DependencyContainerFactory factory) {
     // Ensure that the type C is explicitly provided by checking its runtime type.
     assert(T != dynamic,
         'The Container type parameter T must be explicitly provided.');
