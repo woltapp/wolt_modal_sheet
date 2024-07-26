@@ -35,8 +35,7 @@ class DependencyContainerManager {
   /// Returns the single instance of [DependencyContainerManager].
   static DependencyContainerManager get instance => _instance;
 
-  // Factory constructor to return the singleton instance.
-  factory DependencyContainerManager() => _instance;
+  DependencyContainerManager._();
 
   /// Internal constructor for singleton implementation.
   DependencyContainerManager._internal();
