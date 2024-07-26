@@ -1,6 +1,6 @@
-import 'package:coffee_maker_navigator_2/di/di/dependency_container_manager.dart';
-import 'package:coffee_maker_navigator_2/di/di/dependency_containers/app_level_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/di/injector.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container_manager.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/app_level_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/injector.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view/app_router_delegate.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';

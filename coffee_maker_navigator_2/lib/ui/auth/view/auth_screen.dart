@@ -1,12 +1,22 @@
-import 'package:coffee_maker_navigator_2/di/dependency_injection.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/auth_screen_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/injector.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen>
+    with
+        DependencyContainerSubscriber<AuthScreenDependencyContainer,
+            AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -15,7 +25,9 @@ class AuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: ChangeNotifierProvider<AuthScreenViewModel>(
-              create: (_) => DependencyInjection.get<AuthScreenViewModel>(),
+              create: (context) => Injector.of(context)
+                  .getContainer<AuthScreenDependencyContainer>()
+                  .createViewModel(),
               builder: (context, _) {
                 return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -49,7 +61,7 @@ class AuthScreen extends StatelessWidget {
                         WoltElevatedButton(
                           onPressed: () => context
                               .read<AuthScreenViewModel>()
-                              .logIn('email', 'password'),
+                              .onLoginPressed('email', 'password'),
                           child: const Text('Sign in'),
                         ),
                       ],

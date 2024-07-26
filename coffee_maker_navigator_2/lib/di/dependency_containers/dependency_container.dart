@@ -48,7 +48,7 @@ abstract class SyncDependencyContainer extends DependencyContainer {
   ///
   /// This method should be implemented by concrete synchronous dependency containers
   /// to perform any necessary synchronous initialization.
-  void init();
+  void init() {}
 
   @override
   void dispose();

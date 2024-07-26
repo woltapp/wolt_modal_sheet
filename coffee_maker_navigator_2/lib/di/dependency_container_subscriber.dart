@@ -1,4 +1,4 @@
-import 'package:coffee_maker_navigator_2/di/di/injector.dart';
+import 'package:coffee_maker_navigator_2/di/injector.dart';
 import 'package:flutter/widgets.dart';
 
 /// A mixin that subscribes a `StatefulWidget` to a dependency container and manages its lifecycle.

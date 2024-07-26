@@ -1,5 +1,5 @@
-import 'package:coffee_maker_navigator_2/di/di/dependency_container_manager.dart';
-import 'package:coffee_maker_navigator_2/di/di/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container_manager.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
 import 'package:flutter/widgets.dart';
 
 /// A widget that provides access to the `DependencyContainerManager` throughout the widget tree.
