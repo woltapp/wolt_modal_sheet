@@ -15,7 +15,7 @@ class DependencyContainerManager {
   static final _instance = DependencyContainerManager._internal();
 
   // App-level dependencies that live for the entire duration of the app.
-  final AppLevelDependencyContainer _appLevelDependencies =
+  final AppLevelDependencyContainer _appLevelDependencyContainer =
       AppLevelDependencyContainer();
 
   // A map that registers container factories by their type.
@@ -46,10 +46,10 @@ class DependencyContainerManager {
 
   /// Initializes the app-level dependencies.
   Future<void> init() async {
-    await _appLevelDependencies.init();
-    registerContainerFactory<AppLevelDependencyContainer>(
-        (_) => _appLevelDependencies);
-    subscribeToContainer<AppLevelDependencyContainer>(this);
+    final type = _appLevelDependencyContainer.runtimeType;
+    _containerSubscribers[type] = {this};
+    _activeContainers[type] = _appLevelDependencyContainer;
+    await _appLevelDependencyContainer.init();
   }
 
   /// Registers a dependency container factory for a specific type [T].
@@ -143,7 +143,7 @@ Container of type $C does not exist. Ensure that the container type has been cor
       // Create the container if it doesn't exist and there are subscribers.
       final containerBuilder = _containerFactories[C];
       if (containerBuilder != null) {
-        _activeContainers[C] = containerBuilder(_appLevelDependencies);
+        _activeContainers[C] = containerBuilder(_appLevelDependencyContainer);
       } else {
         throw StateError('''
 No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.
