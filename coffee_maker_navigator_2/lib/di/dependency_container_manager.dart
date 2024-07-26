@@ -104,7 +104,7 @@ class DependencyContainerManager {
   /// Throws [StateError] if the container of type [C] does not exist.
   ///
   /// Returns an instance of the container of type [C].
-  C getContainer<C>() {
+  C getDependencyContainer<C>() {
     final container = _activeContainers[C];
     if (container == null) {
       throw StateError('Container of type $C does not exist.');

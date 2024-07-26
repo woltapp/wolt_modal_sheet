@@ -35,7 +35,7 @@ class _OrdersScreenState extends State<OrdersScreen>
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<OrdersScreenViewModel>(
       create: (context) => Injector.of(context)
-          .getContainer<OrdersDependencyContainer>()
+          .getDependencyContainer<OrdersDependencyContainer>()
           .createOrderScreenViewModel(),
       builder: (context, _) {
         final viewModel = context.watch<OrdersScreenViewModel>();

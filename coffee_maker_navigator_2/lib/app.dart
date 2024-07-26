@@ -14,15 +14,15 @@ class CoffeeMakerApp extends StatefulWidget {
 }
 
 class _CoffeeMakerAppState extends State<CoffeeMakerApp> {
-  late final DependencyContainerManager _containerManager;
+  late final DependencyContainerManager _dependencyContainerManager;
   late final AppLevelDependencyContainer _appLevelDependencyContainer;
 
   @override
   void initState() {
     super.initState();
-    _containerManager = DependencyContainerManager.instance;
-    _appLevelDependencyContainer =
-        _containerManager.getContainer<AppLevelDependencyContainer>();
+    _dependencyContainerManager = DependencyContainerManager.instance;
+    _appLevelDependencyContainer = _dependencyContainerManager
+        .getDependencyContainer<AppLevelDependencyContainer>();
   }
 
   @override
@@ -33,7 +33,7 @@ class _CoffeeMakerAppState extends State<CoffeeMakerApp> {
   @override
   Widget build(BuildContext context) {
     return Injector(
-      containerManager: _containerManager,
+      containerManager: _dependencyContainerManager,
       child: ChangeNotifierProvider<RouterViewModel>(
         create: (_) => _appLevelDependencyContainer.routerViewModel,
         builder: (context, _) {

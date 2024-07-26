@@ -13,17 +13,20 @@ import 'package:flutter/widgets.dart';
 /// This mixin should be used with `State` classes of `StatefulWidget` to manage
 /// their dependency containers seamlessly.
 mixin DependencyContainerSubscriber<C, T extends StatefulWidget> on State<T> {
-  /// Subscribes the widget to the container of type [C] when the widget state is initialized.
+  late Injector _injector;
+
   @override
   void initState() {
     super.initState();
-    Injector.of(context).subscribeToContainer<C>(this);
+    _injector = Injector.of(context);
+    _injector.subscribeToDependencyContainer<C>(this);
   }
 
-  /// Unsubscribes the widget from the container of type [C] when the widget is disposed.
   @override
   void dispose() {
-    Injector.of(context).unsubscribeFromContainer<C>(this);
+    // Use the stored Injector reference to unsubscribe. This avoids accessing context in an
+    // unstable state during widget disposal.
+    _injector.unsubscribeFromDependencyContainer<C>(this);
     super.dispose();
   }
 }

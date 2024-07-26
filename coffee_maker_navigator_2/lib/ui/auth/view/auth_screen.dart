@@ -26,7 +26,7 @@ class _AuthScreenState extends State<AuthScreen>
         child: Center(
           child: ChangeNotifierProvider<AuthScreenViewModel>(
               create: (context) => Injector.of(context)
-                  .getContainer<AuthScreenDependencyContainer>()
+                  .getDependencyContainer<AuthScreenDependencyContainer>()
                   .createViewModel(),
               builder: (context, _) {
                 return SingleChildScrollView(
