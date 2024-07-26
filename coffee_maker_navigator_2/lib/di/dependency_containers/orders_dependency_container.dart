@@ -8,7 +8,6 @@ class OrdersDependencyContainer extends SyncDependencyContainer {
   late final OrdersRemoteDataSource _ordersRemoteDataSource;
   late final OrdersRepository _ordersRepository;
   late final OrdersService _ordersService;
-  late final OrdersScreenViewModel _ordersViewModel;
 
   OrdersDependencyContainer();
 
@@ -22,10 +21,5 @@ class OrdersDependencyContainer extends SyncDependencyContainer {
 
   OrdersScreenViewModel createOrderScreenViewModel() {
     return OrdersScreenViewModel(ordersService: _ordersService);
-  }
-
-  @override
-  void dispose() {
-    _ordersViewModel.dispose();
   }
 }

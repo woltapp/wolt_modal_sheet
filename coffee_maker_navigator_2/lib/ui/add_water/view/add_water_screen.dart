@@ -32,7 +32,7 @@ class _AddWaterScreenState extends State<AddWaterScreen>
           top: false,
           child: ChangeNotifierProvider<AddWaterViewModel>(
               create: (context) => Injector.of(context)
-                  .getContainer<AddWaterDependencyContainer>()
+                  .getDependencyContainer<AddWaterDependencyContainer>()
                   .createViewModel(),
               builder: (context, _) {
                 final viewModel = context.read<AddWaterViewModel>();

@@ -31,10 +31,10 @@ abstract class AsyncDependencyContainer extends DependencyContainer {
   /// This method should be implemented by concrete asynchronous dependency containers
   /// to perform any necessary asynchronous initialization. It returns a `Future<void>`
   /// that completes when the initialization is done.
-  Future<void> init();
+  Future<void> init() async {}
 
   @override
-  void dispose();
+  void dispose() async {}
 }
 
 /// An abstract class representing a dependency container that supports
@@ -51,5 +51,5 @@ abstract class SyncDependencyContainer extends DependencyContainer {
   void init() {}
 
   @override
-  void dispose();
+  void dispose() {}
 }

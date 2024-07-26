@@ -48,7 +48,6 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
 
   @override
   void dispose() {
-    _routerViewModel.dispose();
     _appRouterDelegate.dispose();
   }
 

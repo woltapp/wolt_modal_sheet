@@ -7,7 +7,6 @@ import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_
 
 class AddWaterDependencyContainer extends SyncDependencyContainer {
   late final AddWaterService _addWaterService;
-  late final AddWaterViewModel _addWaterViewModel;
 
   late final OrdersRemoteDataSource _ordersRemoteDataSource;
   late final OrdersRepository _ordersRepository;
@@ -18,6 +17,9 @@ class AddWaterDependencyContainer extends SyncDependencyContainer {
   @override
   void init() {
     _addWaterService = AddWaterService();
+    // Mikhail: How to make sure that this is singleton in DI?
+    // It is also initialized in the previous container. Should we separate UI container and Data
+    // container? Because the Data container is reused.
     _ordersRemoteDataSource = OrdersRemoteDataSourceImpl();
     _ordersRepository =
         OrdersRepository(ordersRemoteDataSource: _ordersRemoteDataSource);
@@ -33,10 +35,5 @@ class AddWaterDependencyContainer extends SyncDependencyContainer {
       addWaterService: _addWaterService,
       ordersService: _ordersService,
     );
-  }
-
-  @override
-  void dispose() {
-    _addWaterViewModel.dispose();
   }
 }
