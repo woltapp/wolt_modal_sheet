@@ -46,9 +46,7 @@ class DependencyContainerManager {
 
   /// Initializes the app-level dependencies.
   Future<void> init() async {
-    final type = _appLevelDependencyContainer.runtimeType;
-    _containerSubscribers[type] = {this};
-    _activeContainers[type] = _appLevelDependencyContainer;
+    _registerAppLevelDependencies();
     await _appLevelDependencyContainer.init();
   }
 
@@ -150,5 +148,11 @@ No container factory registered for type $C. Please ensure that you have registe
 ''');
       }
     }
+  }
+
+  void _registerAppLevelDependencies() {
+    final type = _appLevelDependencyContainer.runtimeType;
+    _containerSubscribers[type] = {this};
+    _activeContainers[type] = _appLevelDependencyContainer;
   }
 }
