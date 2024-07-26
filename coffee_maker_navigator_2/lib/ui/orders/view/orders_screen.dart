@@ -1,6 +1,6 @@
-import 'package:coffee_maker_navigator_2/di/di/dependency_containers/orders_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/di/injector.dart';
-import 'package:coffee_maker_navigator_2/di/di/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/injector.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/coffee_order_list_view_for_step.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/orders_screen_bottom_navigation_bar.dart';
@@ -23,7 +23,8 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen>
-    with DependencyContainerSubscriber<OrdersDependencyContainer, OrdersScreen> {
+    with
+        DependencyContainerSubscriber<OrdersDependencyContainer, OrdersScreen> {
   final List<Widget> _stepLists = [
     const GrindStepList(),
     const AddWaterStepList(),

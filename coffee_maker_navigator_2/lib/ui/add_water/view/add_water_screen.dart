@@ -1,4 +1,6 @@
-import 'package:coffee_maker_navigator_2/di/dependency_injection.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/add_water_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/injector.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/entities/water_source.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
@@ -8,11 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class AddWaterScreen extends StatelessWidget {
+class AddWaterScreen extends StatefulWidget {
   const AddWaterScreen({super.key, required this.coffeeOrderId});
 
   final String coffeeOrderId;
 
+  @override
+  State<AddWaterScreen> createState() => _AddWaterScreenState();
+}
+
+class _AddWaterScreenState extends State<AddWaterScreen>
+    with
+        DependencyContainerSubscriber<AddWaterDependencyContainer,
+            AddWaterScreen> {
   @override
   Widget build(BuildContext context) {
     return SystemUIAnnotationWrapper(
@@ -21,10 +31,9 @@ class AddWaterScreen extends StatelessWidget {
         body: SafeArea(
           top: false,
           child: ChangeNotifierProvider<AddWaterViewModel>(
-              create: (_) => DependencyInjection.get<AddWaterViewModel>()
-                ..onInit(
-                  coffeeOrderId,
-                ),
+              create: (context) => Injector.of(context)
+                  .getContainer<AddWaterDependencyContainer>()
+                  .createViewModel(),
               builder: (context, _) {
                 final viewModel = context.read<AddWaterViewModel>();
                 return Stack(

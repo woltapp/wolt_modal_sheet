@@ -1,5 +1,5 @@
-import 'package:coffee_maker_navigator_2/di/di/dependency_containers/app_level_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/di/dependency_containers/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/app_level_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_container.dart';
 
 /// The `DependencyContainerManager` is a singleton class responsible for managing
 /// the lifecycle of dependency containers in the application.
@@ -57,8 +57,13 @@ class DependencyContainerManager {
   ///
   /// [factory]: A function that takes an existing [DependencyContainer] and returns
   /// a new instance of a [DependencyContainer] for the specified type [T].
+  ///
+  /// MIKHAIL: Should this take AppLevelDependencyContainer?
   void registerContainerFactory<T>(
-      DependencyContainer Function(DependencyContainer) factory) {
+      DependencyContainer Function(AppLevelDependencyContainer) factory) {
+    // Ensure that the type C is explicitly provided by checking its runtime type.
+    assert(T != dynamic,
+        'The Container type parameter T must be explicitly provided.');
     _containerFactories[T] = factory;
   }
 

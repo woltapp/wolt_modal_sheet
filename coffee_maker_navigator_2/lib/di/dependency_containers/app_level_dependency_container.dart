@@ -2,7 +2,7 @@ import 'package:coffee_maker_navigator_2/data/auth/local/auth_local_data_source.
 import 'package:coffee_maker_navigator_2/data/auth/repository/auth_repository.dart';
 import 'package:coffee_maker_navigator_2/data/onboarding/local/onboarding_local_data_source.dart';
 import 'package:coffee_maker_navigator_2/data/onboarding/repository/onboarding_repository.dart';
-import 'package:coffee_maker_navigator_2/di/di/dependency_containers/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
 import 'package:coffee_maker_navigator_2/domain/onboarding/onboarding_service.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
@@ -14,12 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// entire lifecycle of the application.
 class AppLevelDependencyContainer extends AsyncDependencyContainer {
   late final SharedPreferences _sharedPreferences;
-
   late final OnboardingLocalDataSource _onboardingLocalDataSource;
 
   late final AuthLocalDataSource _authLocalDataSource;
   late final AuthRepository _authRepository;
   late final AuthService _authService;
+  AuthService get authService => _authService;
 
   late final OnboardingRepository _onboardingRepository;
   late final OnboardingService _onboardingService;
@@ -32,6 +32,7 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
 
   @override
   Future<void> init() async {
+    /// Mikhail: How to lazily initialize SharedPreferences and inject to Auth?
     _sharedPreferences = await SharedPreferences.getInstance();
     _initAuthDependencies();
     _initOnboardingDependencies();
@@ -65,6 +66,6 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
       onboardingService: _onboardingService,
       isUserLoggedIn: _authService.authStateListenable.value ?? false,
       isTutorialShown: _onboardingService.isTutorialShown(),
-    );
+    )..onInit();
   }
 }
