@@ -5,7 +5,10 @@ import 'package:coffee_maker_navigator_2/data/onboarding/repository/onboarding_r
 import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
 import 'package:coffee_maker_navigator_2/domain/onboarding/onboarding_service.dart';
+import 'package:coffee_maker_navigator_2/ui/router/view/app_router_delegate.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// A class that manages app-level dependencies.
@@ -25,6 +28,10 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
   late final OnboardingService _onboardingService;
 
   late final RouterViewModel _routerViewModel;
+  late final AppRouterDelegate _appRouterDelegate;
+  AppRouterDelegate get appRouterDelegate => _appRouterDelegate;
+  late final BackButtonDispatcher _backButtonDispatcher;
+  BackButtonDispatcher get backButtonDispatcher => _backButtonDispatcher;
 
   RouterViewModel get routerViewModel => _routerViewModel;
 
@@ -36,12 +43,13 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
     _sharedPreferences = await SharedPreferences.getInstance();
     _initAuthDependencies();
     _initOnboardingDependencies();
-    _initRouterViewModel();
+    _initRouterDependencies();
   }
 
   @override
   void dispose() {
-    routerViewModel.dispose();
+    _routerViewModel.dispose();
+    _appRouterDelegate.dispose();
   }
 
   void _initOnboardingDependencies() {
@@ -60,7 +68,9 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
     _authService = AuthServiceImpl(authRepository: _authRepository)..onInit();
   }
 
-  void _initRouterViewModel() {
+  void _initRouterDependencies() {
+    _appRouterDelegate = AppRouterDelegate();
+    _backButtonDispatcher = RootBackButtonDispatcher();
     _routerViewModel = RouterViewModel(
       authService: _authService,
       onboardingService: _onboardingService,

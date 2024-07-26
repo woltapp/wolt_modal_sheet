@@ -1,7 +1,6 @@
 import 'package:coffee_maker_navigator_2/di/dependency_container_manager.dart';
 import 'package:coffee_maker_navigator_2/di/dependency_containers/app_level_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/injector.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view/app_router_delegate.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
@@ -15,21 +14,19 @@ class CoffeeMakerApp extends StatefulWidget {
 }
 
 class _CoffeeMakerAppState extends State<CoffeeMakerApp> {
-  late final AppRouterDelegate _appRouterDelegate;
-  late final BackButtonDispatcher _backButtonDispatcher;
   late final DependencyContainerManager _containerManager;
+  late final AppLevelDependencyContainer _appLevelDependencyContainer;
 
   @override
   void initState() {
     super.initState();
-    _appRouterDelegate = AppRouterDelegate();
-    _backButtonDispatcher = RootBackButtonDispatcher();
     _containerManager = DependencyContainerManager();
+    _appLevelDependencyContainer =
+        _containerManager.getContainer<AppLevelDependencyContainer>();
   }
 
   @override
   void dispose() {
-    _appRouterDelegate.dispose();
     super.dispose();
   }
 
@@ -38,15 +35,14 @@ class _CoffeeMakerAppState extends State<CoffeeMakerApp> {
     return Injector(
       containerManager: _containerManager,
       child: ChangeNotifierProvider<RouterViewModel>(
-        create: (_) => _containerManager
-            .getContainer<AppLevelDependencyContainer>()
-            .routerViewModel,
+        create: (_) => _appLevelDependencyContainer.routerViewModel,
         builder: (context, _) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: AppThemeData.themeData(context),
-            routerDelegate: _appRouterDelegate,
-            backButtonDispatcher: _backButtonDispatcher,
+            routerDelegate: _appLevelDependencyContainer.appRouterDelegate,
+            backButtonDispatcher:
+                _appLevelDependencyContainer.backButtonDispatcher,
           );
         },
       ),

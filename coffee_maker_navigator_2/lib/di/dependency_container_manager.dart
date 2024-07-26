@@ -13,15 +13,15 @@ class DependencyContainerManager {
   final AppLevelDependencyContainer _appLevelDependencies =
       AppLevelDependencyContainer();
 
-  /// A map that registers container factories by their type.
-  ///
-  /// This map holds factory functions that are responsible for creating instances
-  /// of dependency containers. Each entry in the map associates a type [T] with a
-  /// factory function that produces a [DependencyContainer] of that type.
-  ///
-  /// The key is the type of the dependency container, and the value is a function
-  /// that takes an existing [AppLevelDependencies] and returns a new instance of a
-  /// [DependencyContainer] for the specified type [T].
+  // A map that registers container factories by their type.
+  //
+  // This map holds factory functions that are responsible for creating instances
+  // of dependency containers. Each entry in the map associates a type [T] with a
+  // factory function that produces a [DependencyContainer] of that type.
+  //
+  // The key is the type of the dependency container, and the value is a function
+  // that takes an existing [AppLevelDependencies] and returns a new instance of a
+  // [DependencyContainer] for the specified type [T].
   final _containerFactories =
       <Type, DependencyContainer Function(AppLevelDependencyContainer)>{};
 
@@ -35,7 +35,7 @@ class DependencyContainerManager {
   /// Returns the single instance of [DependencyContainerManager].
   static DependencyContainerManager get instance => _instance;
 
-  /// Factory constructor to return the singleton instance.
+  // Factory constructor to return the singleton instance.
   factory DependencyContainerManager() => _instance;
 
   /// Internal constructor for singleton implementation.
@@ -88,7 +88,7 @@ class DependencyContainerManager {
   /// manages the lifecycle of the container based on the remaining subscribers.
   ///
   /// [subscriber]: An object that unsubscribes from the container of type [C]. The absence
-  /// of subscribers can lead to the destruction of the container.
+  /// of subscribers leads to the destruction of the container.
   void unsubscribeFromContainer<C>(Object subscriber) {
     final currentSubscribers = _containerSubscribers[C];
     // Remove the subscriber from the set of subscribers for the container type C if present.
@@ -113,11 +113,11 @@ class DependencyContainerManager {
     return container as C;
   }
 
-  /// Handles the creation and destruction of containers based on the subscribers' state.
-  ///
-  /// This method manages the lifecycle of containers by creating a container when
-  /// there are active subscribers and disposing of the container when there are no
-  /// active subscribers.
+  // Handles the creation and destruction of containers based on the subscribers' state.
+  //
+  // This method manages the lifecycle of containers by creating a container when
+  // there are active subscribers and disposing of the container when there are no
+  // active subscribers.
   void _manageContainerLifecycle<C>() {
     final currentSubscribersForTypeC = _containerSubscribers[C];
 
