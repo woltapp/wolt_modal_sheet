@@ -77,9 +77,12 @@ class DependencyContainerManager {
   /// [subscriber]: An object that subscribes to the container of type [C]. The presence
   /// of subscribers influences the creation and destruction of the container.
   void subscribeToContainer<C>(Object subscriber) {
-    final currentSubscribers = _containerSubscribers[C] ??= {};
-    // Add the subscriber to the set of subscribers for the container type C if not already present.
-    if (currentSubscribers.add(subscriber)) {
+    // Ensure that _containerSubscribers[C] is initialized as an empty set if it's null
+    if (_containerSubscribers[C] == null) {
+      _containerSubscribers[C] = {};
+    }
+
+    if (_containerSubscribers[C]!.add(subscriber)) {
       _manageContainerLifecycle<C>();
     }
   }
