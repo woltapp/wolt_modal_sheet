@@ -107,7 +107,12 @@ class DependencyContainerManager {
   C getDependencyContainer<C>() {
     final container = _activeContainers[C];
     if (container == null) {
-      throw StateError('Container of type $C does not exist.');
+      throw StateError('''
+Container of type $C does not exist. Ensure that the container type has been correctly registered
+ with a factory function and that there is at least one active subscriber. If not already done, 
+ consider registering a factory for this container type and adding a subscriber to activate its 
+ instantiation.
+''');
     }
     return container as C;
   }
@@ -134,7 +139,9 @@ class DependencyContainerManager {
       if (containerBuilder != null) {
         _activeContainers[C] = containerBuilder(_appLevelDependencies);
       } else {
-        throw StateError('No container factory registered for type $C.');
+        throw StateError('''
+No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.
+''');
       }
     }
   }
