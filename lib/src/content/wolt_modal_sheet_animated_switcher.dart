@@ -105,7 +105,7 @@ class _WoltModalSheetAnimatedSwitcherState
 
   bool _isForwardMove = true;
 
-  bool? _shouldAnimatePagination;
+  late bool _shouldAnimatePagination;
 
   GlobalKey get _pageTitleKey => _titleKeys[_pageIndex];
 
@@ -206,47 +206,45 @@ class _WoltModalSheetAnimatedSwitcherState
     final outgoingWidgets = _outgoingPageWidgets;
     final animationController = _animationController;
     final animatePagination = _shouldAnimatePagination;
-
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        if (outgoingWidgets != null)
-          WoltModalSheetLayout(
-            paginatingWidgetsGroup: outgoingWidgets,
-            page: _page,
-            woltModalType: widget.woltModalType,
-            showDragHandle: widget.showDragHandle,
-          ),
-        if (incomingWidgets != null)
-          WoltModalSheetLayout(
-            paginatingWidgetsGroup: incomingWidgets,
-            page: _page,
-            woltModalType: widget.woltModalType,
-            showDragHandle: widget.showDragHandle,
-          ),
-        if (incomingWidgets != null &&
-            animationController != null &&
-            animatePagination != null &&
-            animatePagination &&
-            animationController.value != 1.0)
-          Offstage(
-            child: KeyedSubtree(
-              key: _incomingOffstagedMainContentKeys[_pageIndex],
-              child: incomingWidgets.offstagedMainContent,
+    final isAnimating = animationController != null &&
+        animatePagination &&
+        animationController.isAnimating &&
+        animationController.value != 1.0;
+    return AbsorbPointer(
+      absorbing: isAnimating,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          if (outgoingWidgets != null)
+            WoltModalSheetLayout(
+              paginatingWidgetsGroup: outgoingWidgets,
+              page: _page,
+              woltModalType: widget.woltModalType,
+              showDragHandle: widget.showDragHandle,
             ),
-          ),
-        if (outgoingWidgets != null &&
-            animationController != null &&
-            animatePagination != null &&
-            animatePagination &&
-            animationController.value != 1.0)
-          Offstage(
-            child: KeyedSubtree(
-              key: _outgoingOffstagedMainContentKeys[_pageIndex],
-              child: outgoingWidgets.offstagedMainContent,
+          if (incomingWidgets != null)
+            WoltModalSheetLayout(
+              paginatingWidgetsGroup: incomingWidgets,
+              page: _page,
+              woltModalType: widget.woltModalType,
+              showDragHandle: widget.showDragHandle,
             ),
-          ),
-      ],
+          if (incomingWidgets != null && isAnimating)
+            Offstage(
+              child: KeyedSubtree(
+                key: _incomingOffstagedMainContentKeys[_pageIndex],
+                child: incomingWidgets.offstagedMainContent,
+              ),
+            ),
+          if (outgoingWidgets != null && isAnimating)
+            Offstage(
+              child: KeyedSubtree(
+                key: _outgoingOffstagedMainContentKeys[_pageIndex],
+                child: outgoingWidgets.offstagedMainContent,
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -270,27 +268,23 @@ class _WoltModalSheetAnimatedSwitcherState
     // We set the _shouldAnimatePagination to animate, which dictates whether the new page transition will be animated.
     _shouldAnimatePagination = animate;
 
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final WoltModalSheetAnimationStyle animationStyle =
+        themeData?.animationStyle ?? defaultThemeData.animationStyle;
     // An AnimationController is created and attached to this State object (with 'this' as the vsync).
     _animationController = AnimationController(
-      duration: const Duration(
-          milliseconds: defaultWoltModalTransitionAnimationDuration),
+      duration: animationStyle.paginationAnimationStyle.paginationDuration,
       vsync: this,
-    )
-      // We also attach a status listener to the animation controller. When the animation is completed, it will trigger a state change.
-      ..addStatusListener((status) {
+    )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          setState(() {
-            _shouldAnimatePagination = null;
-            // We clear the _outgoingPageWidgets, which was storing the "outgoing" page (the page we're transitioning from)
-            _outgoingPageWidgets = null;
-            // We ensure that the animation controller's value is set to its upper bound (which should be 1.0)
-            _animationController?.value =
-                _animationController?.upperBound ?? 1.0;
-            // We dispose of the animation controller to free up resources as we're done with this animation
-            _animationController?.dispose();
-            // We also set the animation controller reference to null as it's no longer needed.
-            _animationController = null;
-          });
+          //  If the widget is disposed while the animation is still running calling setState
+          //  will throw an exception.
+          if (context.mounted) {
+            setState(() => _onPaginationAnimationComplete());
+          } else {
+            _onPaginationAnimationComplete();
+          }
         }
       });
 
@@ -315,6 +309,18 @@ class _WoltModalSheetAnimatedSwitcherState
     } else {
       _animationController?.value = 1.0;
     }
+  }
+
+  void _onPaginationAnimationComplete() {
+    _shouldAnimatePagination = false;
+    // We clear the _outgoingPageWidgets, which was storing the "outgoing" page (the page we're transitioning from)
+    _outgoingPageWidgets = null;
+    // We ensure that the animation controller's value is set to its upper bound (which should be 1.0)
+    _animationController?.value = _animationController?.upperBound ?? 1.0;
+    // We dispose of the animation controller to free up resources as we're done with this animation
+    _animationController?.dispose();
+    // We also set the animation controller reference to null as it's no longer needed.
+    _animationController = null;
   }
 
   PaginatingWidgetsGroup _createIncomingWidgets(

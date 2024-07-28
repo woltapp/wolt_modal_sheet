@@ -194,6 +194,9 @@ class WoltModalSheetPaginationAnimationStyle {
   /// Determines the final off-screen position of the exiting content, controlling its exit trajectory.
   final Offset? outgoingMainContentSlideEndOffset;
 
+  /// The duration of the pagination transition.
+  final Duration paginationDuration;
+
   /// Constructs a [WoltModalSheetPaginationAnimationStyle] with customizable animation curves
   /// and offsets for different components during page transitions. Allows for detailed control
   /// over the appearance and behavior of modal sheet pagination animations, enabling developers
@@ -202,6 +205,7 @@ class WoltModalSheetPaginationAnimationStyle {
   /// Default values for curves and offsets are provided, but all can be overridden to achieve
   /// custom animation effects tailored to specific design requirements.
   const WoltModalSheetPaginationAnimationStyle({
+    this.paginationDuration = const Duration(milliseconds: 350),
     this.incomingMainContentSlideBeginOffset,
     this.incomingMainContentSlideEndOffset = Offset.zero,
     this.outgoingMainContentSlideBeginOffset = Offset.zero,
