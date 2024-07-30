@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 ///
 /// The `AppLevelDependencies` initializes and manages dependencies which are required for the
 /// entire lifecycle of the application.
-class AppLevelDependencyContainer extends AsyncDependencyContainer {
+class AppLevelDependencyContainer extends GlobalDependencyContainer {
   late final SharedPreferences _sharedPreferences;
   late final OnboardingLocalDataSource _onboardingLocalDataSource;
 
@@ -44,11 +44,6 @@ class AppLevelDependencyContainer extends AsyncDependencyContainer {
     _initAuthDependencies();
     _initOnboardingDependencies();
     _initRouterDependencies();
-  }
-
-  @override
-  void dispose() {
-    _appRouterDelegate.dispose();
   }
 
   void _initOnboardingDependencies() {

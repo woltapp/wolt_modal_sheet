@@ -33,7 +33,8 @@ class _AddWaterScreenState extends State<AddWaterScreen>
           child: ChangeNotifierProvider<AddWaterViewModel>(
               create: (context) => Injector.of(context)
                   .getDependencyContainer<AddWaterDependencyContainer>()
-                  .createViewModel(),
+                  // Cagatay: hope I passed a correct parameter
+                  .createViewModel()..onInit(widget.coffeeOrderId),
               builder: (context, _) {
                 final viewModel = context.read<AddWaterViewModel>();
                 return Stack(

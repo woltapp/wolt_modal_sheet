@@ -49,6 +49,11 @@ class Injector extends InheritedWidget {
   /// remains active as long as there are subscribers.
   ///
   /// [subscriber]: The object subscribing to the container.
+  /// 
+  /// Cagatay: should we limit here with DependencyContainerSubscriber?
+  /// Potentially we can decide to not use this mixin for some cases,
+  /// and use as subscriber smth else.
+  /// We can allso apply on this class an interface IContainerResolver.
   void subscribeToDependencyContainer<C>(
       DependencyContainerSubscriber subscriber) {
     _dependencyContainerManager.subscribeToContainer<C>(subscriber);
