@@ -17,55 +17,69 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// entire lifecycle of the application.
 class AppLevelDependencyContainer extends GlobalDependencyContainer {
   late final SharedPreferences _sharedPreferences;
-  late final OnboardingLocalDataSource _onboardingLocalDataSource;
 
-  late final AuthLocalDataSource _authLocalDataSource;
-  late final AuthRepository _authRepository;
-  late final AuthService _authService;
-  AuthService get authService => _authService;
+  late final _authLocalDataSource = _createAuthLocalDataSource();
+  late final _authRepository = _createAuthRepository();
+  late final _authService = _createAuthService();
 
-  late final OnboardingRepository _onboardingRepository;
-  late final OnboardingService _onboardingService;
+  late final _onboardingLocalDataSource = _createOnboardingLocalDataSource();
+  late final _onboardingRepository = _createOnboardingRepository();
+  late final _onboardingService = _createOnboardingService();
 
-  late final RouterViewModel _routerViewModel;
-  late final AppRouterDelegate _appRouterDelegate;
+  late final _appRouterDelegate = _createAppRouterDelegate();
+  late final _backButtonDispatcher = _createRootBackButtonDispatcher();
+  late final _routerViewModel = _createRouterViewModel();
+
   AppRouterDelegate get appRouterDelegate => _appRouterDelegate;
-  late final BackButtonDispatcher _backButtonDispatcher;
   BackButtonDispatcher get backButtonDispatcher => _backButtonDispatcher;
-
   RouterViewModel get routerViewModel => _routerViewModel;
+  AuthService get authService => _authService;
 
   AppLevelDependencyContainer();
 
   @override
   Future<void> init() async {
-    /// Mikhail: How to lazily initialize SharedPreferences and inject to Auth?
+    // Mikhail: How to lazily initialize SharedPreferences and inject to Auth?
+    // We cannot handle shared pref lazily, because it starts asynchronously,
+    // and we have to wait for this async process, so we only can init it here.
+    // But all other things can be lazy because they don't need to be awaited.
     _sharedPreferences = await SharedPreferences.getInstance();
-    _initAuthDependencies();
-    _initOnboardingDependencies();
-    _initRouterDependencies();
   }
 
-  void _initOnboardingDependencies() {
-    _onboardingLocalDataSource =
-        OnboardingLocalDataSource(sharedPreferences: _sharedPreferences);
-    _onboardingRepository =
-        OnboardingRepository(localDataSource: _onboardingLocalDataSource);
-    _onboardingService =
-        OnboardingService(tutorialRepository: _onboardingRepository);
+  OnboardingLocalDataSource _createOnboardingLocalDataSource() {
+    return OnboardingLocalDataSource(sharedPreferences: _sharedPreferences);
   }
 
-  void _initAuthDependencies() {
-    _authLocalDataSource =
-        AuthLocalDataSource(sharedPreferences: _sharedPreferences);
-    _authRepository = AuthRepository(localAuthDataSource: _authLocalDataSource);
-    _authService = AuthServiceImpl(authRepository: _authRepository)..onInit();
+  AuthLocalDataSource _createAuthLocalDataSource() {
+    return AuthLocalDataSource(sharedPreferences: _sharedPreferences);
   }
 
-  void _initRouterDependencies() {
-    _appRouterDelegate = AppRouterDelegate();
-    _backButtonDispatcher = RootBackButtonDispatcher();
-    _routerViewModel = RouterViewModel(
+  OnboardingRepository _createOnboardingRepository() {
+    return OnboardingRepository(localDataSource: _onboardingLocalDataSource);
+  }
+
+  AuthRepository _createAuthRepository() {
+    return AuthRepository(localAuthDataSource: _authLocalDataSource);
+  }
+
+  OnboardingService _createOnboardingService() {
+    return OnboardingService(tutorialRepository: _onboardingRepository);
+  }
+
+  AuthServiceImpl _createAuthService() {
+    return AuthServiceImpl(authRepository: _authRepository)..onInit();
+  }
+
+  AppRouterDelegate _createAppRouterDelegate() {
+    return AppRouterDelegate();
+  }
+
+  RootBackButtonDispatcher _createRootBackButtonDispatcher() {
+    return RootBackButtonDispatcher();
+  }
+
+  RouterViewModel _createRouterViewModel() {
+    return RouterViewModel(
       authService: _authService,
       onboardingService: _onboardingService,
       isUserLoggedIn: _authService.authStateListenable.value ?? false,
