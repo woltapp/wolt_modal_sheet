@@ -2,6 +2,33 @@ name: wolt_modal_sheet
 description: This package provides a responsive modal with multiple pages, motion animation for page transitions, and scrollable content within each page.
 version: 0.8.0
 repository: https://github.com/woltapp/wolt_modal_sheet
+topics:
+  - modal
+  - dialog
+  - side-sheet
+  - bottom-sheet
+  - custom-modal
+screenshots:
+  - description: 'WoltModalSheet page elements'
+    path: doc/bottom_sheet_elements.jpeg
+  - description: 'WoltModalSheet page layers'
+    path: doc/modal_sheet_page.png
+  - description: 'Experience multi-page navigation in WoltModalSheet.'
+    path: doc/ss_multi.gif
+  - description: 'Scroll with ease in WoltModalSheet.'
+    path: doc/ss_scrolling.gif
+  - description: 'Responsive modals for different screen sizes.'
+    path: doc/ss_type_builder.gif
+  - description: 'Custom modal types in WoltModalSheet.'
+    path: doc/ss_custom_modals.gif
+  - description: 'Pagination motion in WoltModalSheet.'
+    path: doc/ss_motion_pagination.gif
+  - description: 'Scrolling motion in WoltModalSheet.'
+    path: doc/ss_scroll_motion.gif
+  - description: 'Declarative navigation in WoltModalSheet.'
+    path: doc/ss_navigator_2.gif
+  - description: 'Dynamic pagination in action in WoltModalSheet.'
+    path: doc/ss_dynamic_pagination.gif
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
