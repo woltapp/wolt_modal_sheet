@@ -43,13 +43,18 @@ class Injector extends InheritedWidget {
     return injector!;
   }
 
+  // Cagatay: not sure, if it more convenient or not, wdyt?
+  static C container<C>(BuildContext context) {
+    return Injector.of(context).getDependencyContainer<C>();
+  }
+
   /// Subscribes a given object to a container of type [C].
   ///
   /// This method adds the subscriber to the container, ensuring that the container
   /// remains active as long as there are subscribers.
   ///
   /// [subscriber]: The object subscribing to the container.
-  /// 
+  ///
   /// Cagatay: should we limit here with DependencyContainerSubscriber?
   /// Potentially we can decide to not use this mixin for some cases,
   /// and use as subscriber smth else.
