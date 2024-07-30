@@ -1,7 +1,6 @@
 import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
 import 'package:coffee_maker_navigator_2/di/dependency_containers/add_water_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/injector.dart';
-import 'package:coffee_maker_navigator_2/di/resolvable.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/entities/water_source.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
