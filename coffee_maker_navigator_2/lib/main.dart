@@ -9,12 +9,16 @@ void _registerDependencyContainerFactories() {
   final manager = DependencyContainerManager.instance;
   manager
     // Mikhail: Init is very easy to freeze, what can we do?
+    // There shouldn't be heavy operation, they are called by demand one by one
+    // and we can use lazyness inside. Shouldn't be a problem.
     ..registerContainerFactory<OrdersDependencyContainer>(
-        (_) => OrdersDependencyContainer()..init())
+      (resolver) => OrdersDependencyContainer(resolver: resolver),
+    )
     ..registerContainerFactory<AddWaterDependencyContainer>(
-        (_) => AddWaterDependencyContainer()..init())
+      (resolver) => AddWaterDependencyContainer(resolver: resolver),
+    )
     ..registerContainerFactory<AuthScreenDependencyContainer>(
-      (appLevelContainer) => AuthScreenDependencyContainer(appLevelContainer),
+      (resolver) => AuthScreenDependencyContainer(resolver: resolver),
     );
 }
 

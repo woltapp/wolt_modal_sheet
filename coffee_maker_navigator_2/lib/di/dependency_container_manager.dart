@@ -4,14 +4,30 @@ import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_con
 /// A typedef for the factory function responsible for creating instances
 /// of dependency containers.
 typedef DependencyContainerFactory = DependencyContainer Function(
-    AppLevelDependencyContainer);
+    IContainerResolver);
+
+abstract interface class IContainerManager
+    implements IContainerRegister, IContainerResolver {}
+
+/// A contract for classes that can register container factories.
+abstract interface class IContainerRegister {
+  void registerContainerFactory<T>(DependencyContainerFactory factory);
+}
+
+/// A contract for classes that can manage subscribers on containers,
+/// and existance of containers.
+abstract interface class IContainerResolver {
+  void subscribeToContainer<C>(Object subscriber);
+  void unsubscribeFromContainer<C>(Object subscriber);
+  C getDependencyContainer<C>();
+}
 
 /// The `DependencyContainerManager` is a singleton class responsible for managing
 /// the lifecycle of dependency containers in the application.
 ///
 /// It initializes app-level dependencies at startup and manages feature-level
 /// dependencies dynamically, creating and disposing them based on their usage.
-class DependencyContainerManager {
+class DependencyContainerManager implements IContainerManager {
   static final _instance = DependencyContainerManager._internal();
 
   // App-level dependencies that live for the entire duration of the app.
@@ -39,8 +55,6 @@ class DependencyContainerManager {
   /// Returns the single instance of [DependencyContainerManager].
   static DependencyContainerManager get instance => _instance;
 
-  DependencyContainerManager._();
-
   /// Internal constructor for singleton implementation.
   DependencyContainerManager._internal();
 
@@ -60,6 +74,7 @@ class DependencyContainerManager {
   /// a new instance of a [DependencyContainer] for the specified type [T].
   ///
   /// MIKHAIL: Should this take AppLevelDependencyContainer?
+  @override
   void registerContainerFactory<T>(DependencyContainerFactory factory) {
     // Ensure that the type C is explicitly provided by checking its runtime type.
     assert(T != dynamic,
@@ -74,6 +89,7 @@ class DependencyContainerManager {
   ///
   /// [subscriber]: An object that subscribes to the container of type [C]. The presence
   /// of subscribers influences the creation and destruction of the container.
+  @override
   void subscribeToContainer<C>(Object subscriber) {
     // Ensure that _containerSubscribers[C] is initialized as an empty set if it's null
     if (_containerSubscribers[C] == null) {
@@ -92,6 +108,7 @@ class DependencyContainerManager {
   ///
   /// [subscriber]: An object that unsubscribes from the container of type [C]. The absence
   /// of subscribers leads to the destruction of the container.
+  @override
   void unsubscribeFromContainer<C>(Object subscriber) {
     final currentSubscribers = _containerSubscribers[C];
     // Remove the subscriber from the set of subscribers for the container type C if present.
@@ -108,6 +125,7 @@ class DependencyContainerManager {
   /// Throws [StateError] if the container of type [C] does not exist.
   ///
   /// Returns an instance of the container of type [C].
+  @override
   C getDependencyContainer<C>() {
     final container = _activeContainers[C];
     if (container == null) {
@@ -141,7 +159,7 @@ Container of type $C does not exist. Ensure that the container type has been cor
       // Create the container if it doesn't exist and there are subscribers.
       final containerBuilder = _containerFactories[C];
       if (containerBuilder != null) {
-        _activeContainers[C] = containerBuilder(_appLevelDependencyContainer);
+        _activeContainers[C] = containerBuilder(this);
       } else {
         throw StateError('''
 No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.
