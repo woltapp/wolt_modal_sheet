@@ -6,7 +6,7 @@ class AuthScreenViewModel extends ChangeNotifier {
 
   AuthScreenViewModel({required this.authService});
 
-  Future<void> logIn(String email, String password) async {
+  Future<void> onLoginPressed(String email, String password) async {
     await authService.logIn(email, password);
   }
 }
