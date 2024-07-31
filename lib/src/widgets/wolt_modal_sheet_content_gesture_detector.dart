@@ -48,21 +48,41 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
     final isVertical = _dismissDirection?.isVertical ?? false;
     final isHorizontal = _dismissDirection?.isHorizontal ?? false;
 
-    return GestureDetector(
-      excludeFromSemantics: true,
-      onVerticalDragUpdate: (details) => canDragToDismiss && isVertical
-          ? _handleVerticalDragUpdate(details)
-          : null,
-      onVerticalDragEnd: (details) => canDragToDismiss && isVertical
-          ? _handleVerticalDragEnd(context, details)
-          : null,
-      onHorizontalDragUpdate: (details) => canDragToDismiss && isHorizontal
-          ? _handleHorizontalDragUpdate(context, details)
-          : null,
-      onHorizontalDragEnd: (details) => canDragToDismiss && isHorizontal
-          ? _handleHorizontalDragEnd(context, details)
-          : null,
-      child: child,
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is OverscrollNotification &&
+            notification.dragDetails != null &&
+            canDragToDismiss) {
+          isVertical
+              ? _handleVerticalDragUpdate(notification.dragDetails!)
+              : _handleHorizontalDragUpdate(context, notification.dragDetails!);
+          _handleVerticalDragUpdate(notification.dragDetails!);
+        }
+        if (notification is ScrollEndNotification &&
+            notification.dragDetails != null &&
+            canDragToDismiss) {
+          isVertical
+              ? _handleVerticalDragEnd(context, notification.dragDetails!)
+              : _handleHorizontalDragEnd(context, notification.dragDetails!);
+        }
+        return true;
+      },
+      child: GestureDetector(
+        excludeFromSemantics: true,
+        onVerticalDragUpdate: (details) => canDragToDismiss && isVertical
+            ? _handleVerticalDragUpdate(details)
+            : null,
+        onVerticalDragEnd: (details) => canDragToDismiss && isVertical
+            ? _handleVerticalDragEnd(context, details)
+            : null,
+        onHorizontalDragUpdate: (details) => canDragToDismiss && isHorizontal
+            ? _handleHorizontalDragUpdate(context, details)
+            : null,
+        onHorizontalDragEnd: (details) => canDragToDismiss && isHorizontal
+            ? _handleHorizontalDragEnd(context, details)
+            : null,
+        child: child,
+      ),
     );
   }
 
@@ -70,6 +90,7 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
     if (_isDismissUnderway || _isDismissed) {
       return;
     }
+
     final deltaDiff = details.primaryDelta! / _childHeight;
     if (_dismissDirection == WoltModalDismissDirection.down) {
       _animationController.value -= deltaDiff;

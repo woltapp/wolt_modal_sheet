@@ -22,9 +22,6 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
   final WoltModalType woltModalType;
   final double sheetWidth;
   final bool showDragHandle;
-  final WoltModalSheetRoute route;
-  final VoidCallback? onModalDismissedWithDrag;
-  final GlobalKey modalContentKey;
 
   const WoltModalSheetAnimatedSwitcher({
     required this.pages,
@@ -32,9 +29,6 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
     required this.woltModalType,
     required this.sheetWidth,
     required this.showDragHandle,
-    required this.route,
-    this.onModalDismissedWithDrag,
-    required this.modalContentKey,
     Key? key,
   })  : assert(pageIndex >= 0 && pageIndex < pages.length),
         super(key: key);
@@ -492,9 +486,6 @@ class _WoltModalSheetAnimatedSwitcherState
       scrollController: scrollController,
       page: _page,
       woltModalType: widget.woltModalType,
-      route: widget.route,
-      onModalDismissedWithDrag: widget.onModalDismissedWithDrag,
-      modalContentKey: widget.modalContentKey,
     );
   }
 }
