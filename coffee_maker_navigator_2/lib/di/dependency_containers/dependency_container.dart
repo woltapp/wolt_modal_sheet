@@ -49,13 +49,13 @@ abstract class LocalDependencyContainer extends DependencyContainer {
   LocalDependencyContainer({required this.resolver});
 
   @protected
-  C bindWith<C>() {
+  C bindWith<C extends DependencyContainer>() {
     resolver.subscribeToContainer<C>(this);
     return resolver.getDependencyContainer<C>();
   }
 
   @protected
-  void unbindFrom<C>() {
+  void unbindFrom<C extends DependencyContainer>() {
     resolver.unsubscribeFromContainer<C>(this);
   }
 }

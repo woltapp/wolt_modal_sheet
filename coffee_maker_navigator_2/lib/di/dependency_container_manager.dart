@@ -6,16 +6,13 @@ import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_con
 typedef DependencyContainerFactory = DependencyContainer Function(
     IContainerResolver);
 
-abstract interface class IContainerManager
-    implements IContainerRegister, IContainerResolver {}
-
 /// A contract for classes that can register container factories.
 abstract interface class IContainerRegister {
   void registerContainerFactory<T>(DependencyContainerFactory factory);
 }
 
 /// A contract for classes that can manage subscribers on containers,
-/// and existance of containers.
+/// and existence of containers.
 abstract interface class IContainerResolver {
   void subscribeToContainer<C>(Object subscriber);
   void unsubscribeFromContainer<C>(Object subscriber);
@@ -27,7 +24,7 @@ abstract interface class IContainerResolver {
 ///
 /// It initializes app-level dependencies at startup and manages feature-level
 /// dependencies dynamically, creating and disposing them based on their usage.
-class DependencyContainerManager implements IContainerManager {
+class DependencyContainerManager implements IContainerRegister, IContainerResolver {
   static final _instance = DependencyContainerManager._internal();
 
   // App-level dependencies that live for the entire duration of the app.
@@ -70,11 +67,8 @@ class DependencyContainerManager implements IContainerManager {
   /// for creating instances of the dependency container for the specified dependency container
   /// type [T].
   ///
-  /// [factory]: A function that takes an existing [DependencyContainer] and returns
+  /// [factory]: A function that takes existing [AppLevelDependencyContainer] and returns
   /// a new instance of a [DependencyContainer] for the specified type [T].
-  ///
-  /// MIKHAIL: Should this take AppLevelDependencyContainer?
-  @override
   void registerContainerFactory<T>(DependencyContainerFactory factory) {
     // Ensure that the type C is explicitly provided by checking its runtime type.
     assert(T != dynamic,
@@ -91,13 +85,19 @@ class DependencyContainerManager implements IContainerManager {
   /// of subscribers influences the creation and destruction of the container.
   @override
   void subscribeToContainer<C>(Object subscriber) {
+    final containerBuilder = _containerFactories[C];
+    if (containerBuilder == null) {
+      throw StateError(
+          'No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.');
+    }
+
     // Ensure that _containerSubscribers[C] is initialized as an empty set if it's null
     if (_containerSubscribers[C] == null) {
       _containerSubscribers[C] = {};
     }
 
     if (_containerSubscribers[C]!.add(subscriber)) {
-      _manageContainerLifecycle<C>();
+      _activeContainers[C] = containerBuilder(_appLevelDependencyContainer);
     }
   }
 
@@ -110,10 +110,16 @@ class DependencyContainerManager implements IContainerManager {
   /// of subscribers leads to the destruction of the container.
   @override
   void unsubscribeFromContainer<C>(Object subscriber) {
-    final currentSubscribers = _containerSubscribers[C];
-    // Remove the subscriber from the set of subscribers for the container type C if present.
-    if (currentSubscribers != null && currentSubscribers.remove(subscriber)) {
-      _manageContainerLifecycle<C>();
+    final isUnsubscribed = _containerSubscribers[C] != null &&
+        _containerSubscribers[C]!.remove(subscriber);
+
+    if (isUnsubscribed) {
+      final hasRemainingSubscribers = _containerSubscribers[C]!.isEmpty;
+      // Dispose the container and remove it from the active list if there is no subscriber left.
+      if (!hasRemainingSubscribers && _activeContainers[C] != null) {
+        _activeContainers[C]!.dispose();
+        _activeContainers.remove(C);
+      }
     }
   }
 
@@ -137,35 +143,6 @@ Container of type $C does not exist. Ensure that the container type has been cor
 ''');
     }
     return container as C;
-  }
-
-  // Handles the creation and destruction of containers based on the subscribers' state.
-  //
-  // This method manages the lifecycle of containers by creating a container when
-  // there are active subscribers and disposing of the container when there are no
-  // active subscribers.
-  void _manageContainerLifecycle<C>() {
-    final currentSubscribersForTypeC = _containerSubscribers[C];
-
-    if (currentSubscribersForTypeC == null ||
-        currentSubscribersForTypeC.isEmpty) {
-      // Dispose the container and remove it from the active list if there are no subscribers.
-      final currentContainer = _activeContainers[C];
-      if (currentContainer != null) {
-        currentContainer.dispose();
-        _activeContainers.remove(C);
-      }
-    } else if (!_activeContainers.containsKey(C)) {
-      // Create the container if it doesn't exist and there are subscribers.
-      final containerBuilder = _containerFactories[C];
-      if (containerBuilder != null) {
-        _activeContainers[C] = containerBuilder(this);
-      } else {
-        throw StateError('''
-No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.
-''');
-      }
-    }
   }
 
   void _registerAppLevelDependencies() {
