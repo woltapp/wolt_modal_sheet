@@ -70,7 +70,6 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
     if (_isDismissUnderway || _isDismissed) {
       return;
     }
-
     final deltaDiff = details.primaryDelta! / _childHeight;
     if (_dismissDirection == WoltModalDismissDirection.down) {
       _animationController.value -= deltaDiff;

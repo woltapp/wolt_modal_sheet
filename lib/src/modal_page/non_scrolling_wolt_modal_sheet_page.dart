@@ -36,6 +36,7 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
     super.topBarTitle,
     super.navBarHeight,
     super.useSafeArea,
+    super.contentDraggable,
   }) : super(
           isTopBarLayerAlwaysVisible: hasTopBarLayer,
           mainContentSliversBuilder: (_) => [

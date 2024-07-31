@@ -65,6 +65,7 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
     super.trailingNavBarWidget,
     super.topBar,
     super.useSafeArea,
+    super.contentDraggable,
   }) : super(
           mainContentSliversBuilder: (context) => [
             SliverToBoxAdapter(child: child),
