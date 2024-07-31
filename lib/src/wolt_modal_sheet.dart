@@ -5,7 +5,7 @@ import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_animated_modal_barrier.dart';
-import 'package:wolt_modal_sheet/src/widgets/wolt_modal_sheet_content_gesture_detector.dart';
+import 'package:wolt_modal_sheet/src/widgets/wolt_modal_sheet_drag_to_dismiss_detector.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 const int defaultWoltModalTransitionAnimationDuration = 350;
@@ -357,38 +357,41 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           key: _childKey,
           child: Semantics(
             label: modalType.routeLabel(context),
-            child: WoltModalSheetContentGestureDetector(
-              route: widget.route,
-              enableDrag: enableDrag,
-              modalContentKey: _childKey,
-              onModalDismissedWithDrag: widget.onModalDismissedWithDrag,
-              modalType: modalType,
-              child: Material(
-                color: pageBackgroundColor,
-                elevation: modalElevation,
-                surfaceTintColor: surfaceTintColor,
-                shadowColor: shadowColor,
-                shape: modalType.shapeBorder,
-                clipBehavior: clipBehavior,
-                child: LayoutBuilder(
-                  builder: (_, constraints) {
-                    return modalType.decoratePageContent(
-                      context,
-                      WoltModalSheetAnimatedSwitcher(
-                        woltModalType: modalType,
-                        pageIndex: currentPageIndex,
-                        pages: pages,
-                        sheetWidth: constraints.maxWidth,
-                        showDragHandle: showDragHandle,
-                      ),
-                      useSafeArea,
-                    );
-                  },
-                ),
+            child: Material(
+              color: pageBackgroundColor,
+              elevation: modalElevation,
+              surfaceTintColor: surfaceTintColor,
+              shadowColor: shadowColor,
+              shape: modalType.shapeBorder,
+              clipBehavior: clipBehavior,
+              child: LayoutBuilder(
+                builder: (_, constraints) {
+                  return modalType.decoratePageContent(
+                    context,
+                    WoltModalSheetAnimatedSwitcher(
+                      woltModalType: modalType,
+                      pageIndex: currentPageIndex,
+                      pages: pages,
+                      sheetWidth: constraints.maxWidth,
+                      showDragHandle: showDragHandle,
+                    ),
+                    useSafeArea,
+                  );
+                },
               ),
             ),
           ),
         );
+
+        if (enableDrag) {
+          pageContent = WoltModalSheetDragToDismissDetector(
+            route: widget.route,
+            modalContentKey: _childKey,
+            onModalDismissedWithDrag: widget.onModalDismissedWithDrag,
+            modalType: modalType,
+            child: pageContent,
+          );
+        }
 
         final multiChildLayout = CustomMultiChildLayout(
           delegate: _WoltModalMultiChildLayoutDelegate(
