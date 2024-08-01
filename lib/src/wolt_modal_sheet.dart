@@ -8,8 +8,6 @@ import 'package:wolt_modal_sheet/src/widgets/wolt_animated_modal_barrier.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_modal_sheet_content_gesture_detector.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-const int defaultWoltModalTransitionAnimationDuration = 350;
-
 /// Signature for a function that builds a list of [SliverWoltModalSheetPage] based on the given [BuildContext].
 typedef WoltModalSheetPageListBuilder = List<SliverWoltModalSheetPage> Function(
   BuildContext context,

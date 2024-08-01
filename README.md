@@ -891,6 +891,7 @@ providing an instance of  `WoltModalSheetAnimationStyle` class to
 WoltModalSheetThemeData(
   animationStyle: WoltModalSheetAnimationStyle(
     paginationAnimationStyle: WoltModalSheetPaginationAnimationStyle(
+      paginationDuration = Duration(milliseconds: 250),
       mainContentIncomingOpacityCurve: const Interval(
         150 / 350,
         350 / 350,
