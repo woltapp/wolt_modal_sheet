@@ -27,7 +27,14 @@ in [Wolt](https://wolt.com/) products, this UI component offers a visually
 appealing and highly customizable modal sheets with multiple pages, motion 
 for page transitions, and scrollable content within each page.
 
-- [Examples](#examples)
+- [Usage](#usage)
+  * [Basic Starter App](#basic-starter-app)
+  * [Basic Multi Page Example app](#basic-multi-page-example-app)
+  * [Playground app with imperative navigation](#playground-app-with-imperative-navigation)
+  * [Playground app with declarative navigation](#playground-app-with-declarative-navigation)
+  * [Coffee maker app for state management example](#coffee-maker-app-for-state-management-example)
+  * [CupertinoApp support](#cupertinoapp-support)
+- [Sample Apps](#sample-apps)
 - [Features](#features)
   * [Multi-Page Layout](#multi-page-layout)
   * [Scrollable Content](#scrollable-content)
@@ -90,17 +97,335 @@ for page transitions, and scrollable content within each page.
     + [Pagination Animation](#pagination-animation)
     + [Scrolling Animation](#scrolling-animation)
   * [Example Configuration](#example-configuration)
-- [Usage](#usage)
-  * [Example app](#example-app)
-  * [Playground app with imperative navigation](#playground-app-with-imperative-navigation)
-  * [Playground app with declarative navigation](#playground-app-with-declarative-navigation)
-  * [Coffee maker app for state management example](#coffee-maker-app-for-state-management-example)
-  * [CupertinoApp support](#cupertinoapp-support)
 - [Additional information](#additional-information)
 
-## Examples
 
-You can see how the package is used in the example apps included in the 
+## Usage
+
+This package includes four example projects, but if you're looking to get a quick feel for it, check out the basic starter app.
+
+> Besides the "Basic Starter App," be sure to clone the related example repository to get a feel for the fully functioning samples.
+
+### Basic Starter App
+
+If you copy and paste following code to your `main.dart` file and run it, it will get you started:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+
+void main() {
+  runApp(
+    const WoltModalSheetApp(),
+  );
+}
+
+class WoltModalSheetApp extends StatelessWidget {
+  const WoltModalSheetApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: WoltModalSheetHomePage(),
+    );
+  }
+}
+
+class WoltModalSheetHomePage extends StatelessWidget {
+  const WoltModalSheetHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Wolt Modal Bottom Sheet Sample'),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          WoltModalSheet.show(
+            context: context,
+            pageListBuilder: (bottomSheetContext) => [
+              SliverWoltModalSheetPage(
+                mainContentSlivers: [
+                  SliverList.builder(
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text('Index is $index'),
+                        onTap: Navigator.of(bottomSheetContext).pop,
+                      );
+                    },
+                  ),
+                ],
+              )
+            ],
+          );
+        },
+        label: const Text('Trigger Wolt Sheet'),
+      ),
+    );
+  }
+}
+```
+
+The code above will show you the screen below:
+
+![WoltModalSheet with a endless list of items indicating the index of each item.](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/basic_app_screenshot.png)
+
+### Basic Multi Page Example app
+
+The [example](./example/) app demonstrates how to display a two-pages modal
+sheet that can be customized for dark and light themes
+using [WoltModalSheetThemeData](./lib/src/theme/wolt_modal_sheet_theme_data.dart) theme
+extension.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  SliverWoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
+    return WoltModalSheetPage(
+      hasSabGradient: false,
+      stickyActionBar: Padding(
+        padding: const EdgeInsets.all(_pagePadding),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: Navigator.of(modalSheetContext).pop,
+              child: const SizedBox(
+                height: _buttonHeight,
+                width: double.infinity,
+                child: Center(child: Text('Cancel')),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: WoltModalSheet.of(modalSheetContext).showNext,
+              child: const SizedBox(
+                height: _buttonHeight,
+                width: double.infinity,
+                child: Center(child: Text('Next page')),
+              ),
+            ),
+          ],
+        ),
+      ),
+      topBarTitle: Text('Pagination', style: textTheme.titleSmall),
+      isTopBarLayerAlwaysVisible: true,
+      trailingNavBarWidget: IconButton(
+        padding: const EdgeInsets.all(_pagePadding),
+        icon: const Icon(Icons.close),
+        onPressed: Navigator.of(modalSheetContext).pop,
+      ),
+      child: const Padding(
+              padding: EdgeInsets.fromLTRB(
+                _pagePadding,
+                _pagePadding,
+                _pagePadding,
+                _bottomPaddingForButton,
+              ),
+              child: Text(
+                '''
+Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
+''',
+              )),
+    );
+  }
+
+  SliverWoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
+    return SliverWoltModalSheetPage(
+      pageTitle: Padding(
+        padding: const EdgeInsets.all(_pagePadding),
+        child: Text(
+          'Material Colors',
+          style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ),
+      heroImage: Image(
+        image: NetworkImage(
+          'https://raw.githubusercontent.com/woltapp/wolt_modal_sheet/main/example/lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
+        ),
+        fit: BoxFit.cover,
+      ),
+      leadingNavBarWidget: IconButton(
+        padding: const EdgeInsets.all(_pagePadding),
+        icon: const Icon(Icons.arrow_back_rounded),
+        onPressed: WoltModalSheet.of(modalSheetContext).showPrevious,
+      ),
+      trailingNavBarWidget: IconButton(
+        padding: const EdgeInsets.all(_pagePadding),
+        icon: const Icon(Icons.close),
+        onPressed: Navigator.of(modalSheetContext).pop,
+      ),
+      mainContentSliversBuilder: (context) => [
+        SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 10.0,
+            childAspectRatio: 2.0,
+          ),
+          delegate: SliverChildBuilderDelegate(
+                    (_, index) => ColorTile(color: materialColorsInGrid[index]),
+            childCount: materialColorsInGrid.length,
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+                    (_, index) => ColorTile(color: materialColorsInSliverList[index]),
+            childCount: materialColorsInSliverList.length,
+          ),
+        ),
+      ],
+    );
+  }
+
+  return MaterialApp(
+    themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
+    theme: ThemeData.light(useMaterial3: true).copyWith(
+      extensions: const <ThemeExtension>[
+        WoltModalSheetThemeData(
+          heroImageHeight: _heroImageHeight,
+          topBarShadowColor: _lightThemeShadowColor,
+          modalBarrierColor: Colors.black54,
+          mainContentScrollPhysics: ClampingScrollPhysics(),
+        ),
+      ],
+    ),
+    darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+      extensions: const <ThemeExtension>[
+        WoltModalSheetThemeData(
+          topBarShadowColor: _darkThemeShadowColor,
+          modalBarrierColor: Colors.white12,
+          sabGradientColor: _darkSabGradientColor,
+          mainContentScrollPhysics: ClampingScrollPhysics(),
+        ),
+      ],
+    ),
+    home: Scaffold(
+      body: Builder(
+        builder: (context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(...),
+              ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show<void>(
+                    context: context,
+                    pageListBuilder: (modalSheetContext) {
+                      final textTheme = Theme.of(context).textTheme;
+                      return [
+                        page1(modalSheetContext, textTheme),
+                        page2(modalSheetContext, textTheme),
+                      ];
+                    },
+                    modalTypeBuilder: (context) {
+                      final size = MediaQuery.sizeOf(context).width;
+                      if (size < _pageBreakpoint) {
+                        return WoltModalType.bottomSheet();
+                      } else {
+                        return WoltModalType.dialog();
+                      }
+                    },
+                    onModalDismissedWithBarrierTap: () {
+                      debugPrint('Closed modal sheet with barrier tap');
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+                child: const SizedBox(
+                  height: _buttonHeight,
+                  width: _buttonWidth,
+                  child: Center(child: Text('Show Modal Sheet')),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
+  );
+}
+```
+
+The code snippet above produces the following:
+</br>
+</br>
+
+![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_wms_demo.gif?raw=true)
+
+### Playground app with imperative navigation
+
+The [playground](./playground/) app demonstrates how to imperatively show the
+modal sheet. The purpose of this module is to play and experiment with various
+use cases.
+
+### Playground app with declarative navigation
+
+The [playground_navigator2](./playground_navigator2/) has the same content with
+the [playground](./playground/) app but the modal sheet is shown using Navigator
+2.0 (Router API) in a declarative way.
+
+### Coffee maker app for state management example
+
+Finally, the [coffee_maker](./coffee_maker/) app demonstrates how to manage the
+state among the page components with an opinionated use of the Provider state
+management library.
+
+The code snippet demonstrates how to decorate the modal sheet with a change
+notifier provider so that the page components can be rebuilt according to the
+current state:
+
+```dart
+  void _onCoffeeOrderSelectedInAddWaterState(
+      BuildContext context, String coffeeOrderId) {
+    final model = context.read<StoreOnlineViewModel>();
+
+    WoltModalSheet.show(
+      context: context,
+      pageContentDecorator: (child) {
+        return ChangeNotifierProvider<StoreOnlineViewModel>.value(
+          value: model,
+          builder: (_, __) => child,
+        );
+      },
+      pageListBuilder: (context) {
+        return [
+          AddWaterDescriptionModalPage.build(coffeeOrderId),
+          WaterSettingsModalPage.build(coffeeOrderId)
+        ];
+      },
+      modalTypeBuilder: _modalTypeBuilder,
+    );
+  }
+```
+
+![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_coffee_maker.gif?raw=true)
+
+### Coffee maker app with Navigator 2.0
+
+The [coffee_maker_navigator2](./coffee_maker_navigator2/) app demonstrates 
+how to manage app navigation including the modal sheet withNavigator 2.0 by 
+applying the MVVM pattern with the Provide state management package.
+
+### CupertinoApp support
+
+In the package, certain Material widgets rely on retrieving Material localizations information
+from the widget tree. However, Material localizations are not inherently available in CupertinoApp,
+leading to potential errors. To mitigate this issue, if your application utilizes CupertinoApp
+rather than MaterialApp, it is needed to incorporate a default Material localization delegate
+into your application configuration.
+
+```dart
+CupertinoApp(
+  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[DefaultMaterialLocalizations.delegate],
+)
+```
+To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
+
+
+## Sample Apps
+
+You can see how the package is used in the sample apps included in the 
 repository by clicking the links below:
 
 ### Coffee Maker Example
@@ -919,263 +1244,6 @@ WoltModalSheetThemeData(
   ),
 ),
 ```
-
-## Usage
-
-This package has 4 example projects.
-
-### Example app
-
-The [example](./example/) app demonstrates how to display a two-pages modal
-sheet that can be customized for dark and light themes
-using [WoltModalSheetThemeData](./lib/src/theme/wolt_modal_sheet_theme_data.dart) theme
-extension.
-
-```dart
-@override
-Widget build(BuildContext context) {
-  SliverWoltModalSheetPage page1(BuildContext modalSheetContext, TextTheme textTheme) {
-    return WoltModalSheetPage(
-      hasSabGradient: false,
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.all(_pagePadding),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: Navigator.of(modalSheetContext).pop,
-              child: const SizedBox(
-                height: _buttonHeight,
-                width: double.infinity,
-                child: Center(child: Text('Cancel')),
-              ),
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: WoltModalSheet.of(modalSheetContext).showNext,
-              child: const SizedBox(
-                height: _buttonHeight,
-                width: double.infinity,
-                child: Center(child: Text('Next page')),
-              ),
-            ),
-          ],
-        ),
-      ),
-      topBarTitle: Text('Pagination', style: textTheme.titleSmall),
-      isTopBarLayerAlwaysVisible: true,
-      trailingNavBarWidget: IconButton(
-        padding: const EdgeInsets.all(_pagePadding),
-        icon: const Icon(Icons.close),
-        onPressed: Navigator.of(modalSheetContext).pop,
-      ),
-      child: const Padding(
-              padding: EdgeInsets.fromLTRB(
-                _pagePadding,
-                _pagePadding,
-                _pagePadding,
-                _bottomPaddingForButton,
-              ),
-              child: Text(
-                '''
-Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
-''',
-              )),
-    );
-  }
-
-  SliverWoltModalSheetPage page2(BuildContext modalSheetContext, TextTheme textTheme) {
-    return SliverWoltModalSheetPage(
-      pageTitle: Padding(
-        padding: const EdgeInsets.all(_pagePadding),
-        child: Text(
-          'Material Colors',
-          style: textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ),
-      heroImage: Image(
-        image: NetworkImage(
-          'https://raw.githubusercontent.com/woltapp/wolt_modal_sheet/main/example/lib/assets/images/material_colors_hero${_isLightTheme ? '_light' : '_dark'}.png',
-        ),
-        fit: BoxFit.cover,
-      ),
-      leadingNavBarWidget: IconButton(
-        padding: const EdgeInsets.all(_pagePadding),
-        icon: const Icon(Icons.arrow_back_rounded),
-        onPressed: WoltModalSheet.of(modalSheetContext).showPrevious,
-      ),
-      trailingNavBarWidget: IconButton(
-        padding: const EdgeInsets.all(_pagePadding),
-        icon: const Icon(Icons.close),
-        onPressed: Navigator.of(modalSheetContext).pop,
-      ),
-      mainContentSliversBuilder: (context) => [
-        SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 2.0,
-          ),
-          delegate: SliverChildBuilderDelegate(
-                    (_, index) => ColorTile(color: materialColorsInGrid[index]),
-            childCount: materialColorsInGrid.length,
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-                    (_, index) => ColorTile(color: materialColorsInSliverList[index]),
-            childCount: materialColorsInSliverList.length,
-          ),
-        ),
-      ],
-    );
-  }
-
-  return MaterialApp(
-    themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
-    theme: ThemeData.light(useMaterial3: true).copyWith(
-      extensions: const <ThemeExtension>[
-        WoltModalSheetThemeData(
-          heroImageHeight: _heroImageHeight,
-          topBarShadowColor: _lightThemeShadowColor,
-          modalBarrierColor: Colors.black54,
-          mainContentScrollPhysics: ClampingScrollPhysics(),
-        ),
-      ],
-    ),
-    darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
-      extensions: const <ThemeExtension>[
-        WoltModalSheetThemeData(
-          topBarShadowColor: _darkThemeShadowColor,
-          modalBarrierColor: Colors.white12,
-          sabGradientColor: _darkSabGradientColor,
-          dialogShape: BeveledRectangleBorder(),
-          bottomSheetShape: BeveledRectangleBorder(),
-          mainContentScrollPhysics: ClampingScrollPhysics(),
-        ),
-      ],
-    ),
-    home: Scaffold(
-      body: Builder(
-        builder: (context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(...),
-              ElevatedButton(
-                onPressed: () {
-                  WoltModalSheet.show<void>(
-                    context: context,
-                    pageListBuilder: (modalSheetContext) {
-                      final textTheme = Theme.of(context).textTheme;
-                      return [
-                        page1(modalSheetContext, textTheme),
-                        page2(modalSheetContext, textTheme),
-                      ];
-                    },
-                    modalTypeBuilder: (context) {
-                      final size = MediaQuery.sizeOf(context).width;
-                      if (size < _pageBreakpoint) {
-                        return WoltModalType.bottomSheet;
-                      } else {
-                        return WoltModalType.dialog;
-                      }
-                    },
-                    onModalDismissedWithBarrierTap: () {
-                      debugPrint('Closed modal sheet with barrier tap');
-                      Navigator.of(context).pop();
-                    },
-                  );
-                },
-                child: const SizedBox(
-                  height: _buttonHeight,
-                  width: _buttonWidth,
-                  child: Center(child: Text('Show Modal Sheet')),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    ),
-  );
-}
-```
-
-The code snippet above produces the following:
-</br>
-</br>
-
-![Example app](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/example_wms_demo.gif?raw=true)
-
-### Playground app with imperative navigation
-
-The [playground](./playground/) app demonstrates how to imperatively show the
-modal sheet. The purpose of this module is to play and experiment with various
-use cases.
-
-### Playground app with declarative navigation
-
-The [playground_navigator2](./playground_navigator2/) has the same content with
-the [playground](./playground/) app but the modal sheet is shown using Navigator
-2.0 (Router API) in a declarative way.
-
-### Coffee maker app for state management example
-
-Finally, the [coffee_maker](./coffee_maker/) app demonstrates how to manage the
-state among the page components with an opinionated use of the Provider state
-management library.
-
-The code snippet demonstrates how to decorate the modal sheet with a change
-notifier provider so that the page components can be rebuilt according to the
-current state:
-
-```dart
-  void _onCoffeeOrderSelectedInAddWaterState(
-      BuildContext context, String coffeeOrderId) {
-    final model = context.read<StoreOnlineViewModel>();
-
-    WoltModalSheet.show(
-      context: context,
-      pageContentDecorator: (child) {
-        return ChangeNotifierProvider<StoreOnlineViewModel>.value(
-          value: model,
-          builder: (_, __) => child,
-        );
-      },
-      pageListBuilder: (context) {
-        return [
-          AddWaterDescriptionModalPage.build(coffeeOrderId),
-          WaterSettingsModalPage.build(coffeeOrderId)
-        ];
-      },
-      modalTypeBuilder: _modalTypeBuilder,
-    );
-  }
-```
-
-![Dynamic pagination in action in WoltModalSheet](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/ss_coffee_maker.gif?raw=true)
-
-### Coffee maker app with Navigator 2.0
-
-The [coffee_maker_navigator2](./coffee_maker_navigator2/) app demonstrates 
-how to manage app navigation including the modal sheet withNavigator 2.0 by 
-applying the MVVM pattern with the Provide state management package.
-
-### CupertinoApp support
-
-In the package, certain Material widgets rely on retrieving Material localizations information
-from the widget tree. However, Material localizations are not inherently available in CupertinoApp,
-leading to potential errors. To mitigate this issue, if your application utilizes CupertinoApp
-rather than MaterialApp, it is needed to incorporate a default Material localization delegate
-into your application configuration.
-
-```dart
-CupertinoApp(
-  localizationsDelegates: const <LocalizationsDelegate<dynamic>>[DefaultMaterialLocalizations.delegate],
-)
-```
-To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
 
 ## Additional information
 
