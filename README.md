@@ -108,7 +108,13 @@ This package includes four example projects, but if you're looking to get a quic
 
 ### Basic Starter App
 
-If you copy and paste following code to your `main.dart` file and run it, it will get you started:
+Install the library to your project by running: 
+
+```bash
+flutter pub add wolt_modal_sheet
+```
+
+Afterwards, if you copy and paste following code to your `main.dart` file and run it, it will help you get started:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -347,7 +353,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 }
 ```
 
-The code snippet above produces the following:
+The example project above will create the following:
 </br>
 </br>
 
