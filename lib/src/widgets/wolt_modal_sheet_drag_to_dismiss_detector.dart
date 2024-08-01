@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class WoltModalSheetContentGestureDetector extends StatelessWidget {
-  const WoltModalSheetContentGestureDetector({
+class WoltModalSheetDragToDismissDetector extends StatelessWidget {
+  const WoltModalSheetDragToDismissDetector({
     super.key,
     required this.child,
     required this.modalType,
-    required this.enableDrag,
     required this.onModalDismissedWithDrag,
     required this.modalContentKey,
     required this.route,
@@ -14,7 +13,6 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
 
   final WoltModalType modalType;
   final Widget child;
-  final bool enableDrag;
   final WoltModalSheetRoute route;
   final VoidCallback? onModalDismissedWithDrag;
   final GlobalKey modalContentKey;
@@ -25,11 +23,6 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
       modalType.dismissDirection;
 
   double get _minFlingVelocity => modalType.minFlingVelocity;
-
-  bool get canDragToDismiss =>
-      enableDrag &&
-      _dismissDirection != null &&
-      _dismissDirection != WoltModalDismissDirection.none;
 
   bool get _isDismissUnderway =>
       _animationController.status == AnimationStatus.reverse;
@@ -45,24 +38,45 @@ class WoltModalSheetContentGestureDetector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isVertical = _dismissDirection?.isVertical ?? false;
-    final isHorizontal = _dismissDirection?.isHorizontal ?? false;
+    final isVerticalDismissAllowed = _dismissDirection?.isVertical ?? false;
+    final isHorizontalDismissAllowed = _dismissDirection?.isHorizontal ?? false;
 
-    return GestureDetector(
-      excludeFromSemantics: true,
-      onVerticalDragUpdate: (details) => canDragToDismiss && isVertical
-          ? _handleVerticalDragUpdate(details)
-          : null,
-      onVerticalDragEnd: (details) => canDragToDismiss && isVertical
-          ? _handleVerticalDragEnd(context, details)
-          : null,
-      onHorizontalDragUpdate: (details) => canDragToDismiss && isHorizontal
-          ? _handleHorizontalDragUpdate(context, details)
-          : null,
-      onHorizontalDragEnd: (details) => canDragToDismiss && isHorizontal
-          ? _handleHorizontalDragEnd(context, details)
-          : null,
-      child: child,
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is OverscrollNotification &&
+            notification.dragDetails != null) {
+          if (isVerticalDismissAllowed) {
+            _handleVerticalDragUpdate(notification.dragDetails!);
+          } else if (isHorizontalDismissAllowed) {
+            _handleHorizontalDragUpdate(context, notification.dragDetails!);
+          }
+        }
+        if (notification is ScrollEndNotification &&
+            notification.dragDetails != null) {
+          if (isVerticalDismissAllowed) {
+            _handleVerticalDragEnd(context, notification.dragDetails!);
+          } else if (isHorizontalDismissAllowed) {
+            _handleHorizontalDragEnd(context, notification.dragDetails!);
+          }
+        }
+        return true;
+      },
+      child: GestureDetector(
+        excludeFromSemantics: true,
+        onVerticalDragUpdate: (details) => isVerticalDismissAllowed
+            ? _handleVerticalDragUpdate(details)
+            : null,
+        onVerticalDragEnd: (details) => isVerticalDismissAllowed
+            ? _handleVerticalDragEnd(context, details)
+            : null,
+        onHorizontalDragUpdate: (details) => isHorizontalDismissAllowed
+            ? _handleHorizontalDragUpdate(context, details)
+            : null,
+        onHorizontalDragEnd: (details) => isHorizontalDismissAllowed
+            ? _handleHorizontalDragEnd(context, details)
+            : null,
+        child: child,
+      ),
     );
   }
 
