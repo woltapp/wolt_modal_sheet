@@ -122,6 +122,34 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   bool get useSafeArea => true;
 
+  /// [mainContentScrollPhysics] sets the scrolling behavior for the main content area of the
+  /// WoltModalSheet, defaulting to [ClampingScrollPhysics]. This physics type is chosen for
+  /// several key reasons:
+  ///
+  /// 1. **Prevent Overscroll:** ClampingScrollPhysics stops the scrollable content from moving
+  /// beyond the viewport's bounds. This clear boundary is crucial for drag-to-dismiss feature,
+  /// ensuring that any drag beyond the scroll limit is recognized as an intent to dismiss the
+  /// modal.
+  ///
+  /// 2. **Clear Interaction Boundaries:** By preventing the content from bouncing or scrolling
+  /// past the edge, users receive clear feedback that reaching the end of the scrollable area can
+  /// transition to other interactions, like closing the modal. This helps avoid confusion
+  /// between scrolling and modal dismissal gestures.
+  ///
+  /// 3. **Simplify Gesture Detection:** Using ClampingScrollPhysics simplifies the detection of
+  /// user gestures, differentiating more reliably between scrolling and actions intended to
+  /// dismiss the modal. This reduces the complexity and potential errors in handling these
+  /// interactions.
+  ///
+  /// Choosing alternative scroll physics like [BouncingScrollPhysics] or [ElasticScrollPhysics]
+  /// could disrupt the drag-to-dismiss feature. These physics allow content to move beyond
+  /// scroll limits, which can interfere with gesture recognition, making it unclear whether a
+  /// gesture is intended for scrolling or dismissing the modal. As a result, drag-to-dismiss
+  /// would only be functional with a custom drag handle, limiting interaction flexibility on
+  /// main content area.
+  @override
+  ScrollPhysics? get mainContentScrollPhysics => const ClampingScrollPhysics();
+
   @override
   WoltModalTypeBuilder get modalTypeBuilder => (context) {
         final width = MediaQuery.sizeOf(context).width;

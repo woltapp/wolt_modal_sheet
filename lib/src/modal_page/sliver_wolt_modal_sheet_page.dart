@@ -27,7 +27,7 @@ import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 /// intuitive user experience, with flexible customization options for various use cases.
 ///
 /// [SliverWoltModalSheetPage] utilizes Flutter's sliver widgets for its main content,
-/// encapsulated in [mainContentSlivers]. Slivers are specialized Flutter widgets that
+/// built with [mainContentSliversBuilder]. Slivers are specialized Flutter widgets that
 /// create elements with custom scroll effects and are a fundamental part of creating
 /// advanced scrollable layouts.
 ///
@@ -111,17 +111,10 @@ class SliverWoltModalSheetPage {
   /// be hidden or revealed  based on the page's scrolling behavior.
   final bool? isTopBarLayerAlwaysVisible;
 
-  /// This list of sliver widgets within the scrollable modal sheet is responsible for displaying
-  /// the main content inside the [CustomScrollView] of the modal sheet.
-  @Deprecated(
-      'Use mainContentSliversBuilder to gain access to BuildContext for dynamic widget creation.')
-  final List<Widget>? mainContentSlivers;
-
-  /// Similar to [mainContentSlivers] but exposes the enclosing [BuildContext].
   /// Use this method to dynamically build the list of sliver widgets within the modal sheet
   /// based on the available [BuildContext]. This approach is more flexible and recommended
   /// for most use cases.
-  final List<Widget> Function(BuildContext context)? mainContentSliversBuilder;
+  final List<Widget> Function(BuildContext context) mainContentSliversBuilder;
 
   /// A [Widget] representing the hero image displayed on top of the main content. A Hero Image
   /// is positioned at the top of the main content. This widget immediately grabs the user's
@@ -235,8 +228,7 @@ class SliverWoltModalSheetPage {
 
   /// Creates a page to be built within [WoltScrollableModalSheet].
   const SliverWoltModalSheetPage({
-    this.mainContentSlivers,
-    this.mainContentSliversBuilder,
+    required this.mainContentSliversBuilder,
     this.id,
     this.pageTitle,
     this.navBarHeight,
@@ -258,11 +250,8 @@ class SliverWoltModalSheetPage {
     this.isTopBarLayerAlwaysVisible,
     this.resizeToAvoidBottomInset,
     this.useSafeArea,
-  })  : assert(!(topBar != null && hasTopBarLayer == false),
-            "When topBar is provided, hasTopBarLayer must not be false"),
-        assert(
-            (mainContentSlivers != null) ^ (mainContentSliversBuilder != null),
-            "Either mainContentSlivers or mainContentSliversBuilder must be provided, but not both");
+  }) : assert(!(topBar != null && hasTopBarLayer == false),
+            "When topBar is provided, hasTopBarLayer must not be false");
 
   SliverWoltModalSheetPage copyWith({
     Object? id,
@@ -325,6 +314,7 @@ class SliverWoltModalSheetPage {
   /// [WoltModalSheetPage] or [NonScrollingWoltModalSheetPage] and you want to replace the main
   /// content of the page with a single [child] Widget.
   SliverWoltModalSheetPage copyWithChild({
+    required Widget child,
     Object? id,
     Widget? pageTitle,
     Widget? topBarTitle,
@@ -346,7 +336,6 @@ class SliverWoltModalSheetPage {
     Widget? trailingNavBarWidget,
     bool? resizeToAvoidBottomInset,
     bool? useSafeArea,
-    Widget? child,
   }) {
     return SliverWoltModalSheetPage(
       id: id ?? this.id,
@@ -356,9 +345,7 @@ class SliverWoltModalSheetPage {
       hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
       isTopBarLayerAlwaysVisible:
           isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
-      mainContentSliversBuilder: child == null
-          ? mainContentSliversBuilder
-          : _mainContentBuilderFromChild(child),
+      mainContentSliversBuilder: _mainContentBuilderFromChild(child),
       heroImage: heroImage ?? this.heroImage,
       heroImageHeight: heroImageHeight ?? this.heroImageHeight,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -378,7 +365,7 @@ class SliverWoltModalSheetPage {
     );
   }
 
-  List<Widget> Function(BuildContext context)? _mainContentBuilderFromChild(
+  List<Widget> Function(BuildContext context) _mainContentBuilderFromChild(
       Widget child) {
     if (this is WoltModalSheetPage) {
       return (_) => [
