@@ -195,7 +195,6 @@ class _AllPagesPushWidget extends StatelessWidget {
       children: [
         const Divider(),
         ListTile(
-          contentPadding: EdgeInsets.zero,
           visualDensity: VisualDensity.compact,
           trailing: const Icon(Icons.arrow_forward_ios),
           title: const Text('All the pages in one flow'),

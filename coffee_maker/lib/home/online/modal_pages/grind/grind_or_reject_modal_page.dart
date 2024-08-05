@@ -32,7 +32,6 @@ class GrindOrRejectModalPage {
       ),
       pageTitle: ModalSheetTitle(
         'Are you ready to prepare order $coffeeOrderId?',
-        textAlign: TextAlign.center,
       ),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(
