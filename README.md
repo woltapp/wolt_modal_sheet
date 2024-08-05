@@ -102,7 +102,7 @@ for page transitions, and scrollable content within each page.
 
 ## Usage
 
-This package includes four example projects, but if you're looking to get a quick feel for it, check out the basic starter app.
+This package includes five example projects, but if you're looking to get a quick feel for it, check out the basic starter app.
 
 > Besides the "Basic Starter App," be sure to clone the related example repository to get a feel for the fully functioning samples.
 
@@ -152,7 +152,7 @@ class WoltModalSheetHomePage extends StatelessWidget {
             context: context,
             pageListBuilder: (bottomSheetContext) => [
               SliverWoltModalSheetPage(
-                mainContentSlivers: [
+                mainContentSliversBuilder: (context) => [
                   SliverList.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
@@ -373,11 +373,11 @@ the [playground](./playground/) app but the modal sheet is shown using Navigator
 
 ### Coffee maker app for state management example
 
-Finally, the [coffee_maker](./coffee_maker/) app demonstrates how to manage the
+The [coffee_maker](./coffee_maker/) app demonstrates how to manage the
 state among the page components with an opinionated use of the Provider state
 management library.
 
-The code snippet demonstrates how to decorate the modal sheet with a change
+The following code snippet demonstrates how to decorate the modal sheet with a change
 notifier provider so that the page components can be rebuilt according to the
 current state:
 
