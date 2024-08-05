@@ -410,7 +410,7 @@ current state:
 ### Coffee maker app with Navigator 2.0
 
 The [coffee_maker_navigator2](./coffee_maker_navigator2/) app demonstrates 
-how to manage app navigation including the modal sheet withNavigator 2.0 by 
+how to manage app navigation including the modal sheet with Navigator 2.0 by 
 applying the MVVM pattern with the Provide state management package.
 
 ### CupertinoApp support
