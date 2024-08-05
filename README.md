@@ -34,7 +34,6 @@ for page transitions, and scrollable content within each page.
   * [Playground app with declarative navigation](#playground-app-with-declarative-navigation)
   * [Coffee maker app for state management example](#coffee-maker-app-for-state-management-example)
   * [CupertinoApp support](#cupertinoapp-support)
-- [Sample Apps](#sample-apps)
 - [Features](#features)
   * [Multi-Page Layout](#multi-page-layout)
   * [Scrollable Content](#scrollable-content)
@@ -175,7 +174,7 @@ class WoltModalSheetHomePage extends StatelessWidget {
 
 The code above will show you the screen below:
 
-![WoltModalSheet with a endless list of items indicating the index of each item.](https://github.com/salihgueler/wolt_modal_sheet/blob/maintanence/update_readme_and_samples/doc/basic_app_screenshot.png)
+![WoltModalSheet with an endless list of items indicating the index of each item.](https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/basic_app_screenshot.png)
 
 ### Basic Multi Page Example app
 
@@ -361,20 +360,20 @@ The example project above will create the following:
 
 ### Playground app with imperative navigation
 
-The [playground](./playground/) app demonstrates how to imperatively show the
+The playground app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground), [web app](https://playgroundwoltexample.web.app))
+demonstrates how to imperatively show the
 modal sheet. The purpose of this module is to play and experiment with various
 use cases.
 
 ### Playground app with declarative navigation
 
-The [playground_navigator2](./playground_navigator2/) has the same content with
-the [playground](./playground/) app but the modal sheet is shown using Navigator
-2.0 (Router API) in a declarative way.
+The playground_navigator2 app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground_navigator2), [web app](https://playgroundnavigator2woltexample.web.app)) has the similar content with
+the [playground](./playground/) app but the modal sheet is shown using 
+Navigator 2.0 (Router API) in a declarative way.
 
 ### Coffee maker app for state management example
 
-The [coffee_maker](./coffee_maker/) app demonstrates how to manage the
-state among the page components with an opinionated use of the Provider state
+The coffee_maker app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker), [web app](https://coffeemakerexample.web.app)) demonstrates how to manage the state among the page components with an opinionated use of the Provider state
 management library.
 
 The following code snippet demonstrates how to decorate the modal sheet with a change
@@ -409,8 +408,7 @@ current state:
 
 ### Coffee maker app with Navigator 2.0
 
-The [coffee_maker_navigator2](./coffee_maker_navigator2/) app demonstrates 
-how to manage app navigation including the modal sheet with Navigator 2.0 by 
+The coffee_maker_navigator2 ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker_navigator_2), [web app](https://coffeemakernavigator2.web.app)) app demonstrates how to manage app navigation including the modal sheet with Navigator 2.0 by 
 applying the MVVM pattern with the Provide state management package.
 
 ### CupertinoApp support
@@ -427,24 +425,6 @@ CupertinoApp(
 )
 ```
 To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
-
-
-## Sample Apps
-
-You can see how the package is used in the sample apps included in the 
-repository by clicking the links below:
-
-### Coffee Maker Example
-[Web App](https://coffeemakerexample.web.app), [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker)
-
-### Playground Example
-[Web App](https://playgroundwoltexample.web.app), [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground)
-
-### Playground Navigator2 Example
-[Web App](https://playgroundnavigator2woltexample.web.app), [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground_navigator2)
-
-### Coffee Maker Navigator2 Example
-[Web App](https://coffeemakernavigator2.web.app), [Source Code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker_navigator_2)
 
 ## Features
 
