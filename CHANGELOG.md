@@ -1,3 +1,13 @@
+## 0.9.0
+- Remove deprecated mainContentSlivers field in SliverWoltModalSheetPage [#286](https://github.com/woltapp/wolt_modal_sheet/pull/286) by [ulusoyca](https://github.com/ulusoyca)
+- Maintanence: Update README.md to improve DX [#285](https://github.com/woltapp/wolt_modal_sheet/pull/285) by [salihgueler](https://github.com/salihgueler)
+  - Fixes:
+    - [#284](https://github.com/woltapp/wolt_modal_sheet/issues/284) [DX] ☂️ Update the documentation on README.md and Example Apps
+- Enable drag to dismiss modal if the scroll position is at top edge [#283](https://github.com/woltapp/wolt_modal_sheet/pull/283) by [AcarFurkan](https://github.com/AcarFurkan)
+- Add topics and screenshots to pubspec.yaml [#281](https://github.com/woltapp/wolt_modal_sheet/pull/281) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#255](https://github.com/woltapp/wolt_modal_sheet/issues/255) Add "topic" and "screenshot" to pubspec.yaml file to be visible in pub.dev
+- Prevent crashes during pagination and enable pagination duration configuration in animation style. [#280](https://github.com/woltapp/wolt_modal_sheet/pull/280) by [ulusoyca](https://github.com/ulusoyca)
 ## 0.8.0
 - Fix: Consider directionality for pagination animation [#272](https://github.com/woltapp/wolt_modal_sheet/pull/272) by [ulusoyca](https://github.com/ulusoyca)
   - Issue:
