@@ -1,3 +1,5 @@
+## 0.9.2
+- Fixed URL of the example screenshot in the Readme file for pub.dev. [#291](https://github.com/woltapp/wolt_modal_sheet/pull/291) by [AcarFurkan](https://github.com/AcarFurkan)
 ## 0.9.1
 - Fix the wrong link for the example screenshot in the Readme file. [#290](https://github.com/woltapp/wolt_modal_sheet/pull/290) by [ulusoyca](https://github.com/ulusoyca)
 ## 0.9.0
