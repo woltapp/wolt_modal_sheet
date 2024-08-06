@@ -1,6 +1,6 @@
 name: wolt_modal_sheet
 description: This package provides a responsive modal with multiple pages, motion animation for page transitions, and scrollable content within each page.
-version: 0.9.2
+version: 0.9.1
 repository: https://github.com/woltapp/wolt_modal_sheet
 topics:
   - modal
