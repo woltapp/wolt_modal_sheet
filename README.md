@@ -174,7 +174,7 @@ class WoltModalSheetHomePage extends StatelessWidget {
 
 The code above will show you the screen below:
 
-<img src="https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/basic_app_screenshot.png" alt="WoltModalSheet with an endless list of items indicating the index of each item." width="280"/>
+<img src="https://github.com/woltapp/wolt_modal_sheet/blob/main/doc/basic_app_screenshot.png?raw=true" alt="WoltModalSheet with an endless list of items indicating the index of each item." width="280"/>
 
 ### Basic Multi Page Example app
 
