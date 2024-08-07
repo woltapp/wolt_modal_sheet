@@ -4,38 +4,89 @@ import 'package:flutter/material.dart';
 class WoltModalSheetPage<T> extends Page<T> {
   final Widget child;
 
+  /// {flutter.widgets.ModalRoute.maintainState}
+  final bool maintainState;
+
   const WoltModalSheetPage({
     super.key,
     super.name,
     super.arguments,
+    this.maintainState = true,
     required this.child,
   });
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return PageRouteBuilder<T>(
-      transitionDuration: _PageTransitionAnimation.animationDuration,
-      pageBuilder: (context, animation, secondaryAnimation) => child,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    return _WoltModalPageRoute(page: this);
+  }
+}
 
-        final incomingAnimation = _InAnimation(parent: animation);
-        final outAnimation = _OutAnimation(parent: secondaryAnimation);
+class _WoltModalPageRoute<T> extends PageRoute<T> with _WoltModalRouteTransitionMixin<T> {
+  _WoltModalPageRoute({
+    required WoltModalSheetPage<T> page,
+  }) : super(settings: page) {
+    assert(opaque);
+  }
 
-        return SlideTransition(
-          position: outAnimation.translationAnimation,
+  WoltModalSheetPage<T> get _page => settings as WoltModalSheetPage<T>;
+
+  @override
+  Widget buildContent(BuildContext context) {
+    return _page.child;
+  }
+
+  @override
+  String get debugLabel => '${super.debugLabel}(${_page.name})';
+
+  @override
+  bool get maintainState => _page.maintainState;
+}
+
+mixin _WoltModalRouteTransitionMixin<T> on PageRoute<T> {
+  /// Builds the primary contents of the route.
+  @protected
+  Widget buildContent(BuildContext context);
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  Color? get barrierColor => null;
+
+  @override
+  String? get barrierLabel => null;
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    final Widget result = buildContent(context);
+    return Semantics(
+      scopesRoute: true,
+      explicitChildNodes: true,
+      child: result,
+    );
+  }
+
+  @override
+  Widget buildTransitions(context, animation, secondaryAnimation, child) {
+    final incomingAnimation = _InAnimation(parent: animation);
+    final outAnimation = _OutAnimation(parent: secondaryAnimation);
+
+    return SlideTransition(
+      position: outAnimation.translationAnimation,
+      child: FadeTransition(
+        opacity: outAnimation.alphaAnimation,
+        child: SlideTransition(
+          position: incomingAnimation.translationAnimation,
           child: FadeTransition(
-            opacity: outAnimation.alphaAnimation,
-            child: SlideTransition(
-              position: incomingAnimation.translationAnimation,
-              child: FadeTransition(
-                opacity: incomingAnimation.alphaAnimation,
-                child: child,
-              ),
-            ),
+            opacity: incomingAnimation.alphaAnimation,
+            child: child,
           ),
-        );
-      },
-      settings: this,
+        ),
+      ),
     );
   }
 }
@@ -65,10 +116,11 @@ class _InAnimation extends _PageTransitionAnimation {
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(0),
-          weight: (_animationDuration - _alphaDuration).inMilliseconds.toDouble(),
+          weight:
+          (_animationDuration - _alphaDuration).inMilliseconds.toDouble(),
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin:0, end: 1),
+          tween: Tween<double>(begin: 0, end: 1),
           weight: _alphaDuration.inMilliseconds.toDouble(),
         ),
       ],
@@ -89,7 +141,7 @@ class _OutAnimation extends _PageTransitionAnimation {
   _OutAnimation({required Animation<double> parent}) {
     _translationAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(-1 , 0),
+      end: const Offset(-1, 0),
     ).chain(CurveTween(curve: Curves.fastOutSlowIn)).animate(parent);
 
     _alphaAnimation = TweenSequence<double>(
@@ -100,7 +152,8 @@ class _OutAnimation extends _PageTransitionAnimation {
         ),
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(0),
-          weight: (_animationDuration - _alphaDuration).inMilliseconds.toDouble(),
+          weight:
+              (_animationDuration - _alphaDuration).inMilliseconds.toDouble(),
         ),
       ],
     ).animate(parent);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/wolt_modal_sheet.dart';
-import 'package:rework_experiments/navigation/wolt_modal_sheet_page.dart';
-import 'package:rework_experiments/navigation/wolt_modal_sheet_path.dart';
-import 'package:rework_experiments/navigation/wolt_modal_sheet_route.dart';
-import 'package:rework_experiments/navigation/wolt_navigator.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_page.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_navigator.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,144 +15,199 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Navigation Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(
-        body: WoltModalSheet(
-          supportedPages: supportedPages.values.toList(),
-          initialPage: initialPage,
+      home: const _HomeScreen(),
+    );
+  }
+}
+
+class _HomeScreen extends StatelessWidget {
+  const _HomeScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Function call for declarative use of navigation.
+            showWoltModalSheet(
+              supportedPaths: supportedPaths.values.toList(),
+              context: context,
+              initialPath: initialPath,
+              useRootNavigator: false,
+            );
+          },
+          child: const Text('Open WoltModalBottomSheet'),
         ),
       ),
     );
   }
 }
 
-const initialPage = [
-  WoltModalSheetPath(name: 'firstScreen', arguments: Colors.pinkAccent),
+const initialPath = [
+  WoltModalSheetPath(path: 'firstScreen', arguments: Colors.pinkAccent),
 ];
 
-final Map<String, WoltModalSheetRoute> supportedPages =
-    <String, WoltModalSheetRoute>{
-  'firstScreen': WoltModalSheetRoute(
-    name: 'firstScreen',
+final supportedPaths = <String, WoltModalSheetPathSettings>{
+  'firstScreen': WoltModalSheetPathSettings(
+    path: 'firstScreen',
     pageBuilder: (color) => WoltModalSheetPage(
-      child: FirstPage(color: color as Color),
-      // name: 'testScreen',
+      child: FirstScreen(color: color as Color),
     ),
   ),
-  'secondScreen': WoltModalSheetRoute(
-    name: 'secondScreen',
+  'secondScreen': WoltModalSheetPathSettings(
+    path: 'secondScreen',
     pageBuilder: (color) => WoltModalSheetPage(
-      child: SecondPage(color: color as Color,),
-      // name: 'testScreen',
+      child: SecondScreen(
+        color: color as Color,
+      ),
     ),
   ),
-  'thirdScreen': WoltModalSheetRoute(
-    name: 'thirdScreen',
+  'thirdScreen': WoltModalSheetPathSettings(
+    path: 'thirdScreen',
     pageBuilder: (color) => WoltModalSheetPage(
-      child: ThirdPage(color: color as Color,),
+      child: ThirdScreen(
+        color: color as Color,
+      ),
     ),
   ),
 };
 
-class FirstPage extends StatelessWidget {
+class FirstScreen extends StatelessWidget {
   final Color color;
 
-  const FirstPage({
+  const FirstScreen({
     super.key,
     required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              WoltNavigator.of(context).pushNamed('secondScreen', Colors.blue);
-            },
-            child: const Text('Go to SecondScreen'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              WoltNavigator.of(context).pop();
-            },
-            child: const Text('POP'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  final Color color;
-
-  const SecondPage({
-    super.key,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              WoltNavigator.of(context).pushNamed('thirdScreen', Colors.orange);
-            },
-            child: const Text('Go to ThirdPage'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              WoltNavigator.of(context).pop();
-            },
-            child: const Text('POP'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ThirdPage extends StatelessWidget {
-  final Color color;
-
-  const ThirdPage({
-    super.key,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: Center(
+    return FractionallySizedBox(
+      widthFactor: .5,
+      heightFactor: .7,
+      child: Container(
+        color: color,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () {
-                WoltNavigator.of(context).pushNamed('firstScreen', Colors.pinkAccent);
+                // The default navigator is used here to close the WoltModalSheet.
+                Navigator.of(
+                  context,
+                  rootNavigator: true,
+                ).pop();
               },
-              child: const Text('Go to First Screen'),
+              child: const Text('Close WoltModalBottomSheet'),
             ),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                WoltNavigator.of(context).pop();
+                // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                WoltModalSheetNavigator.of(context)
+                    .pushNamed('secondScreen', Colors.blue);
+              },
+              child: const Text('Go to SecondScreen'),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                WoltModalSheetNavigator.of(context).pop();
               },
               child: const Text('POP'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  final Color color;
+
+  const SecondScreen({
+    super.key,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      widthFactor: .5,
+      heightFactor: .7,
+      child: Container(
+        color: color,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                WoltModalSheetNavigator.of(context)
+                    .pushNamed('thirdScreen', Colors.orange);
+              },
+              child: const Text('Go to ThirdPage'),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                WoltModalSheetNavigator.of(context).pop();
+              },
+              child: const Text('POP'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ThirdScreen extends StatelessWidget {
+  final Color color;
+
+  const ThirdScreen({
+    super.key,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      widthFactor: .5,
+      heightFactor: .7,
+      child: Container(
+        color: color,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                  WoltModalSheetNavigator.of(context)
+                      .pushNamed('firstScreen', Colors.pinkAccent);
+                },
+                child: const Text('Go to First Screen'),
+              ),
+              const SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                  WoltModalSheetNavigator.of(context).pop();
+                },
+                child: const Text('POP'),
+              ),
+            ],
+          ),
         ),
       ),
     );
