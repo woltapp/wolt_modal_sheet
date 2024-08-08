@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/wolt_page.dart';
+import 'package:rework_experiments/wolt_page/wolt_page.dart';
 
 void main() {
   runApp(const MyApp());

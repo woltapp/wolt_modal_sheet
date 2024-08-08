@@ -11,8 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_web_plugins:
+    sdk: flutter
   cupertino_icons: ^1.0.2
+  collection: ^1.18.0
+  # Required for example.
+  go_router: ^14.2.1
 
 dev_dependencies:
   flutter_test:
