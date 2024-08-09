@@ -5,10 +5,9 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class AddWaterDescriptionModalPage {
   AddWaterDescriptionModalPage._();
 
-  static WoltModalSheetPage build({
-    required VoidCallback onCancelPressed,
-    required VoidCallback onNextPage,
-    required VoidCallback onClosed,
+  static WoltModalSheetPage build(
+    String coffeeOrderId, {
+    required VoidCallback onCancelOrder,
   }) {
     return WoltModalSheetPage(
       heroImage: const Image(
@@ -19,16 +18,20 @@ class AddWaterDescriptionModalPage {
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Column(
           children: [
-            WoltElevatedButton(
-              onPressed: onCancelPressed,
-              theme: WoltElevatedButtonTheme.secondary,
-              child: const Text('Cancel order'),
-            ),
+            Builder(builder: (context) {
+              return WoltElevatedButton(
+                onPressed: onCancelOrder,
+                theme: WoltElevatedButtonTheme.secondary,
+                child: const Text('Cancel order'),
+              );
+            }),
             const SizedBox(height: 8),
-            WoltElevatedButton(
-              onPressed: onNextPage,
-              child: const Text('Continue to temperature'),
-            ),
+            Builder(builder: (context) {
+              return WoltElevatedButton(
+                onPressed: WoltModalSheet.of(context).showNext,
+                child: const Text('Continue to temperature'),
+              );
+            }),
           ],
         ),
       ),
@@ -36,9 +39,12 @@ class AddWaterDescriptionModalPage {
         'Adding water for coffee',
         textAlign: TextAlign.center,
       ),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      trailingNavBarWidget: Builder(builder: (context) {
+        return WoltModalSheetCloseButton(onClosed: Navigator.of(context).pop);
+      }),
       child: const Padding(
-        padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 8),
+        padding:
+            EdgeInsets.only(bottom: (2 * WoltElevatedButton.defaultHeight) + 8),
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: ModalSheetContentText(

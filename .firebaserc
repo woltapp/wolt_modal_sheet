@@ -1,0 +1,24 @@
+{
+  "projects": {
+    "default": "woltmodalapp"
+  },
+  "targets": {
+    "woltmodalapp": {
+      "hosting": {
+        "coffee_maker": [
+          "coffeemakerexample"
+        ],
+        "playground": [
+          "playgroundwoltexample"
+        ],
+        "playground_navigator2": [
+          "playgroundnavigator2woltexample"
+        ],
+        "coffeemakernavigator2": [
+          "coffeemakernavigator2"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

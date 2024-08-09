@@ -12,12 +12,14 @@ class WoltModalSheetMainContent extends StatelessWidget {
   final GlobalKey pageTitleKey;
   final SliverWoltModalSheetPage page;
   final WoltModalType woltModalType;
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   const WoltModalSheetMainContent({
     required this.scrollController,
     required this.pageTitleKey,
     required this.page,
     required this.woltModalType,
+    required this.scrollAnimationStyle,
     Key? key,
   }) : super(key: key);
 
@@ -44,6 +46,8 @@ class WoltModalSheetMainContent extends StatelessWidget {
         ? navBarHeight
         : 0.0;
     final isNonScrollingPage = page is NonScrollingWoltModalSheetPage;
+    final shouldFillRemaining = woltModalType.forceMaxHeight ||
+        (page.forceMaxHeight && !isNonScrollingPage);
     final scrollView = CustomScrollView(
       shrinkWrap: true,
       physics: themeData?.mainContentScrollPhysics ??
@@ -61,6 +65,7 @@ class WoltModalSheetMainContent extends StatelessWidget {
                           topBarHeight: topBarHeight,
                           heroImage: heroImage,
                           heroImageHeight: heroImageHeight,
+                          scrollAnimationStyle: scrollAnimationStyle,
                         )
                       // If top bar layer is always visible, the padding is explicitly added to the
                       // scroll view since top bar will not be integrated to scroll view at all.
@@ -79,8 +84,8 @@ class WoltModalSheetMainContent extends StatelessWidget {
               childCount: 2,
             ),
           ),
-        ...page.mainContentSlivers,
-        if (page.forceMaxHeight && !isNonScrollingPage)
+        ...page.mainContentSliversBuilder(context),
+        if (shouldFillRemaining)
           const SliverFillRemaining(
             hasScrollBody: false,
             child: SizedBox.shrink(),

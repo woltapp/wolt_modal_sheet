@@ -1,5 +1,5 @@
-import 'package:coffee_maker/constants/demo_app_colors.dart';
 import 'package:coffee_maker/entities/coffee_order.dart';
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class CoffeeOrderListItemTile extends StatelessWidget {
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
-                Container(color: DemoAppColors.black.withOpacity(0.3)),
+                Container(color: WoltColors.black.withOpacity(0.3)),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -100,8 +100,10 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           onPressed: _onTap,
           child: Text(
             _coffeeOrder.id,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontWeight: FontWeight.bold, color: DemoAppColors.black),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(fontWeight: FontWeight.bold, color: WoltColors.black),
           ),
         ),
         const SizedBox(width: 8),
@@ -109,7 +111,7 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           child: Text(
             _coffeeOrder.orderName,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: DemoAppColors.white,
+                  color: WoltColors.white,
                   fontWeight: FontWeight.bold,
                 ),
             maxLines: 1,

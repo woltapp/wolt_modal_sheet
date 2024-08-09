@@ -1,4 +1,3 @@
-import 'package:coffee_maker/constants/demo_app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// The `GridLayoutButton` widget displays a button indicating the visibility of the grid layout.
@@ -17,14 +16,6 @@ class GridLayoutButton extends StatelessWidget {
       valueListenable: _isGridOverlayVisible,
       builder: (_, isVisible, __) {
         return OutlinedButton(
-          style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
-                side: const MaterialStatePropertyAll(
-                  BorderSide(
-                    width: 2,
-                    color: DemoAppColors.gray,
-                  ),
-                ),
-              ),
           onPressed: () {
             _isGridOverlayVisible.value = !_isGridOverlayVisible.value;
           },

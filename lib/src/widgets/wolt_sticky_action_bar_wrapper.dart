@@ -32,14 +32,26 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
     }
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    final pageBackgroundColor = page.backgroundColor ??
+        themeData?.backgroundColor ??
+        defaultThemeData.backgroundColor;
     final backgroundColor = page.sabGradientColor ??
         themeData?.sabGradientColor ??
-        defaultThemeData.sabGradientColor;
+        defaultThemeData.sabGradientColor ??
+        pageBackgroundColor;
     final hasSabGradient = page.hasSabGradient ??
         themeData?.hasSabGradient ??
         defaultThemeData.hasSabGradient;
-    final surfaceTintColor =
-        themeData?.surfaceTintColor ?? defaultThemeData.surfaceTintColor;
+    final surfaceTintColor = page.surfaceTintColor ??
+        themeData?.surfaceTintColor ??
+        defaultThemeData.surfaceTintColor;
+    final modalElevation =
+        themeData?.modalElevation ?? defaultThemeData.modalElevation;
+    final tintedBackgroundColor = Theme.of(context).useMaterial3
+        ? ElevationOverlay.applySurfaceTint(
+            backgroundColor, surfaceTintColor, modalElevation)
+        : ElevationOverlay.applyOverlay(
+            context, backgroundColor, modalElevation);
     return Column(
       children: [
         // If a gradient is required, add a Container with a linear gradient decoration.
@@ -54,18 +66,16 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 colors: [
-                  backgroundColor,
-                  backgroundColor.withOpacity(0),
+                  tintedBackgroundColor,
+                  tintedBackgroundColor.withOpacity(0),
                 ],
               ),
             ),
           ),
         // Render the sticky action bar with its background color.
         if (hasSabGradient)
-          Material(
-            type: MaterialType.canvas,
-            color: backgroundColor,
-            surfaceTintColor: surfaceTintColor,
+          ColoredBox(
+            color: tintedBackgroundColor,
             child: stickyActionBar,
           )
         else

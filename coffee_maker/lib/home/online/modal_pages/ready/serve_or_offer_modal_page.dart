@@ -6,9 +6,8 @@ class ServeOrOfferModalPage {
   ServeOrOfferModalPage._();
 
   static WoltModalSheetPage build({
-    required VoidCallback onServePressed,
-    required VoidCallback onNextPage,
-    required VoidCallback onClosed,
+    required String coffeeOrderId,
+    required VoidCallback onServeCoffeeTapped,
   }) {
     return WoltModalSheetPage(
       heroImage: const Image(
@@ -20,20 +19,22 @@ class ServeOrOfferModalPage {
         child: Column(
           children: [
             WoltElevatedButton(
-              onPressed: onServePressed,
+              onPressed: onServeCoffeeTapped,
               theme: WoltElevatedButtonTheme.secondary,
               child: const Text('Serve coffee'),
             ),
             const SizedBox(height: 8),
-            WoltElevatedButton(
-              onPressed: onNextPage,
-              child: const Text('Offer recommendations'),
-            ),
+            Builder(builder: (context) {
+              return WoltElevatedButton(
+                onPressed: WoltModalSheet.of(context).showNext,
+                child: const Text('Offer recommendations'),
+              );
+            }),
           ],
         ),
       ),
       pageTitle: const ModalSheetTitle('The coffee is ready!'),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 16, 150),
         child: ModalSheetContentText(

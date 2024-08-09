@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
-
-double _defaultModalTypeBreakPoint = 768.0;
-
-WoltModalTypeBuilder _defaultModalTypeBuilder = (context) {
-  return MediaQuery.of(context).size.width < _defaultModalTypeBreakPoint
-      ? WoltModalType.bottomSheet
-      : WoltModalType.dialog;
-};
+import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
 
 class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
     required this.pageListBuilderNotifier,
     this.pageIndexNotifier,
-    this.decorator,
+    this.pageContentDecorator,
+    this.modalDecorator,
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
     this.modalBarrierColor,
@@ -23,41 +18,30 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     bool? useSafeArea,
     bool? barrierDismissible,
     AnimationController? transitionAnimationController,
-    RouteSettings? routeSettings,
-    Duration? transitionDuration,
-    AnimatedWidget? bottomSheetTransitionAnimation,
-    AnimatedWidget? dialogTransitionAnimation,
-    double? minDialogWidth,
-    double? maxDialogWidth,
-    double? minPageHeight,
-    double? maxPageHeight,
+    RouteSettings? settings,
   })  : _enableDrag = enableDrag,
         _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
-        _transitionDuration =
-            transitionDuration ?? const Duration(milliseconds: 300),
-        _barrierDismissible = barrierDismissible ?? true,
-        _modalTypeBuilder = modalTypeBuilder ?? _defaultModalTypeBuilder,
-        _bottomSheetTransitionAnimation = bottomSheetTransitionAnimation,
-        _dialogTransitionAnimation = dialogTransitionAnimation,
-        _minDialogWidth = minDialogWidth,
-        _maxDialogWidth = maxDialogWidth,
-        _minPageHeight = minPageHeight,
-        _maxPageHeight = maxPageHeight,
-        super(settings: routeSettings);
+        _barrierDismissible = barrierDismissible,
+        _modalTypeBuilder = modalTypeBuilder,
+        super(settings: settings);
 
-  Widget Function(Widget)? decorator;
+  /// Applies additional decorations to the modal page content excluding the
+  /// barrier. Use [modalDecorator] to apply decorations to the barrier and
+  /// the content.
+  Widget Function(Widget)? pageContentDecorator;
+
+  /// Applies additional decorations to the modal including the barrier and the content.
+  Widget Function(Widget)? modalDecorator;
 
   final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
 
   final ValueNotifier<int>? pageIndexNotifier;
 
-  final WoltModalTypeBuilder _modalTypeBuilder;
+  final WoltModalTypeBuilder? _modalTypeBuilder;
 
-  late final Duration _transitionDuration;
-
-  late final bool _barrierDismissible;
+  final bool? _barrierDismissible;
 
   final VoidCallback? onModalDismissedWithBarrierTap;
 
@@ -69,33 +53,22 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   final bool _useSafeArea;
 
-  final AnimatedWidget? _bottomSheetTransitionAnimation;
-
-  final AnimatedWidget? _dialogTransitionAnimation;
-
-  final double? _minDialogWidth;
-
-  final double? _maxDialogWidth;
-
-  final double? _minPageHeight;
-
-  final double? _maxPageHeight;
-
   /// Specifies the color of the modal barrier that darkens everything below the
   /// bottom sheet.
-  ///
-  /// Defaults to `Colors.black54` if not provided.
   final Color? modalBarrierColor;
 
-  /// The animation controller that controls the bottom sheet's entrance and
+  /// The animation controller that controls the modal sheet's entrance and
   /// exit animations.
   ///
-  /// The BottomSheet widget will manipulate the position of this animation, it
+  /// The [WoltModalSheet] widget will manipulate the position of this animation, it
   /// is not just a passive observer.
   final AnimationController? _transitionAnimationController;
 
   @override
-  bool get barrierDismissible => _barrierDismissible;
+  bool get barrierDismissible =>
+      _barrierDismissible ??
+      _determineCurrentModalType(navigator!.context).barrierDismissible ??
+      true;
 
   /// The value of false was chosen to indicate that the modal route does not fully obscure the
   /// underlying content. This allows for a translucent effect, where the content beneath the
@@ -119,20 +92,17 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   ) {
     return WoltModalSheet(
       route: this,
-      decorator: decorator,
+      pageContentDecorator: pageContentDecorator,
+      modalDecorator: modalDecorator,
       pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
       pageListBuilderNotifier: pageListBuilderNotifier,
-      modalTypeBuilder: _modalTypeBuilder,
+      modalTypeBuilder: _determineCurrentModalType,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
-      animationController: animationController,
+      transitionAnimationController: animationController,
       enableDrag: _enableDrag,
       showDragHandle: _showDragHandle,
       useSafeArea: _useSafeArea,
-      minDialogWidth: _minDialogWidth,
-      maxDialogWidth: _maxDialogWidth,
-      minPageHeight: _minPageHeight,
-      maxPageHeight: _maxPageHeight,
     );
   }
 
@@ -143,37 +113,31 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final modalType = _modalTypeBuilder(context);
-    const easeCurve = Curves.ease;
-    switch (modalType) {
-      case WoltModalType.bottomSheet:
-        return _bottomSheetTransitionAnimation ??
-            SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(0.0, 1.0),
-                  end: Offset.zero,
-                ).chain(CurveTween(curve: easeCurve)),
-              ),
-              child: child,
-            );
-      case WoltModalType.dialog:
-        return _dialogTransitionAnimation ??
-            ScaleTransition(
-              scale: animation.drive(Tween(
-                begin: 0.9,
-                end: 1.0,
-              ).chain(CurveTween(curve: easeCurve))),
-              child: child,
-            );
-    }
+    final modalType = _determineCurrentModalType(context);
+    return modalType.buildTransitions(
+        context, animation, secondaryAnimation, child);
   }
 
   @override
-  Color? get barrierColor => modalBarrierColor ?? Colors.black54;
+  Color? get barrierColor {
+    final context = navigator!.context;
+    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
+    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
+    return modalBarrierColor ??
+        themeData?.modalBarrierColor ??
+        defaultThemeData.modalBarrierColor;
+  }
 
   @override
-  Duration get transitionDuration => _transitionDuration;
+  Duration get transitionDuration {
+    return _determineCurrentModalType(navigator!.context).transitionDuration;
+  }
+
+  @override
+  Duration get reverseTransitionDuration {
+    return _determineCurrentModalType(navigator!.context)
+        .reverseTransitionDuration;
+  }
 
   @override
   AnimationController createAnimationController() {
@@ -182,8 +146,17 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       animationController = _transitionAnimationController;
       willDisposeAnimationController = false;
     } else {
-      animationController = BottomSheet.createAnimationController(navigator!);
+      animationController = AnimationController(
+        duration: transitionDuration,
+        reverseDuration: reverseTransitionDuration,
+        debugLabel: 'WoltModalSheet',
+        vsync: navigator!,
+      );
     }
     return animationController!;
+  }
+
+  WoltModalType _determineCurrentModalType(BuildContext context) {
+    return WoltModalTypeUtils.currentModalType(_modalTypeBuilder, context);
   }
 }

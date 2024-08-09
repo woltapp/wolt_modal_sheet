@@ -7,9 +7,8 @@ class RejectOrderModalPage {
   RejectOrderModalPage._();
 
   static WoltModalSheetPage build({
-    required VoidCallback onCoffeeOrderRejected,
-    required VoidCallback onBackButtonPressed,
-    required VoidCallback onClosed,
+    required String coffeeOrderId,
+    required VoidCallback onRejectOrderTapped,
   }) {
     final buttonEnabledListener = ValueNotifier(false);
 
@@ -19,20 +18,21 @@ class RejectOrderModalPage {
         builder: (_, isEnabled, __) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: WoltElevatedButton(
-              onPressed: onCoffeeOrderRejected,
-              theme: WoltElevatedButtonTheme.secondary,
-              colorName: WoltColorName.red,
-              enabled: isEnabled,
-              child: const Text('Reject'),
-            ),
+            child: Builder(builder: (context) {
+              return WoltElevatedButton(
+                onPressed: onRejectOrderTapped,
+                theme: WoltElevatedButtonTheme.secondary,
+                colorName: WoltColorName.red,
+                enabled: isEnabled,
+                child: const Text('Reject'),
+              );
+            }),
           );
         },
       ),
       pageTitle: const ModalSheetTitle('Reject order'),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 120),
         child: Padding(

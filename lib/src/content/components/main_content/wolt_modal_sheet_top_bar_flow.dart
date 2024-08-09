@@ -16,16 +16,16 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WoltModalSheetTopBarFlow extends StatelessWidget {
   final ScrollController scrollController;
   final GlobalKey titleKey;
-  final double topBarTranslationYAmountInPx;
   final SliverWoltModalSheetPage page;
   final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedListenable;
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   const WoltModalSheetTopBarFlow({
     required this.page,
     required this.scrollController,
     required this.titleKey,
-    required this.topBarTranslationYAmountInPx,
     required this.softKeyboardClosedListenable,
+    required this.scrollAnimationStyle,
     Key? key,
   }) : super(key: key);
 
@@ -48,8 +48,8 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
         heroImageHeight: heroImageHeight,
         scrollController: scrollController,
         titleKey: titleKey,
-        topBarTranslationYAmountInPx: topBarTranslationYAmountInPx,
         softKeyboardClosedListenable: softKeyboardClosedListenable,
+        scrollAnimationStyle: scrollAnimationStyle,
       ),
       children: [WoltModalSheetTopBar(page: page)],
     );
@@ -61,15 +61,15 @@ class _TopBarFlowDelegate extends FlowDelegate {
   final double heroImageHeight;
   final ScrollController scrollController;
   final GlobalKey titleKey;
-  final double topBarTranslationYAmountInPx;
   final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedListenable;
+  final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   _TopBarFlowDelegate({
     required this.topBarHeight,
     required this.heroImageHeight,
     required this.scrollController,
     required this.titleKey,
-    required this.topBarTranslationYAmountInPx,
+    required this.scrollAnimationStyle,
     required this.softKeyboardClosedListenable,
   }) : super(
           repaint: Listenable.merge([
@@ -84,7 +84,8 @@ class _TopBarFlowDelegate extends FlowDelegate {
   void paintChildren(FlowPaintingContext context) {
     final pageTitleHeight = titleKey.currentContext!.size!.height;
 
-    final topBarTranslationYStart = -1 * topBarTranslationYAmountInPx;
+    final topBarTranslationYStart =
+        -1 * scrollAnimationStyle.topBarTranslationYInPixels;
     const topBarTranslationYEnd = 0.0;
     final topBarTranslationYAndOpacityStartPoint =
         heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight - 8;
@@ -105,8 +106,8 @@ class _TopBarFlowDelegate extends FlowDelegate {
       rangeInPx: 8,
       progressInRangeInPx:
           currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
-      startValue: 0.0,
-      endValue: 1.0,
+      startValue: scrollAnimationStyle.topBarOpacityStart,
+      endValue: scrollAnimationStyle.topBarOpacityEnd,
     );
 
     /// Paint Top Bar
@@ -122,8 +123,6 @@ class _TopBarFlowDelegate extends FlowDelegate {
     return heroImageHeight != oldDelegate.heroImageHeight ||
         titleKey != oldDelegate.titleKey ||
         currentScrollOffset != oldDelegate.currentScrollOffset ||
-        topBarTranslationYAmountInPx !=
-            oldDelegate.topBarTranslationYAmountInPx ||
         softKeyboardClosedListenable.value !=
             oldDelegate.softKeyboardClosedListenable.value ||
         topBarHeight != oldDelegate.topBarHeight;

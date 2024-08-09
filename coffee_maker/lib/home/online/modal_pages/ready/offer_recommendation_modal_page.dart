@@ -8,9 +8,8 @@ class OfferRecommendationModalPage {
   OfferRecommendationModalPage._();
 
   static SliverWoltModalSheetPage build({
-    required VoidCallback onCoffeeOrderServed,
-    required VoidCallback onBackButtonPressed,
-    required VoidCallback onClosed,
+    required String coffeeOrderId,
+    required VoidCallback onServeWithRecommendation,
   }) {
     final selectedItemCountListener = ValueNotifier(0);
     const pageTitle = 'Recommendations';
@@ -33,7 +32,7 @@ class OfferRecommendationModalPage {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
-              onPressed: onCoffeeOrderServed,
+              onPressed: onServeWithRecommendation,
               enabled: count > 0,
               child: Text(buttonText),
             ),
@@ -42,10 +41,9 @@ class OfferRecommendationModalPage {
       ),
       topBarTitle: const ModalSheetTopBarTitle(pageTitle),
       pageTitle: const ModalSheetTitle(pageTitle),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
-      mainContentSlivers: [
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
+      mainContentSliversBuilder: (context) => [
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (_, index) {
@@ -63,7 +61,9 @@ class OfferRecommendationModalPage {
                     16,
                     16,
                     16,
-                    index == tileCount - 1 ? WoltElevatedButton.height * 2 : 0,
+                    index == tileCount - 1
+                        ? WoltElevatedButton.defaultHeight * 2
+                        : 0,
                   ),
                   child: ExtraRecommendationTile(
                     recommendation: recommendation,

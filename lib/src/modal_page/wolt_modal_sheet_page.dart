@@ -44,16 +44,19 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
   /// Creates a [WoltModalSheetPage] with a single child main content.
   WoltModalSheetPage({
     required this.child,
+    super.id,
     super.pageTitle,
     super.navBarHeight,
     super.topBarTitle,
     super.heroImage,
     super.heroImageHeight,
     super.backgroundColor,
+    super.surfaceTintColor,
     super.hasSabGradient,
     super.sabGradientColor,
     super.enableDrag,
     super.forceMaxHeight = false,
+    super.resizeToAvoidBottomInset,
     super.isTopBarLayerAlwaysVisible,
     super.hasTopBarLayer,
     super.scrollController,
@@ -61,48 +64,10 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
     super.leadingNavBarWidget,
     super.trailingNavBarWidget,
     super.topBar,
-  }) : super(mainContentSlivers: [SliverToBoxAdapter(child: child)]);
-
-  WoltModalSheetPage copyWith({
-    Widget? pageTitle,
-    double? navBarHeight,
-    Widget? child,
-    Widget? topBarTitle,
-    Widget? heroImage,
-    double? heroImageHeight,
-    Color? backgroundColor,
-    bool? hasSabGradient,
-    Color? sabGradientColor,
-    bool? enableDrag,
-    bool? forceMaxHeight,
-    bool? isTopBarLayerAlwaysVisible,
-    bool? hasTopBarLayer,
-    ScrollController? scrollController,
-    Widget? stickyActionBar,
-    Widget? leadingNavBarWidget,
-    Widget? trailingNavBarWidget,
-    Widget? topBar,
-  }) {
-    return WoltModalSheetPage(
-      pageTitle: pageTitle ?? this.pageTitle,
-      navBarHeight: navBarHeight ?? this.navBarHeight,
-      child: child ?? this.child,
-      topBarTitle: topBarTitle ?? this.topBarTitle,
-      heroImage: heroImage ?? this.heroImage,
-      heroImageHeight: heroImageHeight ?? this.heroImageHeight,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      hasSabGradient: hasSabGradient ?? this.hasSabGradient,
-      sabGradientColor: sabGradientColor ?? this.sabGradientColor,
-      enableDrag: enableDrag ?? this.enableDrag,
-      forceMaxHeight: forceMaxHeight ?? this.forceMaxHeight,
-      isTopBarLayerAlwaysVisible:
-          isTopBarLayerAlwaysVisible ?? this.isTopBarLayerAlwaysVisible,
-      hasTopBarLayer: hasTopBarLayer ?? this.hasTopBarLayer,
-      scrollController: scrollController ?? this.scrollController,
-      stickyActionBar: stickyActionBar ?? this.stickyActionBar,
-      leadingNavBarWidget: leadingNavBarWidget ?? this.leadingNavBarWidget,
-      trailingNavBarWidget: trailingNavBarWidget ?? this.trailingNavBarWidget,
-      topBar: topBar ?? this.topBar,
-    );
-  }
+    super.useSafeArea,
+  }) : super(
+          mainContentSliversBuilder: (context) => [
+            SliverToBoxAdapter(child: child),
+          ],
+        );
 }

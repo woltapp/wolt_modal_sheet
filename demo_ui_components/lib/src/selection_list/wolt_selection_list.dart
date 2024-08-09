@@ -123,6 +123,7 @@ class _WoltSelectionListState<T> extends State<WoltSelectionList<T>> {
 
     return ListView.separated(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (_, index) {
         final listItemData = _itemTileDataGroup.group.elementAtOrNull(index);
@@ -150,7 +151,7 @@ class _WoltSelectionListState<T> extends State<WoltSelectionList<T>> {
                 },
               );
       },
-      separatorBuilder: (_, __) => const Divider(),
+      separatorBuilder: (_, __) => const Divider(height: 1.0),
       itemCount: _itemTileDataGroup.itemTileCount,
     );
   }

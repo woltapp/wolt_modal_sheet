@@ -25,17 +25,20 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
   /// Creates a page to be built within [WoltScrollableModalSheet].
   NonScrollingWoltModalSheetPage({
     required this.child,
+    super.id,
     super.backgroundColor,
     super.enableDrag,
     super.leadingNavBarWidget,
     super.trailingNavBarWidget,
     super.hasTopBarLayer = false,
+    super.resizeToAvoidBottomInset,
     super.topBar,
     super.topBarTitle,
     super.navBarHeight,
+    super.useSafeArea,
   }) : super(
           isTopBarLayerAlwaysVisible: hasTopBarLayer,
-          mainContentSlivers: [
+          mainContentSliversBuilder: (_) => [
             SliverFillViewport(delegate: SliverChildListDelegate([child])),
           ],
         );

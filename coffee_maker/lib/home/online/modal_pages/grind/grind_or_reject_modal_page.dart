@@ -7,24 +7,24 @@ class GrindOrRejectModalPage {
 
   static WoltModalSheetPage build({
     required String coffeeOrderId,
-    required VoidCallback onRejectPressed,
-    required VoidCallback onStartGrinding,
-    required VoidCallback onClosed,
+    required VoidCallback onGrindCoffeeTapped,
   }) {
     return WoltModalSheetPage(
       stickyActionBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Column(
           children: [
-            WoltElevatedButton(
-              onPressed: onRejectPressed,
-              theme: WoltElevatedButtonTheme.secondary,
-              colorName: WoltColorName.red,
-              child: const Text('Reject order'),
-            ),
+            Builder(builder: (context) {
+              return WoltElevatedButton(
+                onPressed: WoltModalSheet.of(context).showNext,
+                theme: WoltElevatedButtonTheme.secondary,
+                colorName: WoltColorName.red,
+                child: const Text('Reject order'),
+              );
+            }),
             const SizedBox(height: 8),
             WoltElevatedButton(
-              onPressed: onStartGrinding,
+              onPressed: onGrindCoffeeTapped,
               child: const Text('Start grinding'),
             ),
           ],
@@ -32,11 +32,11 @@ class GrindOrRejectModalPage {
       ),
       pageTitle: ModalSheetTitle(
         'Are you ready to prepare order $coffeeOrderId?',
-        textAlign: TextAlign.center,
       ),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(
-        padding: EdgeInsets.only(bottom: (2 * WoltElevatedButton.height) + 48),
+        padding: EdgeInsets.only(
+            bottom: (2 * WoltElevatedButton.defaultHeight) + 48),
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child:

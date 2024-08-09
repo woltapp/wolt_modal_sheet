@@ -1,0 +1,27 @@
+name: Deploy Wolt Examples on PR
+'on': pull_request_target
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: '3.13.0' # Uses the minimum supported version.
+          channel: stable
+      - run: flutter build web --release --web-renderer=canvaskit
+        working-directory: ./coffee_maker
+      - run: flutter build web --release --web-renderer=canvaskit
+        working-directory: ./coffee_maker_navigator_2
+      - run: flutter build web --release --web-renderer=canvaskit
+        working-directory: ./playground
+      - run: flutter build web --release --web-renderer=canvaskit
+        working-directory: ./playground_navigator2
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WOLTMODALAPP }}'
+          projectId: woltmodalapp

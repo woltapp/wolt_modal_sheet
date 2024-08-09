@@ -1,0 +1,100 @@
+name: Check
+
+on:
+  # Curently, this workflow is triggered by pull request events only.
+  # Uncomment the following line to run this workflow on push events
+  # push:
+  #   branches:
+  #     - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  flutter-analyze:
+    name: flutter analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: '3.13.0' # Uses the minimum supported version.
+          channel: stable
+      # Get Flutter version
+      - name: Get Flutter version
+        run: flutter --version
+      # Get dependencies
+      - name: Get dependencies
+        run: flutter pub get
+      # Setup Melos
+      - name: Setup Melos
+        run: dart pub global activate melos
+      # Run Melos bootstrap
+      - name: Melos bootstrap
+        run: melos bootstrap
+      # Run flutter analyze for the main package
+      - name: Run flutter analyze
+        run: flutter analyze
+      - name: Check if flutter analyze passes
+        run: echo $?
+      # Run melos analyze to find analzyer issues in demos
+      - name: Run melos analyze
+        run: melos analyze
+      - name: Check if melos analyze passes
+        run: echo $?
+
+  dart-format:
+    name: dart format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: '3.13.0' # Uses the minimum supported version.
+          channel: stable
+      # Get Flutter version
+      - name: Get Flutter version
+        run: flutter --version
+      # Get dependencies
+      - name: Get dependencies
+        run: flutter pub get
+      # Setup Melos
+      - name: Setup Melos
+        run: dart pub global activate melos
+      # Run Melos bootstrap
+      - name: Melos bootstrap
+        run: melos bootstrap
+      # CHeck if there are format issues
+      - name: Run dart format
+        run: dart format --set-exit-if-changed .
+      # Run melos format to find format issues in demos
+      - name: Run melos format
+        run: melos format
+      - name: Check if melos analyze passes
+        run: echo $?
+
+  flutter-test:
+    name: flutter test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: '3.13.0' # Uses the minimum supported version.
+          channel: stable
+      # Get Flutter version
+      - name: Get Flutter version
+        run: flutter --version
+      # Get dependencies
+      - name: Get dependencies
+        run: flutter pub get
+      # Setup Melos
+      - name: Setup Melos
+        run: dart pub global activate melos
+      # Run Melos bootstrap
+      - name: Melos bootstrap
+        run: melos bootstrap
+      - name: Run tests
+        run: flutter test
+      - name: Check if flutter test passes
+        run: echo $?

@@ -1,3 +1,127 @@
+## 0.9.2
+- Fixed URL of the example screenshot in the Readme file for pub.dev. [#291](https://github.com/woltapp/wolt_modal_sheet/pull/291) by [AcarFurkan](https://github.com/AcarFurkan)
+## 0.9.1
+- Fix the wrong link for the example screenshot in the Readme file. [#290](https://github.com/woltapp/wolt_modal_sheet/pull/290) by [ulusoyca](https://github.com/ulusoyca)
+## 0.9.0
+- Remove deprecated mainContentSlivers field in SliverWoltModalSheetPage [#286](https://github.com/woltapp/wolt_modal_sheet/pull/286) by [ulusoyca](https://github.com/ulusoyca)
+- Maintanence: Update README.md to improve DX [#285](https://github.com/woltapp/wolt_modal_sheet/pull/285) by [salihgueler](https://github.com/salihgueler)
+  - Fixes:
+    - [#284](https://github.com/woltapp/wolt_modal_sheet/issues/284) [DX] ☂️ Update the documentation on README.md and Example Apps
+- Enable drag to dismiss modal if the scroll position is at top edge [#283](https://github.com/woltapp/wolt_modal_sheet/pull/283) by [AcarFurkan](https://github.com/AcarFurkan)
+- Add topics and screenshots to pubspec.yaml [#281](https://github.com/woltapp/wolt_modal_sheet/pull/281) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#255](https://github.com/woltapp/wolt_modal_sheet/issues/255) Add "topic" and "screenshot" to pubspec.yaml file to be visible in pub.dev
+- Prevent crashes during pagination and enable pagination duration configuration in animation style. [#280](https://github.com/woltapp/wolt_modal_sheet/pull/280) by [ulusoyca](https://github.com/ulusoyca)
+## 0.8.0
+- Fix: Consider directionality for pagination animation [#272](https://github.com/woltapp/wolt_modal_sheet/pull/272) by [ulusoyca](https://github.com/ulusoyca)
+  - Issue:
+    - [#266](https://github.com/woltapp/wolt_modal_sheet/issues/266) Transition direction for pages ( rtl - ltr )
+- Fix existing tests [#270](https://github.com/woltapp/wolt_modal_sheet/pull/270) by [TahaTesser](https://github.com/TahaTesser)
+- Breaking Change: Renamed WoltModalSheetRoute routeSettings to settings [#268](https://github.com/woltapp/wolt_modal_sheet/pull/268) by [durannumit](https://github.com/durannumit)
+  - Issue:
+    - [#198](https://github.com/woltapp/wolt_modal_sheet/issues/198) Rename [WoltModalSheetRoute.routeSettings] fields as [WoltModalSheetRoute.settings]
+- Breaking Change: Introduce modal and page content decorators [#267](https://github.com/woltapp/wolt_modal_sheet/pull/267) by [ulusoyca](https://github.com/ulusoyca)
+- Example app: Add attached sheet example to playground app [#265](https://github.com/woltapp/wolt_modal_sheet/pull/265) by [ABausG](https://github.com/ABausG)
+- Added source codes of example projects to Readme [#264](https://github.com/woltapp/wolt_modal_sheet/pull/264) by [durannumit](https://github.com/durannumit)
+  - Issue:
+    - [#263](https://github.com/woltapp/wolt_modal_sheet/issues/263) Add links to repositories in ReadMe for showcase apps.
+## 0.7.1
+- Fix: Dialog and bottom sheet minimum height is not respected to modal content min height [#260](https://github.com/woltapp/wolt_modal_sheet/pull/260) by [ulusoyca](https://github.com/ulusoyca)
+- Adjustment: Add Last Commit badge to readme [#258](https://github.com/woltapp/wolt_modal_sheet/pull/258) by [durannumit](https://github.com/durannumit)
+  - Fixes:
+    - [#256](https://github.com/woltapp/wolt_modal_sheet/issues/256) Add Last Commit badge to Readme
+- Feature: Extend close progress threshold for different types [#257](https://github.com/woltapp/wolt_modal_sheet/pull/257) by [durannumit](https://github.com/durannumit)
+  - Fixes:
+    - [#253](https://github.com/woltapp/wolt_modal_sheet/issues/253) Add closeProgressThreshold to default modal type constructor methods
+## 0.7.0
+- Adjust dialog enter animation distance [#249](https://github.com/woltapp/wolt_modal_sheet/pull/249) by [ulusoyca](https://github.com/ulusoyca)
+- Adjustment: Readme updated for version 0.7.0 part 2 [#248](https://github.com/woltapp/wolt_modal_sheet/pull/248) by [durannumit](https://github.com/durannumit)
+- Adjustment: Readme updated for version 0.7.0 [#247](https://github.com/woltapp/wolt_modal_sheet/pull/247) by [durannumit](https://github.com/durannumit)
+- Fix: Wolt dialog type position animation updated [#246](https://github.com/woltapp/wolt_modal_sheet/pull/246) by [durannumit](https://github.com/durannumit)
+- Fix: Prevent dismiss on barrier tap for alert dialog [#245](https://github.com/woltapp/wolt_modal_sheet/pull/245) by [durannumit](https://github.com/durannumit)
+- Introduce: Breakpoints and fix dialog layout calculations [#243](https://github.com/woltapp/wolt_modal_sheet/pull/243) by [durannumit](https://github.com/durannumit)
+- Fix: Updated enter/exit animations for modal types [#242](https://github.com/woltapp/wolt_modal_sheet/pull/242) by [durannumit](https://github.com/durannumit)
+- Add custom modal type examples to the playground app [#241](https://github.com/woltapp/wolt_modal_sheet/pull/241) by [ulusoyca](https://github.com/ulusoyca)
+- Add design guidelines documentation to readme. [#240](https://github.com/woltapp/wolt_modal_sheet/pull/240) by [yarneo](https://github.com/yarneo)
+- Redesign enter exit animations for modal types [#239](https://github.com/woltapp/wolt_modal_sheet/pull/239) by [ulusoyca](https://github.com/ulusoyca)
+- Customize enable drag and drag direction for modal types [#238](https://github.com/woltapp/wolt_modal_sheet/pull/238) by [ulusoyca](https://github.com/ulusoyca)
+- Feature: Refactor modal types and introduce side sheet  [#235](https://github.com/woltapp/wolt_modal_sheet/pull/235) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#170](https://github.com/woltapp/wolt_modal_sheet/issues/170) Add change width of dialog or BTS
+    - [#224](https://github.com/woltapp/wolt_modal_sheet/issues/224) Sab gradient color does not default to background color
+    - [#229](https://github.com/woltapp/wolt_modal_sheet/issues/229) Set page transition animation duration
+    - [#25](https://github.com/woltapp/wolt_modal_sheet/issues/25) Add side sheet modal type
+- Prepare 0.6.1 [#228](https://github.com/woltapp/wolt_modal_sheet/pull/228) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#226](https://github.com/woltapp/wolt_modal_sheet/issues/226) `setState()` called after dispose error in version 0.6.0 (not present in version 0.5.0) 
+- Dispose value notifier in WoltModalSheet [#227](https://github.com/woltapp/wolt_modal_sheet/pull/227) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#226](https://github.com/woltapp/wolt_modal_sheet/issues/226) `setState()` called after dispose error in version 0.6.0 (not present in version 0.5.0) 
+## 0.6.1
+- Fix value notifier in WoltModalSheet state is not disposed properly. [#221](https://github.com/woltapp/wolt_modal_sheet/pull/227)
+  - Fixes:
+    - [#226](https://github.com/woltapp/wolt_modal_sheet/issues/226) setState() called after dispose error in version 0.6.0 (not present in version 0.5.0) #226
+## 0.6.0
+- Fix navigator_2_playground_example by Use static value notifier for button enabled listener. [#216](https://github.com/woltapp/wolt_modal_sheet/pull/216)
+- Add coffee maker navigator 2 example to Firebase Deploy. [#214](https://github.com/woltapp/wolt_modal_sheet/pull/214)
+- Refactor updateCurrentPage method and introduce easy page update. [#213](https://github.com/woltapp/wolt_modal_sheet/pull/213)
+- Update `wolt_modal_sheet_test.dart` tests. [#212](https://github.com/woltapp/wolt_modal_sheet/pull/212)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Add Coffee Maker Demo App example with navigator 2.0 (Flutter Full Stack Conference). [#209](https://github.com/woltapp/wolt_modal_sheet/pull/209)
+- Remove duplicate methods of WoltModalSheet. [#208](https://github.com/woltapp/wolt_modal_sheet/pull/208)
+  - Fixes:
+    - [#202](https://github.com/woltapp/wolt_modal_sheet/issues/202) add getter for `atRoot`
+- Introduce updateCurrentPage method to update the currently visible page without pagination animation. [#207](https://github.com/woltapp/wolt_modal_sheet/pull/207)
+  - Fixes:
+    - [#205](https://github.com/woltapp/wolt_modal_sheet/issues/205) Dynamic Page Properties don't work
+- Expose Page index getter. [#204](https://github.com/woltapp/wolt_modal_sheet/pull/204)
+  - Fixes:
+    - [#202](https://github.com/woltapp/wolt_modal_sheet/issues/202) add getter for `atRoot`
+- fix: only decorate the content of the modal. [#203](https://github.com/woltapp/wolt_modal_sheet/pull/203)
+  - Fixes:
+    - [#201](https://github.com/woltapp/wolt_modal_sheet/issues/201) The child provided to decorator functions is larger than it should be
+- Update readme. [#197](https://github.com/woltapp/wolt_modal_sheet/pull/197)
+- Update PR deployment method. [#195](https://github.com/woltapp/wolt_modal_sheet/pull/195)
+- Update PR checks. [#192](https://github.com/woltapp/wolt_modal_sheet/pull/192)
+  - Fixes:
+    - [#190](https://github.com/woltapp/wolt_modal_sheet/issues/190) Add PR check for tests
+- Add tests PR check and improve existing checks. [#191](https://github.com/woltapp/wolt_modal_sheet/pull/191)
+  - Fixes:
+    - [#190](https://github.com/woltapp/wolt_modal_sheet/issues/190) Add PR check for tests
+- Add Enhanced Navigation Methods to WoltModalSheet. [#188](https://github.com/woltapp/wolt_modal_sheet/pull/188)
+- Add mainContentSliversBuilder Property and Deprecation mainContentSlivers. [#177](https://github.com/woltapp/wolt_modal_sheet/pull/177)
+  - Fixes:
+    - [#176](https://github.com/woltapp/wolt_modal_sheet/issues/176) Expose mainContentSlivers's enclosing context
+- Add "Table of Contents" to `README.md`. [#175](https://github.com/woltapp/wolt_modal_sheet/pull/175)
+  - Fixes:
+    - [#174](https://github.com/woltapp/wolt_modal_sheet/issues/174) Include a "Table of Contents" in README
+## 0.5.0
+- Added a "Designer's Collaboration Guide" section to the README, including 
+  a Figma file link for streamlined design handoff and enhanced 
+  collaboration between designers and developers. [#166](https://github.com/woltapp/wolt_modal_sheet/pull/166)
+- Update example app files for missing RunnerTests folder and Podfile. [#168](https://github.com/woltapp/wolt_modal_sheet/pull/168)
+  - Fixes [#153](https://github.com/woltapp/wolt_modal_sheet/issues/153)
+- Introduce `WoltModalSheetAnimationStyle` to customize the pagination and 
+  scrolling animation styles of the modal sheet. [#165](https://github.com/woltapp/wolt_modal_sheet/pull/165)
+  - Addresses the issues: 
+    - [#125](https://github.com/woltapp/wolt_modal_sheet/issues/125)
+    - [#131](https://github.com/woltapp/wolt_modal_sheet/issues/131)
+- Change default clip behavior to antiAliasWithSaveLayer to fix Top Bar 
+  rendering issues. [#164](https://github.com/woltapp/wolt_modal_sheet/pull/164)
+  - Fixes [#162](https://github.com/woltapp/wolt_modal_sheet/issues/162)
+- Add resizeToAvoidBottomInset option to control soft keyboard overlay 
+  behavior. [#163](https://github.com/woltapp/wolt_modal_sheet/pull/163)
+  - Fixes [#154](https://github.com/woltapp/wolt_modal_sheet/issues/154)
+- Add firebase hosting and deploy workflow so that every time PR is opened, 
+  the samples will be deployed and sent as a message, and every time the 
+  main is merged, the main samples will be deployed again. [#159](https://github.com/woltapp/wolt_modal_sheet/pull/159)
+- The surfaceTintColor field is added to pages to control background color 
+  of the modal sheet for every page. [#156](https://github.com/woltapp/wolt_modal_sheet/pull/156)
+  - Addresses [#139](https://github.com/woltapp/wolt_modal_sheet/issues/139)
+- Added semantics for improved accessibility of the modal sheet. [#150](https://github.com/woltapp/wolt_modal_sheet/pull/150)
+  - Addresses [#148](https://github.com/woltapp/wolt_modal_sheet/issues/148) 
+
 ## 0.4.1
 - Reverts [#128](https://github.com/woltapp/wolt_modal_sheet/pull/128) to fix [#134](https://github.com/woltapp/wolt_modal_sheet/issues/134) and [#135](https://github.com/woltapp/wolt_modal_sheet/issues/135)
 

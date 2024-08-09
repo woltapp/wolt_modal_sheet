@@ -7,10 +7,9 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WaterSettingsModalPage {
   WaterSettingsModalPage._();
 
-  static WoltModalSheetPage build({
-    required VoidCallback onBackButtonPressed,
-    required VoidCallback onClosed,
-    required VoidCallback onWaterAdded,
+  static WoltModalSheetPage build(
+    String coffeeOrderId, {
+    required VoidCallback onFinishAddingWater,
   }) {
     final buttonEnabledListener = ValueNotifier(false);
     const pageTitle = 'Water settings';
@@ -22,7 +21,7 @@ class WaterSettingsModalPage {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(
-              onPressed: onWaterAdded,
+              onPressed: onFinishAddingWater,
               enabled: isEnabled,
               child: const Text('Finish adding water'),
             ),
@@ -30,9 +29,8 @@ class WaterSettingsModalPage {
         },
       ),
       pageTitle: const ModalSheetTitle(pageTitle),
-      trailingNavBarWidget: WoltModalSheetCloseButton(onClosed: onClosed),
-      leadingNavBarWidget:
-          WoltModalSheetBackButton(onBackPressed: onBackButtonPressed),
+      trailingNavBarWidget: const WoltModalSheetCloseButton(),
+      leadingNavBarWidget: const WoltModalSheetBackButton(),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         child: Column(

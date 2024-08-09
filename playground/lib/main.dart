@@ -2,6 +2,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:playground/home/home_screen.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -26,6 +27,7 @@ class DemoApp extends StatefulWidget {
 
 class _DemoAppState extends State<DemoApp> {
   bool _isLightTheme = true;
+  TextDirection _direction = TextDirection.ltr;
 
   @override
   void initState() {
@@ -67,42 +69,48 @@ class _DemoAppState extends State<DemoApp> {
       theme: ThemeData.light().copyWith(
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
-        primaryColor: WoltColors.blue,
         useMaterial3: true,
-        switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.all(WoltColors.blue),
-          trackColor: MaterialStateProperty.all(WoltColors.blue16),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: WoltColors.blue),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
-            modalBarrierColor: Colors.black54,
+            modalBarrierColor: Color(0x52000000),
+            surfaceTintColor: Colors.transparent,
           ),
         ],
       ),
       darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
         brightness: Brightness.dark,
         inputDecorationTheme: inputDecorationTheme,
-        primaryColor: WoltColors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF009DE0)),
         useMaterial3: true,
-        switchTheme: SwitchThemeData(
-          thumbColor: MaterialStateProperty.all(WoltColors.blue),
-          trackColor: MaterialStateProperty.all(WoltColors.blue16),
-        ),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
-            modalBarrierColor: Colors.white12,
+            backgroundColor: Color(0xFF242424),
+            modalBarrierColor: Color(0x52000000),
             sabGradientColor: _darkSabGradientColor,
-            dialogShape: BeveledRectangleBorder(),
-            bottomSheetShape: BeveledRectangleBorder(),
           ),
         ],
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      locale: _direction == TextDirection.ltr
+          ? const Locale('en')
+          : const Locale('he'),
+      supportedLocales: const [
+        Locale('en', ''), // English
+        Locale('he', ''), // Hebrew
+      ],
       debugShowCheckedModeBanner: false,
       home: HomeScreen(
-        onThemeBrightnessChanged: (bool isLightTheme) => setState(
-          () => _isLightTheme = isLightTheme,
-        ),
-      ),
+          onThemeBrightnessChanged: (bool isLightTheme) => setState(
+                () => _isLightTheme = isLightTheme,
+              ),
+          onDirectionalityChanged: (TextDirection direction) {
+            setState(() => _direction = direction);
+          }),
     );
   }
 }
