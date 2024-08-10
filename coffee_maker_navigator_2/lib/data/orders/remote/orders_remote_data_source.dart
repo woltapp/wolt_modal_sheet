@@ -10,6 +10,8 @@ abstract interface class OrdersRemoteDataSource {
   Future<CoffeeOrder> updateOrder(CoffeeOrder updatedOrder);
 
   Future<void> archiveOrder(String id);
+
+  Future<void> dispose();
 }
 
 /// A data source that provides access to a list of coffee orders. This class is used to simulate
@@ -42,6 +44,12 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
     final orders = List<CoffeeOrder>.from(_ordersValueNotifier.value);
     orders.removeWhere((order) => order.id == id);
     _ordersValueNotifier.value = orders;
+  }
+
+  @override
+  Future<void> dispose() {
+    _ordersValueNotifier.dispose();
+    return Future.value();
   }
 }
 

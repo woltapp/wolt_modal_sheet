@@ -2,7 +2,7 @@ import 'package:coffee_maker_navigator_2/data/auth/local/auth_local_data_source.
 import 'package:coffee_maker_navigator_2/data/auth/repository/auth_repository.dart';
 import 'package:coffee_maker_navigator_2/data/onboarding/local/onboarding_local_data_source.dart';
 import 'package:coffee_maker_navigator_2/data/onboarding/repository/onboarding_repository.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
 import 'package:coffee_maker_navigator_2/domain/onboarding/onboarding_service.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view/app_router_delegate.dart';
@@ -12,10 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// A class that manages app-level dependencies.
-///
-/// The `AppLevelDependencies` initializes and manages dependencies which are required for the
-/// entire lifecycle of the application.
-class AppLevelDependencyContainer extends GlobalDependencyContainer {
+class CoffeeMakerAppLevelDependencyContainer
+    extends AppLevelDependencyContainer {
   late final SharedPreferences _sharedPreferences;
 
   late final _authLocalDataSource = _createAuthLocalDataSource();
@@ -35,14 +33,10 @@ class AppLevelDependencyContainer extends GlobalDependencyContainer {
   RouterViewModel get routerViewModel => _routerViewModel;
   AuthService get authService => _authService;
 
-  AppLevelDependencyContainer();
+  CoffeeMakerAppLevelDependencyContainer();
 
   @override
   Future<void> init() async {
-    // Mikhail: How to lazily initialize SharedPreferences and inject to Auth?
-    // We cannot handle shared pref lazily, because it starts asynchronously,
-    // and we have to wait for this async process, so we only can init it here.
-    // But all other things can be lazy because they don't need to be awaited.
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 

@@ -1,21 +1,18 @@
-import 'package:coffee_maker_navigator_2/di/dependency_containers/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/dependency_containers/orders_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/add_water_service.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/orders_service.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
 
-class AddWaterDependencyContainer extends LocalDependencyContainer {
-  // Just in the sake to show that we can use a method here and keep lazyness.
+class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
+  // Just in the sake to show that we can use a method here to make the service lazily initialized.
   late final AddWaterService _addWaterService = _createAddWaterService();
+  // This is an example to non-lazy initialization.
   late final OrdersService _ordersService;
 
-  AddWaterDependencyContainer({required super.resolver}) {
-    // _addWaterService = AddWaterService();// Cagatay: why can't we make it lazy.
-    // Mikhail: How to make sure that this is singleton in DI?
-    // It is also initialized in the previous container. Should we separate UI container and Data
-    // container? Because the Data container is reused.
-    final orderDeps = bindWith<OrdersDependencyContainer>();
-    _ordersService = orderDeps.ordersService;
+  AddWaterDependencyContainer({required super.dependencyContainerManager}) {
+    final orderDependencies = bindWith<OrdersDependencyContainer>();
+    _ordersService = orderDependencies.ordersService;
   }
 
   AddWaterViewModel createViewModel() {
@@ -31,8 +28,8 @@ class AddWaterDependencyContainer extends LocalDependencyContainer {
 
   @override
   void dispose() {
+    // Only unbind, without disposing OrdersDependencyContainer, because we are using but not owning.
+    // DependencyContainerManager will take care of disposing it if needed.
     unbindFrom<OrdersDependencyContainer>();
-    // Cagatay: seems dispose need (or not, based on implementation).
-    // _addWaterService.dispose();
   }
 }

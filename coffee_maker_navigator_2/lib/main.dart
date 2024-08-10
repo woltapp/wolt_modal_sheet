@@ -8,17 +8,20 @@ import 'package:flutter/material.dart';
 void _registerDependencyContainerFactories() {
   final manager = DependencyContainerManager.instance;
   manager
-    // Mikhail: Init is very easy to freeze, what can we do?
-    // There shouldn't be heavy operation, they are called by demand one by one
-    // and we can use lazyness inside. Shouldn't be a problem.
     ..registerContainerFactory<OrdersDependencyContainer>(
-      (resolver) => OrdersDependencyContainer(resolver: resolver),
+      (resolver) => OrdersDependencyContainer(
+        dependencyContainerManager: manager,
+      ),
     )
     ..registerContainerFactory<AddWaterDependencyContainer>(
-      (resolver) => AddWaterDependencyContainer(resolver: resolver),
+      (resolver) => AddWaterDependencyContainer(
+        dependencyContainerManager: manager,
+      ),
     )
     ..registerContainerFactory<AuthScreenDependencyContainer>(
-      (resolver) => AuthScreenDependencyContainer(resolver: resolver),
+      (resolver) => AuthScreenDependencyContainer(
+        dependencyContainerManager: manager,
+      ),
     );
 }
 
