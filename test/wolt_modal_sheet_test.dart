@@ -229,51 +229,53 @@ void main() {
         const Size(524.0, 600.0));
   });
 
-  testWidgets('Custom WoltModalSheet.modalDecorator', (tester) async {
-    const Color coloredBoxColor = Color(0xFFFF0000);
-    await tester.pumpWidget(buildSheetWithShow(
-      modalDecorator: (child) {
-        return ColoredBox(
-          color: coloredBoxColor,
-          child: child,
-        );
-      },
-    ));
+  group("Decorators", () {
+    testWidgets('Custom WoltModalSheet.modalDecorator', (tester) async {
+      const Color coloredBoxColor = Color(0xFFFF0000);
+      await tester.pumpWidget(buildSheetWithShow(
+        modalDecorator: (child) {
+          return ColoredBox(
+            color: coloredBoxColor,
+            child: child,
+          );
+        },
+      ));
 
-    await tester.tap(find.text('Open sheet'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text('Open sheet'));
+      await tester.pumpAndSettle();
 
-    expect(
-      tester.widget<ColoredBox>(find.byType(ColoredBox).last).color,
-      coloredBoxColor,
-    );
-    expect(
-      tester.getSize(find.byType(ColoredBox).last),
-      equals(const Size(800.0, 600.0)),
-    );
-  });
+      expect(
+        tester.widget<ColoredBox>(find.byType(ColoredBox).last).color,
+        coloredBoxColor,
+      );
+      expect(
+        tester.getSize(find.byType(ColoredBox).last),
+        equals(const Size(800.0, 600.0)),
+      );
+    });
 
-  testWidgets('Custom WoltModalSheet.pageContentDecorator', (tester) async {
-    const Color coloredBoxColor = Color(0xFFFF00FF);
-    await tester.pumpWidget(buildSheetWithShow(
-      pageContentDecorator: (child) {
-        return ColoredBox(
-          color: coloredBoxColor,
-          child: child,
-        );
-      },
-    ));
+    testWidgets('Custom WoltModalSheet.pageContentDecorator', (tester) async {
+      const Color coloredBoxColor = Color(0xFFFF00FF);
+      await tester.pumpWidget(buildSheetWithShow(
+        pageContentDecorator: (child) {
+          return ColoredBox(
+            color: coloredBoxColor,
+            child: child,
+          );
+        },
+      ));
 
-    await tester.tap(find.text('Open sheet'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text('Open sheet'));
+      await tester.pumpAndSettle();
 
-    expect(
-      tester.widget<ColoredBox>(find.byType(ColoredBox).last).color,
-      coloredBoxColor,
-    );
-    expect(
-      tester.getSize(find.byType(ColoredBox).last),
-      equals(const Size(524.0, 86.0)),
-    );
+      expect(
+        tester.widget<ColoredBox>(find.byType(ColoredBox).last).color,
+        coloredBoxColor,
+      );
+      expect(
+        tester.getSize(find.byType(ColoredBox).last),
+        equals(const Size(524.0, 86.0)),
+      );
+    });
   });
 }
