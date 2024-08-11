@@ -13,22 +13,14 @@ class SheetPageWithCustomTopBar {
   static const ModalPageName pageId = ModalPageName.customTopBar;
 
   /// Builds and returns a [WoltModalSheetPage] with custom top bar.
-  static WoltModalSheetPage build({bool isLastPage = true}) {
+  static WoltModalSheetPage build() {
     return WoltModalSheetPage(
       id: pageId,
       backgroundColor: WoltColors.blue8,
       forceMaxHeight: true,
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Builder(builder: (context) {
-          return WoltElevatedButton(
-            onPressed: isLastPage
-                ? Navigator.of(context).pop
-                : WoltModalSheet.of(context).showNext,
-            colorName: WoltColorName.blue,
-            child: Text(isLastPage ? "Close" : "Next"),
-          );
-        }),
+      stickyActionBar: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: WoltModalSheetCloseOrNextSab(),
       ),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       isTopBarLayerAlwaysVisible: false,

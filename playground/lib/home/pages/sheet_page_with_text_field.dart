@@ -8,7 +8,7 @@ class SheetPageWithTextField {
 
   static const ModalPageName pageId = ModalPageName.textField;
 
-  static WoltModalSheetPage build({bool isLastPage = true}) {
+  static WoltModalSheetPage build() {
     ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     final textEditingController = TextEditingController();
     textEditingController.addListener(() {
@@ -19,6 +19,7 @@ class SheetPageWithTextField {
       stickyActionBar: ValueListenableBuilder<bool>(
         valueListenable: isButtonEnabledNotifier,
         builder: (context, isEnabled, __) {
+          final isLastPage = WoltModalSheet.of(context).isAtLastPage;
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: WoltElevatedButton(

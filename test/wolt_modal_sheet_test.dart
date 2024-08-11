@@ -277,5 +277,45 @@ void main() {
         equals(const Size(524.0, 86.0)),
       );
     });
+
+    testWidgets('getters return the correct page, page index and list of pages',
+        (tester) async {
+      const page1Id = 'page1';
+      const page2Id = 'page2';
+      final page1 =
+          WoltModalSheetPage(child: const Text('Page 1'), id: page1Id);
+      final page2 =
+          WoltModalSheetPage(child: const Text('Page 2'), id: page2Id);
+
+      await tester.pumpWidget(buildSheetWithShow(
+        pageListBuilder: (_) => [page1, page2],
+      ));
+
+      await tester.tap(find.text('Open sheet'));
+      await tester.pumpAndSettle();
+
+      final WoltModalSheetState modal =
+          WoltModalSheet.of(tester.element(find.text('Page 1')));
+
+      expect(modal.pages.length, 2);
+      expect(modal.pages[0].id, page1Id);
+      expect(modal.pages[1].id, page2Id);
+      expect(modal.currentPage, page1);
+      expect(modal.currentPageIndex, 0);
+      expect(modal.isAtFirstPage, isTrue);
+      expect(modal.isAtLastPage, isFalse);
+
+      // Go to next page
+      modal.showNext();
+      await tester.pumpAndSettle();
+
+      expect(modal.pages.length, 2);
+      expect(modal.pages[0].id, page1Id);
+      expect(modal.pages[1].id, page2Id);
+      expect(modal.currentPage, page2);
+      expect(modal.currentPageIndex, 1);
+      expect(modal.isAtFirstPage, isFalse);
+      expect(modal.isAtLastPage, isTrue);
+    });
   });
 }

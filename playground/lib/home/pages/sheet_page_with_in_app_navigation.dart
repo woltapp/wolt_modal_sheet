@@ -9,7 +9,7 @@ class SheetPageWithInAppNavigation {
 
   static const ModalPageName pageId = ModalPageName.inAppNavigation;
 
-  static WoltModalSheetPage build({bool isLastPage = true}) {
+  static WoltModalSheetPage build() {
     return WoltModalSheetPage(
       id: pageId,
       leadingNavBarWidget: const WoltModalSheetBackButton(),

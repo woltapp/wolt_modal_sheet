@@ -15,17 +15,9 @@ class SheetPageWithNoPageTitleNoTopBar {
       id: pageId,
       backgroundColor: WoltColors.green8,
       forceMaxHeight: true,
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Builder(builder: (context) {
-          return WoltElevatedButton(
-            onPressed: isLastPage
-                ? Navigator.of(context).pop
-                : WoltModalSheet.of(context).showNext,
-            colorName: WoltColorName.green,
-            child: Text(isLastPage ? "Close" : "Next"),
-          );
-        }),
+      stickyActionBar: const Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
       ),
       hasTopBarLayer: false,
       child: const Padding(
