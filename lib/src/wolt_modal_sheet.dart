@@ -272,6 +272,21 @@ class WoltModalSheet<T> extends StatefulWidget {
 class WoltModalSheetState extends State<WoltModalSheet> {
   List<SliverWoltModalSheetPage> _pages = [];
 
+  /// The list of pages in the modal sheet.
+  List<SliverWoltModalSheetPage> get pages => _pages;
+
+  /// The current page displayed in the modal sheet.
+  SliverWoltModalSheetPage get currentPage => _pages[_currentPageIndex];
+
+  /// The index of the currently displayed page in the in-modal navigation stack.
+  int get currentPageIndex => _currentPageIndex;
+
+  /// Returns true if the current page is the first page in the stack.
+  bool get isAtFirstPage => _currentPageIndex == 0;
+
+  /// Returns true if the current page is the last page in the stack.
+  bool get isAtLastPage => _currentPageIndex == _pages.length - 1;
+
   final GlobalKey _childKey = GlobalKey(debugLabel: 'Modal sheet child');
 
   static const barrierLayoutId = 'barrierLayoutId';
@@ -888,9 +903,6 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     }
     return false;
   }
-
-  /// The index of the currently displayed page in the in-modal navigation stack.
-  int get currentPageIndex => _currentPageIndex;
 }
 
 class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
