@@ -10,7 +10,7 @@ class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
   // This is an example to non-lazy initialization.
   late final OrdersService _ordersService;
 
-  AddWaterDependencyContainer({required super.dependencyContainerResolver}) {
+  AddWaterDependencyContainer({required super.resolver}) {
     final orderDependencies = bindWith<OrdersDependencyContainer>();
     _ordersService = orderDependencies.ordersService;
   }

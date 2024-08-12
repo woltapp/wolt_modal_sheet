@@ -6,32 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CoffeeMakerApp extends StatelessWidget {
-  const CoffeeMakerApp({
-    required this.dependencyContainerResolver,
-    Key? key,
-  }) : super(key: key);
-
-  final DependencyContainerResolver dependencyContainerResolver;
+  const CoffeeMakerApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final appLevelDependencyContainer = dependencyContainerResolver
-        .getDependencyContainer<CoffeeMakerAppLevelDependencyContainer>();
+    return DependencyInjector(
+      child: Builder(builder: (context) {
+        final appLevelDependencyContainer = DependencyInjector.container<
+            CoffeeMakerAppLevelDependencyContainer>(context);
 
-    return DependencyContainerInjector(
-      dependencyContainerResolver: dependencyContainerResolver,
-      child: ChangeNotifierProvider<RouterViewModel>(
-        create: (_) => appLevelDependencyContainer.routerViewModel,
-        builder: (context, _) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: AppThemeData.themeData(context),
-            routerDelegate: appLevelDependencyContainer.appRouterDelegate,
-            backButtonDispatcher:
-                appLevelDependencyContainer.backButtonDispatcher,
-          );
-        },
-      ),
+        return ChangeNotifierProvider<RouterViewModel>(
+          create: (_) => appLevelDependencyContainer.routerViewModel,
+          builder: (context, _) {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              theme: AppThemeData.themeData(context),
+              routerDelegate: appLevelDependencyContainer.appRouterDelegate,
+              backButtonDispatcher:
+                  appLevelDependencyContainer.backButtonDispatcher,
+            );
+          },
+        );
+      }),
     );
   }
 }

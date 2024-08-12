@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscription_mixin.dart';
 import 'package:coffee_maker_navigator_2/di/src/dependency_containers/add_water_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_injector.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_injector.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/entities/water_source.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
@@ -31,10 +31,11 @@ class _AddWaterScreenState extends State<AddWaterScreen>
         body: SafeArea(
           top: false,
           child: ChangeNotifierProvider<AddWaterViewModel>(
-              create: (context) => DependencyContainerInjector.container<
-                      AddWaterDependencyContainer>(context)
-                  .createViewModel()
-                ..onInit(widget.coffeeOrderId),
+              create: (context) =>
+                  DependencyInjector.container<AddWaterDependencyContainer>(
+                          context)
+                      .createViewModel()
+                    ..onInit(widget.coffeeOrderId),
               builder: (context, _) {
                 final viewModel = context.read<AddWaterViewModel>();
                 return Stack(

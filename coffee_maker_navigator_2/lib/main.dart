@@ -10,22 +10,21 @@ void _registerDependencyContainerFactories(
     DependencyContainerRegistrar registrar) {
   registrar
     ..registerContainerFactory<OrdersDependencyContainer>(
-      (r) => OrdersDependencyContainer(dependencyContainerResolver: r),
+      (r) => OrdersDependencyContainer(resolver: r),
     )
     ..registerContainerFactory<AddWaterDependencyContainer>(
-      (r) => AddWaterDependencyContainer(dependencyContainerResolver: r),
+      (r) => AddWaterDependencyContainer(resolver: r),
     )
     ..registerContainerFactory<AuthScreenDependencyContainer>(
-      (r) => AuthScreenDependencyContainer(dependencyContainerResolver: r),
+      (r) => AuthScreenDependencyContainer(resolver: r),
     );
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dependencyContainerManager = DependencyContainerManager.instance;
-  await dependencyContainerManager
-      .init(CoffeeMakerAppLevelDependencyContainer());
+  final appLevelDependencyContainer = CoffeeMakerAppLevelDependencyContainer();
+  await dependencyContainerManager.init(appLevelDependencyContainer);
   _registerDependencyContainerFactories(dependencyContainerManager);
-  runApp(
-      CoffeeMakerApp(dependencyContainerResolver: dependencyContainerManager));
+  runApp(const CoffeeMakerApp());
 }

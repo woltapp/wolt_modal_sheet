@@ -119,7 +119,7 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// subscriptions to other containers, ensuring that feature-level dependencies
   /// are created and disposed of in accordance with the application's needs.
   @protected
-  final DependencyContainerResolver dependencyContainerResolver;
+  final DependencyContainerResolver resolver;
 
   /// Constructor for `FeatureLevelDependencyContainer`.
   ///
@@ -128,7 +128,7 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   ///
   /// [dependencyContainerManager]: The `DependencyContainerManager` that will manage
   /// the lifecycle of this feature-level container's dependencies.
-  FeatureLevelDependencyContainer({required this.dependencyContainerResolver});
+  FeatureLevelDependencyContainer({required this.resolver});
 
   /// Binds this container to another specified dependency container type [C].
   ///
@@ -148,8 +148,8 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// ```
   @protected
   C bindWith<C extends DependencyContainer>() {
-    dependencyContainerResolver.subscribeToContainer<C>(this);
-    return dependencyContainerResolver.getDependencyContainer<C>();
+    resolver.subscribeToContainer<C>(this);
+    return resolver.getDependencyContainer<C>();
   }
 
   /// Unbinds this container from the specified dependency container type [C].
@@ -167,7 +167,7 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// ```
   @protected
   void unbindFrom<C extends DependencyContainer>() {
-    dependencyContainerResolver.unsubscribeFromContainer<C>(this);
+    resolver.unsubscribeFromContainer<C>(this);
   }
 
   /// Disposes the dependencies managed by this container.

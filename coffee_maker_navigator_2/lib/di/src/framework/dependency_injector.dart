@@ -3,31 +3,30 @@ import 'package:flutter/widgets.dart';
 
 /// A widget that proxies requests to [DependencyContainerResolver].
 ///
-/// The [DependencyContainerInjector] widget is an [InheritedWidget] that holds a reference to
+/// The [DependencyInjector] widget is an [InheritedWidget] that holds a reference to
 /// the [DependencyContainerResolver]. It ensures that the DI system is accessible
 /// from anywhere within the widget tree.
 ///
 /// This widget is used to inject the [DependencyContainerResolver] into the widget
 /// tree, making it possible to obtain and manage dependency containers from any
 /// descendant widget.
-class DependencyContainerInjector extends InheritedWidget {
+class DependencyInjector extends InheritedWidget {
   /// The [DependencyContainerResolver] that manages access to dependency containers,
   /// including subscribing to, unsubscribing from, and resolving container instances.
-  final DependencyContainerResolver _dependencyContainerResolver;
+  final DependencyContainerResolver _resolver;
 
-  /// Creates an [DependencyContainerInjector] widget.
+  /// Creates an [DependencyInjector] widget.
   ///
   /// [key]: An optional key for the widget.
   /// [child]: The child widget which will have access to the DI system.
   /// [dependencyContainerResolver]: The [DependencyContainerResolver] instance to be provided.
-  const DependencyContainerInjector({
+  DependencyInjector({
     Key? key,
     required Widget child,
-    required DependencyContainerResolver dependencyContainerResolver,
-  })  : _dependencyContainerResolver = dependencyContainerResolver,
+  })  : _resolver = DependencyContainerManager.instance,
         super(key: key, child: child);
 
-  /// Retrieves the [DependencyContainerInjector] from the given `BuildContext`.
+  /// Retrieves the [DependencyInjector] from the given `BuildContext`.
   ///
   /// This method allows any descendant widget to access the [DependencyContainerResolver]
   /// by calling `Injector.of(context)`.
@@ -35,9 +34,9 @@ class DependencyContainerInjector extends InheritedWidget {
   /// [context]: The `BuildContext` from which to retrieve the [DependencyContainerResolver].
   ///
   /// Returns the nearest `Injector` widget.
-  static DependencyContainerInjector of(BuildContext context) {
-    final DependencyContainerInjector? injector =
-        context.getInheritedWidgetOfExactType<DependencyContainerInjector>();
+  static DependencyInjector of(BuildContext context) {
+    final DependencyInjector? injector =
+        context.getInheritedWidgetOfExactType<DependencyInjector>();
     assert(injector != null, 'No Injector found in context');
     return injector!;
   }
@@ -48,7 +47,7 @@ class DependencyContainerInjector extends InheritedWidget {
   ///
   /// Returns an instance of the container of type [C].
   static C container<C>(BuildContext context) {
-    return DependencyContainerInjector.of(context)._getDependencyContainer<C>();
+    return DependencyInjector.of(context)._getDependencyContainer<C>();
   }
 
   /// Subscribes a given object to a container of type [C].
@@ -59,7 +58,7 @@ class DependencyContainerInjector extends InheritedWidget {
   /// [subscriber]: The [DependencyContainerSubscriptionMixin] mixin subscribing to the container.
   void subscribeToDependencyContainer<C>(
       DependencyContainerSubscriptionMixin subscriber) {
-    _dependencyContainerResolver.subscribeToContainer<C>(subscriber);
+    _resolver.subscribeToContainer<C>(subscriber);
   }
 
   /// Unsubscribes a given object from a container of type [C].
@@ -70,7 +69,7 @@ class DependencyContainerInjector extends InheritedWidget {
   /// [subscriber]:  The [DependencyContainerSubscriptionMixin] mixin unsubscribing from the container.
   void unsubscribeFromDependencyContainer<C>(
       DependencyContainerSubscriptionMixin subscriber) {
-    _dependencyContainerResolver.unsubscribeFromContainer<C>(subscriber);
+    _resolver.unsubscribeFromContainer<C>(subscriber);
   }
 
   /// Retrieves the container of type [C].
@@ -79,14 +78,14 @@ class DependencyContainerInjector extends InheritedWidget {
   ///
   /// Returns an instance of the container of type [C].
   C _getDependencyContainer<C>() {
-    return _dependencyContainerResolver.getDependencyContainer<C>();
+    return _resolver.getDependencyContainer<C>();
   }
 
   /// Determines whether the widget should notify its dependents when the widget's state changes.
   ///
   /// Since the `Injector` widget does not have any mutable state, this method always returns `false`.
   @override
-  bool updateShouldNotify(DependencyContainerInjector oldWidget) {
+  bool updateShouldNotify(DependencyInjector oldWidget) {
     return false;
   }
 }
