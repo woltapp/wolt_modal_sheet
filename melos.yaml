@@ -8,6 +8,7 @@ packages:
   - demo_ui_components
   - playground
   - playground_navigator2
+  - wolt_di
 
 command:
   bootstrap:

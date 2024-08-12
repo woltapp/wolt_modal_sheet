@@ -1,10 +1,8 @@
-import 'package:coffee_maker_navigator_2/di/di.dart';
+import 'package:wolt_di/wolt_di.dart';
 
 /// A typedef for the factory function responsible for creating instances
 /// of dependency containers.
-typedef DependencyContainerFactory = DependencyContainer Function(
-  DependencyContainerResolver,
-);
+typedef DependencyContainerFactory = DependencyContainer Function();
 
 /// A contract for registering dependency container factories.
 ///
@@ -163,7 +161,7 @@ class DependencyContainerManager
     final isSubscriptionAdded = _containerSubscribers[C]!.add(subscriber);
 
     if (_activeContainers[C] == null && isSubscriptionAdded) {
-      _activeContainers[C] = _containerFactories[C]!(this);
+      _activeContainers[C] = _containerFactories[C]!();
     }
   }
 

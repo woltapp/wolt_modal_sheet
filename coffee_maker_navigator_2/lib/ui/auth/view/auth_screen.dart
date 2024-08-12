@@ -1,10 +1,9 @@
-import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscription_mixin.dart';
-import 'package:coffee_maker_navigator_2/di/src/dependency_containers/auth_screen_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/src/framework/dependency_injector.dart';
+import 'package:coffee_maker_navigator_2/di/auth_screen_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wolt_di/wolt_di.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});

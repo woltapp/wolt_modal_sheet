@@ -1,5 +1,7 @@
-import 'package:coffee_maker_navigator_2/di/di.dart';
 import 'package:flutter/widgets.dart';
+import 'package:wolt_di/src/manager/dependency_container_manager.dart';
+import 'package:wolt_di/src/dependency_container_subscription_mixin.dart';
+import 'package:meta/meta.dart';
 
 /// A widget that proxies requests to [DependencyContainerResolver].
 ///
@@ -45,6 +47,11 @@ class DependencyInjector extends InheritedWidget {
   ///
   /// This method allows any widget to access the active container of the specified type [C].
   ///
+  /// This method returns the currently active container of the specified type [C]. If the
+  /// container does not exist or has not been instantiated (since it has not been subscribed to)
+  /// an error is thrown. Ensure that the container type [C] has been correctly registered with
+  /// a factory function and has at least one active subscriber before calling this method.
+  ///
   /// Returns an instance of the container of type [C].
   static C container<C>(BuildContext context) {
     return DependencyInjector.of(context)._getDependencyContainer<C>();
@@ -56,6 +63,7 @@ class DependencyInjector extends InheritedWidget {
   /// remains active as long as there are subscribers.
   ///
   /// [subscriber]: The [DependencyContainerSubscriptionMixin] mixin subscribing to the container.
+  @internal
   void subscribeToDependencyContainer<C>(
       DependencyContainerSubscriptionMixin subscriber) {
     _resolver.subscribeToContainer<C>(subscriber);
@@ -67,16 +75,12 @@ class DependencyInjector extends InheritedWidget {
   /// more subscribers, the container may be disposed of.
   ///
   /// [subscriber]:  The [DependencyContainerSubscriptionMixin] mixin unsubscribing from the container.
+  @internal
   void unsubscribeFromDependencyContainer<C>(
       DependencyContainerSubscriptionMixin subscriber) {
     _resolver.unsubscribeFromContainer<C>(subscriber);
   }
 
-  /// Retrieves the container of type [C].
-  ///
-  /// This method allows any widget to access the active container of the specified type [C].
-  ///
-  /// Returns an instance of the container of type [C].
   C _getDependencyContainer<C>() {
     return _resolver.getDependencyContainer<C>();
   }

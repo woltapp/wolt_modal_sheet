@@ -1,12 +1,12 @@
-import 'package:coffee_maker_navigator_2/di/src/dependency_containers/coffee_maker_app_level_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/coffee_maker_app_level_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
+import 'package:wolt_di/wolt_di.dart';
 
 class AuthScreenDependencyContainer extends FeatureLevelDependencyContainer {
   late final AuthService _authService;
 
-  AuthScreenDependencyContainer({required super.resolver}) {
+  AuthScreenDependencyContainer() {
     final appLevelDependencies =
         bindWith<CoffeeMakerAppLevelDependencyContainer>();
     _authService = appLevelDependencies.authService;

@@ -1,5 +1,5 @@
-import 'package:coffee_maker_navigator_2/di/di.dart';
 import 'package:flutter/foundation.dart';
+import 'package:wolt_di/src/manager/dependency_container_manager.dart';
 
 /// An abstract base class representing a dependency container in the Dependency Injection (DI)
 /// system.
@@ -119,16 +119,11 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// subscriptions to other containers, ensuring that feature-level dependencies
   /// are created and disposed of in accordance with the application's needs.
   @protected
-  final DependencyContainerResolver resolver;
+  final DependencyContainerResolver _resolver;
 
-  /// Constructor for `FeatureLevelDependencyContainer`.
-  ///
-  /// Requires an instance of `DependencyContainerManager` to manage the feature's
-  /// dependencies dynamically.
-  ///
-  /// [dependencyContainerManager]: The `DependencyContainerManager` that will manage
-  /// the lifecycle of this feature-level container's dependencies.
-  FeatureLevelDependencyContainer({required this.resolver});
+  /// Constructor for [FeatureLevelDependencyContainer].
+  FeatureLevelDependencyContainer()
+      : _resolver = DependencyContainerManager.instance;
 
   /// Binds this container to another specified dependency container type [C].
   ///
@@ -148,8 +143,8 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// ```
   @protected
   C bindWith<C extends DependencyContainer>() {
-    resolver.subscribeToContainer<C>(this);
-    return resolver.getDependencyContainer<C>();
+    _resolver.subscribeToContainer<C>(this);
+    return _resolver.getDependencyContainer<C>();
   }
 
   /// Unbinds this container from the specified dependency container type [C].
@@ -167,7 +162,7 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// ```
   @protected
   void unbindFrom<C extends DependencyContainer>() {
-    resolver.unsubscribeFromContainer<C>(this);
+    _resolver.unsubscribeFromContainer<C>(this);
   }
 
   /// Disposes the dependencies managed by this container.
