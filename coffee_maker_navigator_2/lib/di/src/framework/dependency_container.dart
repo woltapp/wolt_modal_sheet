@@ -1,4 +1,5 @@
-import 'package:coffee_maker_navigator_2/di/dependency_container_manager.dart';
+import 'package:coffee_maker_navigator_2/di/di.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/manager/dependency_container_manager.dart';
 import 'package:flutter/foundation.dart';
 
 /// An abstract base class representing a dependency container in the Dependency Injection (DI)
@@ -21,21 +22,7 @@ import 'package:flutter/foundation.dart';
 ///   }
 /// }
 /// ```
-abstract class DependencyContainer {
-  /// Disposes the dependencies managed by this container.
-  ///
-  /// This method should be implemented by concrete dependency containers to release
-  /// any resources they hold. It is called by the [DependencyContainerManager] when the container
-  /// is no longer needed, typically when there are no more subscribers for the container.
-  ///
-  /// Implementers should ensure that all managed resources, such as open connections,
-  /// event listeners, or other allocated objects, are properly cleaned up in this method.
-  ///
-  /// **Do not call this method directly** from outside the container. The
-  /// `DependencyContainerManager` is responsible for determining when a container
-  /// should be disposed of and will invoke this method as needed.
-  void dispose();
-}
+abstract class DependencyContainer {}
 
 /// An abstract class representing the dependency container for app-level dependencies.
 ///
@@ -97,13 +84,6 @@ abstract class AppLevelDependencyContainer extends DependencyContainer {
   /// Returns a [Future] that completes once all app-level dependencies have been
   /// successfully initialized.
   Future<void> init();
-
-  @override
-  void dispose() {
-    throw StateError(
-      'AppLevelDependencyContainer should remain available for the life of the application and cannot be disposed.',
-    );
-  }
 }
 
 /// An abstract base class for managing feature-level dependency containers within the application.
@@ -140,7 +120,7 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// subscriptions to other containers, ensuring that feature-level dependencies
   /// are created and disposed of in accordance with the application's needs.
   @protected
-  final DependencyContainerManager dependencyContainerManager;
+  final DependencyContainerAccessHandler dependencyContainerAccessHandler;
 
   /// Constructor for `FeatureLevelDependencyContainer`.
   ///
@@ -149,7 +129,8 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   ///
   /// [dependencyContainerManager]: The `DependencyContainerManager` that will manage
   /// the lifecycle of this feature-level container's dependencies.
-  FeatureLevelDependencyContainer({required this.dependencyContainerManager});
+  FeatureLevelDependencyContainer(
+      {required this.dependencyContainerAccessHandler});
 
   /// Binds this container to another specified dependency container type [C].
   ///
@@ -169,8 +150,8 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// ```
   @protected
   C bindWith<C extends DependencyContainer>() {
-    dependencyContainerManager.subscribeToContainer<C>(this);
-    return dependencyContainerManager.getDependencyContainer<C>();
+    dependencyContainerAccessHandler.subscribeToContainer<C>(this);
+    return dependencyContainerAccessHandler.getDependencyContainer<C>();
   }
 
   /// Unbinds this container from the specified dependency container type [C].
@@ -188,6 +169,20 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   /// ```
   @protected
   void unbindFrom<C extends DependencyContainer>() {
-    dependencyContainerManager.unsubscribeFromContainer<C>(this);
+    dependencyContainerAccessHandler.unsubscribeFromContainer<C>(this);
   }
+
+  /// Disposes the dependencies managed by this container.
+  ///
+  /// This method should be implemented by concrete dependency containers to release
+  /// any resources they hold. It is called by the [DependencyContainerManager] when the container
+  /// is no longer needed, typically when there are no more subscribers for the container.
+  ///
+  /// Implementers should ensure that all managed resources, such as open connections,
+  /// event listeners, or other allocated objects, are properly cleaned up in this method.
+  ///
+  /// **Do not call this method directly** from outside the container. The
+  /// `DependencyContainerManager` is responsible for determining when a container
+  /// should be disposed of and will invoke this method as needed.
+  void dispose();
 }

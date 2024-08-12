@@ -1,5 +1,5 @@
-import 'package:coffee_maker_navigator_2/di/dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/orders_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/add_water_service.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/orders_service.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
@@ -10,7 +10,8 @@ class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
   // This is an example to non-lazy initialization.
   late final OrdersService _ordersService;
 
-  AddWaterDependencyContainer({required super.dependencyContainerManager}) {
+  AddWaterDependencyContainer(
+      {required super.dependencyContainerAccessHandler}) {
     final orderDependencies = bindWith<OrdersDependencyContainer>();
     _ordersService = orderDependencies.ordersService;
   }

@@ -2,7 +2,7 @@ import 'package:coffee_maker_navigator_2/data/auth/local/auth_local_data_source.
 import 'package:coffee_maker_navigator_2/data/auth/repository/auth_repository.dart';
 import 'package:coffee_maker_navigator_2/data/onboarding/local/onboarding_local_data_source.dart';
 import 'package:coffee_maker_navigator_2/data/onboarding/repository/onboarding_repository.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
 import 'package:coffee_maker_navigator_2/domain/onboarding/onboarding_service.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view/app_router_delegate.dart';

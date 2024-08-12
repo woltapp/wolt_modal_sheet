@@ -1,6 +1,6 @@
-import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/auth_screen_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/injector.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/auth_screen_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_injector.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,8 @@ class _AuthScreenState extends State<AuthScreen>
       body: SafeArea(
         child: Center(
           child: ChangeNotifierProvider<AuthScreenViewModel>(
-              create: (context) => Injector.of(context)
-                  .getDependencyContainer<AuthScreenDependencyContainer>()
+              create: (context) => DependencyContainerInjector.container<
+                      AuthScreenDependencyContainer>(context)
                   .createViewModel(),
               builder: (context, _) {
                 return SingleChildScrollView(

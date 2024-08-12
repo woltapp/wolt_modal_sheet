@@ -1,6 +1,6 @@
-import 'package:coffee_maker_navigator_2/di/dependency_containers/orders_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/injector.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_injector.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscriber.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/coffee_order_list_view_for_step.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/orders_screen_bottom_navigation_bar.dart';
@@ -34,9 +34,10 @@ class _OrdersScreenState extends State<OrdersScreen>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<OrdersScreenViewModel>(
-      create: (context) => Injector.of(context)
-          .getDependencyContainer<OrdersDependencyContainer>()
-          .createOrderScreenViewModel(),
+      create: (context) =>
+          DependencyContainerInjector.container<OrdersDependencyContainer>(
+                  context)
+              .createOrderScreenViewModel(),
       builder: (context, _) {
         final viewModel = context.watch<OrdersScreenViewModel>();
 

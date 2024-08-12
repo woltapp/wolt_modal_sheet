@@ -1,4 +1,4 @@
-import 'package:coffee_maker_navigator_2/di/injector.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_injector.dart';
 import 'package:flutter/widgets.dart';
 
 /// A mixin that subscribes the state of the `StatefulWidget` to a dependency container and manages
@@ -13,12 +13,12 @@ import 'package:flutter/widgets.dart';
 /// This mixin should be used with `State` classes of `StatefulWidget` to manage
 /// their dependency containers seamlessly.
 mixin DependencyContainerSubscriber<C, T extends StatefulWidget> on State<T> {
-  late Injector _injector;
+  late DependencyContainerInjector _injector;
 
   @override
   void initState() {
     super.initState();
-    _injector = Injector.of(context);
+    _injector = DependencyContainerInjector.of(context);
     _injector.subscribeToDependencyContainer<C>(this);
   }
 

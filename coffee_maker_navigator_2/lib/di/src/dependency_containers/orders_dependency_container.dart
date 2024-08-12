@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/data/orders/remote/orders_remote_data_source.dart';
 import 'package:coffee_maker_navigator_2/data/orders/repository/orders_repository.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/orders_service.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view_model/orders_screen_view_model.dart';
 
@@ -11,7 +11,7 @@ class OrdersDependencyContainer extends FeatureLevelDependencyContainer {
 
   OrdersService get ordersService => _ordersService;
 
-  OrdersDependencyContainer({required super.dependencyContainerManager}) {
+  OrdersDependencyContainer({required super.dependencyContainerAccessHandler}) {
     _ordersRemoteDataSource = OrdersRemoteDataSourceImpl();
     _ordersRepository = OrdersRepository(
       ordersRemoteDataSource: _ordersRemoteDataSource,

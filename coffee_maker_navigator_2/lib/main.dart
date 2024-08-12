@@ -1,38 +1,35 @@
 import 'package:coffee_maker_navigator_2/app.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_container_manager.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/add_water_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/auth_screen_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/di.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/auth_screen_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/add_water_dependency_container.dart';
 import 'package:flutter/material.dart';
 
-void _registerDependencyContainerFactories() {
-  final manager = DependencyContainerManager.instance;
-  manager
+void _registerDependencyContainerFactories(
+    DependencyContainerFactoryRegistrar registrar) {
+  registrar
     ..registerContainerFactory<OrdersDependencyContainer>(
-      (resolver) => OrdersDependencyContainer(
-        dependencyContainerManager: manager,
+      (accessHandler) => OrdersDependencyContainer(
+        dependencyContainerAccessHandler: accessHandler,
       ),
     )
     ..registerContainerFactory<AddWaterDependencyContainer>(
-      (resolver) => AddWaterDependencyContainer(
-        dependencyContainerManager: manager,
+      (accessHandler) => AddWaterDependencyContainer(
+        dependencyContainerAccessHandler: accessHandler,
       ),
     )
     ..registerContainerFactory<AuthScreenDependencyContainer>(
-      (resolver) => AuthScreenDependencyContainer(
-        dependencyContainerManager: manager,
+      (accessHandler) => AuthScreenDependencyContainer(
+        dependencyContainerAccessHandler: accessHandler,
       ),
     );
 }
 
-Future<void> _initDependencyContainerManager() async {
-  final manager = DependencyContainerManager.instance;
-  await manager.init();
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await _initDependencyContainerManager();
-  _registerDependencyContainerFactories();
-  runApp(const CoffeeMakerApp());
+  final dependencyContainerManager = DependencyContainerManager.instance;
+  await dependencyContainerManager.init();
+  _registerDependencyContainerFactories(dependencyContainerManager);
+  runApp(CoffeeMakerApp(
+      dependencyContainerAccessHandler: dependencyContainerManager));
 }

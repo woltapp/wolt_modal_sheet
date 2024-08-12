@@ -1,17 +1,15 @@
-import 'package:coffee_maker_navigator_2/di/dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/dependency_containers/coffee_maker_app_level_dependency_container.dart';
-
-/// A typedef for the factory function responsible for creating instances
-/// of dependency containers.
-typedef DependencyContainerFactory = DependencyContainer Function(
-    DependencyContainerManager);
+import 'package:coffee_maker_navigator_2/di/di.dart';
+import 'package:coffee_maker_navigator_2/di/src/dependency_containers/coffee_maker_app_level_dependency_container.dart';
 
 /// The `DependencyContainerManager` is a singleton class responsible for managing
 /// the lifecycle of dependency containers in the application.
 ///
 /// It initializes app-level dependencies at startup and manages feature-level
 /// dependencies dynamically, creating and disposing them based on their usage.
-class DependencyContainerManager {
+class DependencyContainerManager
+    implements
+        DependencyContainerAccessHandler,
+        DependencyContainerFactoryRegistrar {
   static final _instance = DependencyContainerManager._internal();
 
   // App-level dependencies that live for the entire duration of the app.
@@ -48,14 +46,7 @@ class DependencyContainerManager {
     await _appLevelDependencyContainer.init();
   }
 
-  /// Registers a dependency container factory for a specific type [T].
-  ///
-  /// This method allows you to register a factory function that will be responsible
-  /// for creating instances of the dependency container for the specified dependency container
-  /// type [T].
-  ///
-  /// [factory]: A factory function that takes [DependencyContainerManager] and returns an
-  /// instance of the dependency container type [T].
+  @override
   void registerContainerFactory<T>(DependencyContainerFactory factory) {
     // Ensure that the type C is explicitly provided by checking its runtime type.
     assert(T != dynamic,
@@ -63,13 +54,7 @@ class DependencyContainerManager {
     _containerFactories[T] = factory;
   }
 
-  /// Adds a subscriber for the container of type [C] and manages the container's lifecycle.
-  ///
-  /// This method registers a subscriber for the specified container type [C] and
-  /// manages the lifecycle of the container based on the presence of subscribers.
-  ///
-  /// [subscriber]: An object that subscribes to the container of type [C]. The presence
-  /// of subscribers influences the creation and destruction of the container.
+  @override
   void subscribeToContainer<C>(Object subscriber) {
     final isSubscribingToAppLevelContainer =
         C == _appLevelDependencyContainer.runtimeType;
@@ -93,35 +78,26 @@ class DependencyContainerManager {
     }
   }
 
-  /// Removes a subscriber for the container of type [C] and manages the container's lifecycle.
-  ///
-  /// This method unregisters a subscriber for the specified container type [C] and
-  /// manages the lifecycle of the container based on the remaining subscribers.
-  ///
-  /// [subscriber]: An object that unsubscribes from the container of type [C]. The absence
-  /// of subscribers leads to the destruction of the container.
+  @override
   void unsubscribeFromContainer<C>(Object subscriber) {
     final isSubscriptionRemoved = _containerSubscribers[C] != null &&
         _containerSubscribers[C]!.remove(subscriber);
+    final isSubscriberToAppLevelContainer =
+        C == _appLevelDependencyContainer.runtimeType;
 
     if (isSubscriptionRemoved) {
       final hasRemainingSubscribers = _containerSubscribers[C]!.isEmpty;
       // Dispose the container and remove it from the active list if there is no subscriber left.
-      if (!hasRemainingSubscribers && _activeContainers[C] != null) {
-        _activeContainers[C]!.dispose();
+      if (!hasRemainingSubscribers &&
+          _activeContainers[C] != null &&
+          !isSubscriberToAppLevelContainer) {
+        (_activeContainers[C] as FeatureLevelDependencyContainer).dispose();
         _activeContainers.remove(C);
       }
     }
   }
 
-  /// Retrieves the container of type [C].
-  ///
-  /// This method returns the active container of the specified type [C]. If the container
-  /// does not exist, an error is thrown.
-  ///
-  /// Throws [StateError] if the container of type [C] does not exist.
-  ///
-  /// Returns an instance of the container of type [C].
+  @override
   C getDependencyContainer<C>() {
     final container = _activeContainers[C];
     if (container == null) {
