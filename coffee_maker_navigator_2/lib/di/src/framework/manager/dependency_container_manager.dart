@@ -13,8 +13,7 @@ class DependencyContainerManager
   static final _instance = DependencyContainerManager._internal();
 
   // App-level dependencies that live for the entire duration of the app.
-  final AppLevelDependencyContainer _appLevelDependencyContainer =
-      CoffeeMakerAppLevelDependencyContainer();
+  late AppLevelDependencyContainer _appLevelDependencyContainer;
 
   // A map that registers container factories by their type.
   //
@@ -41,7 +40,9 @@ class DependencyContainerManager
   DependencyContainerManager._internal();
 
   /// Initializes the app-level dependencies.
-  Future<void> init() async {
+  Future<void> init(
+      AppLevelDependencyContainer appLevelDependencyContainer) async {
+    _appLevelDependencyContainer = appLevelDependencyContainer;
     _registerAppLevelDependencies();
     await _appLevelDependencyContainer.init();
   }
