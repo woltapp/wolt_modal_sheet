@@ -7,7 +7,7 @@ import 'package:coffee_maker_navigator_2/di/src/dependency_containers/add_water_
 import 'package:flutter/material.dart';
 
 void _registerDependencyContainerFactories(
-    DependencyContainerFactoryRegistrar registrar) {
+    DependencyContainerRegistrar registrar) {
   registrar
     ..registerContainerFactory<OrdersDependencyContainer>(
       (accessHandler) => OrdersDependencyContainer(

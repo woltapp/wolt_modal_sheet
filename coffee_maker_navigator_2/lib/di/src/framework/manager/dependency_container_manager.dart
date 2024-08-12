@@ -7,9 +7,7 @@ import 'package:coffee_maker_navigator_2/di/src/dependency_containers/coffee_mak
 /// It initializes app-level dependencies at startup and manages feature-level
 /// dependencies dynamically, creating and disposing them based on their usage.
 class DependencyContainerManager
-    implements
-        DependencyContainerAccessHandler,
-        DependencyContainerFactoryRegistrar {
+    implements DependencyContainerAccessHandler, DependencyContainerRegistrar {
   static final _instance = DependencyContainerManager._internal();
 
   // App-level dependencies that live for the entire duration of the app.

@@ -8,13 +8,13 @@ typedef DependencyContainerFactory = DependencyContainer Function(
 
 /// A contract for registering dependency container factories.
 ///
-/// The [DependencyContainerFactoryRegistrar] interface defines the methods required for
+/// The [DependencyContainerRegistrar] interface defines the methods required for
 /// registering factory functions that create instances of dependency containers.
 /// Implementations of this interface manage the registration process, ensuring
 /// that the correct factory functions are associated with the appropriate container types.
 ///
 /// [DependencyContainerManager] is typically the only class that implements this interface.
-abstract interface class DependencyContainerFactoryRegistrar {
+abstract interface class DependencyContainerRegistrar {
   /// Registers a factory function for a specific dependency container type [T].
   ///
   /// This method allows registering a factory function that will be responsible
