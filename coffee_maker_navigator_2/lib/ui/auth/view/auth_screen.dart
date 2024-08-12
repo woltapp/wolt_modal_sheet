@@ -1,4 +1,4 @@
-import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscription_mixin.dart';
 import 'package:coffee_maker_navigator_2/di/src/dependency_containers/auth_screen_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_injector.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
@@ -15,7 +15,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen>
     with
-        DependencyContainerSubscriber<AuthScreenDependencyContainer,
+        DependencyContainerSubscriptionMixin<AuthScreenDependencyContainer,
             AuthScreen> {
   @override
   Widget build(BuildContext context) {

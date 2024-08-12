@@ -12,7 +12,8 @@ import 'package:flutter/widgets.dart';
 ///
 /// This mixin should be used with `State` classes of `StatefulWidget` to manage
 /// their dependency containers seamlessly.
-mixin DependencyContainerSubscriber<C, T extends StatefulWidget> on State<T> {
+mixin DependencyContainerSubscriptionMixin<C, T extends StatefulWidget>
+    on State<T> {
   late DependencyContainerInjector _injector;
 
   @override

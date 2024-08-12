@@ -1,5 +1,4 @@
 import 'package:coffee_maker_navigator_2/di/di.dart';
-import 'package:coffee_maker_navigator_2/di/src/framework/manager/dependency_container_manager.dart';
 import 'package:flutter/foundation.dart';
 
 /// An abstract base class representing a dependency container in the Dependency Injection (DI)

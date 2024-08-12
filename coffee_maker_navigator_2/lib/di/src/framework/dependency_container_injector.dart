@@ -56,9 +56,9 @@ class DependencyContainerInjector extends InheritedWidget {
   /// This method adds the subscriber to the container, ensuring that the container
   /// remains active as long as there are subscribers.
   ///
-  /// [subscriber]: The [DependencyContainerSubscriber] mixin subscribing to the container.
+  /// [subscriber]: The [DependencyContainerSubscriptionMixin] mixin subscribing to the container.
   void subscribeToDependencyContainer<C>(
-      DependencyContainerSubscriber subscriber) {
+      DependencyContainerSubscriptionMixin subscriber) {
     _dependencyContainerResolver.subscribeToContainer<C>(subscriber);
   }
 
@@ -67,9 +67,9 @@ class DependencyContainerInjector extends InheritedWidget {
   /// This method removes the subscriber from the container, and if there are no
   /// more subscribers, the container may be disposed of.
   ///
-  /// [subscriber]:  The [DependencyContainerSubscriber] mixin unsubscribing from the container.
+  /// [subscriber]:  The [DependencyContainerSubscriptionMixin] mixin unsubscribing from the container.
   void unsubscribeFromDependencyContainer<C>(
-      DependencyContainerSubscriber subscriber) {
+      DependencyContainerSubscriptionMixin subscriber) {
     _dependencyContainerResolver.unsubscribeFromContainer<C>(subscriber);
   }
 

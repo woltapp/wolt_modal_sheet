@@ -1,5 +1,95 @@
 import 'package:coffee_maker_navigator_2/di/di.dart';
-import 'package:coffee_maker_navigator_2/di/src/dependency_containers/coffee_maker_app_level_dependency_container.dart';
+
+/// A typedef for the factory function responsible for creating instances
+/// of dependency containers.
+typedef DependencyContainerFactory = DependencyContainer Function(
+  DependencyContainerResolver,
+);
+
+/// A contract for registering dependency container factories.
+///
+/// The [DependencyContainerRegistrar] interface defines the methods required for
+/// registering factory functions that create instances of dependency containers.
+/// Implementations of this interface manage the registration process, ensuring
+/// that the correct factory functions are associated with the appropriate container types.
+///
+/// [DependencyContainerManager] is typically the only class that implements this interface.
+abstract interface class DependencyContainerRegistrar {
+  /// Registers a factory function for a specific dependency container type [T].
+  ///
+  /// This method allows registering a factory function that will be responsible
+  /// for creating instances of the dependency container for the specified type [T].
+  /// The registered factory function should take a [DependencyContainerResolver] as a
+  /// parameter and return an instance of the container type [T].
+  ///
+  /// [factory]: A factory function that takes a [DependencyContainerResolver] and returns
+  /// an instance of the dependency container of type [T].
+  ///
+  /// **Example**:
+  /// ```dart
+  /// containerManager.registerContainerFactory<MyFeatureContainer>(
+  ///   (manager) => MyFeatureContainer(manager),
+  /// );
+  /// ```
+  void registerContainerFactory<T>(DependencyContainerFactory factory);
+}
+
+/// A contract for managing access to dependency containers, including subscribing to,
+/// unsubscribing from, and resolving container instances.
+///
+/// Implementations of this interface are responsible for adding and removing the subscription of
+/// objects to containers, as well as resolving and providing active instances of
+/// those containers.
+///
+/// This interface ensures that dependency containers are accessible, created, and
+/// disposed of based on their usage within the application, promoting efficient
+/// resource management and modular design.
+abstract interface class DependencyContainerResolver {
+  /// Subscribes an object to a dependency container of type [C].
+  ///
+  /// This method registers an object as a subscriber to the specified container type [C],
+  /// ensuring that the container is instantiated and available for use. If no container
+  /// instance of type [C] exists when a subscription is made, this method will create
+  /// the container using the associated factory function. Otherwise, the existing container will
+  /// be used, and the subscriber will be added to the list of subscribers for that container.
+  ///
+  /// [subscriber]: The object that subscribes to the container of type [C].
+  ///
+  /// **Example**:
+  /// ```dart
+  /// containerManager.subscribeToContainer<MyFeatureContainer>(this);
+  /// ```
+  void subscribeToContainer<C>(Object subscriber);
+
+  /// Unsubscribes an object from a dependency container of type [C], managing its access.
+  ///
+  /// This method removes a subscriber from the specified container type [C]. If there are
+  /// no remaining subscribers for the container after this operation, the container will
+  /// be disposed of, releasing any resources it holds.
+  ///
+  /// [subscriber]: The object that unsubscribes from the container of type [C].
+  ///
+  /// **Example**:
+  /// ```dart
+  /// containerManager.unsubscribeFromContainer<MyFeatureContainer>(this);
+  /// ```
+  void unsubscribeFromContainer<C>(Object subscriber);
+
+  /// Retrieves the active instance of a dependency container of type [C].
+  ///
+  /// This method returns the currently active container of the specified type [C]. If the
+  /// container does not exist or has not been instantiated (since it has not been subscribed to)
+  /// an error is thrown. Ensure that the container type [C] has been correctly registered with
+  /// a factory function and has at least one active subscriber before calling this method.
+  ///
+  /// Throws [StateError] if the container of type [C] does not exist.
+  ///
+  /// **Example**:
+  /// ```dart
+  /// final myFeatureContainer = containerManager.getDependencyContainer<MyFeatureContainer>();
+  /// ```
+  C getDependencyContainer<C>();
+}
 
 /// The `DependencyContainerManager` is a singleton class responsible for managing
 /// the lifecycle of dependency containers in the application.

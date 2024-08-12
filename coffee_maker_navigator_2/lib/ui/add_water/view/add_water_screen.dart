@@ -1,4 +1,4 @@
-import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscriber.dart';
+import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_subscription_mixin.dart';
 import 'package:coffee_maker_navigator_2/di/src/dependency_containers/add_water_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/di/src/framework/dependency_container_injector.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/entities/water_source.dart';
@@ -21,7 +21,7 @@ class AddWaterScreen extends StatefulWidget {
 
 class _AddWaterScreenState extends State<AddWaterScreen>
     with
-        DependencyContainerSubscriber<AddWaterDependencyContainer,
+        DependencyContainerSubscriptionMixin<AddWaterDependencyContainer,
             AddWaterScreen> {
   @override
   Widget build(BuildContext context) {
