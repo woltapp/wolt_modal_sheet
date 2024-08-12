@@ -1,38 +1,38 @@
 import 'package:coffee_maker_navigator_2/di/di.dart';
 import 'package:flutter/widgets.dart';
 
-/// A widget that proxies requests to [DependencyContainerAccessHandler].
+/// A widget that proxies requests to [DependencyContainerResolver].
 ///
 /// The [DependencyContainerInjector] widget is an [InheritedWidget] that holds a reference to
-/// the [DependencyContainerAccessHandler]. It ensures that the DI system is accessible
+/// the [DependencyContainerResolver]. It ensures that the DI system is accessible
 /// from anywhere within the widget tree.
 ///
-/// This widget is used to inject the [DependencyContainerAccessHandler] into the widget
+/// This widget is used to inject the [DependencyContainerResolver] into the widget
 /// tree, making it possible to obtain and manage dependency containers from any
 /// descendant widget.
 class DependencyContainerInjector extends InheritedWidget {
-  /// The [DependencyContainerAccessHandler] that manages access to dependency containers,
+  /// The [DependencyContainerResolver] that manages access to dependency containers,
   /// including subscribing to, unsubscribing from, and resolving container instances.
-  final DependencyContainerAccessHandler _dependencyContainerAccessHandler;
+  final DependencyContainerResolver _dependencyContainerResolver;
 
   /// Creates an [DependencyContainerInjector] widget.
   ///
   /// [key]: An optional key for the widget.
   /// [child]: The child widget which will have access to the DI system.
-  /// [containerAccessHandler]: The [DependencyContainerAccessHandler] instance to be provided.
+  /// [dependencyContainerResolver]: The [DependencyContainerResolver] instance to be provided.
   const DependencyContainerInjector({
     Key? key,
     required Widget child,
-    required DependencyContainerAccessHandler dependencyContainerAccessHandler,
-  })  : _dependencyContainerAccessHandler = dependencyContainerAccessHandler,
+    required DependencyContainerResolver dependencyContainerResolver,
+  })  : _dependencyContainerResolver = dependencyContainerResolver,
         super(key: key, child: child);
 
   /// Retrieves the [DependencyContainerInjector] from the given `BuildContext`.
   ///
-  /// This method allows any descendant widget to access the [DependencyContainerAccessHandler]
+  /// This method allows any descendant widget to access the [DependencyContainerResolver]
   /// by calling `Injector.of(context)`.
   ///
-  /// [context]: The `BuildContext` from which to retrieve the [DependencyContainerAccessHandler].
+  /// [context]: The `BuildContext` from which to retrieve the [DependencyContainerResolver].
   ///
   /// Returns the nearest `Injector` widget.
   static DependencyContainerInjector of(BuildContext context) {
@@ -59,7 +59,7 @@ class DependencyContainerInjector extends InheritedWidget {
   /// [subscriber]: The [DependencyContainerSubscriber] mixin subscribing to the container.
   void subscribeToDependencyContainer<C>(
       DependencyContainerSubscriber subscriber) {
-    _dependencyContainerAccessHandler.subscribeToContainer<C>(subscriber);
+    _dependencyContainerResolver.subscribeToContainer<C>(subscriber);
   }
 
   /// Unsubscribes a given object from a container of type [C].
@@ -70,7 +70,7 @@ class DependencyContainerInjector extends InheritedWidget {
   /// [subscriber]:  The [DependencyContainerSubscriber] mixin unsubscribing from the container.
   void unsubscribeFromDependencyContainer<C>(
       DependencyContainerSubscriber subscriber) {
-    _dependencyContainerAccessHandler.unsubscribeFromContainer<C>(subscriber);
+    _dependencyContainerResolver.unsubscribeFromContainer<C>(subscriber);
   }
 
   /// Retrieves the container of type [C].
@@ -79,7 +79,7 @@ class DependencyContainerInjector extends InheritedWidget {
   ///
   /// Returns an instance of the container of type [C].
   C _getDependencyContainer<C>() {
-    return _dependencyContainerAccessHandler.getDependencyContainer<C>();
+    return _dependencyContainerResolver.getDependencyContainer<C>();
   }
 
   /// Determines whether the widget should notify its dependents when the widget's state changes.

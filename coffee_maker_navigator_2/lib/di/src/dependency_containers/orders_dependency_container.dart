@@ -11,7 +11,7 @@ class OrdersDependencyContainer extends FeatureLevelDependencyContainer {
 
   OrdersService get ordersService => _ordersService;
 
-  OrdersDependencyContainer({required super.dependencyContainerAccessHandler}) {
+  OrdersDependencyContainer({required super.dependencyContainerResolver}) {
     _ordersRemoteDataSource = OrdersRemoteDataSourceImpl();
     _ordersRepository = OrdersRepository(
       ordersRemoteDataSource: _ordersRemoteDataSource,

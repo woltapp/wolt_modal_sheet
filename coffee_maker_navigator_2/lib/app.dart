@@ -7,19 +7,19 @@ import 'package:provider/provider.dart';
 
 class CoffeeMakerApp extends StatelessWidget {
   const CoffeeMakerApp({
-    required this.dependencyContainerAccessHandler,
+    required this.dependencyContainerResolver,
     Key? key,
   }) : super(key: key);
 
-  final DependencyContainerAccessHandler dependencyContainerAccessHandler;
+  final DependencyContainerResolver dependencyContainerResolver;
 
   @override
   Widget build(BuildContext context) {
-    final appLevelDependencyContainer = dependencyContainerAccessHandler
+    final appLevelDependencyContainer = dependencyContainerResolver
         .getDependencyContainer<CoffeeMakerAppLevelDependencyContainer>();
 
     return DependencyContainerInjector(
-      dependencyContainerAccessHandler: dependencyContainerAccessHandler,
+      dependencyContainerResolver: dependencyContainerResolver,
       child: ChangeNotifierProvider<RouterViewModel>(
         create: (_) => appLevelDependencyContainer.routerViewModel,
         builder: (context, _) {

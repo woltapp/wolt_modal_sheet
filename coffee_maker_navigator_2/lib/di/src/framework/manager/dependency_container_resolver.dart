@@ -8,7 +8,7 @@
 /// This interface ensures that dependency containers are accessible, created, and
 /// disposed of based on their usage within the application, promoting efficient
 /// resource management and modular design.
-abstract interface class DependencyContainerAccessHandler {
+abstract interface class DependencyContainerResolver {
   /// Subscribes an object to a dependency container of type [C].
   ///
   /// This method registers an object as a subscriber to the specified container type [C],

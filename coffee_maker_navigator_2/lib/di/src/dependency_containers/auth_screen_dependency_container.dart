@@ -6,8 +6,7 @@ import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_mod
 class AuthScreenDependencyContainer extends FeatureLevelDependencyContainer {
   late final AuthService _authService;
 
-  AuthScreenDependencyContainer(
-      {required super.dependencyContainerAccessHandler}) {
+  AuthScreenDependencyContainer({required super.dependencyContainerResolver}) {
     final appLevelDependencies =
         bindWith<CoffeeMakerAppLevelDependencyContainer>();
     _authService = appLevelDependencies.authService;

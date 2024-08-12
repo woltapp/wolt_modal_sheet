@@ -3,7 +3,7 @@ import 'package:coffee_maker_navigator_2/di/di.dart';
 /// A typedef for the factory function responsible for creating instances
 /// of dependency containers.
 typedef DependencyContainerFactory = DependencyContainer Function(
-  DependencyContainerAccessHandler,
+  DependencyContainerResolver,
 );
 
 /// A contract for registering dependency container factories.
@@ -19,10 +19,10 @@ abstract interface class DependencyContainerRegistrar {
   ///
   /// This method allows registering a factory function that will be responsible
   /// for creating instances of the dependency container for the specified type [T].
-  /// The registered factory function should take a [DependencyContainerAccessHandler] as a
+  /// The registered factory function should take a [DependencyContainerResolver] as a
   /// parameter and return an instance of the container type [T].
   ///
-  /// [factory]: A factory function that takes a [DependencyContainerAccessHandler] and returns
+  /// [factory]: A factory function that takes a [DependencyContainerResolver] and returns
   /// an instance of the dependency container of type [T].
   ///
   /// **Example**:
