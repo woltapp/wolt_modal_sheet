@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_main_content.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar_flow.dart';
@@ -67,6 +66,8 @@ class _WoltModalSheetAnimatedSwitcherState
   late List<GlobalKey> _outgoingOffstagedMainContentKeys;
 
   AnimationController? _animationController;
+  late MediaQueryData _mediaQueryData;
+  late Timer? _debounceTimer;
 
   /// List of [ScrollController] objects, one for each [WoltModalSheetPage] main content.
   List<ScrollController> _scrollControllers = [];
@@ -116,7 +117,7 @@ class _WoltModalSheetAnimatedSwitcherState
     _resetScrollPositions();
     _resetScrollControllers();
     _subscribeToCurrentPageScrollPositionChanges();
-    _subscribeToSoftKeyboardClosedEvent();
+    _mediaQueryData = MediaQuery.of(context);
   }
 
   void _resetGlobalKeys() {
@@ -154,29 +155,29 @@ class _WoltModalSheetAnimatedSwitcherState
     }
   }
 
-  void _subscribeToSoftKeyboardClosedEvent() {
-    _softKeyboardVisibilitySubscription =
-        KeyboardVisibilityController().onChange.listen((bool visible) async {
-      if (!visible) {
-        /// Wait for closing soft keyboard animation to finish before emitting new value.
-        await Future.delayed(
-          const Duration(milliseconds: _maxKeyboardAnimationDuration),
-        );
-        final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
-        final newEventId = lastEventId + 1;
-        _softKeyboardClosedNotifier.value =
-            SoftKeyboardClosedEvent(eventId: newEventId);
-      }
-    });
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_incomingPageWidgets == null) {
       _addPage(animate: false);
     }
+
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: _maxKeyboardAnimationDuration), () async {
+      var keyboardVisible = _mediaQueryData.viewInsets.bottom != 0;
+      if (!keyboardVisible) {
+        /// Wait for closing soft keyboard animation to finish before emitting new value.
+        await Future.delayed(
+          const Duration(milliseconds: _maxKeyboardAnimationDuration),
+        );
+        final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
+        final newEventId = lastEventId + 1;
+        _softKeyboardClosedNotifier.value = SoftKeyboardClosedEvent(eventId: newEventId);
+      }
+    });
   }
+
+  Future<void> onKeyboardVisibilityChange(bool visible) async {}
 
   @override
   void didUpdateWidget(covariant WoltModalSheetAnimatedSwitcher oldWidget) {
@@ -251,6 +252,7 @@ class _WoltModalSheetAnimatedSwitcherState
   @override
   void dispose() {
     _animationController?.dispose();
+    _debounceTimer?.cancel();
     _softKeyboardVisibilitySubscription.cancel();
     for (final element in _scrollControllers) {
       element.dispose();
