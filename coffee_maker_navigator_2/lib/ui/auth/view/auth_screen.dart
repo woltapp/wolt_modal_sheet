@@ -1,12 +1,21 @@
-import 'package:coffee_maker_navigator_2/di/dependency_injection.dart';
+import 'package:coffee_maker_navigator_2/di/auth_screen_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wolt_di/wolt_di.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen>
+    with
+        DependencyContainerSubscriptionMixin<AuthScreenDependencyContainer,
+            AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -15,7 +24,10 @@ class AuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: ChangeNotifierProvider<AuthScreenViewModel>(
-              create: (_) => DependencyInjection.get<AuthScreenViewModel>(),
+              create: (context) =>
+                  DependencyInjector.container<AuthScreenDependencyContainer>(
+                          context)
+                      .createViewModel(),
               builder: (context, _) {
                 return SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -49,7 +61,7 @@ class AuthScreen extends StatelessWidget {
                         WoltElevatedButton(
                           onPressed: () => context
                               .read<AuthScreenViewModel>()
-                              .logIn('email', 'password'),
+                              .onLoginPressed('email', 'password'),
                           child: const Text('Sign in'),
                         ),
                       ],
