@@ -66,8 +66,8 @@ class _WoltModalSheetAnimatedSwitcherState
   late List<GlobalKey> _outgoingOffstagedMainContentKeys;
 
   AnimationController? _animationController;
-  late MediaQueryData _mediaQueryData;
-  late Timer? _debounceTimer;
+  MediaQueryData? _mediaQueryData;
+  Timer? _debounceTimer;
 
   /// List of [ScrollController] objects, one for each [WoltModalSheetPage] main content.
   List<ScrollController> _scrollControllers = [];
@@ -84,9 +84,6 @@ class _WoltModalSheetAnimatedSwitcherState
   /// needed to create a [ScrollController] with initial scroll offset when changing pages.
   ValueNotifier<double> get _currentPageScrollPosition =>
       _scrollPositions[_pageIndex];
-
-  /// Subscription for discovering the state of the soft-keyboard visibility
-  late StreamSubscription<bool> _softKeyboardVisibilitySubscription;
 
   /// Value notifier for discovering when the soft-keyboard is dismissed. These events are
   /// consumed by [WoltModalSheetTopBarFlow] and [WoltModalSheetTopBarTitleFlow] to trigger a
@@ -117,7 +114,6 @@ class _WoltModalSheetAnimatedSwitcherState
     _resetScrollPositions();
     _resetScrollControllers();
     _subscribeToCurrentPageScrollPositionChanges();
-    _mediaQueryData = MediaQuery.of(context);
   }
 
   void _resetGlobalKeys() {
@@ -162,9 +158,11 @@ class _WoltModalSheetAnimatedSwitcherState
       _addPage(animate: false);
     }
 
+    _mediaQueryData ??= MediaQuery.of(context);
+
     _debounceTimer?.cancel();
-    _debounceTimer = Timer(const Duration(milliseconds: _maxKeyboardAnimationDuration), () async {
-      var keyboardVisible = _mediaQueryData.viewInsets.bottom != 0;
+    _debounceTimer = Timer(const Duration(milliseconds: 50), () async {
+      var keyboardVisible = _mediaQueryData!.viewInsets.bottom != 0;
       if (!keyboardVisible) {
         /// Wait for closing soft keyboard animation to finish before emitting new value.
         await Future.delayed(
@@ -253,7 +251,6 @@ class _WoltModalSheetAnimatedSwitcherState
   void dispose() {
     _animationController?.dispose();
     _debounceTimer?.cancel();
-    _softKeyboardVisibilitySubscription.cancel();
     for (final element in _scrollControllers) {
       element.dispose();
     }
