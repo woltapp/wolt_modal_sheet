@@ -1,8 +1,8 @@
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../widgets/app_navigation_drawer.dart';
 
@@ -67,8 +67,7 @@ We're excited to assist you with the orders. To ensure you get the most out of o
                                 ],
                               ),
                               onSelectionUpdateInSingleSelectionList: (item) {
-                                context
-                                    .read<RouterViewModel>()
+                                context.routerViewModel
                                     .onTutorialDetailSelected(item.value);
                               },
                             ),

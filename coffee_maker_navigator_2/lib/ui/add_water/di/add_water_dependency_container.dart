@@ -1,10 +1,11 @@
 import 'package:wolt_di/wolt_di.dart';
-import 'package:coffee_maker_navigator_2/di/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/di/orders_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/add_water_service.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/orders_service.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
 
-class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
+class AddWaterDependencyContainer
+    extends FeatureWithViewModelDependencyContainer {
   // Just in the sake to show that we can use a method here to make the service lazily initialized.
   late final AddWaterService _addWaterService = _createAddWaterService();
   // This is an example to non-lazy initialization.
@@ -15,16 +16,15 @@ class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
     _ordersService = orderDependencies.ordersService;
   }
 
-  AddWaterViewModel createViewModel() {
-    return AddWaterViewModel(
-      addWaterService: _addWaterService,
-      ordersService: _ordersService,
-    );
-  }
-
   AddWaterService _createAddWaterService() {
     return AddWaterService();
   }
+
+  @override
+  AddWaterViewModel createViewModel() => AddWaterViewModel(
+        addWaterService: _addWaterService,
+        ordersService: _ordersService,
+      );
 
   @override
   void dispose() {

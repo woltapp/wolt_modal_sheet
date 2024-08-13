@@ -4,8 +4,9 @@ import 'package:coffee_maker_navigator_2/domain/add_water/entities/water_source.
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/orders_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:wolt_di/wolt_di.dart';
 
-class AddWaterViewModel extends ChangeNotifier {
+class AddWaterViewModel extends WoltViewModel {
   final AddWaterService _addWaterService;
   final OrdersService _ordersService;
   String _waterQuantityInMl = '';
@@ -63,7 +64,6 @@ class AddWaterViewModel extends ChangeNotifier {
   void dispose() {
     isReadyToAddWater.dispose();
     _errorMessage.dispose();
-    super.dispose();
   }
 
   ValueListenable<bool> get isAddWaterButtonEnabled => isReadyToAddWater;
@@ -71,7 +71,7 @@ class AddWaterViewModel extends ChangeNotifier {
   ValueListenable<String?> get errorMessage => _errorMessage;
 
   // Method to check the validity of the current state
-  void checkValidity() {
+  void onCheckValidityPressed() {
     _errorMessage.value = null; // Clear previous errors
     double? quantity = double.tryParse(_waterQuantityInMl);
     double? temperature = double.tryParse(_waterTemperatureInC);
@@ -95,7 +95,7 @@ class AddWaterViewModel extends ChangeNotifier {
     }
   }
 
-  void addWater() {
+  void onAddWaterPressed() {
     _ordersService.updateOrder(_orderId, CoffeeMakerStep.ready);
   }
 }

@@ -1,13 +1,14 @@
-import 'package:coffee_maker_navigator_2/ui/orders/view_model/orders_screen_view_model.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/view/orders_screen.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class ServeOrOfferModalPage {
   ServeOrOfferModalPage._();
 
-  static WoltModalSheetPage build({required String coffeeOrderId}) {
+  static WoltModalSheetPage build(
+      OnCoffeeOrderStatusChange onCoffeeOrderStatusChange,
+      String coffeeOrderId) {
     return WoltModalSheetPage(
       heroImage: const Image(
         image: AssetImage('lib/assets/images/coffee_is_ready.png'),
@@ -18,10 +19,9 @@ class ServeOrOfferModalPage {
         child: Column(
           children: [
             Builder(builder: (context) {
-              final model = context.read<OrdersScreenViewModel>();
               return WoltElevatedButton(
                 onPressed: () {
-                  model.onCoffeeOrderStatusChange(coffeeOrderId);
+                  onCoffeeOrderStatusChange(coffeeOrderId);
                   Navigator.pop(context);
                 },
                 theme: WoltElevatedButtonTheme.secondary,

@@ -1,6 +1,5 @@
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 enum AppNavigationDrawerDestination {
   ordersScreen(label: Text("Orders"), icon: Icon(Icons.coffee)),
@@ -71,9 +70,9 @@ class AppNavigationDrawer extends StatelessWidget {
           ),
         ],
         onDestinationSelected: (int index) {
-          context.read<RouterViewModel>().onDrawerDestinationSelected(
-                AppNavigationDrawerDestination.fromIndex(index),
-              );
+          context.routerViewModel.onDrawerDestinationSelected(
+            AppNavigationDrawerDestination.fromIndex(index),
+          );
         },
       ),
     );

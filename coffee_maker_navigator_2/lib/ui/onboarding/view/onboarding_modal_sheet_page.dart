@@ -1,7 +1,6 @@
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class OnboardingModalSheetPage extends WoltModalSheetPage {
@@ -30,9 +29,7 @@ We're excited to assist you with the orders. To ensure you get the most out of o
                 Builder(builder: (context) {
                   return WoltElevatedButton(
                     onPressed: () {
-                      context
-                          .read<RouterViewModel>()
-                          .onCloseOnboardingModalSheet();
+                      context.routerViewModel.onCloseOnboardingModalSheet();
                     },
                     theme: WoltElevatedButtonTheme.secondary,
                     child: const Text('Show me later'),
@@ -42,8 +39,7 @@ We're excited to assist you with the orders. To ensure you get the most out of o
                 Builder(builder: (context) {
                   return WoltElevatedButton(
                     onPressed: () {
-                      context
-                          .read<RouterViewModel>()
+                      context.routerViewModel
                           .onUserRequestedTutorialFromOnboardingModal();
                     },
                     child: const Text('Show me tutorials!'),

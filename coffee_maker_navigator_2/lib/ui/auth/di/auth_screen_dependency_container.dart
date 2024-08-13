@@ -3,7 +3,8 @@ import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view_model/auth_screen_view_model.dart';
 import 'package:wolt_di/wolt_di.dart';
 
-class AuthScreenDependencyContainer extends FeatureLevelDependencyContainer {
+class AuthScreenDependencyContainer
+    extends FeatureWithViewModelDependencyContainer {
   late final AuthService _authService;
 
   AuthScreenDependencyContainer() {
@@ -12,6 +13,8 @@ class AuthScreenDependencyContainer extends FeatureLevelDependencyContainer {
     _authService = appLevelDependencies.authService;
   }
 
+  // ViewModel should always be created lazily.
+  @override
   AuthScreenViewModel createViewModel() {
     return AuthScreenViewModel(authService: _authService);
   }

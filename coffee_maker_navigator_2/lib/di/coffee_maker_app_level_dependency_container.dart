@@ -78,6 +78,6 @@ class CoffeeMakerAppLevelDependencyContainer
       onboardingService: _onboardingService,
       isUserLoggedIn: _authService.authStateListenable.value ?? false,
       isTutorialShown: _onboardingService.isTutorialShown(),
-    )..onInit();
+    );
   }
 }

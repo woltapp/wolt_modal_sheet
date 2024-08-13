@@ -1,16 +1,15 @@
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view/add_water_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/auth/view/auth_screen.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:coffee_maker_navigator_2/ui/onboarding/view/onboarding_modal_sheet_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/grind_or_reject_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/reject_order_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/orders_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/router/entities/app_route_settings_name.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
 import 'package:coffee_maker_navigator_2/ui/tutorials/view/single_tutorial_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/tutorials/view/tutorials_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 sealed class AppRoutePage<T> extends Page<T> {
@@ -115,9 +114,9 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
         (context) => [OnboardingModalSheetPage()],
       ),
       onModalDismissedWithDrag:
-          context.read<RouterViewModel>().onCloseOnboardingModalSheet,
+          context.routerViewModel.onCloseOnboardingModalSheet,
       onModalDismissedWithBarrierTap:
-          context.read<RouterViewModel>().onCloseOnboardingModalSheet,
+          context.routerViewModel.onCloseOnboardingModalSheet,
     );
   }
 }
@@ -127,8 +126,7 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
   String get name => RouteSettingsName.onboarding.routeName;
 
   final String coffeeOrderId;
-  final void Function(String orderId, [CoffeeMakerStep? newStep])
-      onCoffeeOrderStatusChange;
+  final OnCoffeeOrderStatusChange onCoffeeOrderStatusChange;
 
   GrindCoffeeModalRoutePage(
     this.coffeeOrderId,

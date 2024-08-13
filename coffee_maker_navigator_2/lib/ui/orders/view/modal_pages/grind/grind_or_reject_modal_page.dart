@@ -1,15 +1,14 @@
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/view/orders_screen.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class GrindOrRejectModalPage extends WoltModalSheetPage {
   GrindOrRejectModalPage(
     String coffeeOrderId,
-    void Function(String orderId, CoffeeMakerStep? newStep)
-        onCoffeeOrderStatusChange,
+    OnCoffeeOrderStatusChange onCoffeeOrderStatusChange,
   ) : super(
           child: const Padding(
             padding: EdgeInsets.only(
@@ -42,9 +41,8 @@ class GrindOrRejectModalPage extends WoltModalSheetPage {
                     onPressed: () {
                       onCoffeeOrderStatusChange(
                           coffeeOrderId, CoffeeMakerStep.addWater);
-                      context.read<RouterViewModel>().onGrindStepExit(
-                            hasStartedGrinding: true,
-                          );
+                      context.routerViewModel
+                          .onGrindStepExit(hasStartedGrinding: true);
                     },
                     child: const Text('Start grinding'),
                   );

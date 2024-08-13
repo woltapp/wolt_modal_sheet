@@ -1,9 +1,8 @@
-import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/grind/reject_order_reason.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/view/orders_screen.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class RejectOrderModalPage extends WoltModalSheetPage {
@@ -11,8 +10,7 @@ class RejectOrderModalPage extends WoltModalSheetPage {
 
   RejectOrderModalPage(
     String coffeeOrderId,
-    void Function(String orderId, [CoffeeMakerStep? newStep])
-        onCoffeeOrderStatusChange,
+    OnCoffeeOrderStatusChange onCoffeeOrderStatusChange,
   ) : super(
           stickyActionBar: ValueListenableBuilder<bool>(
             valueListenable: _buttonEnabledListener,
@@ -23,9 +21,8 @@ class RejectOrderModalPage extends WoltModalSheetPage {
                   return WoltElevatedButton(
                     onPressed: () {
                       onCoffeeOrderStatusChange(coffeeOrderId);
-                      context.read<RouterViewModel>().onGrindStepExit(
-                            hasStartedGrinding: false,
-                          );
+                      context.routerViewModel
+                          .onGrindStepExit(hasStartedGrinding: false);
                     },
                     theme: WoltElevatedButtonTheme.secondary,
                     colorName: WoltColorName.red,

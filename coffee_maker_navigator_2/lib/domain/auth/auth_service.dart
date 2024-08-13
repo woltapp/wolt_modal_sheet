@@ -11,6 +11,8 @@ abstract interface class AuthService {
   Future<void> logOut();
 
   Future<void> logIn(String email, String password);
+
+  void dispose();
 }
 
 class AuthServiceImpl implements AuthService {
@@ -49,5 +51,10 @@ class AuthServiceImpl implements AuthService {
       // TODO error handling
       _authStateNotifier.value = false;
     }
+  }
+
+  @override
+  void dispose() {
+    _authStateNotifier.dispose();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:coffee_maker_navigator_2/domain/auth/auth_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:wolt_di/wolt_di.dart';
 
-class AuthScreenViewModel extends ChangeNotifier {
+class AuthScreenViewModel extends WoltViewModel {
   final AuthService authService;
 
   AuthScreenViewModel({required this.authService});
@@ -9,4 +9,7 @@ class AuthScreenViewModel extends ChangeNotifier {
   Future<void> onLoginPressed(String email, String password) async {
     await authService.logIn(email, password);
   }
+
+  @override
+  void dispose() {}
 }

@@ -1,12 +1,11 @@
-import 'package:coffee_maker_navigator_2/di/add_water_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/ui/add_water/di/add_water_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/domain/add_water/entities/water_source.dart';
 import 'package:coffee_maker_navigator_2/ui/add_water/view_model/add_water_view_model.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_di/wolt_di.dart';
 
 class AddWaterScreen extends StatefulWidget {
@@ -22,6 +21,17 @@ class _AddWaterScreenState extends State<AddWaterScreen>
     with
         DependencyContainerSubscriptionMixin<AddWaterDependencyContainer,
             AddWaterScreen> {
+  late AddWaterViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    final dependencyContainer =
+        DependencyInjector.container<AddWaterDependencyContainer>(context);
+    _viewModel = dependencyContainer.createViewModel()
+      ..onInit(widget.coffeeOrderId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SystemUIAnnotationWrapper(
@@ -29,30 +39,22 @@ class _AddWaterScreenState extends State<AddWaterScreen>
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           top: false,
-          child: ChangeNotifierProvider<AddWaterViewModel>(
-              create: (context) =>
-                  DependencyInjector.container<AddWaterDependencyContainer>(
-                          context)
-                      .createViewModel()
-                    ..onInit(widget.coffeeOrderId),
-              builder: (context, _) {
-                final viewModel = context.read<AddWaterViewModel>();
-                return Stack(
-                  children: [
-                    _AddWaterScreenContent(
-                      onWaterQuantityUpdated: viewModel.onWaterQuantityUpdated,
-                      onWaterSourceUpdated: viewModel.onWaterSourceUpdated,
-                      onWaterTemperatureUpdated:
-                          viewModel.onWaterTemperatureUpdated,
-                    ),
-                    const _AddWaterScreenBackButton(),
-                    _AddWaterScreenFooter(
-                      viewModel.isReadyToAddWater,
-                      viewModel.errorMessage,
-                    ),
-                  ],
-                );
-              }),
+          child: Stack(
+            children: [
+              _AddWaterScreenContent(
+                onWaterQuantityUpdated: _viewModel.onWaterQuantityUpdated,
+                onWaterSourceUpdated: _viewModel.onWaterSourceUpdated,
+                onWaterTemperatureUpdated: _viewModel.onWaterTemperatureUpdated,
+              ),
+              const _AddWaterScreenBackButton(),
+              _AddWaterScreenFooter(
+                _viewModel.isReadyToAddWater,
+                _viewModel.errorMessage,
+                _viewModel.onCheckValidityPressed,
+                _viewModel.onAddWaterPressed,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -179,10 +181,17 @@ class _AddWaterScreenBackButton extends StatelessWidget {
 }
 
 class _AddWaterScreenFooter extends StatelessWidget {
-  const _AddWaterScreenFooter(this.isReadyToAddWater, this.errorMessage);
+  const _AddWaterScreenFooter(
+    this.isReadyToAddWater,
+    this.errorMessage,
+    this.onCheckValidity,
+    this.onAddWater,
+  );
 
   final ValueListenable<bool> isReadyToAddWater;
   final ValueListenable<String?> errorMessage;
+  final VoidCallback onCheckValidity;
+  final VoidCallback onAddWater;
 
   @override
   Widget build(BuildContext context) {
@@ -207,9 +216,7 @@ class _AddWaterScreenFooter extends StatelessWidget {
                           );
                   }),
               WoltElevatedButton(
-                onPressed: () {
-                  context.read<AddWaterViewModel>().checkValidity();
-                },
+                onPressed: onCheckValidity,
                 child: const Text('Check '),
               ),
               const SizedBox(height: 12),
@@ -219,8 +226,8 @@ class _AddWaterScreenFooter extends StatelessWidget {
                   return WoltElevatedButton(
                     enabled: isEnabled,
                     onPressed: () {
-                      context.read<AddWaterViewModel>().addWater();
-                      context.read<RouterViewModel>().onAddWaterStepCompleted();
+                      onAddWater();
+                      context.routerViewModel.onAddWaterStepCompleted();
                     },
                     child: const Text('Add water'),
                   );

@@ -1,36 +1,36 @@
 import 'dart:async';
 
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/coffee_order_list_view_for_step.dart';
 import 'package:coffee_maker_navigator_2/ui/router/entities/app_route_page.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
-    final routerViewModel = context.watch<RouterViewModel>();
-    final pages = routerViewModel.state.pages;
+    return ValueListenableBuilder<List<AppRoutePage>>(
+      valueListenable: context.routerViewModel.pages,
+      builder: (context, pages, __) {
+        return Navigator(
+          key: navigatorKey,
+          pages: pages,
+          onPopPage: (route, result) {
+            final context = navigatorKey.currentContext;
+            final name = route.settings.name;
 
-    return Navigator(
-      key: navigatorKey,
-      pages: pages,
-      onPopPage: (route, result) {
-        final context = navigatorKey.currentContext;
-        final name = route.settings.name;
+            if (context != null && name != null) {
+              context.routerViewModel
+                  .onPagePoppedImperatively(poppingPageName: name);
+            }
 
-        if (context != null && name != null) {
-          context
-              .read<RouterViewModel>()
-              .onPagePoppedImperatively(poppingPageName: name);
-        }
-
-        return route.didPop(result);
+            return route.didPop(result);
+          },
+          observers: [_AppRouteObserver(Theme.of(context).colorScheme)],
+        );
       },
-      observers: [_AppRouteObserver(Theme.of(context).colorScheme)],
     );
   }
 
@@ -43,8 +43,7 @@ class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
       if (_isImperativePopFromOrderScreenModals(currentContext)) {
         return Future.value(true);
       }
-      return currentContext
-          .read<RouterViewModel>()
+      return currentContext.routerViewModel
           .onPagePoppedWithOperatingSystemIntent();
     }
 

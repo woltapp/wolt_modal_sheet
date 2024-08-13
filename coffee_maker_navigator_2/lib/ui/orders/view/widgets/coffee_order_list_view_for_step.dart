@@ -1,15 +1,14 @@
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/coffee_order.dart';
 import 'package:coffee_maker_navigator_2/domain/orders/entities/grouped_coffee_orders.dart';
+import 'package:coffee_maker_navigator_2/ui/extensions/context_extensions.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/ready/offer_recommendation_modal_page.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/modal_pages/ready/serve_or_offer_modal_page.dart';
+import 'package:coffee_maker_navigator_2/ui/orders/view/orders_screen.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/coffee_order_list_item_tile.dart';
 import 'package:coffee_maker_navigator_2/ui/orders/view/widgets/empty_coffee_order_list_view.dart';
-import 'package:coffee_maker_navigator_2/ui/orders/view_model/orders_screen_view_model.dart';
-import 'package:coffee_maker_navigator_2/ui/router/view_model/router_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
@@ -22,10 +21,12 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
     super.key,
     required this.selectedStep,
     required this.groupedCoffeeOrders,
+    required this.onCoffeeOrderStatusChange,
   });
 
   final CoffeeMakerStep selectedStep;
   final GroupedCoffeeOrders groupedCoffeeOrders;
+  final OnCoffeeOrderStatusChange onCoffeeOrderStatusChange;
 
   static const String modalRouteSettingName = "stepModalRouteName";
 
@@ -36,12 +37,15 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
         return _CoffeeOrderListView(
           coffeeOrders: groupedCoffeeOrders.grindStateOrders,
           coffeeMakerStep: CoffeeMakerStep.grind,
-          onCoffeeOrderSelected: (id) => context
-              .read<RouterViewModel>()
-              .onGrindStepEntering(
+          onCoffeeOrderSelected: (id) {
+            context.routerViewModel.onGrindStepEntering(
+              id,
+              onCoffeeOrderStatusChange(
                 id,
-                context.read<OrdersScreenViewModel>().onCoffeeOrderStatusChange,
+                CoffeeMakerStep.addWater,
               ),
+            );
+          },
         );
       case CoffeeMakerStep.addWater:
         return _CoffeeOrderListView(
@@ -54,8 +58,8 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
         return _CoffeeOrderListView(
           coffeeOrders: groupedCoffeeOrders.readyStateOrders,
           coffeeMakerStep: CoffeeMakerStep.ready,
-          onCoffeeOrderSelected: (id) =>
-              _onCoffeeOrderSelectedInReadyState(context, id),
+          onCoffeeOrderSelected: (id) => _onCoffeeOrderSelectedInReadyState(
+              context, onCoffeeOrderStatusChange, id),
         );
     }
   }
@@ -63,27 +67,23 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
 
 void _onCoffeeOrderSelectedInAddWaterState(
     BuildContext context, String coffeeOrderId) {
-  context.read<RouterViewModel>().onAddWaterStepEntering(coffeeOrderId);
+  context.routerViewModel.onAddWaterStepEntering(coffeeOrderId);
 }
 
 void _onCoffeeOrderSelectedInReadyState(
-    BuildContext context, String coffeeOrderId) {
-  final model = context.read<OrdersScreenViewModel>();
-
+  BuildContext context,
+  OnCoffeeOrderStatusChange onCoffeeOrderStatusChange,
+  String coffeeOrderId,
+) {
   WoltModalSheet.show(
     settings: const RouteSettings(
         name: CoffeeOrderListViewForStep.modalRouteSettingName),
     context: context,
     pageListBuilder: (context) => [
-      ServeOrOfferModalPage.build(coffeeOrderId: coffeeOrderId),
-      OfferRecommendationModalPage.build(coffeeOrderId: coffeeOrderId)
+      ServeOrOfferModalPage.build(onCoffeeOrderStatusChange, coffeeOrderId),
+      OfferRecommendationModalPage.build(
+          onCoffeeOrderStatusChange, coffeeOrderId)
     ],
-    pageContentDecorator: (child) {
-      return ChangeNotifierProvider<OrdersScreenViewModel>.value(
-        value: model,
-        builder: (_, __) => child,
-      );
-    },
     modalTypeBuilder: _modalTypeBuilder,
   );
 }
