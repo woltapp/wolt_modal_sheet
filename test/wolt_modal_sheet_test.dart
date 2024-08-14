@@ -334,7 +334,8 @@ void main() {
 
   testWidgets('Custom WoltModalSheet.modalBarrierColor', (tester) async {
     Color barrierColor = const Color(0xFFFF0000);
-    await tester.pumpWidget(buildSheetWithShow(modalBarrierColor: barrierColor));
+    await tester
+        .pumpWidget(buildSheetWithShow(modalBarrierColor: barrierColor));
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
