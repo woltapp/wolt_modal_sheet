@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_main_content.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar_flow.dart';
@@ -11,7 +8,7 @@ import 'package:wolt_modal_sheet/src/content/components/paginating_group/paginat
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/wolt_modal_sheet_page_transition_state.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_layout.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
-import 'package:wolt_modal_sheet/src/utils/soft_keyboard_closed_event.dart';
+import 'package:wolt_modal_sheet/src/utils/wolt_keyboard_closure_listener_mixin.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_navigation_toolbar.dart';
 import 'package:wolt_modal_sheet/src/widgets/wolt_sticky_action_bar_wrapper.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -40,11 +37,12 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
 
 class _WoltModalSheetAnimatedSwitcherState
     extends State<WoltModalSheetAnimatedSwitcher>
-    with TickerProviderStateMixin {
+    with
+        TickerProviderStateMixin,
+        WidgetsBindingObserver,
+        WoltKeyboardClosureListenerMixin {
   PaginatingWidgetsGroup? _incomingPageWidgets;
   PaginatingWidgetsGroup? _outgoingPageWidgets;
-
-  static const int _maxKeyboardAnimationDuration = 250;
 
   int get _pagesCount => widget.pages.length;
 
@@ -84,25 +82,6 @@ class _WoltModalSheetAnimatedSwitcherState
   ValueNotifier<double> get _currentPageScrollPosition =>
       _scrollPositions[_pageIndex];
 
-  /// Subscription for discovering the state of the soft-keyboard visibility
-  late StreamSubscription<bool> _softKeyboardVisibilitySubscription;
-
-  /// Value notifier for discovering when the soft-keyboard is dismissed. These events are
-  /// consumed by [WoltModalSheetTopBarFlow] and [WoltModalSheetTopBarTitleFlow] to trigger a
-  /// re-paint when keyboard is closing. This is needed to avoid the top bar from being stuck
-  /// when keyboard is closing.
-  ///
-  /// By default, the top bar visibility is synced with the scroll controller position. The
-  /// [WoltModalSheetTopBarFlow] and [WoltModalSheetTopBarTitleFlow] paints the top bar according
-  /// to the scroll position changes.
-  ///
-  /// When the keyboard appears the scroll controller receives scroll update events, which are
-  /// sent by the Flutter SDK. However, the keyboard closing events do not cause a change in the
-  /// scroll controller. Therefore, we need to manually trigger a re-paint when the keyboard is
-  /// closing.
-  final ValueNotifier<SoftKeyboardClosedEvent> _softKeyboardClosedNotifier =
-      ValueNotifier(const SoftKeyboardClosedEvent(eventId: 0));
-
   bool _isForwardMove = true;
 
   late bool _shouldAnimatePagination;
@@ -116,7 +95,6 @@ class _WoltModalSheetAnimatedSwitcherState
     _resetScrollPositions();
     _resetScrollControllers();
     _subscribeToCurrentPageScrollPositionChanges();
-    _subscribeToSoftKeyboardClosedEvent();
   }
 
   void _resetGlobalKeys() {
@@ -152,22 +130,6 @@ class _WoltModalSheetAnimatedSwitcherState
         }
       });
     }
-  }
-
-  void _subscribeToSoftKeyboardClosedEvent() {
-    _softKeyboardVisibilitySubscription =
-        KeyboardVisibilityController().onChange.listen((bool visible) async {
-      if (!visible) {
-        /// Wait for closing soft keyboard animation to finish before emitting new value.
-        await Future.delayed(
-          const Duration(milliseconds: _maxKeyboardAnimationDuration),
-        );
-        final int lastEventId = _softKeyboardClosedNotifier.value.eventId;
-        final newEventId = lastEventId + 1;
-        _softKeyboardClosedNotifier.value =
-            SoftKeyboardClosedEvent(eventId: newEventId);
-      }
-    });
   }
 
   @override
@@ -251,7 +213,6 @@ class _WoltModalSheetAnimatedSwitcherState
   @override
   void dispose() {
     _animationController?.dispose();
-    _softKeyboardVisibilitySubscription.cancel();
     for (final element in _scrollControllers) {
       element.dispose();
     }
@@ -355,7 +316,7 @@ class _WoltModalSheetAnimatedSwitcherState
           scrollController: _currentPageScrollController,
           titleKey: _pageTitleKey,
           topBarTitle: topBarTitle,
-          softKeyboardClosedListenable: _softKeyboardClosedNotifier,
+          softKeyboardClosedListenable: softKeyboardClosureListenable,
         );
       }
     }
@@ -396,7 +357,7 @@ class _WoltModalSheetAnimatedSwitcherState
                     page: _page,
                     scrollController: _currentPageScrollController,
                     titleKey: _pageTitleKey,
-                    softKeyboardClosedListenable: _softKeyboardClosedNotifier,
+                    softKeyboardClosedListenable: softKeyboardClosureListenable,
                   ))
             : const SizedBox.shrink(),
       ),
