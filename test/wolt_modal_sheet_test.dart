@@ -9,6 +9,7 @@ void main() {
     Widget Function(Widget)? modalDecorator,
     bool? barrierDismissible,
     List<WoltModalSheetPage> Function(BuildContext)? pageListBuilder,
+    Color? modalBarrierColor,
   }) {
     return MaterialApp(
       home: Scaffold(body: Center(
@@ -22,6 +23,7 @@ void main() {
                   pageContentDecorator: pageContentDecorator,
                   modalDecorator: modalDecorator,
                   barrierDismissible: barrierDismissible,
+                  modalBarrierColor: modalBarrierColor,
                   pageListBuilder: pageListBuilder ??
                       (context) {
                         return <WoltModalSheetPage>[
@@ -317,5 +319,28 @@ void main() {
       expect(modal.isAtFirstPage, isFalse);
       expect(modal.isAtLastPage, isTrue);
     });
+  });
+
+  testWidgets('WoltModalSheet.modalBarrierColor defaults', (tester) async {
+    Color barrierColor = Colors.black54;
+    await tester.pumpWidget(buildSheetWithShow());
+
+    await tester.tap(find.text('Open sheet'));
+    await tester.pumpAndSettle();
+
+    final ColoredBox coloredBox = tester.widget(find.byType(ColoredBox));
+    expect(coloredBox.color, barrierColor);
+  });
+
+  testWidgets('Custom WoltModalSheet.modalBarrierColor', (tester) async {
+    Color barrierColor = const Color(0xFFFF0000);
+    await tester
+        .pumpWidget(buildSheetWithShow(modalBarrierColor: barrierColor));
+
+    await tester.tap(find.text('Open sheet'));
+    await tester.pumpAndSettle();
+
+    final ColoredBox coloredBox = tester.widget(find.byType(ColoredBox));
+    expect(coloredBox.color, barrierColor);
   });
 }
