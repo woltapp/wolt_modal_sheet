@@ -26,8 +26,14 @@ class _OrdersScreenState extends State<OrdersScreen>
     with
         FeatureWithViewModelDependencyContainerSubscriptionMixin<
             OrdersDependencyContainer, OrdersScreenViewModel, OrdersScreen> {
-  ValueListenable<CoffeeMakerStep> get selectedStepListenable =>
-      context.routerViewModel.bottomNavigationTabInOrdersPage;
+  late ValueListenable<CoffeeMakerStep> selectedStepListenable;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedStepListenable =
+        context.routerViewModel.bottomNavigationTabInOrdersPage;
+  }
 
   @override
   Widget build(BuildContext context) {
