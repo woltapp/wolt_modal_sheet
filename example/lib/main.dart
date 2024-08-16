@@ -106,6 +106,17 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           icon: const Icon(Icons.close),
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
+        stickyActionBar: Padding(
+          padding: const EdgeInsets.all(_pagePadding),
+          child: ElevatedButton(
+            onPressed: Navigator.of(modalSheetContext).pop,
+            child: const SizedBox(
+              height: _buttonHeight,
+              width: double.infinity,
+              child: Center(child: Text('Close')),
+            ),
+          ),
+        ),
         mainContentSliversBuilder: (context) => [
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -123,6 +134,18 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
             delegate: SliverChildBuilderDelegate(
               (_, index) => ColorTile(color: materialColorsInSliverList[index]),
               childCount: materialColorsInSliverList.length,
+            ),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.only(bottom: _bottomPaddingForButton),
+            sliver: SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(_pagePadding),
+                child: Text(
+                  'Last Item',
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ),
         ],
