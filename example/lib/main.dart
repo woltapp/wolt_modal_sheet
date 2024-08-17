@@ -106,6 +106,17 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           icon: const Icon(Icons.close),
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
+        stickyActionBar: Padding(
+          padding: const EdgeInsets.all(_pagePadding),
+          child: ElevatedButton(
+            onPressed: Navigator.of(modalSheetContext).pop,
+            child: const SizedBox(
+              height: _buttonHeight,
+              width: double.infinity,
+              child: Center(child: Text('Close')),
+            ),
+          ),
+        ),
         mainContentSliversBuilder: (context) => [
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -125,13 +136,25 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
               childCount: materialColorsInSliverList.length,
             ),
           ),
+          const SliverPadding(
+            padding: EdgeInsets.only(bottom: _bottomPaddingForButton),
+            sliver: SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(_pagePadding),
+                child: Text(
+                  'Last Item',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
         ],
       );
     }
 
     return MaterialApp(
       themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
-      theme: ThemeData.light(useMaterial3: true).copyWith(
+      theme: ThemeData.light().copyWith(
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
             heroImageHeight: _heroImageHeight,
@@ -141,7 +164,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
           ),
         ],
       ),
-      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+      darkTheme: ThemeData.dark().copyWith(
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
             topBarShadowColor: _darkThemeShadowColor,
