@@ -25,7 +25,6 @@ class AppThemeData {
       cardTheme: _cardThemeData,
       outlinedButtonTheme: _outlinedButtonThemeData(textTheme),
       navigationBarTheme: _navigationBarThemeData(textTheme),
-      useMaterial3: true,
       colorScheme: colorScheme,
     );
   }

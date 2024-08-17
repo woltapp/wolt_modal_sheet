@@ -69,7 +69,6 @@ class _DemoAppState extends State<DemoApp> {
       theme: ThemeData.light().copyWith(
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: WoltColors.blue),
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
@@ -78,11 +77,10 @@ class _DemoAppState extends State<DemoApp> {
           ),
         ],
       ),
-      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+      darkTheme: ThemeData.dark().copyWith(
         brightness: Brightness.dark,
         inputDecorationTheme: inputDecorationTheme,
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF009DE0)),
-        useMaterial3: true,
         extensions: const <ThemeExtension>[
           WoltModalSheetThemeData(
             backgroundColor: Color(0xFF242424),
