@@ -1,9 +1,9 @@
-import 'package:coffee_maker_navigator_2/app.dart';
+import 'package:coffee_maker_navigator_2/app/app.dart';
 import 'package:wolt_di/wolt_di.dart';
-import 'package:coffee_maker_navigator_2/ui/add_water/di/add_water_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/ui/auth/di/auth_screen_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/di/coffee_maker_app_level_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/ui/orders/di/orders_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/features/add_water/di/add_water_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/features/login/di/login_screen_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/app/di/coffee_maker_app_level_dependency_container.dart';
+import 'package:coffee_maker_navigator_2/features/orders/di/orders_dependency_container.dart';
 import 'package:flutter/material.dart';
 
 void _registerDependencyContainerFactories(DependencyContainerManager manager) {
@@ -12,8 +12,8 @@ void _registerDependencyContainerFactories(DependencyContainerManager manager) {
         () => OrdersDependencyContainer())
     ..registerContainerFactory<AddWaterDependencyContainer>(
         () => AddWaterDependencyContainer())
-    ..registerContainerFactory<AuthScreenDependencyContainer>(
-        () => AuthScreenDependencyContainer());
+    ..registerContainerFactory<LoginScreenDependencyContainer>(
+        () => LoginScreenDependencyContainer());
 }
 
 Future<void> main() async {
