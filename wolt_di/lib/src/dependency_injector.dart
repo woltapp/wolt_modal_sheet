@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:wolt_di/src/manager/dependency_container_manager.dart';
-import 'package:wolt_di/src/dependency_container_subscription_mixin.dart';
-import 'package:meta/meta.dart';
+import 'package:wolt_di/wolt_di.dart';
 
 /// A widget that proxies requests to [DependencyContainerResolver].
 ///
@@ -62,10 +61,9 @@ class DependencyInjector extends InheritedWidget {
   /// This method adds the subscriber to the container, ensuring that the container
   /// remains active as long as there are subscribers.
   ///
-  /// [subscriber]: The [DependencyContainerSubscriptionMixin] mixin subscribing to the container.
-  @internal
+  /// [subscriber]: The [DependencyContainerSubscriber] mixin subscribing to the container.
   void subscribeToDependencyContainer<C>(
-      DependencyContainerSubscriptionMixin subscriber) {
+      DependencyContainerSubscriber subscriber) {
     _resolver.subscribeToContainer<C>(subscriber);
   }
 
@@ -74,10 +72,9 @@ class DependencyInjector extends InheritedWidget {
   /// This method removes the subscriber from the container, and if there are no
   /// more subscribers, the container may be disposed of.
   ///
-  /// [subscriber]:  The [DependencyContainerSubscriptionMixin] mixin unsubscribing from the container.
-  @internal
+  /// [subscriber]:  The [DependencyContainerSubscriber] mixin unsubscribing from the container.
   void unsubscribeFromDependencyContainer<C>(
-      DependencyContainerSubscriptionMixin subscriber) {
+      DependencyContainerSubscriber subscriber) {
     _resolver.unsubscribeFromContainer<C>(subscriber);
   }
 
