@@ -4,8 +4,15 @@ import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dar
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
-class TutorialsScreen extends StatelessWidget {
+class TutorialsScreen extends StatefulWidget {
   const TutorialsScreen({super.key});
+
+  @override
+  State<TutorialsScreen> createState() => _TutorialsScreenState();
+}
+
+class _TutorialsScreenState extends State<TutorialsScreen> {
+  CoffeeMakerStep? selectedStep;
 
   @override
   Widget build(BuildContext context) {
@@ -34,42 +41,52 @@ class TutorialsScreen extends StatelessWidget {
                       constraints: const BoxConstraints(maxWidth: 600),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              '''
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(
+                                '''
 We're excited to assist you with the orders. To ensure you get the most out of our app, we've prepared a brief tutorial that will guide you through the features and functionalities available.
 \nLet's begin your journey to quick and easy coffee order fulfillment!
 ''',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            WoltSelectionList<CoffeeMakerStep>.singleSelect(
-                              itemTileDataGroup:
-                                  const WoltSelectionListItemDataGroup(
-                                group: [
-                                  WoltSelectionListItemData(
-                                    title: 'Coffee grinding',
-                                    value: CoffeeMakerStep.grind,
-                                    isSelected: false,
-                                  ),
-                                  WoltSelectionListItemData(
-                                    title: 'Adding water to coffee',
-                                    value: CoffeeMakerStep.addWater,
-                                    isSelected: false,
-                                  ),
-                                  WoltSelectionListItemData(
-                                    title: 'Serving coffee',
-                                    value: CoffeeMakerStep.ready,
-                                    isSelected: false,
-                                  ),
-                                ],
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              onSelectionUpdateInSingleSelectionList: (item) {
-                                context.routerViewModel
-                                    .onTutorialDetailSelected(item.value);
-                              },
-                            ),
-                          ],
+                              WoltSelectionList<CoffeeMakerStep>.singleSelect(
+                                itemTileDataGroup:
+                                    const WoltSelectionListItemDataGroup(
+                                  group: [
+                                    WoltSelectionListItemData(
+                                      title: 'Coffee grinding',
+                                      value: CoffeeMakerStep.grind,
+                                      isSelected: false,
+                                    ),
+                                    WoltSelectionListItemData(
+                                      title: 'Adding water to coffee',
+                                      value: CoffeeMakerStep.addWater,
+                                      isSelected: false,
+                                    ),
+                                    WoltSelectionListItemData(
+                                      title: 'Serving coffee',
+                                      value: CoffeeMakerStep.ready,
+                                      isSelected: false,
+                                    ),
+                                  ],
+                                ),
+                                onSelectionUpdateInSingleSelectionList: (item) {
+                                  setState(() => selectedStep = item.value);
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              WoltElevatedButton(
+                                onPressed: () {
+                                  context.routerViewModel
+                                      .onTutorialDetailSelected(selectedStep!);
+                                },
+                                enabled: selectedStep != null,
+                                child: const Text('Start tutorial'),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

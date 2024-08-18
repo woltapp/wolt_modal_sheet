@@ -7,6 +7,8 @@ import 'package:wolt_di/wolt_di.dart';
 class OrdersScreenViewModel implements WoltViewModel {
   final OrdersService _ordersService;
   final groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.empty());
+  final ValueNotifier<CoffeeMakerStep> selectedBottomNavBarItem =
+      ValueNotifier(CoffeeMakerStep.grind);
 
   OrdersScreenViewModel({
     required OrdersService ordersService,
@@ -15,6 +17,10 @@ class OrdersScreenViewModel implements WoltViewModel {
     groupedCoffeeOrders.value =
         GroupedCoffeeOrders.fromCoffeeOrders(currentOrders);
     _ordersService.receiveOrders().addListener(_onOrdersReceived);
+  }
+
+  void onInit(CoffeeMakerStep? initialNavBarItem) {
+    selectedBottomNavBarItem.value = initialNavBarItem ?? CoffeeMakerStep.grind;
   }
 
   @override
@@ -27,10 +33,11 @@ class OrdersScreenViewModel implements WoltViewModel {
     groupedCoffeeOrders.value = GroupedCoffeeOrders.fromCoffeeOrders(orders);
   }
 
-  void onCoffeeOrderStatusChange(
-    String orderId, [
-    CoffeeMakerStep? newStep,
-  ]) {
+  void onBottomNavBarItemSelected(CoffeeMakerStep selectedStep) {
+    selectedBottomNavBarItem.value = selectedStep;
+  }
+
+  void onOrderStatusChange(String orderId, [CoffeeMakerStep? newStep]) {
     _ordersService.updateOrder(orderId, newStep);
   }
 }

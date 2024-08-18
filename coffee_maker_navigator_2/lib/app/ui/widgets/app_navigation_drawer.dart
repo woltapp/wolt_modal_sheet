@@ -70,9 +70,18 @@ class AppNavigationDrawer extends StatelessWidget {
           ),
         ],
         onDestinationSelected: (int index) {
-          context.routerViewModel.onDrawerDestinationSelected(
-            AppNavigationDrawerDestination.fromIndex(index),
-          );
+          final scaffold = Scaffold.maybeOf(context);
+          if (scaffold != null && scaffold.isDrawerOpen) {
+            scaffold.closeDrawer();
+            Future.delayed(const Duration(milliseconds: 250), () {
+              if (context.mounted) {
+                // If the view is still mounted, navigate to the selected destination.
+                context.routerViewModel.onDrawerDestinationSelected(
+                  AppNavigationDrawerDestination.fromIndex(index),
+                );
+              }
+            });
+          }
         },
       ),
     );

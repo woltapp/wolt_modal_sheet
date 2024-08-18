@@ -1,10 +1,12 @@
 enum RouteSettingsName {
+  bootstrap('bootstrap'),
   auth('auth'),
   orders('orders'),
   tutorials('tutorials'),
   singleTutorial('singleTutorial'),
   addWater('addWater'),
-  grindCoffee('grindCoffee'),
+  grindCoffeeModal('grindCoffeeModal'),
+  readyCoffeeModal('readyCoffeeModal'),
   onboarding('welcomeModal');
 
   final String routeName;
