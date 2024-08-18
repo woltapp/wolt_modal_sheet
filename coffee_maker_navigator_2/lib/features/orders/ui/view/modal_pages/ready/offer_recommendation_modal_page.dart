@@ -1,6 +1,5 @@
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/modal_pages/ready/extra_recommendation.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/modal_pages/ready/extra_recommendation_tile.dart';
-import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -9,7 +8,7 @@ class OfferRecommendationModalPage {
   OfferRecommendationModalPage._();
 
   static SliverWoltModalSheetPage build(
-    OnCoffeeOrderStatusChange onCoffeeOrderStatusChange,
+    VoidCallback onCoffeeOrderServed,
     String coffeeOrderId,
   ) {
     final selectedItemCountListener = ValueNotifier(0);
@@ -34,10 +33,7 @@ class OfferRecommendationModalPage {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Builder(builder: (context) {
               return WoltElevatedButton(
-                onPressed: () {
-                  onCoffeeOrderStatusChange(coffeeOrderId);
-                  Navigator.pop(context);
-                },
+                onPressed: onCoffeeOrderServed,
                 enabled: count > 0,
                 child: Text(buttonText),
               );

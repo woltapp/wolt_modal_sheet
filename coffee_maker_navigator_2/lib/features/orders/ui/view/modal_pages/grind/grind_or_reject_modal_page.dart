@@ -1,15 +1,12 @@
-import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
-import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.dart';
-import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class GrindOrRejectModalPage extends WoltModalSheetPage {
-  GrindOrRejectModalPage(
-    String coffeeOrderId,
-    OnCoffeeOrderStatusChange onCoffeeOrderStatusChange,
-  ) : super(
+  GrindOrRejectModalPage({
+    required String coffeeOrderId,
+    required VoidCallback onCoffeeOrderGrindCompleted,
+  }) : super(
           child: const Padding(
             padding: EdgeInsets.only(
                 bottom: (2 * WoltElevatedButton.defaultHeight) + 48),
@@ -38,12 +35,7 @@ class GrindOrRejectModalPage extends WoltModalSheetPage {
                 const SizedBox(height: 8),
                 Builder(builder: (context) {
                   return WoltElevatedButton(
-                    onPressed: () {
-                      onCoffeeOrderStatusChange(
-                          coffeeOrderId, CoffeeMakerStep.addWater);
-                      context.routerViewModel
-                          .onGrindStepExit(hasStartedGrinding: true);
-                    },
+                    onPressed: onCoffeeOrderGrindCompleted,
                     child: const Text('Start grinding'),
                   );
                 }),

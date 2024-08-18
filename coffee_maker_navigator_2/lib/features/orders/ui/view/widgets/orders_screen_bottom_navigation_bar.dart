@@ -1,10 +1,10 @@
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
+import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
 
 /// A custom bottom navigation bar for the home screen.
 ///
@@ -12,39 +12,48 @@ typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
 /// It also shows the count of orders for each step, indicated by a badge.
 /// The selected step is highlighted with a different color.
 class OrdersScreenBottomNavigationBar extends StatelessWidget {
-  const OrdersScreenBottomNavigationBar({
-    required CoffeeMakerStep selectedStep,
-    required void Function(CoffeeMakerStep) onSelected,
-    required GroupedCoffeeOrders groupedCoffeeOrders,
+  const OrdersScreenBottomNavigationBar(
+    this.groupedCoffeeOrders,
+    this.onBottomNavBarItemSelected,
+    this.selectedBottomNavBarItem, {
     super.key,
-  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _onSelected = onSelected,
-        _selectedStep = selectedStep;
+  });
 
-  final CoffeeMakerStep _selectedStep;
-  final OnCoffeeMakerStepSelected _onSelected;
-  final GroupedCoffeeOrders _groupedCoffeeOrders;
+  final ValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
+  final ValueListenable<CoffeeMakerStep> selectedBottomNavBarItem;
+  final OnOrderScreenBottomNavBarItemSelected onBottomNavBarItemSelected;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        const CoffeeMakerCustomDivider(),
-        NavigationBar(
-          destinations: [
-            for (CoffeeMakerStep step in CoffeeMakerStep.values)
-              step._navigationDestination(
-                  isSelected: step == _selectedStep,
-                  count: _groupedCoffeeOrders.countForStep(step)),
-          ],
-          selectedIndex: _selectedStep.index,
-          onDestinationSelected: (i) {
-            _onSelected(
-                CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i));
+    return ValueListenableBuilder(
+      valueListenable: selectedBottomNavBarItem,
+      builder: (context, selectedTab, _) {
+        return ValueListenableBuilder(
+          valueListenable: groupedCoffeeOrders,
+          builder: (context, orders, _) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const CoffeeMakerCustomDivider(),
+                NavigationBar(
+                  destinations: [
+                    for (CoffeeMakerStep step in CoffeeMakerStep.values)
+                      step._navigationDestination(
+                          isSelected: step == selectedTab,
+                          count: orders.countForStep(step)),
+                  ],
+                  selectedIndex: selectedTab.index,
+                  onDestinationSelected: (i) {
+                    final selectedTab = CoffeeMakerStep.values
+                        .firstWhere((e) => e.stepNumber == i);
+                    onBottomNavBarItemSelected(selectedTab);
+                  },
+                ),
+              ],
+            );
           },
-        ),
-      ],
+        );
+      },
     );
   }
 }

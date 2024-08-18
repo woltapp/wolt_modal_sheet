@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/coffee_order_list_view_for_step.dart';
+import 'package:coffee_maker_navigator_2/app/router/entities/app_route_settings_name.dart';
 import 'package:coffee_maker_navigator_2/app/router/entities/app_route_page.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
@@ -18,14 +18,8 @@ class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
           key: navigatorKey,
           pages: pages,
           onPopPage: (route, result) {
-            final context = navigatorKey.currentContext;
-            final name = route.settings.name;
-
-            if (context != null && name != null) {
-              context.routerViewModel
-                  .onPagePoppedImperatively(poppingPageName: name);
-            }
-
+            navigatorKey.currentContext?.routerViewModel
+                .onPagePoppedImperatively();
             return route.didPop(result);
           },
           observers: [_AppRouteObserver(Theme.of(context).colorScheme)],
@@ -40,9 +34,6 @@ class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
   Future<bool> popRoute() {
     final currentContext = navigatorKey.currentContext;
     if (currentContext != null) {
-      if (_isImperativePopFromOrderScreenModals(currentContext)) {
-        return Future.value(true);
-      }
       return currentContext.routerViewModel
           .onPagePoppedWithOperatingSystemIntent();
     }
@@ -54,26 +45,6 @@ class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
   // ignore: no-empty-block, nothing to do
   Future<void> setNewRoutePath(void configuration) async {
     /* Do Nothing */
-  }
-
-  bool _isImperativePopFromOrderScreenModals(BuildContext currentContext) {
-    // Modals on order screen are opened imperatively. We .
-    final navigatorState = Navigator.of(currentContext);
-
-    // Navigator widget doesn't expose the current route. This seem to be the only way to access it.
-    late Route<void> currentRoute;
-    navigatorState.popUntil((route) {
-      currentRoute = route;
-      return true;
-    });
-
-    final routeName = currentRoute.settings.name;
-    if (routeName == CoffeeOrderListViewForStep.modalRouteSettingName) {
-      navigatorState.pop();
-      return true;
-    }
-
-    return false;
   }
 }
 
@@ -110,7 +81,7 @@ class _AppRouteObserver extends RouteObserver<PageRoute<void>> {
     SystemUIAnnotationWrapper.setSystemUIOverlayStyle(
       colorScheme,
       hasBottomNavigationBar:
-          route.settings.name == const OrdersRoutePage().name,
+          route.settings.name == RouteSettingsName.orders.routeName,
     );
   }
 }

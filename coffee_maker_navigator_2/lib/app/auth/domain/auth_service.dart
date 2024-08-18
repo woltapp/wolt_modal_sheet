@@ -25,7 +25,10 @@ class AuthServiceImpl implements AuthService {
 
   @override
   void onInit() {
-    _authStateNotifier.value = _authRepository.isUserLogged();
+    // Simulate a delay in the initialization of the auth state.
+    Future.delayed(const Duration(seconds: 3), () {
+      _authStateNotifier.value = _authRepository.isUserLogged();
+    });
   }
 
   @override

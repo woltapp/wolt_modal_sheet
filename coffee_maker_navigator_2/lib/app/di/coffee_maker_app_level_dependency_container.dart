@@ -76,8 +76,6 @@ class CoffeeMakerAppLevelDependencyContainer
     return RouterViewModel(
       authService: _authService,
       onboardingService: _onboardingService,
-      isUserLoggedIn: _authService.authStateListenable.value ?? false,
-      isTutorialShown: _onboardingService.isTutorialShown(),
     );
   }
 }
