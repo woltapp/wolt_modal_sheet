@@ -23,3 +23,5 @@ scripts:
     exec: dart analyze .
   format:
     exec: dart format --set-exit-if-changed .
+  test:
+    exec: flutter test

@@ -22,4 +22,9 @@ To get started with contributing, please follow the steps below:
    ```bash
    melos analyze
    ```
-9. Create a pull request.
+9. Make sure all existing tests pass and add new tests for the changes you made.
+   Execute the following command to run the tests.
+   ```bash
+   melos test
+   ```
+10. Create a pull request.
