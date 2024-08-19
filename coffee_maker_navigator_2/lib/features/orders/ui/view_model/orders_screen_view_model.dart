@@ -13,10 +13,10 @@ class OrdersScreenViewModel implements WoltViewModel {
   OrdersScreenViewModel({
     required OrdersService ordersService,
   }) : _ordersService = ordersService {
-    final currentOrders = _ordersService.receiveOrders().value;
+    final currentOrders = _ordersService.orders.value;
     groupedCoffeeOrders.value =
         GroupedCoffeeOrders.fromCoffeeOrders(currentOrders);
-    _ordersService.receiveOrders().addListener(_onOrdersReceived);
+    _ordersService.orders.addListener(_onOrdersReceived);
   }
 
   void onInit(CoffeeMakerStep? initialNavBarItem) {
@@ -25,11 +25,11 @@ class OrdersScreenViewModel implements WoltViewModel {
 
   @override
   void dispose() {
-    _ordersService.receiveOrders().removeListener(_onOrdersReceived);
+    _ordersService.orders.removeListener(_onOrdersReceived);
   }
 
   void _onOrdersReceived() {
-    final orders = _ordersService.receiveOrders().value;
+    final orders = _ordersService.orders.value;
     groupedCoffeeOrders.value = GroupedCoffeeOrders.fromCoffeeOrders(orders);
   }
 

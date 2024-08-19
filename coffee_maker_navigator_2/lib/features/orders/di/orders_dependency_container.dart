@@ -29,6 +29,7 @@ class OrdersDependencyContainer
 
   @override
   void dispose() {
+    _ordersService.dispose();
     _ordersRemoteDataSource.dispose();
   }
 }
