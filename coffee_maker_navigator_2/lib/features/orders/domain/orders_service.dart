@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:coffee_maker_navigator_2/features/orders/data/repository/orders_repository.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_order.dart';
@@ -5,13 +7,23 @@ import 'package:flutter/foundation.dart';
 
 class OrdersService {
   final OrdersRepository _ordersRepository;
+  Timer? _pollingTimer;
 
-  const OrdersService({
+  final ValueNotifier<List<CoffeeOrder>> _orders = ValueNotifier([]);
+
+  static const Duration pollingInterval = Duration(seconds: 3);
+
+  OrdersService({
     required OrdersRepository ordersRepository,
-  }) : _ordersRepository = ordersRepository;
+  }) : _ordersRepository = ordersRepository {
+    _startPolling();
+  }
 
-  ValueListenable<List<CoffeeOrder>> receiveOrders() {
-    return _ordersRepository.receiveOrders();
+  ValueListenable<List<CoffeeOrder>> get orders => _orders;
+
+  void dispose() {
+    _stopPolling();
+    _orders.dispose();
   }
 
   /// Callback method invoked when the status of a coffee order changes.
@@ -22,26 +34,45 @@ class OrdersService {
   /// If [newStep] is provided and is either [CoffeeMakerStep.addWater] or [CoffeeMakerStep.ready],
   /// the method updates the status of the coffee order in the current list of orders. If
   /// [newStep] is not provided the method removes the coffee order.
-  Future<CoffeeOrder?> updateOrder(
-      String orderId, CoffeeMakerStep? newStep) async {
-    /// This is where we implement the business logic. The data logic is handled by the repository.
-    final currentList = receiveOrders().value;
+  void updateOrder(String orderId, CoffeeMakerStep? newStep) async {
+    final currentList = orders.value;
     final updateIndex = currentList.indexWhere((o) => o.id == orderId);
     final orderToUpdate = currentList.elementAtOrNull(updateIndex);
 
     if (orderToUpdate != null) {
       if ([CoffeeMakerStep.addWater, CoffeeMakerStep.ready].contains(newStep)) {
-        return await _ordersRepository.updateOrder(
-          orderToUpdate.copyWith(coffeeMakerStep: newStep),
-        );
+        _ordersRepository
+            .updateOrder(orderToUpdate.copyWith(coffeeMakerStep: newStep));
       } else {
-        await _ordersRepository.archiveOrder(orderId);
+        _ordersRepository.archiveOrder(orderId);
       }
     }
-    return Future.value();
   }
 
-  Future<void> archiveOrder(String id) async {
-    return await _ordersRepository.archiveOrder(id);
+  /// Starts polling for order updates.
+  void _startPolling() {
+    _pollingTimer?.cancel(); // Cancel any existing timer
+    _pollingTimer = Timer.periodic(pollingInterval, (timer) async {
+      final updatedOrders = await _ordersRepository.fetchOrders();
+      if (kDebugMode) {
+        _log(updatedOrders);
+      }
+      _orders.value = updatedOrders;
+    });
+  }
+
+  /// Stops the polling process.
+  void _stopPolling() {
+    _pollingTimer?.cancel();
+    _pollingTimer = null;
+  }
+
+  void _log(List<CoffeeOrder> updatedOrders) {
+    final now = DateTime.now();
+    debugPrint(
+      '${now.hour}:${now.minute}:${now.second} Polling for orders: ${updatedOrders.map(
+            (e) => (e.id, e.coffeeMakerStep.stepName),
+          ).toList()}',
+    );
   }
 }

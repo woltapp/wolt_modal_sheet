@@ -2,37 +2,37 @@ import 'dart:async';
 
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_order.dart';
-import 'package:flutter/foundation.dart';
 
 abstract interface class OrdersRemoteDataSource {
-  ValueListenable<List<CoffeeOrder>> receiveOrders();
+  Future<List<CoffeeOrder>> fetchOrders();
 
   Future<CoffeeOrder> updateOrder(CoffeeOrder updatedOrder);
 
   Future<void> archiveOrder(String id);
 
-  Future<void> dispose();
+  void dispose();
 }
 
 /// A data source that provides access to a list of coffee orders. This class is used to simulate
 /// a remote data source. In a real-world scenario, this class would interact with a remote
 /// server to fetch and update coffee orders.
 class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
-  final ValueNotifier<List<CoffeeOrder>> _ordersValueNotifier =
-      ValueNotifier(List.from(_mockCoffeeOrders));
-
   OrdersRemoteDataSourceImpl();
 
+  List<CoffeeOrder> _orders = List<CoffeeOrder>.from(_mockCoffeeOrders);
+
   @override
-  ValueListenable<List<CoffeeOrder>> receiveOrders() => _ordersValueNotifier;
+  Future<List<CoffeeOrder>> fetchOrders() {
+    return Future.value(_orders);
+  }
 
   @override
   Future<CoffeeOrder> updateOrder(CoffeeOrder updatedOrder) async {
-    final orders = List<CoffeeOrder>.from(_ordersValueNotifier.value);
+    final orders = List<CoffeeOrder>.from(_orders);
     int index = orders.indexWhere((order) => order.id == updatedOrder.id);
     if (index != -1) {
       orders[index] = updatedOrder;
-      _ordersValueNotifier.value = orders;
+      _orders = orders;
       return updatedOrder;
     } else {
       throw Exception('Order not found');
@@ -41,15 +41,14 @@ class OrdersRemoteDataSourceImpl implements OrdersRemoteDataSource {
 
   @override
   Future<void> archiveOrder(String id) async {
-    final orders = List<CoffeeOrder>.from(_ordersValueNotifier.value);
+    final orders = List<CoffeeOrder>.from(_orders);
     orders.removeWhere((order) => order.id == id);
-    _ordersValueNotifier.value = orders;
+    _orders = orders;
   }
 
   @override
-  Future<void> dispose() {
-    _ordersValueNotifier.dispose();
-    return Future.value();
+  void dispose() {
+    _orders = <CoffeeOrder>[];
   }
 }
 
