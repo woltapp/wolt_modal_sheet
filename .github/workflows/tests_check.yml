@@ -2,7 +2,7 @@ name: Check for Tests in PR
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, reopened]
 
 jobs:
   check-for-tests:
