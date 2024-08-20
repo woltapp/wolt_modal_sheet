@@ -4,8 +4,7 @@ import 'package:coffee_maker_navigator_2/features/add_water/domain/add_water_ser
 import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view_model/add_water_view_model.dart';
 
-class AddWaterDependencyContainer
-    extends FeatureWithViewModelDependencyContainer {
+class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
   // Just in the sake to show that we can use a method here to make the service lazily initialized.
   late final AddWaterService _addWaterService = _createAddWaterService();
   // This is an example to non-lazy initialization.
@@ -20,7 +19,6 @@ class AddWaterDependencyContainer
     return AddWaterService();
   }
 
-  @override
   AddWaterViewModel createViewModel() => AddWaterViewModel(
         addWaterService: _addWaterService,
         ordersService: _ordersService,

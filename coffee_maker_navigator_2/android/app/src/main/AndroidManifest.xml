@@ -2,6 +2,7 @@
     <application
         android:label="coffee_maker_navigator_2"
         android:name="${applicationName}"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

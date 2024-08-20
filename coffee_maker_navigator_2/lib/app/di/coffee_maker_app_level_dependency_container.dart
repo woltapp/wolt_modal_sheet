@@ -1,3 +1,4 @@
+import 'package:coffee_maker_navigator_2/app/app_lifecycle/domain/app_lifecyle_service.dart';
 import 'package:coffee_maker_navigator_2/app/auth/data/local/auth_local_data_source.dart';
 import 'package:coffee_maker_navigator_2/app/auth/data/repository/auth_repository.dart';
 import 'package:coffee_maker_navigator_2/app/auth/domain/auth_service.dart';
@@ -24,6 +25,8 @@ class CoffeeMakerAppLevelDependencyContainer
   late final _onboardingRepository = _createOnboardingRepository();
   late final _onboardingService = _createOnboardingService();
 
+  late final _appLifeCycleService = _createAppLifeCycleService();
+
   late final _appRouterDelegate = _createAppRouterDelegate();
   late final _backButtonDispatcher = _createRootBackButtonDispatcher();
   late final _routerViewModel = _createRouterViewModel();
@@ -32,6 +35,7 @@ class CoffeeMakerAppLevelDependencyContainer
   BackButtonDispatcher get backButtonDispatcher => _backButtonDispatcher;
   RouterViewModel get routerViewModel => _routerViewModel;
   AuthService get authService => _authService;
+  AppLifeCycleService get appLifeCycleService => _appLifeCycleService;
 
   CoffeeMakerAppLevelDependencyContainer();
 
@@ -77,5 +81,9 @@ class CoffeeMakerAppLevelDependencyContainer
       authService: _authService,
       onboardingService: _onboardingService,
     );
+  }
+
+  AppLifeCycleService _createAppLifeCycleService() {
+    return AppLifeCycleService();
   }
 }

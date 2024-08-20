@@ -1,43 +1,50 @@
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:wolt_di/wolt_di.dart';
+import 'package:flutter/foundation.dart';
 
-class OrdersScreenViewModel implements WoltViewModel {
-  final OrdersService _ordersService;
-  final groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.empty());
-  final ValueNotifier<CoffeeMakerStep> selectedBottomNavBarItem =
-      ValueNotifier(CoffeeMakerStep.grind);
-
-  OrdersScreenViewModel({
-    required OrdersService ordersService,
-  }) : _ordersService = ordersService {
+class OrdersScreenViewModel {
+  OrdersScreenViewModel({required OrdersService ordersService})
+      : _ordersService = ordersService {
     final currentOrders = _ordersService.orders.value;
-    groupedCoffeeOrders.value =
+    _groupedCoffeeOrders.value =
         GroupedCoffeeOrders.fromCoffeeOrders(currentOrders);
     _ordersService.orders.addListener(_onOrdersReceived);
   }
 
+  final OrdersService _ordersService;
+
+  final _groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.empty());
+
+  ValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
+      _groupedCoffeeOrders;
+
+  final ValueNotifier<CoffeeMakerStep> _selectedBottomNavBarItem =
+      ValueNotifier(CoffeeMakerStep.grind);
+
+  ValueListenable<CoffeeMakerStep> get selectedBottomNavBarItem =>
+      _selectedBottomNavBarItem;
+
   void onInit(CoffeeMakerStep? initialNavBarItem) {
-    selectedBottomNavBarItem.value = initialNavBarItem ?? CoffeeMakerStep.grind;
+    if (initialNavBarItem != null) {
+      _selectedBottomNavBarItem.value = initialNavBarItem;
+    }
   }
 
-  @override
   void dispose() {
     _ordersService.orders.removeListener(_onOrdersReceived);
   }
 
-  void _onOrdersReceived() {
-    final orders = _ordersService.orders.value;
-    groupedCoffeeOrders.value = GroupedCoffeeOrders.fromCoffeeOrders(orders);
-  }
-
   void onBottomNavBarItemSelected(CoffeeMakerStep selectedStep) {
-    selectedBottomNavBarItem.value = selectedStep;
+    _selectedBottomNavBarItem.value = selectedStep;
   }
 
   void onOrderStatusChange(String orderId, [CoffeeMakerStep? newStep]) {
     _ordersService.updateOrder(orderId, newStep);
+  }
+
+  void _onOrdersReceived() {
+    final orders = _ordersService.orders.value;
+    _groupedCoffeeOrders.value = GroupedCoffeeOrders.fromCoffeeOrders(orders);
   }
 }
