@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coffee_maker_navigator_2/app/app_lifecycle/domain/app_lifecyle_service.dart';
 import 'package:coffee_maker_navigator_2/features/orders/data/repository/orders_repository.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_order.dart';
@@ -15,8 +16,12 @@ class OrdersService {
 
   OrdersService({
     required OrdersRepository ordersRepository,
+    required AppLifeCycleService appLifeCycleService,
   }) : _ordersRepository = ordersRepository {
     _startPolling();
+    appLifeCycleService.appLifeStateListenable.addListener(() {
+      _onAppLifeCycleChange(appLifeCycleService.appLifeStateListenable.value);
+    });
   }
 
   ValueListenable<List<CoffeeOrder>> get orders => _orders;
@@ -46,6 +51,17 @@ class OrdersService {
       } else {
         _ordersRepository.archiveOrder(orderId);
       }
+    }
+  }
+
+  void _onAppLifeCycleChange(AppLifeCycleState appLifeCycleState) {
+    switch (appLifeCycleState) {
+      case AppLifeCycleState.foreground:
+        _startPolling();
+        break;
+      case AppLifeCycleState.background:
+        _stopPolling();
+        break;
     }
   }
 

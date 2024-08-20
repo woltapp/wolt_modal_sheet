@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
-import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.dart';
+import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_screen_content.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';

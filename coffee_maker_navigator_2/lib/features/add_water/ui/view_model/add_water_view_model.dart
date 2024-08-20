@@ -4,9 +4,8 @@ import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/wate
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.dart';
 import 'package:flutter/foundation.dart';
-import 'package:wolt_di/wolt_di.dart';
 
-class AddWaterViewModel extends WoltViewModel {
+class AddWaterViewModel {
   final AddWaterService _addWaterService;
   final OrdersService _ordersService;
   String _waterQuantityInMl = '';
@@ -14,8 +13,11 @@ class AddWaterViewModel extends WoltViewModel {
   WaterSource _waterSource = WaterSource.tap;
   late String _orderId;
 
-  final ValueNotifier<bool> isReadyToAddWater = ValueNotifier(false);
+  final ValueNotifier<bool> _isReadyToAddWater = ValueNotifier(false);
+  ValueListenable<bool> get isReadyToAddWater => _isReadyToAddWater;
+
   final ValueNotifier<String?> _errorMessage = ValueNotifier(null);
+  ValueListenable<String?> get errorMessage => _errorMessage;
 
   AddWaterViewModel({
     required AddWaterService addWaterService,
@@ -60,15 +62,10 @@ class AddWaterViewModel extends WoltViewModel {
     }
   }
 
-  @override
   void dispose() {
-    isReadyToAddWater.dispose();
+    _isReadyToAddWater.dispose();
     _errorMessage.dispose();
   }
-
-  ValueListenable<bool> get isAddWaterButtonEnabled => isReadyToAddWater;
-
-  ValueListenable<String?> get errorMessage => _errorMessage;
 
   // Method to check the validity of the current state
   void onCheckValidityPressed() {
@@ -79,7 +76,7 @@ class AddWaterViewModel extends WoltViewModel {
     if (quantity == null || temperature == null) {
       _errorMessage.value =
           "Invalid numeric values for quantity or temperature.";
-      isReadyToAddWater.value = false;
+      _isReadyToAddWater.value = false;
       return;
     }
 
@@ -89,7 +86,7 @@ class AddWaterViewModel extends WoltViewModel {
       waterSource: _waterSource,
       currentDate: DateTime.now(),
     );
-    isReadyToAddWater.value = result.isAccepted;
+    _isReadyToAddWater.value = result.isAccepted;
     if (!result.isAccepted) {
       _errorMessage.value = result.message;
     }

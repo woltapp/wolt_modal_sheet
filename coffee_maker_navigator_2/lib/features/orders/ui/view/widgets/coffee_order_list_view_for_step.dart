@@ -1,8 +1,8 @@
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_order.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
-import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/coffee_order_list_item_tile.dart';
+import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_screen_content.dart';
 import 'package:flutter/material.dart';
 
 class CoffeeOrderListViewForStep extends StatelessWidget {
