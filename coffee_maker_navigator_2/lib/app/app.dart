@@ -19,6 +19,8 @@ class CoffeeMakerApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: AppThemeData.themeData(context),
             routerDelegate: appLevelDependencyContainer.appRouterDelegate,
+            routeInformationParser:
+                appLevelDependencyContainer.appRouteInformationParser,
             backButtonDispatcher:
                 appLevelDependencyContainer.backButtonDispatcher,
           ),

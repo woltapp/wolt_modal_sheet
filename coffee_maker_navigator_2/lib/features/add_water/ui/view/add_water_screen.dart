@@ -1,7 +1,6 @@
 import 'package:coffee_maker_navigator_2/features/add_water/di/add_water_dependency_container.dart';
-import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_back_button.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_content.dart';
-import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_footer.dart';
+import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_step_order_not_found.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view_model/add_water_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +31,14 @@ class _AddWaterScreenState extends State<AddWaterScreen>
   }
 
   @override
+  void didUpdateWidget(covariant AddWaterScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.coffeeOrderId != widget.coffeeOrderId) {
+      _viewModel.onInit(widget.coffeeOrderId);
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _viewModel.dispose();
@@ -44,22 +51,18 @@ class _AddWaterScreenState extends State<AddWaterScreen>
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           top: false,
-          child: Stack(
-            children: [
-              AddWaterScreenContent(
-                onWaterQuantityUpdated: _viewModel.onWaterQuantityUpdated,
-                onWaterSourceUpdated: _viewModel.onWaterSourceUpdated,
-                onWaterTemperatureUpdated: _viewModel.onWaterTemperatureUpdated,
-              ),
-              const AddWaterScreenBackButton(),
-              AddWaterScreenFooter(
-                _viewModel.isReadyToAddWater,
-                _viewModel.errorMessage,
-                _viewModel.onCheckValidityPressed,
-                _viewModel.onAddWaterPressed,
-              ),
-            ],
-          ),
+          child: _viewModel.orderExists
+              ? AddWaterScreenContent(
+                  onWaterQuantityUpdated: _viewModel.onWaterQuantityUpdated,
+                  onWaterTemperatureUpdated:
+                      _viewModel.onWaterTemperatureUpdated,
+                  onWaterSourceUpdated: _viewModel.onWaterSourceUpdated,
+                  isReadyToAddWater: _viewModel.isReadyToAddWater,
+                  errorMessage: _viewModel.errorMessage,
+                  onCheckValidityPressed: _viewModel.onCheckValidityPressed,
+                  onAddWaterPressed: _viewModel.onAddWaterPressed,
+                )
+              : const AddWaterStepOrderNotFound(),
         ),
       ),
     );

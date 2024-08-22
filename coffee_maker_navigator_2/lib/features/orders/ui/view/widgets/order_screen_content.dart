@@ -1,4 +1,3 @@
-import 'package:coffee_maker_navigator_2/app/router/view_model/router_view_model.dart';
 import 'package:coffee_maker_navigator_2/app/ui/widgets/app_navigation_drawer.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
@@ -24,13 +23,11 @@ class OrderScreenContent extends StatelessWidget {
     required this.selectedStepListenable,
     required this.groupedCoffeeOrders,
     required this.onBottomNavBarItemSelected,
-    required this.onOrderStatusChange,
   });
 
   final ValueListenable<CoffeeMakerStep> selectedStepListenable;
   final ValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
   final OnOrderScreenBottomNavBarItemSelected onBottomNavBarItemSelected;
-  final OnCoffeeOrderStatusChange onOrderStatusChange;
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +49,12 @@ class OrderScreenContent extends StatelessWidget {
                         return CoffeeOrderListViewForStep(
                           groupedCoffeeOrders: orders,
                           selectedBottomNavBarItem: selectedTab,
-                          onGrindCoffeeStepSelected: (id) =>
-                              _onGrindCoffeeStepSelected(routerViewModel, id),
+                          onGrindCoffeeStepSelected:
+                              routerViewModel.onGrindCoffeeStepSelected,
                           onAddWaterCoffeeStepSelected:
                               routerViewModel.onAddWaterCoffeeStepSelected,
-                          onReadyCoffeeStepSelected: (id) =>
-                              _onReadyCoffeeStepSelected(routerViewModel, id),
+                          onReadyCoffeeStepSelected:
+                              routerViewModel.onReadyCoffeeStepSelected,
                         );
                       },
                     ),
@@ -75,19 +72,5 @@ class OrderScreenContent extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _onGrindCoffeeStepSelected(RouterViewModel routerViewModel, String id) {
-    routerViewModel.onGrindCoffeeStepSelected(
-      id: id,
-      onCoffeeGrindCompleted: () =>
-          onOrderStatusChange(id, CoffeeMakerStep.addWater),
-      onCoffeeGrindRejected: () => onOrderStatusChange(id),
-    );
-  }
-
-  void _onReadyCoffeeStepSelected(RouterViewModel routerViewModel, String id) {
-    routerViewModel.onReadyCoffeeStepSelected(
-        id: id, onCoffeeServed: () => onOrderStatusChange(id));
   }
 }

@@ -2,6 +2,7 @@ import 'package:coffee_maker_navigator_2/app/app_lifecycle/domain/app_lifecyle_s
 import 'package:coffee_maker_navigator_2/app/auth/data/local/auth_local_data_source.dart';
 import 'package:coffee_maker_navigator_2/app/auth/data/repository/auth_repository.dart';
 import 'package:coffee_maker_navigator_2/app/auth/domain/auth_service.dart';
+import 'package:coffee_maker_navigator_2/app/router/view/app_route_information_parser.dart';
 import 'package:coffee_maker_navigator_2/features/onboarding/data/local/onboarding_local_data_source.dart';
 import 'package:coffee_maker_navigator_2/features/onboarding/data/repository/onboarding_repository.dart';
 import 'package:coffee_maker_navigator_2/features/onboarding/domain/onboarding_service.dart';
@@ -28,10 +29,13 @@ class CoffeeMakerAppLevelDependencyContainer
   late final _appLifeCycleService = _createAppLifeCycleService();
 
   late final _appRouterDelegate = _createAppRouterDelegate();
+  late final _appRouteInformationParser = _createAppRouteInformationParser();
   late final _backButtonDispatcher = _createRootBackButtonDispatcher();
   late final _routerViewModel = _createRouterViewModel();
 
   AppRouterDelegate get appRouterDelegate => _appRouterDelegate;
+  AppRouteInformationParser get appRouteInformationParser =>
+      _appRouteInformationParser;
   BackButtonDispatcher get backButtonDispatcher => _backButtonDispatcher;
   RouterViewModel get routerViewModel => _routerViewModel;
   AuthService get authService => _authService;
@@ -69,7 +73,11 @@ class CoffeeMakerAppLevelDependencyContainer
   }
 
   AppRouterDelegate _createAppRouterDelegate() {
-    return AppRouterDelegate();
+    return AppRouterDelegate(routerViewModel);
+  }
+
+  AppRouteInformationParser _createAppRouteInformationParser() {
+    return const AppRouteInformationParser();
   }
 
   RootBackButtonDispatcher _createRootBackButtonDispatcher() {

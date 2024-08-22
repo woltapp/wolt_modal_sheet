@@ -57,46 +57,46 @@ const List<CoffeeOrder> _mockCoffeeOrders = <CoffeeOrder>[
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.grind,
     orderName: 'Yuho W.',
-    id: '#001',
+    id: '001',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.grind,
     orderName: 'John Doe',
-    id: '#002',
+    id: '002',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.grind,
     orderName: 'Jane Smith',
-    id: '#003',
+    id: '003',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.grind,
     orderName: 'Michael Johnson',
-    id: '#004',
+    id: '004',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.grind,
     orderName: 'Sarah Davis',
-    id: '#005',
+    id: '005',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.grind,
     orderName: 'David Wilson',
-    id: '#006',
+    id: '006',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.addWater,
     orderName: 'Emily Brown',
-    id: '#007',
+    id: '007',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.addWater,
     orderName: 'Robert Jones',
-    id: '#008',
+    id: '008',
   ),
   CoffeeOrder(
     coffeeMakerStep: CoffeeMakerStep.ready,
     orderName: 'Jennifer Taylor',
-    id: '#009',
+    id: '009',
   ),
 ];

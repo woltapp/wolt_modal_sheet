@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class ServeOrOfferModalPage extends WoltModalSheetPage {
-  ServeOrOfferModalPage(
-    VoidCallback onCoffeeOrderServed,
-    String coffeeOrderId,
-  ) : super(
+  ServeOrOfferModalPage({
+    required VoidCallback onCoffeeOrderServed,
+    required String coffeeOrderId,
+  }) : super(
           heroImage: const Image(
             image: AssetImage('lib/assets/images/coffee_is_ready.png'),
             fit: BoxFit.cover,
