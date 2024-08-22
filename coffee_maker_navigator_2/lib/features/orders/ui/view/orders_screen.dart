@@ -40,7 +40,6 @@ class _OrdersScreenState extends State<OrdersScreen>
       selectedStepListenable: viewModel.selectedBottomNavBarItem,
       groupedCoffeeOrders: viewModel.groupedCoffeeOrders,
       onBottomNavBarItemSelected: viewModel.onBottomNavBarItemSelected,
-      onOrderStatusChange: viewModel.onOrderStatusChange,
     );
   }
 }

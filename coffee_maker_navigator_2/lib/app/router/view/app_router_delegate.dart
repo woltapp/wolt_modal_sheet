@@ -1,30 +1,31 @@
 import 'dart:async';
 
-import 'package:coffee_maker_navigator_2/app/router/entities/app_route_settings_name.dart';
-import 'package:coffee_maker_navigator_2/app/router/entities/app_route_page.dart';
-import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
-import 'package:demo_ui_components/demo_ui_components.dart';
+import 'package:coffee_maker_navigator_2/app/router/entities/app_route_configuration.dart';
+import 'package:coffee_maker_navigator_2/app/router/entities/app_route_path.dart';
+import 'package:coffee_maker_navigator_2/app/router/view/app_route_observer.dart';
+import 'package:coffee_maker_navigator_2/app/router/view_model/router_view_model.dart';
 import 'package:flutter/material.dart';
 
-class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
+class AppRouterDelegate extends RouterDelegate<AppRouteConfiguration>
+    with ChangeNotifier {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  final RouterViewModel routerViewModel;
+
+  AppRouterDelegate(this.routerViewModel) {
+    routerViewModel.navigationStack.addListener(notifyListeners);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<AppRoutePage>>(
-      valueListenable: context.routerViewModel.pages,
-      builder: (context, pages, __) {
-        return Navigator(
-          key: navigatorKey,
-          pages: pages,
-          onPopPage: (route, result) {
-            navigatorKey.currentContext?.routerViewModel
-                .onPagePoppedImperatively();
-            return route.didPop(result);
-          },
-          observers: [_AppRouteObserver(Theme.of(context).colorScheme)],
-        );
+    return Navigator(
+      key: navigatorKey,
+      pages: routerViewModel.navigationStack.value.pages,
+      onPopPage: (route, result) {
+        routerViewModel.onPagePoppedImperatively();
+        return route.didPop(result);
       },
+      observers: [AppRouteObserver(Theme.of(context).colorScheme)],
     );
   }
 
@@ -34,54 +35,22 @@ class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
   Future<bool> popRoute() {
     final currentContext = navigatorKey.currentContext;
     if (currentContext != null) {
-      return currentContext.routerViewModel
-          .onPagePoppedWithOperatingSystemIntent();
+      return routerViewModel.onPagePoppedWithOperatingSystemIntent();
     }
 
     return Future.value(false);
   }
 
   @override
+  AppRouteConfiguration get currentConfiguration {
+    final lastPage = routerViewModel.navigationStack.value.lastPage;
+    return lastPage.configuration ??
+        const AppRouteConfiguration(appRoutePath: AppRoutePath.bootstrap);
+  }
+
+  @override
   // ignore: no-empty-block, nothing to do
-  Future<void> setNewRoutePath(void configuration) async {
-    /* Do Nothing */
-  }
-}
-
-class _AppRouteObserver extends RouteObserver<PageRoute<void>> {
-  final ColorScheme colorScheme;
-
-  _AppRouteObserver(this.colorScheme);
-
-  @override
-  void didReplace({Route<void>? newRoute, Route<void>? oldRoute}) {
-    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
-    if (newRoute is ModalRoute) {
-      _updateSystemUIOverlayStyle(newRoute);
-    }
-  }
-
-  @override
-  void didPush(Route<void> route, Route<void>? previousRoute) {
-    super.didPush(route, previousRoute);
-    if (route is ModalRoute) {
-      _updateSystemUIOverlayStyle(route);
-    }
-  }
-
-  @override
-  void didPop(Route<void> route, Route<void>? previousRoute) {
-    super.didPop(route, previousRoute);
-    if (previousRoute != null) {
-      _updateSystemUIOverlayStyle(previousRoute);
-    }
-  }
-
-  void _updateSystemUIOverlayStyle(Route<void> route) {
-    SystemUIAnnotationWrapper.setSystemUIOverlayStyle(
-      colorScheme,
-      hasBottomNavigationBar:
-          route.settings.name == RouteSettingsName.orders.routeName,
-    );
+  Future<void> setNewRoutePath(AppRouteConfiguration configuration) async {
+    routerViewModel.onNewRoutePathSet(configuration);
   }
 }

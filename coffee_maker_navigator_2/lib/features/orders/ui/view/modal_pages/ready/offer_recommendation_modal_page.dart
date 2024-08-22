@@ -7,10 +7,10 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class OfferRecommendationModalPage {
   OfferRecommendationModalPage._();
 
-  static SliverWoltModalSheetPage build(
-    VoidCallback onCoffeeOrderServed,
-    String coffeeOrderId,
-  ) {
+  static SliverWoltModalSheetPage build({
+    required VoidCallback onCoffeeOrderServed,
+    required String coffeeOrderId,
+  }) {
     final selectedItemCountListener = ValueNotifier(0);
     const pageTitle = 'Recommendations';
     const allRecommendations = ExtraRecommendation.values;

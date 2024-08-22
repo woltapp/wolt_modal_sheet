@@ -15,7 +15,7 @@ class AppThemeData {
   const AppThemeData();
 
   static ThemeData themeData(BuildContext context) {
-    final textTheme = GoogleFonts.interTextTheme(Theme.of(context).textTheme);
+    final textTheme = Theme.of(context).textTheme;
 
     return ThemeData(
       brightness: colorScheme.brightness,

@@ -47,4 +47,9 @@ class OrdersScreenViewModel {
     final orders = _ordersService.orders.value;
     _groupedCoffeeOrders.value = GroupedCoffeeOrders.fromCoffeeOrders(orders);
   }
+
+  bool orderExists(String orderId, CoffeeMakerStep step) {
+    return _ordersService.orders.value
+        .any((order) => order.id == orderId && order.coffeeMakerStep == step);
+  }
 }

@@ -30,12 +30,7 @@ class _DemoAppState extends State<DemoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      // This is needed to make the app working with CupertinoApp.
-      // For more details on CupertinoApp support, see the "CupertinoApp Support" section in the README file.
-      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-        DefaultMaterialLocalizations.delegate,
-      ],
+    return MaterialApp(
       scrollBehavior: const CustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       home: Theme(

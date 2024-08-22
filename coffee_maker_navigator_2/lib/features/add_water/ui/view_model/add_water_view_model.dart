@@ -14,10 +14,20 @@ class AddWaterViewModel {
   late String _orderId;
 
   final ValueNotifier<bool> _isReadyToAddWater = ValueNotifier(false);
+
   ValueListenable<bool> get isReadyToAddWater => _isReadyToAddWater;
 
   final ValueNotifier<String?> _errorMessage = ValueNotifier(null);
+
   ValueListenable<String?> get errorMessage => _errorMessage;
+
+  bool get orderExists {
+    return _ordersService.orders.value.any(
+      (order) =>
+          order.id == _orderId &&
+          order.coffeeMakerStep == CoffeeMakerStep.addWater,
+    );
+  }
 
   AddWaterViewModel({
     required AddWaterService addWaterService,
