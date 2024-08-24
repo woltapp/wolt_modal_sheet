@@ -1,5 +1,4 @@
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/error_notification_widget.dart';
-import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -9,7 +8,8 @@ class AddWaterScreenFooter extends StatelessWidget {
     this.isReadyToAddWater,
     this.errorMessage,
     this.onCheckValidity,
-    this.onAddWater, {
+    this.onAddWater,
+    this.onStepCompleted, {
     super.key,
   });
 
@@ -17,6 +17,7 @@ class AddWaterScreenFooter extends StatelessWidget {
   final ValueListenable<String?> errorMessage;
   final VoidCallback onCheckValidity;
   final VoidCallback onAddWater;
+  final VoidCallback onStepCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class AddWaterScreenFooter extends StatelessWidget {
                     enabled: isEnabled,
                     onPressed: () {
                       onAddWater();
-                      context.routerViewModel.onAddWaterStepCompleted();
+                      onStepCompleted();
                     },
                     child: const Text('Add water'),
                   );
