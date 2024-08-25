@@ -7,6 +7,7 @@ enum CoffeeMakerStep {
       actionName: 'Start grinding',
       assetName: '${_imagePath}_grind.jpg',
       tutorialTitle: 'Tips for grinding',
+      queryParamName: 'grind',
       tutorialContent: '''
 Grinding is crucial for brewing as it increases the surface area of coffee beans, enhancing water's ability to extract flavors effectively. However, the grind size needs to be optimal—not too fine nor too coarse—to prevent undesirable flavors from over- or under-extraction. Experts like Sierra Yeo emphasize that the right grind can significantly impact the taste of coffee, suggesting that coffee enthusiasts consider grinding their beans at home for the freshest, most flavorful results. Additionally, the consistency and shape of the coffee grounds also play critical roles in the brewing process, influencing the overall taste of the coffee.
 
@@ -18,6 +19,7 @@ The process of finding the perfect grind is not just about the size but also abo
     actionName: 'Add water',
     assetName: '${_imagePath}_water.jpg',
     tutorialTitle: 'Adding water to coffee',
+    queryParamName: 'water',
     tutorialContent: '''
 Adding water to coffee involves precise considerations, significantly influencing the quality and flavor of the brew. Optimal water temperature, typically between 195°F to 205°F (about 90°C to 96°C), is crucial for effective extraction of coffee oils and flavors without causing bitterness due to over-extraction. These temperatures can vary slightly depending on the season, with adjustments made to accommodate ambient temperature effects on the brewing process. An innovative service class in the coffee maker takes these factors into account, dynamically adjusting acceptable temperature ranges based on the current coffee season to ensure optimal brewing conditions year-round.
 
@@ -30,6 +32,7 @@ Moreover, the quality of water used is paramount. The water source's pH level an
       actionName: 'Ready',
       assetName: '${_imagePath}_ready.jpg',
       tutorialTitle: 'Serving coffee',
+      queryParamName: 'ready',
       tutorialContent: '''
 Serving coffee, the final and perhaps the most gratifying step in the coffee-making process, is about more than merely pouring a brew into a cup. This stage is crucial for ensuring that the aroma and temperature of the coffee are optimal at the moment of enjoyment. Serving coffee at the right temperature is vital—not too hot to cause discomfort, nor too cool, which might dampen its rich flavors and aromas. Ideally, coffee should be served immediately after brewing, at a temperature between 155°F and 175°F (about 68°C to 80°C), to capture the full spectrum of flavors crafted during the brewing process.
 
@@ -45,6 +48,7 @@ Further elevating the serving experience, some advanced coffee machines integrat
     required this.assetName,
     required this.tutorialContent,
     required this.tutorialTitle,
+    required this.queryParamName,
   });
 
   final String stepName;
@@ -53,4 +57,12 @@ Further elevating the serving experience, some advanced coffee machines integrat
   final String assetName;
   final String tutorialContent;
   final String tutorialTitle;
+  final String queryParamName;
+
+  static CoffeeMakerStep fromQueryParameter(String queryParameter) {
+    return CoffeeMakerStep.values.firstWhere(
+      (element) => element.queryParamName == queryParameter,
+      orElse: () => CoffeeMakerStep.grind,
+    );
+  }
 }

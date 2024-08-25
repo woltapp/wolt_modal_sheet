@@ -1,9 +1,13 @@
-import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 class AddWaterStepOrderNotFound extends StatelessWidget {
-  const AddWaterStepOrderNotFound({super.key});
+  const AddWaterStepOrderNotFound({
+    required this.onOrderStepCompleted,
+    super.key,
+  });
+
+  final VoidCallback onOrderStepCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class AddWaterStepOrderNotFound extends StatelessWidget {
                 ),
               ),
               WoltElevatedButton(
-                onPressed: context.routerViewModel.onAddWaterStepCompleted,
+                onPressed: onOrderStepCompleted,
                 child: const Text('Go to orders'),
               ),
             ],

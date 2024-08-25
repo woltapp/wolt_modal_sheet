@@ -29,7 +29,10 @@ We're excited to assist you with the orders. To ensure you get the most out of o
                 Builder(builder: (context) {
                   return WoltElevatedButton(
                     onPressed: () {
-                      context.routerViewModel.onCloseOnboardingModalSheet();
+                      // No need to call RouterViewModel because onPopPage method of the
+                      // RouterDelegate will capture this and the RouterViewModel will handle
+                      // from there.
+                      Navigator.of(context).pop();
                     },
                     theme: WoltElevatedButtonTheme.secondary,
                     child: const Text('Show me later'),

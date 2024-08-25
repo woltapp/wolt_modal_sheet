@@ -2,6 +2,7 @@ import 'package:coffee_maker_navigator_2/features/add_water/di/add_water_depende
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_content.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_step_order_not_found.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view_model/add_water_view_model.dart';
+import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_di/wolt_di.dart';
@@ -61,8 +62,12 @@ class _AddWaterScreenState extends State<AddWaterScreen>
                   errorMessage: _viewModel.errorMessage,
                   onCheckValidityPressed: _viewModel.onCheckValidityPressed,
                   onAddWaterPressed: _viewModel.onAddWaterPressed,
+                  onStepCompleted: context.routerViewModel.onOrderStepCompleted,
                 )
-              : const AddWaterStepOrderNotFound(),
+              : AddWaterStepOrderNotFound(
+                  onOrderStepCompleted:
+                      context.routerViewModel.onOrderStepCompleted,
+                ),
         ),
       ),
     );

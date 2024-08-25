@@ -4,7 +4,6 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/coffee_order_list_view_for_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/orders_screen_bottom_navigation_bar.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/top_bar.dart';
-import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,14 +19,20 @@ typedef OnOrderScreenBottomNavBarItemSelected = void Function(
 class OrderScreenContent extends StatelessWidget {
   const OrderScreenContent({
     super.key,
-    required this.selectedStepListenable,
+    required this.selectedNavBarTabListenable,
     required this.groupedCoffeeOrders,
-    required this.onBottomNavBarItemSelected,
+    required this.onNavBarItemSelected,
+    required this.onGrindCoffeeStepSelected,
+    required this.onAddWaterCoffeeStepSelected,
+    required this.onReadyCoffeeStepSelected,
   });
 
-  final ValueListenable<CoffeeMakerStep> selectedStepListenable;
+  final ValueListenable<CoffeeMakerStep> selectedNavBarTabListenable;
   final ValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
-  final OnOrderScreenBottomNavBarItemSelected onBottomNavBarItemSelected;
+  final OnOrderScreenBottomNavBarItemSelected onNavBarItemSelected;
+  final OnCoffeeOrderUpdate onGrindCoffeeStepSelected;
+  final OnCoffeeOrderUpdate onAddWaterCoffeeStepSelected;
+  final OnCoffeeOrderUpdate onReadyCoffeeStepSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class OrderScreenContent extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: ValueListenableBuilder(
-            valueListenable: selectedStepListenable,
+            valueListenable: selectedNavBarTabListenable,
             builder: (context, selectedTab, _) {
               return Column(
                 children: [
@@ -45,16 +50,13 @@ class OrderScreenContent extends StatelessWidget {
                     child: ValueListenableBuilder(
                       valueListenable: groupedCoffeeOrders,
                       builder: (context, orders, _) {
-                        final routerViewModel = context.routerViewModel;
                         return CoffeeOrderListViewForStep(
                           groupedCoffeeOrders: orders,
                           selectedBottomNavBarItem: selectedTab,
-                          onGrindCoffeeStepSelected:
-                              routerViewModel.onGrindCoffeeStepSelected,
+                          onGrindCoffeeStepSelected: onGrindCoffeeStepSelected,
                           onAddWaterCoffeeStepSelected:
-                              routerViewModel.onAddWaterCoffeeStepSelected,
-                          onReadyCoffeeStepSelected:
-                              routerViewModel.onReadyCoffeeStepSelected,
+                              onAddWaterCoffeeStepSelected,
+                          onReadyCoffeeStepSelected: onReadyCoffeeStepSelected,
                         );
                       },
                     ),
@@ -67,8 +69,8 @@ class OrderScreenContent extends StatelessWidget {
         drawer: const AppNavigationDrawer(selectedIndex: 0),
         bottomNavigationBar: OrdersScreenBottomNavigationBar(
           groupedCoffeeOrders,
-          onBottomNavBarItemSelected,
-          selectedStepListenable,
+          onNavBarItemSelected,
+          selectedNavBarTabListenable,
         ),
       ),
     );
