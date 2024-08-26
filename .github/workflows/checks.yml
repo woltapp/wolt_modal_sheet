@@ -36,11 +36,11 @@ jobs:
       # Run Melos bootstrap
       - name: Melos bootstrap
         run: melos bootstrap
-      # # Run flutter analyze for the main package
-      # - name: Run flutter analyze
-      #   run: flutter analyze
-      # - name: Check if flutter analyze passes
-      #   run: echo $?
+      # Run flutter analyze for the main package
+      - name: Run flutter analyze
+        run: flutter analyze
+      - name: Check if flutter analyze passes
+        run: echo $?
       # Run melos analyze to find analzyer issues using DCM.dev for both Flutter and Dart
       - name: Run melos analyze
         run: melos analyze
