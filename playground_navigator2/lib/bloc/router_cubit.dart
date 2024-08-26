@@ -10,7 +10,9 @@ class RouterCubit extends Cubit<RouterState> {
     if (currentState is ModalSheetVisibleState) {
       emit(
         ModalSheetVisibleState(
-            pageIndex: pageIndex, pathName: currentState.pathName),
+          pageIndex: pageIndex,
+          pathName: currentState.pathName,
+        ),
       );
     }
   }
@@ -26,7 +28,9 @@ class RouterCubit extends Cubit<RouterState> {
     final currentState = state;
     if (currentState is ModalSheetVisibleState) {
       emit(ModalSheetVisibleState(
-          pageIndex: currentState.pageIndex, pathName: pathName));
+        pageIndex: currentState.pageIndex,
+        pathName: pathName,
+      ));
     }
   }
 
@@ -39,7 +43,9 @@ class RouterCubit extends Cubit<RouterState> {
     if (currentState is HomeScreenVisibleState) {
       emit(
         const ModalSheetVisibleState(
-            pageIndex: 0, pathName: MultiPagePathName.defaultPath),
+          pageIndex: 0,
+          pathName: MultiPagePathName.defaultPath,
+        ),
       );
     }
   }

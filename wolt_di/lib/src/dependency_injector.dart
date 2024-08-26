@@ -21,10 +21,8 @@ class DependencyInjector extends InheritedWidget {
   /// [key]: An optional key for the widget.
   /// [child]: The child widget which will have access to the DI system.
   /// [dependencyContainerResolver]: The [DependencyContainerResolver] instance to be provided.
-  DependencyInjector({
-    Key? key,
-    required Widget child,
-  })  : _resolver = DependencyContainerManager.instance,
+  DependencyInjector({Key? key, required Widget child})
+      : _resolver = DependencyContainerManager.instance,
         super(key: key, child: child);
 
   /// Retrieves the [DependencyInjector] from the given `BuildContext`.
@@ -53,7 +51,7 @@ class DependencyInjector extends InheritedWidget {
   ///
   /// Returns an instance of the container of type [C].
   static C container<C>(BuildContext context) {
-    return DependencyInjector.of(context)._getDependencyContainer<C>();
+    return DependencyInjector.of(context)._getDependencyContainer();
   }
 
   /// Subscribes a given object to a container of type [C].
@@ -63,7 +61,8 @@ class DependencyInjector extends InheritedWidget {
   ///
   /// [subscriber]: The [DependencyContainerSubscriber] mixin subscribing to the container.
   void subscribeToDependencyContainer<C>(
-      DependencyContainerSubscriber subscriber) {
+    DependencyContainerSubscriber subscriber,
+  ) {
     _resolver.subscribeToContainer<C>(subscriber);
   }
 
@@ -74,12 +73,13 @@ class DependencyInjector extends InheritedWidget {
   ///
   /// [subscriber]:  The [DependencyContainerSubscriber] mixin unsubscribing from the container.
   void unsubscribeFromDependencyContainer<C>(
-      DependencyContainerSubscriber subscriber) {
+    DependencyContainerSubscriber subscriber,
+  ) {
     _resolver.unsubscribeFromContainer<C>(subscriber);
   }
 
   C _getDependencyContainer<C>() {
-    return _resolver.getDependencyContainer<C>();
+    return _resolver.getDependencyContainer();
   }
 
   /// Determines whether the widget should notify its dependents when the widget's state changes.

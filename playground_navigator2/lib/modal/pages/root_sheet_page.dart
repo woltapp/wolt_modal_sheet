@@ -6,7 +6,7 @@ import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class RootSheetPage {
-  RootSheetPage._();
+  const RootSheetPage._();
 
   static final ValueNotifier<bool> _isButtonEnabledNotifier =
       ValueNotifier(false);
@@ -30,7 +30,8 @@ class RootSheetPage {
       pageTitle: const ModalSheetTitle(title),
       hasTopBarLayer: false,
       trailingNavBarWidget: WoltModalSheetCloseButton(
-          onClosed: context.read<RouterCubit>().closeSheet),
+        onClosed: context.read<RouterCubit>().closeSheet,
+      ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
         child: Column(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ModalSheetTitle extends StatelessWidget {
-  const ModalSheetTitle(this.text,
-      {this.textAlign = TextAlign.start, super.key});
+  const ModalSheetTitle(
+    this.text, {
+    this.textAlign = TextAlign.start,
+    super.key,
+  });
 
   final String text;
   final TextAlign textAlign;
@@ -10,11 +13,7 @@ class ModalSheetTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 16,
-        left: 16,
-        right: 16,
-      ),
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
       child: Text(
         text,
         textAlign: textAlign,

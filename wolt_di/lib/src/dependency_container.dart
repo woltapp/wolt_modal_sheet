@@ -144,7 +144,7 @@ abstract class FeatureLevelDependencyContainer extends DependencyContainer {
   @protected
   C bindWith<C extends DependencyContainer>() {
     _resolver.subscribeToContainer<C>(this);
-    return _resolver.getDependencyContainer<C>();
+    return _resolver.getDependencyContainer();
   }
 
   /// Unbinds this container from the specified dependency container type [C].

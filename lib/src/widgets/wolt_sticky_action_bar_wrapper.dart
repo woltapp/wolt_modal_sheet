@@ -49,9 +49,15 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
         themeData?.modalElevation ?? defaultThemeData.modalElevation;
     final tintedBackgroundColor = Theme.of(context).useMaterial3
         ? ElevationOverlay.applySurfaceTint(
-            backgroundColor, surfaceTintColor, modalElevation)
+            backgroundColor,
+            surfaceTintColor,
+            modalElevation,
+          )
         : ElevationOverlay.applyOverlay(
-            context, backgroundColor, modalElevation);
+            context,
+            backgroundColor,
+            modalElevation,
+          );
     return Column(
       children: [
         // If a gradient is required, add a Container with a linear gradient decoration.
@@ -74,10 +80,7 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
           ),
         // Render the sticky action bar with its background color.
         if (hasSabGradient)
-          ColoredBox(
-            color: tintedBackgroundColor,
-            child: stickyActionBar,
-          )
+          ColoredBox(color: tintedBackgroundColor, child: stickyActionBar)
         else
           stickyActionBar,
       ],

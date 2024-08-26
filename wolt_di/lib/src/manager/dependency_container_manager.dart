@@ -127,7 +127,8 @@ class DependencyContainerManager
 
   /// Initializes the app-level dependencies.
   Future<void> init(
-      AppLevelDependencyContainer appLevelDependencyContainer) async {
+    AppLevelDependencyContainer appLevelDependencyContainer,
+  ) async {
     _appLevelDependencyContainer = appLevelDependencyContainer;
     _registerAppLevelDependencies();
     await _appLevelDependencyContainer.init();
@@ -151,7 +152,8 @@ class DependencyContainerManager
     // created when the container manager is created.
     if (!isSubscribingToAppLevelContainer && _containerFactories[C] == null) {
       throw StateError(
-          'No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.');
+        'No container factory registered for type $C. Please ensure that you have registered a container factory using registerContainerFactory<$C>() before attempting to use this container type.',
+      );
     }
 
     // Ensure that _containerSubscribers[C] is initialized as an empty set if it's null
@@ -169,10 +171,10 @@ class DependencyContainerManager
   void unsubscribeFromContainer<C>(Object subscriber) {
     final isSubscriptionRemoved = _containerSubscribers[C] != null &&
         _containerSubscribers[C]!.remove(subscriber);
-    final isSubscriberToAppLevelContainer =
-        C == _appLevelDependencyContainer.runtimeType;
 
     if (isSubscriptionRemoved) {
+      final isSubscriberToAppLevelContainer =
+          C == _appLevelDependencyContainer.runtimeType;
       final hasRemainingSubscribers = _containerSubscribers[C]!.isEmpty;
       // Dispose the container and remove it from the active list if there is no subscriber left.
       if (!hasRemainingSubscribers &&

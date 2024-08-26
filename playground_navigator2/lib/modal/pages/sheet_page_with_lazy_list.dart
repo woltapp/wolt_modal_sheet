@@ -5,7 +5,7 @@ import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithLazyList {
-  SheetPageWithLazyList._();
+  const SheetPageWithLazyList._();
 
   static SliverWoltModalSheetPage build(
     BuildContext context, {
@@ -34,7 +34,8 @@ class SheetPageWithLazyList {
         child: ModalSheetTitle(titleText),
       ),
       leadingNavBarWidget: WoltModalSheetBackButton(
-          onBackPressed: () => cubit.goToPage(currentPage - 1)),
+        onBackPressed: () => cubit.goToPage(currentPage - 1),
+      ),
       trailingNavBarWidget:
           WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       mainContentSliversBuilder: (context) => [

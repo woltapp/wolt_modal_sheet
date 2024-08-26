@@ -31,12 +31,12 @@ class WoltSelectionListItemDataGroup<T> {
     required WoltSelectionListType selectionListType,
     required bool isSelected,
   }) {
-    final element = group.elementAt(index);
     List<WoltSelectionListItemData<T>> updatedGroup;
 
     switch (selectionListType) {
       case WoltSelectionListType.multiSelect:
         updatedGroup = List<WoltSelectionListItemData<T>>.of(group);
+        final element = group.elementAt(index);
         updatedGroup[index] = element.copyWith(isSelected: isSelected);
         break;
       case WoltSelectionListType.singleSelect:
@@ -44,16 +44,18 @@ class WoltSelectionListItemDataGroup<T> {
           final selectedIndex = group.indexOf(item);
 
           return item.copyWith(
-              isSelected: index == selectedIndex ? isSelected : false);
+            isSelected: index == selectedIndex ? isSelected : false,
+          );
         }).toList();
         break;
     }
 
-    return WoltSelectionListItemDataGroup<T>(group: updatedGroup);
+    return WoltSelectionListItemDataGroup(group: updatedGroup);
   }
 
   WoltSelectionListItemDataGroup<T> copyWith(
-      List<WoltSelectionListItemData<T>>? group) {
-    return WoltSelectionListItemDataGroup<T>(group: group ?? this.group);
+    List<WoltSelectionListItemData<T>>? group,
+  ) {
+    return WoltSelectionListItemDataGroup(group: group ?? this.group);
   }
 }

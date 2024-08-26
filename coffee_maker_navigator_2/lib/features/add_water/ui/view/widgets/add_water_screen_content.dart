@@ -2,10 +2,8 @@ import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/wate
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_back_button.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_body.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_footer.dart';
-import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AddWaterScreenContent extends StatelessWidget {
   const AddWaterScreenContent({

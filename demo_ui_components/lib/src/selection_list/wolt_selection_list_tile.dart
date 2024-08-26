@@ -46,7 +46,7 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
   void _onTap() {
     setState(() {
       _isSelected = !_isSelected;
-      widget.onSelected.call(_isSelected);
+      widget.onSelected(_isSelected);
     });
   }
 
@@ -96,13 +96,17 @@ class _WoltSelectionListTileState<T> extends State<WoltSelectionListTile<T>> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_data.title,
-                        style: Theme.of(context).textTheme.bodyLarge!),
+                    Text(
+                      _data.title,
+                      style: Theme.of(context).textTheme.bodyLarge!,
+                    ),
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
-                      Text(subtitle,
-                          style: Theme.of(context).textTheme.bodyMedium),
-                    ]
+                      Text(
+                        subtitle,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
                   ],
                 ),
               ),

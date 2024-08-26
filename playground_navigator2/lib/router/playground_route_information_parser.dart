@@ -12,7 +12,8 @@ class PlaygroundRouteInformationParser
 
   @override
   Future<PlaygroundRouterConfiguration> parseRouteInformation(
-      RouteInformation routeInformation) async {
+    RouteInformation routeInformation,
+  ) async {
     final uri = routeInformation.uri;
     if (uri.pathSegments.isEmpty) {
       return PlaygroundRouterConfiguration.home();
@@ -24,27 +25,25 @@ class PlaygroundRouteInformationParser
             multiPagePathName: MultiPagePathName.defaultPath,
             index: 0,
           );
-        } else {
-          final path = queryParams[pathQueryParam];
-          final pageIndexText = queryParams[pageIndexQueryParam];
-          final pageIndex =
-              pageIndexText != null && int.tryParse(pageIndexText) != null
-                  ? int.parse(pageIndexText)
-                  : null;
-          if (pageIndex != null &&
-              path != null &&
-              MultiPagePathName.isValidQueryParam(path, pageIndex)) {
-            return PlaygroundRouterConfiguration.modalSheet(
-              multiPagePathName: MultiPagePathName.defaultPath,
-              index: pageIndex,
-            );
-          } else {
-            return PlaygroundRouterConfiguration.modalSheet(
-              multiPagePathName: MultiPagePathName.defaultPath,
-              index: 0,
-            );
-          }
         }
+        final path = queryParams[pathQueryParam];
+        final pageIndexText = queryParams[pageIndexQueryParam];
+        final pageIndex =
+            pageIndexText != null && int.tryParse(pageIndexText) != null
+                ? int.parse(pageIndexText)
+                : null;
+        if (pageIndex != null &&
+            path != null &&
+            MultiPagePathName.isValidQueryParam(path, pageIndex)) {
+          return PlaygroundRouterConfiguration.modalSheet(
+            multiPagePathName: MultiPagePathName.defaultPath,
+            index: pageIndex,
+          );
+        }
+        return PlaygroundRouterConfiguration.modalSheet(
+          multiPagePathName: MultiPagePathName.defaultPath,
+          index: 0,
+        );
       }
     }
     return PlaygroundRouterConfiguration.unknown();
@@ -52,20 +51,24 @@ class PlaygroundRouteInformationParser
 
   @override
   RouteInformation? restoreRouteInformation(
-      PlaygroundRouterConfiguration configuration) {
+    PlaygroundRouterConfiguration configuration,
+  ) {
     if (configuration.isUnknown) {
       return RouteInformation(uri: Uri.parse('/unknown'));
     } else if (configuration.isHomePage) {
       return RouteInformation(uri: Uri.parse('/'));
     } else if (configuration.isSheetPage) {
       final path = configuration.multiPagePathName?.queryParamName;
+      if (path == null) {
+        return null;
+      }
       final pageIndex = configuration.pageIndex;
       return RouteInformation(
         uri: Uri.parse(
-            '/$sheetPageSegment?$pathQueryParam=$path&$pageIndexQueryParam=$pageIndex'),
+          '/$sheetPageSegment?$pathQueryParam=$path&$pageIndexQueryParam=$pageIndex',
+        ),
       );
-    } else {
-      return null;
     }
+    return null;
   }
 }

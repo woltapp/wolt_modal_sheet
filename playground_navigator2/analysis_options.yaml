@@ -9,21 +9,30 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
-linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at
-  # https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
+dart_code_metrics:
+  extends:
+    - recommended
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
-
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+    - prefer-single-widget-per-file: false
+    - avoid-unsafe-collection-methods: false
+    - avoid-shadowing: false
+    - avoid-missing-image-alt: false
+    - dispose-fields: false
+    - avoid-incomplete-copy-with: false
+    - prefer-prefixed-global-constants: false
+    - move-variable-closer-to-its-usage: false
+    - prefer-match-file-name: false
+    - avoid-unnecessary-gesture-detector: false
+    - avoid-equal-expressions: false
+    - prefer-correct-callback-field-name: false
+    - match-getter-setter-field-names: false
+    - avoid-undisposed-instances: false
+    - always-remove-listener: false
+    - avoid-empty-setstate: false
+    - no-empty-block: false
+    - avoid-dynamic: false
+    - avoid-duplicate-test-assertions: false
+    - prefer-correct-test-file-name: false
+analyzer:
+  errors:
+    deprecated_member_use: ignore

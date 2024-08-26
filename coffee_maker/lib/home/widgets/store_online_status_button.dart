@@ -19,7 +19,7 @@ class StoreOnlineStatusButton extends StatelessWidget {
       builder: (_, isOnline, __) {
         return OutlinedButton(
           style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
-                side: const MaterialStatePropertyAll(
+                side: const WidgetStatePropertyAll(
                     BorderSide(width: 2, color: WoltColors.gray)),
               ),
           onPressed: () {

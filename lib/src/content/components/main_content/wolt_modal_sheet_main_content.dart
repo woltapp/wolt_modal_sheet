@@ -71,15 +71,14 @@ class WoltModalSheetMainContent extends StatelessWidget {
                       // scroll view since top bar will not be integrated to scroll view at all.
                       // Otherwise, we implicitly create a spacing as a part of the scroll view.
                       : SizedBox(
-                          height:
-                              isTopBarLayerAlwaysVisible ? 0 : topBarHeight);
-                } else {
-                  final pageTitle = page.pageTitle;
-                  return KeyedSubtree(
-                    key: pageTitleKey,
-                    child: pageTitle ?? const SizedBox.shrink(),
-                  );
+                          height: isTopBarLayerAlwaysVisible ? 0 : topBarHeight,
+                        );
                 }
+                final pageTitle = page.pageTitle;
+                return KeyedSubtree(
+                  key: pageTitleKey,
+                  child: pageTitle ?? const SizedBox.shrink(),
+                );
               },
               childCount: 2,
             ),

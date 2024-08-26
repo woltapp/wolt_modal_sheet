@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use_from_same_package
-
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/modal_page/non_scrolling_wolt_modal_sheet_page.dart';
 import 'package:wolt_modal_sheet/src/modal_page/wolt_modal_sheet_page.dart';
@@ -276,7 +274,6 @@ class SliverWoltModalSheetPage {
     Widget? trailingNavBarWidget,
     bool? resizeToAvoidBottomInset,
     bool? useSafeArea,
-    Widget? child,
   }) {
     return SliverWoltModalSheetPage(
       id: id ?? this.id,
@@ -366,17 +363,15 @@ class SliverWoltModalSheetPage {
   }
 
   List<Widget> Function(BuildContext context) _mainContentBuilderFromChild(
-      Widget child) {
+    Widget child,
+  ) {
     if (this is WoltModalSheetPage) {
-      return (_) => [
-            SliverToBoxAdapter(child: child),
-          ];
+      return (_) => [SliverToBoxAdapter(child: child)];
     } else if (this is NonScrollingWoltModalSheetPage) {
       return (_) => [
             SliverFillViewport(delegate: SliverChildListDelegate([child])),
           ];
-    } else {
-      return mainContentSliversBuilder;
     }
+    return mainContentSliversBuilder;
   }
 }

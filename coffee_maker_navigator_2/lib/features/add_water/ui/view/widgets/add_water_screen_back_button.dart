@@ -12,7 +12,7 @@ class AddWaterScreenBackButton extends StatelessWidget {
             EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
         child: BackButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: WidgetStateProperty.all(Colors.white),
           ),
           onPressed: Navigator.of(context).pop,
         ),

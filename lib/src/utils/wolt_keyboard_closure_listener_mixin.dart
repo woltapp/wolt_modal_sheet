@@ -25,7 +25,8 @@ mixin WoltKeyboardClosureListenerMixin<T extends StatefulWidget>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _keyboardClosedNotifier = ValueNotifier(const SoftKeyboardClosedEvent(
-        eventId: 0)); // Provide an appropriate initial event ID.
+      eventId: 0,
+    )); // Provide an appropriate initial event ID.
   }
 
   /// Cleans up by removing the observer to avoid memory leaks.
@@ -42,7 +43,7 @@ mixin WoltKeyboardClosureListenerMixin<T extends StatefulWidget>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final viewInsets = MediaQuery.of(context).viewInsets.bottom;
+    final viewInsets = MediaQuery.viewInsetsOf(context).bottom;
     bool keyboardVisible = viewInsets > 0;
 
     if (_keyboardWasVisible && !keyboardVisible) {

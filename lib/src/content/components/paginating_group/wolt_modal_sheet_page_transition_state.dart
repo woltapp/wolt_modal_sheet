@@ -8,7 +8,8 @@ enum WoltModalSheetPageTransitionState {
   const WoltModalSheetPageTransitionState();
 
   Animation<double> defaultMainContentSizeFactor(
-      AnimationController controller) {
+    AnimationController controller,
+  ) {
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
         return Tween<double>(begin: 0.0, end: 1.0).animate(controller);
