@@ -19,24 +19,8 @@ class OrdersScreenViewModel {
   ValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
       _groupedCoffeeOrders;
 
-  final ValueNotifier<CoffeeMakerStep> _selectedBottomNavBarItem =
-      ValueNotifier(CoffeeMakerStep.grind);
-
-  ValueListenable<CoffeeMakerStep> get selectedBottomNavBarItem =>
-      _selectedBottomNavBarItem;
-
-  void onInit(CoffeeMakerStep? initialNavBarItem) {
-    if (initialNavBarItem != null) {
-      _selectedBottomNavBarItem.value = initialNavBarItem;
-    }
-  }
-
   void dispose() {
     _ordersService.orders.removeListener(_onOrdersReceived);
-  }
-
-  void onBottomNavBarItemSelected(CoffeeMakerStep selectedStep) {
-    _selectedBottomNavBarItem.value = selectedStep;
   }
 
   void onOrderStatusChange(String orderId, [CoffeeMakerStep? newStep]) {

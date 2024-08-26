@@ -1,5 +1,5 @@
 import 'package:coffee_maker_navigator_2/app/router/entities/app_route_configuration.dart';
-import 'package:coffee_maker_navigator_2/app/router/entities/app_route_path.dart';
+import 'package:coffee_maker_navigator_2/app/router/entities/app_route_uri_template.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/add_water_screen.dart';
 import 'package:coffee_maker_navigator_2/features/login/ui/view/login_screen.dart';
 import 'package:coffee_maker_navigator_2/features/onboarding/ui/view/onboarding_modal_sheet_page.dart';
@@ -14,28 +14,53 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.d
 import 'package:coffee_maker_navigator_2/features/tutorial/view/single_tutorial_screen.dart';
 import 'package:coffee_maker_navigator_2/features/tutorial/view/tutorials_screen.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_di/wolt_di.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+/// `AppRoutePage` is a sealed class that extends Flutter's [Page] class. It serves as a base
+/// class for all route pages within the application, defining a consistent interface and behavior
+/// for routes.
+///
+/// One of the main benefits of a sealed class is that it guarantees exhaustiveness.
+/// Since all possible subclasses of `AppRoutePage` are known at compile time, the application can
+/// ensure that every route is explicitly handled. This helps prevent errors that can arise from
+/// unhandled routes or navigation scenarios, leading to more robust and predictable routing behavior.
+/// When working with pattern matching or switch cases on instances of `AppRoutePage`, the compiler
+/// can enforce that all cases are covered, reducing the risk of runtime errors.
+///
+///   Each subclass of `AppRoutePage` must specify an [AppRouteUriTemplate] that represents the
+///   static route template associated with the page. The `queryParams` getter allows each page
+///   to define any dynamic query parameters it might need. This is crucial for passing state or
+///   configuration data through the URL, supporting more sophisticated navigation scenarios and
+///   state management.x
 sealed class AppRoutePage<T> extends Page<T> {
-  const AppRoutePage({LocalKey? key, this.configuration}) : super(key: key);
+  const AppRoutePage({LocalKey? key}) : super(key: key);
 
-  final AppRouteConfiguration? configuration;
+  /// Provides dynamic query parameters for the route.
+  /// By default, this method returns `null`, indicating no query parameters.
+  /// Subclasses can override this to provide specific query parameters needed
+  /// for the route, facilitating dynamic navigation scenarios.
+  QueryParams? get queryParams => null;
+
+  /// An abstract getter that subclasses must implement to return the
+  /// corresponding [AppRouteUriTemplate] for the page. This links each
+  /// page to a specific URI structure, ensuring that the navigation system
+  /// can accurately map the application's state to the correct URI.
+  AppRouteUriTemplate get appRouteUriTemplate;
 }
 
 class BootstrapRoutePage extends AppRoutePage<void> {
+  static const String routeName = 'bootstrap';
+
   @override
   String get name => routeName;
 
-  static const String routeName = 'bootstrap';
+  @override
+  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.bootstrap;
 
-  const BootstrapRoutePage()
-      : super(
-          key: const ValueKey('BootstrapRoutePage'),
-          configuration:
-              const AppRouteConfiguration(appRoutePath: AppRoutePath.bootstrap),
-        );
+  const BootstrapRoutePage() : super(key: const ValueKey('BootstrapRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -54,14 +79,12 @@ class LoginRoutePage extends AppRoutePage<void> {
   @override
   String get name => routeName;
 
+  @override
+  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.login;
+
   static const String routeName = 'login';
 
-  const LoginRoutePage()
-      : super(
-          key: const ValueKey('LoginRoutePage'),
-          configuration:
-              const AppRouteConfiguration(appRoutePath: AppRoutePath.login),
-        );
+  const LoginRoutePage() : super(key: const ValueKey('LoginRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -74,25 +97,28 @@ class LoginRoutePage extends AppRoutePage<void> {
 
 class OrdersRoutePage extends AppRoutePage<void> {
   @override
+  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.orders;
+
+  @override
+  QueryParams? get queryParams => {
+        AppRouteUriTemplate.queryParamKeyOrderScreenTab:
+            _visibleOrderScreenNavBarTab.value.queryParamName
+      };
+
+  @override
   String get name => routeName;
 
   static const String routeName = 'orders';
 
-  const OrdersRoutePage([this.initialBottomNavBarTab])
-      : super(
-          key: const ValueKey('OrdersRoutePage'),
-          configuration:
-              const AppRouteConfiguration(appRoutePath: AppRoutePath.orders),
-        );
+  const OrdersRoutePage(this._visibleOrderScreenNavBarTab)
+      : super(key: const ValueKey('OrdersRoutePage'));
 
-  final CoffeeMakerStep? initialBottomNavBarTab;
+  final ValueListenable<CoffeeMakerStep> _visibleOrderScreenNavBarTab;
 
   @override
   Route<void> createRoute(BuildContext context) {
     return MaterialPageRoute<void>(
-      builder: (context) => OrdersScreen(
-        initialBottomNavBarTab,
-      ),
+      builder: (context) => const OrdersScreen(),
       settings: this,
     );
   }
@@ -100,29 +126,25 @@ class OrdersRoutePage extends AppRoutePage<void> {
 
 class AddWaterRoutePage extends AppRoutePage<void> {
   @override
+  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.addWater;
+
+  @override
+  QueryParams? get queryParams =>
+      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
+
+  @override
   String get name => routeName;
 
   static const String routeName = 'addWater';
 
-  AddWaterRoutePage(this.coffeeOrderId)
-      : super(
-          key: ValueKey(coffeeOrderId),
-          configuration: AppRouteConfiguration(
-            appRoutePath: AppRoutePath.addWater,
-            queryParams: {AppRoutePath.queryParamId: coffeeOrderId},
-          ),
-        );
+  AddWaterRoutePage(this.coffeeOrderId) : super(key: ValueKey(coffeeOrderId));
 
   final String coffeeOrderId;
 
   @override
   Route<void> createRoute(BuildContext context) {
     return MaterialPageRoute<void>(
-      builder: (context) {
-        return AddWaterScreen(
-          coffeeOrderId: coffeeOrderId,
-        );
-      },
+      builder: (_) => AddWaterScreen(coffeeOrderId: coffeeOrderId),
       settings: this,
     );
   }
@@ -130,17 +152,24 @@ class AddWaterRoutePage extends AppRoutePage<void> {
 
 class SingleTutorialRoutePage extends AppRoutePage<void> {
   @override
+  AppRouteUriTemplate get appRouteUriTemplate {
+    switch (coffeeMakerStep) {
+      case CoffeeMakerStep.grind:
+        return AppRouteUriTemplate.grindTutorial;
+      case CoffeeMakerStep.addWater:
+        return AppRouteUriTemplate.waterTutorial;
+      case CoffeeMakerStep.ready:
+        return AppRouteUriTemplate.readyTutorial;
+    }
+  }
+
+  @override
   String get name => routeName;
 
   static const String routeName = 'singleTutorial';
 
   SingleTutorialRoutePage(this.coffeeMakerStep)
-      : super(
-          key: ValueKey(coffeeMakerStep),
-          configuration: AppRouteConfiguration(
-            appRoutePath: AppRoutePath.fromCoffeeMakerStep(coffeeMakerStep),
-          ),
-        );
+      : super(key: ValueKey(coffeeMakerStep));
 
   final CoffeeMakerStep coffeeMakerStep;
 
@@ -156,16 +185,14 @@ class SingleTutorialRoutePage extends AppRoutePage<void> {
 
 class TutorialsRoutePage extends AppRoutePage<void> {
   @override
+  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.tutorials;
+
+  @override
   String get name => routeName;
 
   static const String routeName = 'tutorials';
 
-  const TutorialsRoutePage()
-      : super(
-          key: const ValueKey('TutorialsRoutePage'),
-          configuration:
-              const AppRouteConfiguration(appRoutePath: AppRoutePath.tutorials),
-        );
+  const TutorialsRoutePage() : super(key: const ValueKey('TutorialsRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -178,16 +205,15 @@ class TutorialsRoutePage extends AppRoutePage<void> {
 
 class OnboardingModalRoutePage extends AppRoutePage<void> {
   @override
+  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.onboarding;
+
+  @override
   String get name => routeName;
 
   static const String routeName = 'onboarding';
 
   const OnboardingModalRoutePage()
-      : super(
-          key: const ValueKey('OnboardingRoutePage'),
-          configuration: const AppRouteConfiguration(
-              appRoutePath: AppRoutePath.onboarding),
-        );
+      : super(key: const ValueKey('OnboardingRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -196,15 +222,19 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
       pageListBuilderNotifier: ValueNotifier(
         (context) => [OnboardingModalSheetPage()],
       ),
-      onModalDismissedWithDrag:
-          context.routerViewModel.onCloseOnboardingModalSheet,
-      onModalDismissedWithBarrierTap:
-          context.routerViewModel.onCloseOnboardingModalSheet,
     );
   }
 }
 
 class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
+  @override
+  AppRouteUriTemplate get appRouteUriTemplate =>
+      AppRouteUriTemplate.grindCoffeeModal;
+
+  @override
+  QueryParams? get queryParams =>
+      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
+
   @override
   String get name => routeName;
 
@@ -215,10 +245,6 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
   GrindCoffeeModalRoutePage({required this.coffeeOrderId})
       : super(
           key: ValueKey('GrindCoffeeModalRoutePage-$coffeeOrderId'),
-          configuration: AppRouteConfiguration(
-            appRoutePath: AppRoutePath.grindCoffeeModal,
-            queryParams: {AppRoutePath.queryParamId: coffeeOrderId},
-          ),
         );
 
   @override
@@ -241,13 +267,13 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
                   onCoffeeOrderGrindCompleted: () {
                     viewModel.onOrderStatusChange(
                         coffeeOrderId, CoffeeMakerStep.addWater);
-                    context.routerViewModel.onGrindCoffeeCompleted();
+                    context.routerViewModel.onOrderStepCompleted();
                   }),
               RejectOrderModalPage(
                 coffeeOrderId: coffeeOrderId,
                 onCoffeeOrderRejected: () {
                   viewModel.onOrderStatusChange(coffeeOrderId);
-                  context.routerViewModel.onGrindCoffeeCompleted();
+                  context.routerViewModel.onOrderStepCompleted();
                 },
               ),
             ] else
@@ -261,6 +287,14 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
 
 class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
   @override
+  AppRouteUriTemplate get appRouteUriTemplate =>
+      AppRouteUriTemplate.readyCoffeeModal;
+
+  @override
+  QueryParams? get queryParams =>
+      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
+
+  @override
   String get name => routeName;
 
   static const String routeName = 'readyCoffee';
@@ -268,13 +302,7 @@ class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
   final String coffeeOrderId;
 
   ReadyCoffeeModalRoutePage({required this.coffeeOrderId})
-      : super(
-          key: ValueKey('ReadyCoffeeModalRoutePage-$coffeeOrderId'),
-          configuration: AppRouteConfiguration(
-            appRoutePath: AppRoutePath.readyCoffeeModal,
-            queryParams: {AppRoutePath.queryParamId: coffeeOrderId},
-          ),
-        );
+      : super(key: ValueKey('ReadyCoffeeModalRoutePage-$coffeeOrderId'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -294,14 +322,14 @@ class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
               coffeeOrderId: coffeeOrderId,
               onCoffeeOrderServed: () {
                 viewModel.onOrderStatusChange(coffeeOrderId);
-                context.routerViewModel.onReadyCoffeeStepCompleted();
+                context.routerViewModel.onOrderStepCompleted();
               },
             ),
             OfferRecommendationModalPage.build(
               coffeeOrderId: coffeeOrderId,
               onCoffeeOrderServed: () {
                 viewModel.onOrderStatusChange(coffeeOrderId);
-                context.routerViewModel.onReadyCoffeeStepCompleted();
+                context.routerViewModel.onOrderStepCompleted();
               },
             ),
           ] else

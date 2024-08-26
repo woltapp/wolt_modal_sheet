@@ -15,6 +15,7 @@ class AddWaterScreenContent extends StatelessWidget {
     required this.onAddWaterPressed,
     required this.isReadyToAddWater,
     required this.errorMessage,
+    required this.onStepCompleted,
   });
 
   final void Function(String) onWaterQuantityUpdated;
@@ -24,6 +25,7 @@ class AddWaterScreenContent extends StatelessWidget {
   final ValueListenable<String?> errorMessage;
   final VoidCallback onCheckValidityPressed;
   final VoidCallback onAddWaterPressed;
+  final VoidCallback onStepCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class AddWaterScreenContent extends StatelessWidget {
           errorMessage,
           onCheckValidityPressed,
           onAddWaterPressed,
+          onStepCompleted,
         ),
       ],
     );
