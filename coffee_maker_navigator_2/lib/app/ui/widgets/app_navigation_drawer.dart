@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 
 enum AppNavigationDrawerDestination {
   ordersScreen(label: Text("Orders"), icon: Icon(Icons.coffee)),
-  tutorialsScreen(
-      label: Text("Tutorials"), icon: Icon(Icons.menu_book_outlined)),
-  logOut(label: Text("Log out"), icon: Icon(Icons.logout)),
-  ;
+  tutorialsScreen(label: Text("Tutorials"), icon: Icon(Icons.menu_book_outlined)),
+  logOut(label: Text("Log out"), icon: Icon(Icons.logout));
 
   const AppNavigationDrawerDestination({
     required this.icon,
@@ -39,6 +37,8 @@ class AppNavigationDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackButtonListener(
       onBackButtonPressed: () async {
+        /// STEP #16: Handle the back button press event.
+        /*
         final scaffold = Scaffold.maybeOf(context);
         if (scaffold != null && scaffold.isDrawerOpen) {
           // If view is open, close it and return true to indicate
@@ -47,7 +47,7 @@ class AppNavigationDrawer extends StatelessWidget {
 
           return true;
         }
-
+         */
         // If view is not open, return false to indicate that
         // the router should handle this.
         return false;
@@ -99,8 +99,7 @@ class _NavigationDrawerHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
-          Text('Coffee Maker',
-              style: Theme.of(context).textTheme.headlineMedium),
+          Text('Coffee Maker', style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),
         ],
       ),

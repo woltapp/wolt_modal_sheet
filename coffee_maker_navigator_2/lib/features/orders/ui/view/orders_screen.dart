@@ -13,6 +13,10 @@ class OrdersScreen extends StatefulWidget {
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
+/// STEP #4: Use DependencyContainerSubscriptionMixin to subscribe to the
+/// dependency container. This mixin unsubscribes automatically when the
+/// widget is disposed. DependencyContainerManager will take care of
+/// disposing it if needed.
 class _OrdersScreenState extends State<OrdersScreen>
     with
         DependencyContainerSubscriptionMixin<OrdersDependencyContainer,
@@ -22,6 +26,7 @@ class _OrdersScreenState extends State<OrdersScreen>
   @override
   void initState() {
     super.initState();
+    /// STEP #5: Create the view model using the dependency container.
     viewModel = DependencyInjector.container<OrdersDependencyContainer>(context)
         .createViewModel();
   }
@@ -29,6 +34,7 @@ class _OrdersScreenState extends State<OrdersScreen>
   @override
   void dispose() {
     super.dispose();
+    /// STEP #6: Dispose the viewmodel on dispose.
     viewModel.dispose();
   }
 

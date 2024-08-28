@@ -1,5 +1,3 @@
-import 'package:coffee_maker_navigator_2/app/router/entities/app_route_configuration.dart';
-import 'package:coffee_maker_navigator_2/app/router/entities/app_route_uri_template.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/add_water_screen.dart';
 import 'package:coffee_maker_navigator_2/features/login/ui/view/login_screen.dart';
 import 'package:coffee_maker_navigator_2/features/onboarding/ui/view/onboarding_modal_sheet_page.dart';
@@ -37,18 +35,6 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 ///   state management.x
 sealed class AppRoutePage<T> extends Page<T> {
   const AppRoutePage({LocalKey? key}) : super(key: key);
-
-  /// Provides dynamic query parameters for the route.
-  /// By default, this method returns `null`, indicating no query parameters.
-  /// Subclasses can override this to provide specific query parameters needed
-  /// for the route, facilitating dynamic navigation scenarios.
-  QueryParams? get queryParams => null;
-
-  /// An abstract getter that subclasses must implement to return the
-  /// corresponding [AppRouteUriTemplate] for the page. This links each
-  /// page to a specific URI structure, ensuring that the navigation system
-  /// can accurately map the application's state to the correct URI.
-  AppRouteUriTemplate get appRouteUriTemplate;
 }
 
 class BootstrapRoutePage extends AppRoutePage<void> {
@@ -56,9 +42,6 @@ class BootstrapRoutePage extends AppRoutePage<void> {
 
   @override
   String get name => routeName;
-
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.bootstrap;
 
   const BootstrapRoutePage() : super(key: const ValueKey('BootstrapRoutePage'));
 
@@ -79,9 +62,6 @@ class LoginRoutePage extends AppRoutePage<void> {
   @override
   String get name => routeName;
 
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.login;
-
   static const String routeName = 'login';
 
   const LoginRoutePage() : super(key: const ValueKey('LoginRoutePage'));
@@ -96,15 +76,6 @@ class LoginRoutePage extends AppRoutePage<void> {
 }
 
 class OrdersRoutePage extends AppRoutePage<void> {
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.orders;
-
-  @override
-  QueryParams? get queryParams => {
-        AppRouteUriTemplate.queryParamKeyOrderScreenTab:
-            _visibleOrderScreenNavBarTab.value.queryParamName
-      };
-
   @override
   String get name => routeName;
 
@@ -125,12 +96,6 @@ class OrdersRoutePage extends AppRoutePage<void> {
 }
 
 class AddWaterRoutePage extends AppRoutePage<void> {
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.addWater;
-
-  @override
-  QueryParams? get queryParams =>
-      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
 
   @override
   String get name => routeName;
@@ -151,17 +116,6 @@ class AddWaterRoutePage extends AppRoutePage<void> {
 }
 
 class SingleTutorialRoutePage extends AppRoutePage<void> {
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate {
-    switch (coffeeMakerStep) {
-      case CoffeeMakerStep.grind:
-        return AppRouteUriTemplate.grindTutorial;
-      case CoffeeMakerStep.addWater:
-        return AppRouteUriTemplate.waterTutorial;
-      case CoffeeMakerStep.ready:
-        return AppRouteUriTemplate.readyTutorial;
-    }
-  }
 
   @override
   String get name => routeName;
@@ -185,9 +139,6 @@ class SingleTutorialRoutePage extends AppRoutePage<void> {
 
 class TutorialsRoutePage extends AppRoutePage<void> {
   @override
-  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.tutorials;
-
-  @override
   String get name => routeName;
 
   static const String routeName = 'tutorials';
@@ -204,8 +155,6 @@ class TutorialsRoutePage extends AppRoutePage<void> {
 }
 
 class OnboardingModalRoutePage extends AppRoutePage<void> {
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.onboarding;
 
   @override
   String get name => routeName;
@@ -227,13 +176,6 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
 }
 
 class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate =>
-      AppRouteUriTemplate.grindCoffeeModal;
-
-  @override
-  QueryParams? get queryParams =>
-      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
 
   @override
   String get name => routeName;
@@ -286,13 +228,6 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
 }
 
 class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
-  @override
-  AppRouteUriTemplate get appRouteUriTemplate =>
-      AppRouteUriTemplate.readyCoffeeModal;
-
-  @override
-  QueryParams? get queryParams =>
-      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
 
   @override
   String get name => routeName;

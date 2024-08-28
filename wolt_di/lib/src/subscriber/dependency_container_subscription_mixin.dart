@@ -51,7 +51,7 @@ mixin DependencyContainerSubscriptionMixin<C, T extends StatefulWidget>
   /// receiving updates from the dependency container as soon as it is initialized.
   @override
   void initState() {
-    super.initState(); // Call the superclass's initState method.
+    super.initState();
 
     // Begin subscription to the dependency container.
     subscribeToDependencyContainer();
@@ -67,8 +67,6 @@ mixin DependencyContainerSubscriptionMixin<C, T extends StatefulWidget>
   void dispose() {
     // End subscription to the dependency container.
     unsubscribeFromDependencyContainer();
-
-    // Call the superclass's dispose method.
     super.dispose();
   }
 }
