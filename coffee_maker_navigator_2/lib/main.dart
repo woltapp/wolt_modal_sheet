@@ -16,6 +16,45 @@ void _registerDependencyContainerFactories(DependencyContainerManager manager) {
         () => LoginScreenDependencyContainer());
 }
 
+/*
++----------------------------------+
+|  DependencyContainerManager      |       +----------------------------------+
+|  +-----------------------------+ |       |                                  |
+|  | App Level DI Container      | |       |          MaterialApp             |
+|  | +-------------------------+ | |       |  +-----------------------------+ |
+|  | | AuthService             | | |       |  |    DependencyInjector       | |
+|  | +-------------------------+ | |       |  |          Widget             | |
+|  | | AuthRepository          | | |       |  |  +-----------------------+  | |
+|  | +-------------------------+ | |       |  |  | FeatureLevelDependency|  | |
+|  | | AuthRemoteDataSource    | | |       |  |  |        Container      |  | |
+|  | +-------------------------+ | |       |  |  | +-------------------+ |  | |
+|  | | RouterViewModel         | | |       |  |  | |      Feature      | |  | |
+|  | +-------------------------+ | |       |  |  | |    Screen Widget  | |  | |
+|  +-----------------------------+ |       |  |  | |                   | |  | |
+|                                  |       |  |  | +-------------------+ |  | |
+|  +-----------------------------+ |       |  |  |                       |  | |
+|  | OrdersDependencyContainer   | |       |  |  +-----------------------+  | |
+|  | +-------------------------+ | |       |  +-----------------------------+ |
+|  | | OrderService            | | |       |                                  |
+|  | +-------------------------+ | |       +----------------------------------+
+|  | | OrdersRepository        | | |
+|  | +-------------------------+ | |
+|  | | OrdersRemoteDataSource  | | |
+|  | +-------------------------+ | |
+|  | | OrderScreenVM (Factory) | | |
+|  | +-------------------------+ | |
+|  +-----------------------------+ |
+|                                  |
+|  +-----------------------------+ |
+|  | AddWaterDependencyContainer | |
+|  | +-------------------------+ | |
+|  | |AddWaterScreenVM(Factory)| | |
+|  | +-------------------------+ | |
+|  | | AddWaterService         | | |
+|  | +-------------------------+ | |
+|  +-----------------------------+ |
++----------------------------------+
+*/
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dependencyContainerManager = DependencyContainerManager.instance;
