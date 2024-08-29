@@ -38,7 +38,6 @@ class AppNavigationDrawer extends StatelessWidget {
     return BackButtonListener(
       onBackButtonPressed: () async {
         /// STEP #16: Handle the back button press event.
-        /*
         final scaffold = Scaffold.maybeOf(context);
         if (scaffold != null && scaffold.isDrawerOpen) {
           // If view is open, close it and return true to indicate
@@ -47,7 +46,6 @@ class AppNavigationDrawer extends StatelessWidget {
 
           return true;
         }
-         */
         // If view is not open, return false to indicate that
         // the router should handle this.
         return false;

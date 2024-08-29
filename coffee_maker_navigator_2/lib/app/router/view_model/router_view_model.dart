@@ -21,16 +21,14 @@ class RouterViewModel {
   ValueListenable<CoffeeMakerStep> get visibleOrderScreenNavBarTab =>
       _visibleOrderScreenNavBarTab;
 
-  /// Step #7: Inject the model into the view model's constructor.
+  /// Step #4: Inject the model into the view model's constructor.
   RouterViewModel({
     required this.authService,
     required this.onboardingService,
   }) {
-    /// Step #8: Subscribe to the auth state listenable to respond to changes in the user's
+    /// Step #5: Subscribe to the auth state listenable to respond to changes in the user's
     /// authentication state.
-    /*
     authService.authStateListenable.addListener(_authStateChangeSubscription);
-     */
   }
 
   /// Cleans up and releases all resources when the view model is no longer needed.
@@ -96,8 +94,7 @@ class RouterViewModel {
   void onDrawerDestinationSelected(
     AppNavigationDrawerDestination destination,
   ) {
-    /// Step #10: Implement the drawer destination navigation logic in the view model.
-    /*
+    /// Step #6: Implement the drawer destination navigation logic in the view model.
     switch (destination) {
       case AppNavigationDrawerDestination.ordersScreen:
         _pages.value = [OrdersRoutePage(_visibleOrderScreenNavBarTab)];
@@ -112,27 +109,18 @@ class RouterViewModel {
         authService.logOut();
         break;
     }
-     */
   }
 
   void onUserRequestedTutorialFromOnboardingModal() {
-    /// Step #9: Implement the tutorial navigation logic in the view model.
-    /*
     onboardingService.markTutorialShown();
     _pushPage(const TutorialsRoutePage());
-     */
   }
 
   void onTutorialDetailSelected(CoffeeMakerStep coffeeMakerStep) {
-    /// Step #11: Implement the tutorial detail navigation logic in the view model.
-    /*
     _pushPage(SingleTutorialRoutePage(coffeeMakerStep));
-     */
   }
 
   void onOrderStepStarted(String id, CoffeeMakerStep step) {
-    /// Step #13: Implement the order step navigation logic in the view model.
-    /*
     switch (step) {
       case CoffeeMakerStep.grind:
         _pushPage(GrindCoffeeModalRoutePage(coffeeOrderId: id));
@@ -144,7 +132,6 @@ class RouterViewModel {
         _pushPage(ReadyCoffeeModalRoutePage(coffeeOrderId: id));
         break;
     }
-     */
   }
 
   void onOrderStepCompleted() {
@@ -152,14 +139,10 @@ class RouterViewModel {
   }
 
   void onOrderScreenNavBarTabSelected(CoffeeMakerStep selectedStep) {
-    /// Step #12: Implement the order screen navigation logic in the view model.
-    /*
     _visibleOrderScreenNavBarTab.value = selectedStep;
-     */
   }
 
   void _authStateChangeSubscription() {
-    /*
     final isLoggedIn = authService.authStateListenable.value ?? false;
     if (isLoggedIn) {
       final shouldShowOnboardingModal = !onboardingService.isTutorialShown();
@@ -170,7 +153,6 @@ class RouterViewModel {
     } else {
       _pages.value = [const LoginRoutePage()];
     }
-     */
   }
 
   void _pushPage(AppRoutePage page) {
