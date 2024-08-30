@@ -27,6 +27,6 @@ class WoltModalSheetPathSettings {
 
   const WoltModalSheetPathSettings({
     required this.path,
-    required this. pageBuilder,
+    required this.pageBuilder,
   });
 }

@@ -14,7 +14,7 @@ class WoltModalSheetNavigator<T> extends InheritedWidget {
   }) : _coordinator = coordinator;
 
   @override
-  bool updateShouldNotify(covariant WoltModalSheetNavigator oldWidget) {
+  bool updateShouldNotify(WoltModalSheetNavigator oldWidget) {
     return _coordinator != oldWidget._coordinator;
   }
 

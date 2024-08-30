@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 
-/// Page with Wolt animation.
-class WoltModalSheetPage<T> extends Page<T> {
+// TODO: Написать доку либо спросить у Миши как сделать доступ к закрытому классу.
+abstract class WoltModalPageRoute<T> extends PageRoute<T> {
+  WoltModalPageRoute({
+    required WoltModalInternalPage<T> page,
+  }) : super(settings: page) {
+    assert(opaque);
+  }
+
+  GlobalKey get contentKey;
+}
+
+/// Page with Wolt animation for internal pages.
+class WoltModalInternalPage<T> extends Page<T> {
   final Widget child;
 
   /// {flutter.widgets.ModalRoute.maintainState}
   final bool maintainState;
 
-  const WoltModalSheetPage({
+  const WoltModalInternalPage({
     super.key,
     super.name,
     super.arguments,
@@ -17,22 +28,33 @@ class WoltModalSheetPage<T> extends Page<T> {
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return _WoltModalPageRoute(page: this);
+    return _WoltModalInternalPageRoute(page: this);
   }
 }
 
-class _WoltModalPageRoute<T> extends PageRoute<T> with _WoltModalRouteTransitionMixin<T> {
-  _WoltModalPageRoute({
-    required WoltModalSheetPage<T> page,
-  }) : super(settings: page) {
-    assert(opaque);
-  }
+class _WoltModalInternalPageRoute<T> extends WoltModalPageRoute<T>
+    with _WoltModalRouteTransitionMixin<T> {
+  _WoltModalInternalPageRoute({
+    required WoltModalInternalPage<T> page,
+  }) : super(page: page);
 
-  WoltModalSheetPage<T> get _page => settings as WoltModalSheetPage<T>;
+  final _contentKey = GlobalKey();
+
+  @override
+  GlobalKey get contentKey => _contentKey;
+
+  WoltModalInternalPage<T> get _page => settings as WoltModalInternalPage<T>;
 
   @override
   Widget buildContent(BuildContext context) {
-    return _page.child;
+    return Align(
+      alignment: Alignment.topCenter,
+      child: SizedBox(
+        width: double.infinity,
+        key: contentKey,
+        child: _page.child,
+      ),
+    );
   }
 
   @override
@@ -43,7 +65,7 @@ class _WoltModalPageRoute<T> extends PageRoute<T> with _WoltModalRouteTransition
 }
 
 mixin _WoltModalRouteTransitionMixin<T> on PageRoute<T> {
-  /// Builds the primary contents of the route.
+  // Builds the primary contents of the route.
   @protected
   Widget buildContent(BuildContext context);
 
@@ -117,7 +139,7 @@ class _InAnimation extends _PageTransitionAnimation {
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(0),
           weight:
-          (_animationDuration - _alphaDuration).inMilliseconds.toDouble(),
+              (_animationDuration - _alphaDuration).inMilliseconds.toDouble(),
         ),
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0, end: 1),

@@ -32,21 +32,24 @@ class _TestScreen extends StatelessWidget {
         child: FractionallySizedBox(
           widthFactor: .5,
           // heightFactor: .7,
-          child: WoltPage(
-            header: const _CollapsedContent('header', Colors.blue),
-            footer: const _CollapsedContent('footer', Colors.green),
-            slivers: [
-              const SliverAppBar.medium(
-                backgroundColor: Colors.amber,
-              ),
-              SliverList.builder(
-                itemBuilder: (context, index) {
-                  debugPrint('1st seq $index');
-                  return _Slice(index);
-                },
-                itemCount: 10,
-              ),
-            ],
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 300),
+            child: WoltPage(
+              header: const _CollapsedContent('header', Colors.blue),
+              footer: const _CollapsedContent('footer', Colors.green),
+              slivers: [
+                const SliverAppBar.medium(
+                  backgroundColor: Colors.amber,
+                ),
+                SliverList.builder(
+                  itemBuilder: (context, index) {
+                    debugPrint('1st seq $index');
+                    return _Slice(index);
+                  },
+                  itemCount: 1,
+                ),
+              ],
+            ),
           ),
         ),
       ),

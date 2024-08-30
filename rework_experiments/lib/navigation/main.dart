@@ -56,13 +56,13 @@ const initialPath = [
 final supportedPaths = <String, WoltModalSheetPathSettings>{
   'firstScreen': WoltModalSheetPathSettings(
     path: 'firstScreen',
-    pageBuilder: (color) => WoltModalSheetPage(
+    pageBuilder: (color) => WoltModalInternalPage(
       child: FirstScreen(color: color as Color),
     ),
   ),
   'secondScreen': WoltModalSheetPathSettings(
     path: 'secondScreen',
-    pageBuilder: (color) => WoltModalSheetPage(
+    pageBuilder: (color) => WoltModalInternalPage(
       child: SecondScreen(
         color: color as Color,
       ),
@@ -70,7 +70,7 @@ final supportedPaths = <String, WoltModalSheetPathSettings>{
   ),
   'thirdScreen': WoltModalSheetPathSettings(
     path: 'thirdScreen',
-    pageBuilder: (color) => WoltModalSheetPage(
+    pageBuilder: (color) => WoltModalInternalPage(
       child: ThirdScreen(
         color: color as Color,
       ),
