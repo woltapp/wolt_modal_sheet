@@ -2,20 +2,15 @@ import 'package:coffee_maker_navigator_2/app/router/view/app_route_observer.dart
 import 'package:coffee_maker_navigator_2/app/router/view_model/router_view_model.dart';
 import 'package:flutter/material.dart';
 
-class AppRouterDelegate extends RouterDelegate<Object>
-    with ChangeNotifier {
+class AppRouterDelegate extends RouterDelegate<Object> with ChangeNotifier {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   final RouterViewModel routerViewModel;
 
   AppRouterDelegate(this.routerViewModel) {
-    // Setting up listeners to monitor changes in the navigation state.
-    // Listens to changes in the list of pages and the visibility of specific tabs.
-    // When changes are detected, it triggers a rebuild for the Navigator widget.
-    Listenable.merge([
-      routerViewModel.pages,
-      routerViewModel.visibleOrderScreenNavBarTab,
-    ]).addListener(notifyListeners);
+    // Setting up listeners to monitor changes in the navigation state. Listens to changes in the
+    // list of pages. When changes are detected, it triggers a rebuild for the Navigator widget.
+    routerViewModel.pages.addListener(notifyListeners);
   }
 
   @override

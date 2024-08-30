@@ -4,6 +4,9 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.d
 import 'package:flutter/foundation.dart';
 
 class OrdersScreenViewModel {
+  final ValueNotifier<CoffeeMakerStep> selectedNavBarTabListenable =
+      ValueNotifier(CoffeeMakerStep.grind);
+
   OrdersScreenViewModel({required OrdersService ordersService})
       : _ordersService = ordersService {
     final currentOrders = _ordersService.orders.value;
@@ -15,12 +18,19 @@ class OrdersScreenViewModel {
   final OrdersService _ordersService;
 
   final _groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.empty());
+  void onInit(CoffeeMakerStep? initialNavBarItem) {
+    selectedNavBarTabListenable.value = initialNavBarItem ?? CoffeeMakerStep.grind;
+  }
 
   ValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
       _groupedCoffeeOrders;
 
   void dispose() {
     _ordersService.orders.removeListener(_onOrdersReceived);
+  }
+
+  void onNavBarItemSelected(CoffeeMakerStep selectedStep) {
+    selectedNavBarTabListenable.value = selectedStep;
   }
 
   void onOrderStatusChange(String orderId, [CoffeeMakerStep? newStep]) {

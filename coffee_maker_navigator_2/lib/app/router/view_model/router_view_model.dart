@@ -15,12 +15,6 @@ class RouterViewModel {
 
   ValueListenable<List<AppRoutePage>> get pages => _pages;
 
-  final ValueNotifier<CoffeeMakerStep> _visibleOrderScreenNavBarTab =
-      ValueNotifier(CoffeeMakerStep.grind);
-
-  ValueListenable<CoffeeMakerStep> get visibleOrderScreenNavBarTab =>
-      _visibleOrderScreenNavBarTab;
-
   /// Step #4: Inject the model into the view model's constructor.
   RouterViewModel({
     required this.authService,
@@ -97,11 +91,11 @@ class RouterViewModel {
     /// Step #6: Implement the drawer destination navigation logic in the view model.
     switch (destination) {
       case AppNavigationDrawerDestination.ordersScreen:
-        _pages.value = [OrdersRoutePage(_visibleOrderScreenNavBarTab)];
+        _pages.value = [const OrdersRoutePage()];
         break;
       case AppNavigationDrawerDestination.tutorialsScreen:
         _pages.value = [
-          OrdersRoutePage(_visibleOrderScreenNavBarTab),
+          const OrdersRoutePage(),
           const TutorialsRoutePage(),
         ];
         break;
@@ -138,16 +132,12 @@ class RouterViewModel {
     _popPage();
   }
 
-  void onOrderScreenNavBarTabSelected(CoffeeMakerStep selectedStep) {
-    _visibleOrderScreenNavBarTab.value = selectedStep;
-  }
-
   void _authStateChangeSubscription() {
     final isLoggedIn = authService.authStateListenable.value ?? false;
     if (isLoggedIn) {
       final shouldShowOnboardingModal = !onboardingService.isTutorialShown();
       _pages.value = [
-        OrdersRoutePage(_visibleOrderScreenNavBarTab),
+        const OrdersRoutePage(),
         if (shouldShowOnboardingModal) const OnboardingModalRoutePage(),
       ];
     } else {

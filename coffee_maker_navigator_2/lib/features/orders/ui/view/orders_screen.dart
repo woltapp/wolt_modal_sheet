@@ -41,8 +41,8 @@ class _OrdersScreenState extends State<OrdersScreen>
     final routerViewModel = context.routerViewModel;
 
     return OrderScreenContent(
-      selectedNavBarTabListenable: routerViewModel.visibleOrderScreenNavBarTab,
-      onNavBarItemSelected: routerViewModel.onOrderScreenNavBarTabSelected,
+      selectedNavBarTabListenable: viewModel.selectedNavBarTabListenable,
+      onNavBarItemSelected: viewModel.onNavBarItemSelected,
       groupedCoffeeOrders: viewModel.groupedCoffeeOrders,
       onGrindCoffeeStepSelected: (id) =>
           routerViewModel.onOrderStepStarted(id, CoffeeMakerStep.grind),

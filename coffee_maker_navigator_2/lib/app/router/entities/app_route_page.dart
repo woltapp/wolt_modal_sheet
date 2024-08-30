@@ -81,10 +81,8 @@ class OrdersRoutePage extends AppRoutePage<void> {
 
   static const String routeName = 'orders';
 
-  const OrdersRoutePage(this._visibleOrderScreenNavBarTab)
+  const OrdersRoutePage()
       : super(key: const ValueKey('OrdersRoutePage'));
-
-  final ValueListenable<CoffeeMakerStep> _visibleOrderScreenNavBarTab;
 
   @override
   Route<void> createRoute(BuildContext context) {
