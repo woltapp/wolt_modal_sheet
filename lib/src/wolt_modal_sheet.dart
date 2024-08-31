@@ -153,8 +153,6 @@ class WoltModalSheet<T> extends StatefulWidget {
       enableDrag: enableDrag,
       showDragHandle: showDragHandle,
       settings: settings,
-      // transitionDuration is not supported in this method.
-      // transitionDuration: transitionDuration,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       transitionAnimationController: transitionAnimationController,

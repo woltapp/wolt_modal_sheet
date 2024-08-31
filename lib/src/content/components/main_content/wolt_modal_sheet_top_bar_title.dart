@@ -37,12 +37,11 @@ class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
   }
 
   void _extractPageTitleText() {
-    // final isPageTitleTextWidget = widget.page.pageTitle is Text;
+    final isPageTitleTextWidget = widget.page.pageTitle is Text;
     final pageTitleElement = widget.pageTitleKey.currentContext;
 
-    // if (widget.page.topBarTitle != null || isPageTitleTextWidget) {
-    // } else
-    if (pageTitleElement != null) {
+    if (widget.page.topBarTitle != null || isPageTitleTextWidget) {
+    } else if (pageTitleElement != null) {
       _visitAllDescendants(pageTitleElement);
     }
   }
