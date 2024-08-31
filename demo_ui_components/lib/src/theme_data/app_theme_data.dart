@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-switch-with-enums
+
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
@@ -34,15 +36,15 @@ class AppThemeData {
       backgroundColor: colorScheme.surface,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
-      labelTextStyle: WidgetStateProperty.resolveWith((state) {
-        return state.contains(WidgetState.selected)
+      labelTextStyle: MaterialStateProperty.resolveWith((state) {
+        return state.contains(MaterialState.selected)
             ? textTheme.labelSmall!.copyWith(color: colorScheme.primary)
             : textTheme.labelSmall!;
       }),
-      iconTheme: WidgetStateProperty.resolveWith((state) {
+      iconTheme: MaterialStateProperty.resolveWith((state) {
         const iconSize = 24.0;
 
-        return state.contains(WidgetState.selected)
+        return state.contains(MaterialState.selected)
             ? IconThemeData(size: iconSize, color: colorScheme.primary)
             : IconThemeData(size: iconSize, color: colorScheme.onSurface);
       }),

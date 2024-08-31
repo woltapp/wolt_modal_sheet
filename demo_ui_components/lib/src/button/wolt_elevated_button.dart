@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-switch-with-enums
+
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
@@ -27,23 +29,23 @@ class WoltElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.resolveWith(
-          (Set<WidgetState> states) {
-            return states.contains(WidgetState.disabled)
+        foregroundColor: MaterialStateProperty.resolveWith(
+          (Set<MaterialState> states) {
+            return states.contains(MaterialState.disabled)
                 ? theme.disabledForegroundColor(colorName)
                 : theme.enabledForegroundColor(colorName);
           },
         ),
-        backgroundColor: WidgetStateProperty.resolveWith(
-          (Set<WidgetState> states) {
-            return states.contains(WidgetState.disabled)
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (Set<MaterialState> states) {
+            return states.contains(MaterialState.disabled)
                 ? theme.disabledBackgroundColor(colorName)
                 : theme.enabledBackgroundColor(colorName);
           },
         ),
-        overlayColor: WidgetStateProperty.all(theme.splashColor(colorName)),
-        shadowColor: WidgetStateProperty.all(Colors.transparent),
-        shape: WidgetStateProperty.all<OutlinedBorder>(
+        overlayColor: MaterialStateProperty.all(theme.splashColor(colorName)),
+        shadowColor: MaterialStateProperty.all(Colors.transparent),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         ),
       ),

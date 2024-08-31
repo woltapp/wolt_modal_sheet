@@ -24,3 +24,7 @@ dart_code_metrics:
     - avoid-dynamic: false
     - avoid-duplicate-test-assertions: false
     - prefer-correct-test-file-name: false
+
+analyzer:
+  errors:
+    deprecated_member_use: ignore
