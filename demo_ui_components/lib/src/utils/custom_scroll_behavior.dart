@@ -33,8 +33,8 @@ class CustomScrollBehavior extends ScrollBehavior {
       case TargetPlatform.windows:
         return child;
       case TargetPlatform.android:
-        final _androidSdkVersion = androidSdkVersion;
-        if (_androidSdkVersion != null && _androidSdkVersion > 30) {
+        final androidSdkVer = androidSdkVersion;
+        if (androidSdkVer != null && androidSdkVer > 30) {
           return StretchingOverscrollIndicator(
             axisDirection: details.direction,
             child: child,
