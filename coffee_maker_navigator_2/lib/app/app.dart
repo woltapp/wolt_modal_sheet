@@ -13,8 +13,8 @@ class CoffeeMakerApp extends StatelessWidget {
     /// the widget tree.
     return DependencyInjector(
       child: Builder(builder: (context) {
-        final appLevelDependencyContainer =
-            DependencyInjector.container<CoffeeMakerAppLevelDependencyContainer>(context);
+        final appLevelDependencyContainer = DependencyInjector.container<
+            CoffeeMakerAppLevelDependencyContainer>(context);
 
         return AppLifecycleObserver(
           child: MaterialApp.router(

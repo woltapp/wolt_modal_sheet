@@ -4,33 +4,36 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.d
 import 'package:flutter/foundation.dart';
 
 class OrdersScreenViewModel {
-  final ValueNotifier<CoffeeMakerStep> selectedNavBarTabListenable =
-      ValueNotifier(CoffeeMakerStep.grind);
+  late final ValueNotifier<CoffeeMakerStep> _selectedNavBarTab;
 
-  OrdersScreenViewModel({required OrdersService ordersService})
-      : _ordersService = ordersService {
-    final currentOrders = _ordersService.orders.value;
-    _groupedCoffeeOrders.value =
-        GroupedCoffeeOrders.fromCoffeeOrders(currentOrders);
+  ValueListenable<CoffeeMakerStep> get selectedNavBarTab => _selectedNavBarTab;
+
+  late ValueNotifier<GroupedCoffeeOrders> _groupedCoffeeOrders;
+
+  ValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders => _groupedCoffeeOrders;
+
+  OrdersScreenViewModel({
+    required OrdersService ordersService,
+  }) : _ordersService = ordersService {
+    _groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.fromCoffeeOrders(
+      _ordersService.orders.value,
+    ));
+    _selectedNavBarTab = ValueNotifier(CoffeeMakerStep.grind);
     _ordersService.orders.addListener(_onOrdersReceived);
   }
 
   final OrdersService _ordersService;
 
-  final _groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.empty());
   void onInit(CoffeeMakerStep? initialNavBarItem) {
-    selectedNavBarTabListenable.value = initialNavBarItem ?? CoffeeMakerStep.grind;
+    _selectedNavBarTab.value = initialNavBarItem ?? CoffeeMakerStep.grind;
   }
-
-  ValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
-      _groupedCoffeeOrders;
 
   void dispose() {
     _ordersService.orders.removeListener(_onOrdersReceived);
   }
 
   void onNavBarItemSelected(CoffeeMakerStep selectedStep) {
-    selectedNavBarTabListenable.value = selectedStep;
+    _selectedNavBarTab.value = selectedStep;
   }
 
   void onOrderStatusChange(String orderId, [CoffeeMakerStep? newStep]) {

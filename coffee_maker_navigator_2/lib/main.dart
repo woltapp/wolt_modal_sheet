@@ -57,6 +57,7 @@ void _registerDependencyContainerFactories(DependencyContainerManager manager) {
 */
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   /// STEP #1: Initialize the dependency container manager with the App-level dependency container.
   final dependencyContainerManager = DependencyContainerManager.instance;
   await dependencyContainerManager

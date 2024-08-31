@@ -81,8 +81,7 @@ class OrdersRoutePage extends AppRoutePage<void> {
 
   static const String routeName = 'orders';
 
-  const OrdersRoutePage()
-      : super(key: const ValueKey('OrdersRoutePage'));
+  const OrdersRoutePage() : super(key: const ValueKey('OrdersRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -94,7 +93,6 @@ class OrdersRoutePage extends AppRoutePage<void> {
 }
 
 class AddWaterRoutePage extends AppRoutePage<void> {
-
   @override
   String get name => routeName;
 
@@ -114,7 +112,6 @@ class AddWaterRoutePage extends AppRoutePage<void> {
 }
 
 class SingleTutorialRoutePage extends AppRoutePage<void> {
-
   @override
   String get name => routeName;
 
@@ -153,7 +150,6 @@ class TutorialsRoutePage extends AppRoutePage<void> {
 }
 
 class OnboardingModalRoutePage extends AppRoutePage<void> {
-
   @override
   String get name => routeName;
 
@@ -174,7 +170,6 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
 }
 
 class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
-
   @override
   String get name => routeName;
 
@@ -226,7 +221,6 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
 }
 
 class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
-
   @override
   String get name => routeName;
 
