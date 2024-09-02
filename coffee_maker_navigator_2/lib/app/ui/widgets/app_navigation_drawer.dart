@@ -37,53 +37,37 @@ class AppNavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackButtonListener(
-      onBackButtonPressed: () async {
+    return NavigationDrawer(
+      selectedIndex: selectedIndex,
+      children: [
+        const _NavigationDrawerHeader(),
+        NavigationDrawerDestination(
+          icon: AppNavigationDrawerDestination.ordersScreen.icon,
+          label: AppNavigationDrawerDestination.ordersScreen.label,
+        ),
+        NavigationDrawerDestination(
+          icon: AppNavigationDrawerDestination.tutorialsScreen.icon,
+          label: AppNavigationDrawerDestination.tutorialsScreen.label,
+        ),
+        NavigationDrawerDestination(
+          icon: AppNavigationDrawerDestination.logOut.icon,
+          label: AppNavigationDrawerDestination.logOut.label,
+        ),
+      ],
+      onDestinationSelected: (int index) {
         final scaffold = Scaffold.maybeOf(context);
         if (scaffold != null && scaffold.isDrawerOpen) {
-          // If view is open, close it and return true to indicate
-          // that the router should not handle the back button.
           scaffold.closeDrawer();
-
-          return true;
+          Future.delayed(const Duration(milliseconds: 250), () {
+            if (context.mounted) {
+              // If the view is still mounted, navigate to the selected destination.
+              context.routerViewModel.onDrawerDestinationSelected(
+                AppNavigationDrawerDestination.fromIndex(index),
+              );
+            }
+          });
         }
-
-        // If view is not open, return false to indicate that
-        // the router should handle this.
-        return false;
       },
-      child: NavigationDrawer(
-        selectedIndex: selectedIndex,
-        children: [
-          const _NavigationDrawerHeader(),
-          NavigationDrawerDestination(
-            icon: AppNavigationDrawerDestination.ordersScreen.icon,
-            label: AppNavigationDrawerDestination.ordersScreen.label,
-          ),
-          NavigationDrawerDestination(
-            icon: AppNavigationDrawerDestination.tutorialsScreen.icon,
-            label: AppNavigationDrawerDestination.tutorialsScreen.label,
-          ),
-          NavigationDrawerDestination(
-            icon: AppNavigationDrawerDestination.logOut.icon,
-            label: AppNavigationDrawerDestination.logOut.label,
-          ),
-        ],
-        onDestinationSelected: (int index) {
-          final scaffold = Scaffold.maybeOf(context);
-          if (scaffold != null && scaffold.isDrawerOpen) {
-            scaffold.closeDrawer();
-            Future.delayed(const Duration(milliseconds: 250), () {
-              if (context.mounted) {
-                // If the view is still mounted, navigate to the selected destination.
-                context.routerViewModel.onDrawerDestinationSelected(
-                  AppNavigationDrawerDestination.fromIndex(index),
-                );
-              }
-            });
-          }
-        },
-      ),
     );
   }
 }
