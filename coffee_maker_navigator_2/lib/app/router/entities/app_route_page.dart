@@ -12,27 +12,20 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/view/orders_screen.d
 import 'package:coffee_maker_navigator_2/features/tutorial/view/single_tutorial_screen.dart';
 import 'package:coffee_maker_navigator_2/features/tutorial/view/tutorials_screen.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_di/wolt_di.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-/// `AppRoutePage` is a sealed class that extends Flutter's [Page] class. It serves as a base
-/// class for all route pages within the application, defining a consistent interface and behavior
-/// for routes.
+/// STEP #7: Define the route pages.
 ///
-/// One of the main benefits of a sealed class is that it guarantees exhaustiveness.
-/// Since all possible subclasses of `AppRoutePage` are known at compile time, the application can
-/// ensure that every route is explicitly handled. This helps prevent errors that can arise from
-/// unhandled routes or navigation scenarios, leading to more robust and predictable routing behavior.
-/// When working with pattern matching or switch cases on instances of `AppRoutePage`, the compiler
-/// can enforce that all cases are covered, reducing the risk of runtime errors.
+/// The `AppRoutePage` class is a base class for all route pages in the application.
+/// It extends Flutter's [Page] class, providing a consistent way to define the pages
+/// and their behavior for navigation.
 ///
-///   Each subclass of `AppRoutePage` must specify an [AppRouteUriTemplate] that represents the
-///   static route template associated with the page. The `queryParams` getter allows each page
-///   to define any dynamic query parameters it might need. This is crucial for passing state or
-///   configuration data through the URL, supporting more sophisticated navigation scenarios and
-///   state management.x
+/// Using a sealed class provides exhaustiveness that helps to ensure that all possible route types
+/// are defined and handled explicitly. This makes the navigation system more robust and
+/// predictable by preventing errors from unhandled routes. It allows for clear and
+/// exhaustive pattern matching when managing navigation, reducing the chance of runtime errors.
 sealed class AppRoutePage<T> extends Page<T> {
   const AppRoutePage({LocalKey? key}) : super(key: key);
 }

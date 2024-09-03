@@ -76,7 +76,6 @@ class CoffeeMakerAppLevelDependencyContainer
     return RootBackButtonDispatcher();
   }
 
-  /// Step #7: Inject the model into the view model's constructor.
   RouterViewModel _createRouterViewModel() {
     return RouterViewModel(
       authService: _authService,
