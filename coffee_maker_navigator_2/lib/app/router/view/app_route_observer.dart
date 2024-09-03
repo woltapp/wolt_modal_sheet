@@ -35,6 +35,13 @@ class AppRouteObserver extends RouteObserver<PageRoute<void>> {
     }
   }
 
+  /// STEP #12: Update the System UI Overlay Style based on the current route.
+  ///
+  /// This method updates the system UI overlay style, such as the status bar and navigation bar
+  /// colors, based on the active route. It checks whether the current route has a bottom
+  /// navigation bar (like the Orders page) and adjusts the UI elements accordingly to ensure
+  /// a consistent look and feel throughout the app. This is done using the provided color scheme
+  /// and helps maintain visual consistency as users navigate between different parts of the app.
   void _updateSystemUIOverlayStyle(Route<void> route) {
     SystemUIAnnotationWrapper.setSystemUIOverlayStyle(
       colorScheme,

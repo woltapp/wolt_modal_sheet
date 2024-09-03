@@ -45,13 +45,29 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfiguration>
     ]).addListener(notifyListeners);
   }
 
+  /// STEP #6: Build the navigation stack.
+  ///
+  /// This method is responsible for building the `Navigator` widget, which manages
+  /// the app's navigation stack. It uses the list of pages provided by the `RouterViewModel` to
+  /// define what pages are currently displayed. The `Navigator` widget is the View part of MVVM,
+  /// and it updates automatically whenever the ViewModel (RouterViewModel) changes, ensuring the
+  /// UI reflects the current navigation state. This connection allows for a reactive and dynamic
+  /// navigation experience in the app.
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      pages: routerViewModel.pages
-          .value, // The list of pages defining the current navigation stack.
+      pages: routerViewModel.pages.value,
       onPopPage: (route, result) {
+        /// STEP #9: Handle the pop page event.
+        ///
+        /// This callback is invoked when a [Route] created from a [Page] in the [pages] list is
+        /// popped. In other words, it handles the scenario where a declaratively added route is
+        /// removed using an imperative pop call to the [Navigator] widget. For example, the back
+        /// button in the [AddWaterScreen] can trigger a pop event that removes the screen from the
+        ///
+        /// The `RouterViewModel` is notified about the page pop event, allowing it to update and sync
+        /// the [pages] list accordingly, ensuring that the navigation state remains consistent.
         routerViewModel.onPagePoppedImperatively();
         return route.didPop(result);
       },
@@ -59,25 +75,37 @@ class AppRouterDelegate extends RouterDelegate<AppRouteConfiguration>
     );
   }
 
-  /// Handles pop actions initiated by the operating system (e.g., back gestures or hardware
-  /// buttons). This method ensures that such interactions are managed consistently with the
-  /// app's navigation logic.
+  /// STEP #10: Handle the pop route event.
+  ///
+  /// This method manages pop actions initiated by the operating system, such as back gestures or
+  /// hardware back button presses on devices like Android. It ensures these interactions are
+  /// handled consistently with the app's navigation logic as defined in the `RouterViewModel`,
+  /// which tracks and updates the list of pages in the navigation stack.
   @override
   Future<bool> popRoute() {
     return routerViewModel.onPagePoppedWithOperatingSystemIntent();
   }
 
+  /// STEP #17: Get the current route configuration.
+  ///
+  /// This method retrieves the current route configuration, which reflects the app's current
+  /// navigation state. The router widget calls this method whenever it needs to update the
+  /// browser's URL or sync the app state with the URL. This ensures that the displayed URL
+  /// accurately represents the current visible screen in the app.
   @override
   AppRouteConfiguration get currentConfiguration {
-    // Returns the current route configuration, used to update the browser's URL
-    // and keep it in sync with the application's state.
     return routerViewModel.onUriRestoration();
   }
 
+  /// STEP #14: Set a new navigation stack for the app configuration.
+  ///
+  /// This method updates the navigation stack based on a new route configuration. It is used to handle
+  /// changes such as URL updates or deep links, ensuring the app responds appropriately to these changes.
+  /// By parsing the new route configuration and updating the state in the `RouterViewModel`, the app
+  /// can dynamically adjust its navigation stack to reflect the user's intent, whether it's through
+  /// direct URL input, deep links, or other routing events.
   @override
   Future<void> setNewRoutePath(AppRouteConfiguration configuration) async {
-    // Updates the navigation stack based on a new route configuration, allowing
-    // the application to respond to changes such as URL updates or deep links.
     routerViewModel.onNewUriParsed(configuration);
   }
 }

@@ -31,6 +31,11 @@ class AppRouteConfiguration {
   final AppRouteUriTemplate appRouteUriTemplate;
   final QueryParams queryParams;
 
+  /// STEP #16: Define the AppRouteConfiguration class.
+  ///
+  /// This class represents the navigation state by combining a static route template
+  /// from [AppRouteUriTemplate] with dynamic query parameters. It is used in handling
+  /// deep linking, dynamic navigation, and keeping the app's state in sync with the browser's URL.
   const AppRouteConfiguration({
     required this.appRouteUriTemplate,
     this.queryParams = const {},

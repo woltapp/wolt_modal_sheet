@@ -34,7 +34,7 @@ class AppRouteInformationParser
     extends RouteInformationParser<AppRouteConfiguration> {
   const AppRouteInformationParser();
 
-  /// Parses the given [RouteInformation] into an [AppRouteConfiguration].
+  /// Step #13: Parse the given [RouteInformation] into an [AppRouteConfiguration].
   ///
   /// This method extracts the URI from the [RouteInformation], identifies the route path using
   /// [AppRouteUriTemplate.findFromUri], and captures any query parameters. The resulting
@@ -51,7 +51,8 @@ class AppRouteInformationParser
     );
   }
 
-  /// Restores the [RouteInformation] from a given [AppRouteConfiguration].
+  /// Step #19: Restores the [RouteInformation] from a given
+  /// [AppRouteConfiguration].
   ///
   /// This method converts the application's current navigation state back into a URI,
   /// which can be used to update the browser's address bar, ensuring consistency between

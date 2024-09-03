@@ -9,6 +9,12 @@ class CoffeeMakerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// STEP #3: Provide the DependencyInjector to the widget tree.
+    ///
+    /// Here, we wrap the entire widget tree with the `DependencyInjector` widget.
+    /// This makes the DI system available to all widgets in the tree, allowing them
+    /// to access the active dependency containers. By doing this, any widget can
+    /// easily retrieve the necessary dependencies it needs.
     return DependencyInjector(
       child: Builder(builder: (context) {
         final appLevelDependencyContainer = DependencyInjector.container<

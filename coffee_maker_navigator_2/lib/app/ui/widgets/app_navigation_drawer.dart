@@ -5,8 +5,7 @@ enum AppNavigationDrawerDestination {
   ordersScreen(label: Text("Orders"), icon: Icon(Icons.coffee)),
   tutorialsScreen(
       label: Text("Tutorials"), icon: Icon(Icons.menu_book_outlined)),
-  logOut(label: Text("Log out"), icon: Icon(Icons.logout)),
-  ;
+  logOut(label: Text("Log out"), icon: Icon(Icons.logout));
 
   const AppNavigationDrawerDestination({
     required this.icon,
@@ -37,6 +36,13 @@ class AppNavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// STEP #11: Handle the back button press event.
+    ///
+    /// This callback manages back button presses from the operating system (e.g., gestures or hardware
+    /// buttons on Android) in this particular case, when the navigation drawer is open. Instead
+    /// of leaving the screen, it closes the drawer and returns `true` to indicate the event is
+    /// handled locally. If the drawer is not open, it returns `false`, allowing
+    /// the Router widget's `RootBackButtonDispatcher` content to handle the event.
     return BackButtonListener(
       onBackButtonPressed: () async {
         final scaffold = Scaffold.maybeOf(context);
@@ -47,7 +53,6 @@ class AppNavigationDrawer extends StatelessWidget {
 
           return true;
         }
-
         // If view is not open, return false to indicate that
         // the router should handle this.
         return false;
