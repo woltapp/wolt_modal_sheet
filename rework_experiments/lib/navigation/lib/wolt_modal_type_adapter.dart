@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rework_experiments/navigation/lib/theme/wolt_modal_sheet_theme_data.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_delegate.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_type_delegate.dart';
 
 /// An entity responsible for deciding, based on the device’s size, in what
 /// form to display the provided child.
@@ -61,7 +61,12 @@ class _WoltModalTypeAdapterState extends State<WoltModalTypeAdapter>
     switch (woltModalType) {
       case WoltModalType.bottomSheet:
         final bottomSheetStyle = style.bottomSheetStyle;
-        constraints = BoxConstraints(maxHeight: bottomSheetStyle.maxHeight);
+        constraints = BoxConstraints(
+          maxHeight: bottomSheetStyle.maxHeight,
+          minHeight: bottomSheetStyle.minHeight,
+          minWidth: double.infinity,
+          maxWidth: double.infinity,
+        );
         child = _BottomSheet(
           routeAnimationController: _routeAnimationController,
           style: bottomSheetStyle,
@@ -69,26 +74,30 @@ class _WoltModalTypeAdapterState extends State<WoltModalTypeAdapter>
         );
       case WoltModalType.dialog:
         final dialogStyle = style.dialogStyle;
-        constraints = BoxConstraints(maxHeight: dialogStyle.maxHeight);
-        child = _AlertDialog(style: dialogStyle, child: widget.child);
+        constraints = BoxConstraints(
+          maxHeight: dialogStyle.maxHeight,
+          minHeight: dialogStyle.minHeight,
+          maxWidth: dialogStyle.width,
+          minWidth: dialogStyle.width,
+        );
+        child = _Dialog(style: dialogStyle, child: widget.child);
     }
 
     return ConstraintsProvider(constraints: constraints, child: child);
   }
 }
 
-class _AlertDialog extends StatelessWidget {
+class _Dialog extends StatelessWidget {
   final Widget child;
   final WoltModalDialogStyle style;
 
-  const _AlertDialog({
+  const _Dialog({
     required this.child,
     required this.style,
   });
 
   @override
   Widget build(BuildContext context) {
-
     return Dialog(
       backgroundColor: style.backgroundColor,
       elevation: style.elevation,
@@ -137,21 +146,26 @@ class _BottomSheetState extends State<_BottomSheet> {
     return SlideTransition(
       position: _incomingAnimation,
       child: BottomSheet(
-        backgroundColor: bottomSheetThemeData.backgroundColor,
-        shadowColor: bottomSheetThemeData.shadowColor,
-        elevation: bottomSheetThemeData.elevation,
-        shape: bottomSheetThemeData.shape,
-        clipBehavior: bottomSheetThemeData.clipBehavior,
-        animationController: widget.routeAnimationController,
-        showDragHandle: bottomSheetThemeData.enableDrag,
-        dragHandleColor: bottomSheetThemeData.dragHandleColor,
-        dragHandleSize: bottomSheetThemeData.dragHandleSize,
-        enableDrag: bottomSheetThemeData.enableDrag,
-        onClosing: () {
-          Navigator.pop(context);
-        },
-        builder: (_) => widget.child,
-      ),
+          backgroundColor: bottomSheetThemeData.backgroundColor,
+          shadowColor: bottomSheetThemeData.shadowColor,
+          elevation: bottomSheetThemeData.elevation,
+          shape: bottomSheetThemeData.shape,
+          clipBehavior: bottomSheetThemeData.clipBehavior,
+          animationController: widget.routeAnimationController,
+          showDragHandle: bottomSheetThemeData.enableDrag,
+          dragHandleColor: bottomSheetThemeData.dragHandleColor,
+          dragHandleSize: bottomSheetThemeData.dragHandleSize,
+          enableDrag: bottomSheetThemeData.enableDrag,
+          onClosing: () {
+            Navigator.pop(context);
+          },
+          builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                    bottom: bottomSheetThemeData.resizeToAvoidBottomInset
+                        ? MediaQuery.of(context).viewInsets.bottom
+                        : 0.0),
+                child: widget.child,
+              )),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/wolt_page/wolt_page.dart';
+import 'package:rework_experiments/wolt_page_layout/wolt_page_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,8 +33,8 @@ class _TestScreen extends StatelessWidget {
           widthFactor: .5,
           // heightFactor: .7,
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 300),
-            child: WoltPage(
+            constraints: const BoxConstraints(maxHeight: 300),
+            child: WoltPageLayout(
               header: const _CollapsedContent('header', Colors.blue),
               footer: const _CollapsedContent('footer', Colors.green),
               slivers: [

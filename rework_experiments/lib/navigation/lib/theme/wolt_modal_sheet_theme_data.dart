@@ -72,6 +72,8 @@ class WoltModalBottomSheetStyle {
     Clip? clipBehavior,
     bool? enableDrag,
     double? maxHeight,
+    double? minHeight,
+    bool? resizeToAvoidBottomInset,
   })  : elevation = elevation ?? 1.0,
         shape = shape ??
             const RoundedRectangleBorder(
@@ -82,7 +84,9 @@ class WoltModalBottomSheetStyle {
         enableDrag = enableDrag ?? true,
         showDragHandle = showDragHandle ?? true,
         shadowColor = shadowColor ?? Colors.transparent,
-        maxHeight = maxHeight ?? 640.0;
+        maxHeight = maxHeight ?? 640.0,
+        minHeight = minHeight ?? 300,
+        resizeToAvoidBottomInset = resizeToAvoidBottomInset ?? false;
 
   factory WoltModalBottomSheetStyle.fromTheme(
     ThemeData themeData, {
@@ -91,9 +95,11 @@ class WoltModalBottomSheetStyle {
     Size? dragHandleSize,
     Clip? clipBehavior,
     double? maxHeight,
+    double? minHeight,
     bool? enableDrag,
     Color? shadowColor,
     ShapeBorder? shape,
+    bool? resizeToAvoidBottomInset,
   }) {
     final colorsScheme = themeData.colorScheme;
     return WoltModalBottomSheetStyle(
@@ -105,12 +111,14 @@ class WoltModalBottomSheetStyle {
       dragHandleSize: dragHandleSize,
       clipBehavior: clipBehavior,
       maxHeight: maxHeight,
+      minHeight: minHeight,
       enableDrag: enableDrag,
       shadowColor: shadowColor,
       shape: shape ??
           const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
           ),
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
     );
   }
 
@@ -134,7 +142,11 @@ class WoltModalBottomSheetStyle {
 
   final double maxHeight;
 
+  final double minHeight;
+
   final bool enableDrag;
+
+  final bool resizeToAvoidBottomInset;
 
   WoltModalBottomSheetStyle copyWith({
     Color? backgroundColor,
@@ -149,7 +161,9 @@ class WoltModalBottomSheetStyle {
     Size? dragHandleSize,
     Clip? clipBehavior,
     double? maxHeight,
+    double? minHeight,
     bool? enableDrag,
+    bool? resizeToAvoidBottomInset,
   }) {
     return WoltModalBottomSheetStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -162,7 +176,9 @@ class WoltModalBottomSheetStyle {
       dragHandleSize: dragHandleSize ?? this.dragHandleSize,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       maxHeight: maxHeight ?? this.maxHeight,
+      minHeight: minHeight ?? this.minHeight,
       enableDrag: enableDrag ?? this.enableDrag,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
     );
   }
 
@@ -180,6 +196,7 @@ class WoltModalBottomSheetStyle {
       dragHandleSize: Size.lerp(dragHandleSize, other.dragHandleSize, t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
       maxHeight: t < 0.5 ? maxHeight : other.maxHeight,
+      minHeight: t < 0.5 ? minHeight : other.minHeight,
     );
   }
 }
@@ -196,7 +213,7 @@ class WoltModalDialogStyle extends ThemeExtension<WoltModalDialogStyle> {
     Clip? clipBehavior,
     double? maxHeight,
     double? minHeight,
-    //double? weight,
+    double? width,
   })  : elevation = elevation ?? 1.0,
         shape = shape ??
             const RoundedRectangleBorder(
@@ -205,19 +222,26 @@ class WoltModalDialogStyle extends ThemeExtension<WoltModalDialogStyle> {
         alignment = alignment ?? Alignment.center,
         insetPadding = insetPadding ?? EdgeInsets.zero,
         clipBehavior = clipBehavior ?? Clip.antiAliasWithSaveLayer,
-        maxHeight = maxHeight ?? 640.0;
+        maxHeight = maxHeight ?? 640.0,
+        minHeight = minHeight ?? 300.0,
+        width = width ?? 500.0;
 
   factory WoltModalDialogStyle.fromTheme(
     ThemeData themeData, {
     double? elevation,
     Clip? clipBehavior,
     double? maxHeight,
+    double? minHeight,
+    double? width,
     ShapeBorder? shape,
     AlignmentGeometry? alignment,
     EdgeInsets? insetPadding,
   }) {
     final colorsScheme = themeData.colorScheme;
     return WoltModalDialogStyle(
+      maxHeight: maxHeight,
+      minHeight: minHeight,
+      width: width,
       backgroundColor: colorsScheme.surface,
       surfaceTintColor: colorsScheme.surfaceTint,
       elevation: elevation,
@@ -244,9 +268,9 @@ class WoltModalDialogStyle extends ThemeExtension<WoltModalDialogStyle> {
 
   final double maxHeight;
 
-//  final double minHeight;
+  final double minHeight;
 
-  //final double weight;
+  final double width;
 
   /// Creates a copy of this object but with the given fields replaced with the
   /// new values.
@@ -260,6 +284,8 @@ class WoltModalDialogStyle extends ThemeExtension<WoltModalDialogStyle> {
     EdgeInsets? insetPadding,
     Clip? clipBehavior,
     double? maxHeight,
+    double? minHeight,
+    double? width,
   }) {
     return WoltModalDialogStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -270,6 +296,8 @@ class WoltModalDialogStyle extends ThemeExtension<WoltModalDialogStyle> {
       insetPadding: insetPadding ?? this.insetPadding,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       maxHeight: maxHeight ?? this.maxHeight,
+      minHeight: minHeight ?? this.minHeight,
+      width: width ?? this.width,
     );
   }
 
@@ -286,6 +314,8 @@ class WoltModalDialogStyle extends ThemeExtension<WoltModalDialogStyle> {
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
       insetPadding: EdgeInsets.lerp(insetPadding, other.insetPadding, t),
       maxHeight: t < 0.5 ? maxHeight : other.maxHeight,
+      minHeight: t < 0.5 ? minHeight : other.minHeight,
+      width: t < 0.5 ? width : other.width,
     );
   }
 }

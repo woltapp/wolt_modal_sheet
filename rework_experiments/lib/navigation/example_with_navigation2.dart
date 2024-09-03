@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_page.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
@@ -136,7 +135,7 @@ final Map<String, WoltModalSheetPathSettings> supportedPaths =
     path: 'firstScreen',
     pageBuilder: (arguments) => WoltModalInternalPage(
       arguments: arguments,
-      child: const FirstScreen(),
+      child: const _FirstScreen(),
       name: 'firstScreen',
     ),
   ),
@@ -145,7 +144,7 @@ final Map<String, WoltModalSheetPathSettings> supportedPaths =
     pageBuilder: (arguments) {
       return WoltModalInternalPage(
         arguments: arguments,
-        child: SecondScreen(
+        child: _SecondScreen(
           isChecked: arguments as bool,
         ),
         name: 'secondScreen',
@@ -156,22 +155,20 @@ final Map<String, WoltModalSheetPathSettings> supportedPaths =
     path: 'thirdScreen',
     pageBuilder: (arguments) => WoltModalInternalPage(
       arguments: arguments,
-      child: const ThirdScreen(),
+      child: const _ThirdScreen(),
       name: 'thirdScreen',
     ),
   ),
 };
 
-class FirstScreen extends StatefulWidget {
-  const FirstScreen({
-    super.key,
-  });
+class _FirstScreen extends StatefulWidget {
+  const _FirstScreen();
 
   @override
-  State<FirstScreen> createState() => _FirstScreenState();
+  State<_FirstScreen> createState() => _FirstScreenState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class _FirstScreenState extends State<_FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -222,23 +219,22 @@ class _FirstScreenState extends State<FirstScreen> {
   }
 }
 
-class SecondScreen extends StatefulWidget {
+class _SecondScreen extends StatefulWidget {
   final bool isChecked;
 
-  const SecondScreen({
-    super.key,
+  const _SecondScreen({
     required this.isChecked,
   });
 
   @override
-  State<SecondScreen> createState() => _SecondScreenState();
+  State<_SecondScreen> createState() => _SecondScreenState();
 }
 
-class _SecondScreenState extends State<SecondScreen> {
+class _SecondScreenState extends State<_SecondScreen> {
   late final _isCheckedState = ValueNotifier<bool>(widget.isChecked);
 
   @override
-  void didUpdateWidget(covariant SecondScreen oldWidget) {
+  void didUpdateWidget(_SecondScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.isChecked != widget.isChecked) {
       _isCheckedState.value = widget.isChecked;
@@ -294,10 +290,8 @@ class _SecondScreenState extends State<SecondScreen> {
   }
 }
 
-class ThirdScreen extends StatelessWidget {
-  const ThirdScreen({
-    super.key,
-  });
+class _ThirdScreen extends StatelessWidget {
+  const _ThirdScreen();
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_type_adapter.dart';
 
-// TODO: Написать доку либо спросить у Миши как сделать доступ к закрытому классу.
 abstract class WoltModalPageRoute<T> extends PageRoute<T> {
   WoltModalPageRoute({
     required WoltModalInternalPage<T> page,
@@ -38,19 +38,21 @@ class _WoltModalInternalPageRoute<T> extends WoltModalPageRoute<T>
     required WoltModalInternalPage<T> page,
   }) : super(page: page);
 
+  WoltModalInternalPage<T> get _page => settings as WoltModalInternalPage<T>;
+
   final _contentKey = GlobalKey();
 
   @override
   GlobalKey get contentKey => _contentKey;
 
-  WoltModalInternalPage<T> get _page => settings as WoltModalInternalPage<T>;
-
   @override
   Widget buildContent(BuildContext context) {
+    final constraints = ConstraintsProvider.of(context).constraints;
+
     return Align(
       alignment: Alignment.topCenter,
-      child: SizedBox(
-        width: double.infinity,
+      child: ConstrainedBox(
+        constraints: constraints,
         key: contentKey,
         child: _page.child,
       ),

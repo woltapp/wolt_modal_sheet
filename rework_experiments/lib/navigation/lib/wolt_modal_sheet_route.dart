@@ -35,23 +35,11 @@ Future<T?> showWoltModalSheet<T>({
 
 /// Rout for displaying the [WoltModalSheet].
 class WoltModalSheetRoute<T> extends PopupRoute<T> {
-  /// Specifies the color of the modal barrier that darkens everything below the
-  /// bottom sheet.
-  ///
-  /// Defaults to `Colors.black54` if not provided.
-  final Color? modalBarrierColor;
-
   /// All the pages that the bottom tire can display.
   final List<WoltModalSheetPathSettings> supportedPaths;
 
   /// Initial page, or set of initial paths.
   final List<WoltModalSheetPath> initialPath;
-
-  /// Callback function that is triggered whenever there is a change in navigation
-  /// within the [WoltModalSheet].
-  /// The function receives a list of the current active routes as a parameter, allowing
-  /// you to track and respond to navigation changes.
-  final Function(List<WoltModalSheetPath>)? onPathChangedInternal;
 
   /// Specifies whether the bottom sheet will be dismissed
   /// when user taps on the scrim.
@@ -61,11 +49,24 @@ class WoltModalSheetRoute<T> extends PopupRoute<T> {
   /// Defaults to true.
   final bool isDismissible;
 
-  late final BoxConstraints _constraints;
+  /// Specifies the color of the modal barrier that darkens everything below the
+  /// bottom sheet.
+  ///
+  /// Defaults to `Colors.black54` if not provided.
+  final Color? modalBarrierColor;
+
+  /// Callback function that is triggered whenever there is a change in navigation
+  /// within the [WoltModalSheet].
+  /// The function receives a list of the current active routes as a parameter, allowing
+  /// you to track and respond to navigation changes.
+  final Function(List<WoltModalSheetPath>)? onPathChangedInternal;
+
+  late final Duration _transitionDuration;
 
   late final String? _barrierLabel;
 
-  late final Duration _transitionDuration;
+  late final BoxConstraints _constraints;
+
 
   WoltModalSheetRoute({
     required this.supportedPaths,

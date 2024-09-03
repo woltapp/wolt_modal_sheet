@@ -41,19 +41,23 @@ class _ThemeResolverState extends State<ThemeResolver> {
     if (styleOverride != null) {
       final extensions = theme.extensions.values;
 
-      _themeData = theme.copyWith(extensions: [
-        ...extensions.where((e) => e is! WoltModalSheetTheme),
-        WoltModalSheetTheme(style: styleOverride),
-      ]);
+      _themeData = theme.copyWith(
+        extensions: [
+          ...extensions.where((e) => e is! WoltModalSheetTheme),
+          WoltModalSheetTheme(style: styleOverride),
+        ],
+      );
     } else {
       if (woltModalSheetTheme != null) {
         _themeData = theme;
       } else {
         final extensions = theme.extensions.values;
-        _themeData = theme.copyWith(extensions: [
-          ...extensions,
-          WoltModalSheetTheme(),
-        ]);
+        _themeData = theme.copyWith(
+          extensions: [
+            ...extensions,
+            WoltModalSheetTheme(),
+          ],
+        );
       }
     }
   }

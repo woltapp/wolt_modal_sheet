@@ -4,7 +4,7 @@ import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_navigator.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_route.dart';
-import 'package:rework_experiments/wolt_page/wolt_page.dart';
+import 'package:rework_experiments/wolt_page_layout/wolt_page_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Navigation Example',
+      title: 'Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -80,7 +80,7 @@ final supportedPaths = <String, WoltModalSheetPathSettings>{
   'testScreen': WoltModalSheetPathSettings(
     path: 'testScreen',
     pageBuilder: (_) => const WoltModalInternalPage(
-      child: TestScreen(),
+      child: _TestScreen(),
     ),
   ),
 };
@@ -111,7 +111,7 @@ final supportedPathsMaterial = <String, WoltModalSheetPathSettings>{
   'testScreen': WoltModalSheetPathSettings(
     path: 'testScreen',
     pageBuilder: (_) => const MaterialPage(
-      child: TestScreen(),
+      child: _TestScreen(),
     ),
   ),
 };
@@ -126,65 +126,51 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              // The default navigator is used here to close the WoltModalSheet.
-              Navigator.of(
-                context,
-                rootNavigator: true,
-              ).pop();
-            },
-            child: const Text('Close WoltModalBottomSheet'),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () {
-              // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
-              WoltModalSheetNavigator.of(context)
-                  .pushNamed('secondScreen', Colors.blue);
-            },
-            child: const Text('Go to SecondScreen'),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () {
-              // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
-              WoltModalSheetNavigator.of(context).pop();
-            },
-            child: const Text('POP'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // The default navigator is used here to close the WoltModalSheet.
-              Navigator.of(
-                context,
-                rootNavigator: true,
-              ).pop();
-            },
-            child: const Text('Close WoltModalBottomSheet'),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () {
-              // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
-              WoltModalSheetNavigator.of(context)
-                  .pushNamed('secondScreen', Colors.blue);
-            },
-            child: const Text('Go to SecondScreen'),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () {
-              // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
-              WoltModalSheetNavigator.of(context).pop();
-            },
-            child: const Text('POP'),
-          ),
-        ],
+    return Container(
+      color: color,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 40),
+            const Text(
+              'First Screen',
+              style: TextStyle(fontSize: 30),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                // The default navigator is used here to close the WoltModalSheet.
+                Navigator.of(
+                  context,
+                  rootNavigator: true,
+                ).pop();
+              },
+              child: const Text('Close WoltModalBottomSheet'),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                WoltModalSheetNavigator.of(context)
+                    .pushNamed('secondScreen', Colors.blue);
+              },
+              child: const Text('Go to SecondScreen'),
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
+                Navigator.of(
+                  context,
+                  rootNavigator: true,
+                ).pop();
+              },
+              child: const Text('POP'),
+            ),
+            const SizedBox(height: 40),
+          ],
+        ),
       ),
     );
   }
@@ -201,11 +187,16 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 300,
       color: color,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        //mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text(
+            'Second Screen',
+            style: TextStyle(fontSize: 30),
+          ),
           ElevatedButton(
             onPressed: () {
               // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
@@ -214,7 +205,7 @@ class SecondScreen extends StatelessWidget {
             },
             child: const Text('Go to ThirdPage'),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
@@ -244,6 +235,12 @@ class ThirdScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 40),
+            const Text(
+              'Third Screen',
+              style: TextStyle(fontSize: 30),
+            ),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
@@ -268,8 +265,8 @@ class ThirdScreen extends StatelessWidget {
   }
 }
 
-class TestScreen extends StatelessWidget {
-  const TestScreen();
+class _TestScreen extends StatelessWidget {
+  const _TestScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -277,16 +274,13 @@ class TestScreen extends StatelessWidget {
       height: 600,
       color: Colors.red,
       child: Column(
-       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: WoltPage(
+            child: WoltPageLayout(
               header: const _CollapsedContent('header', Colors.blue),
               footer: const _CollapsedContent('footer', Colors.green),
               slivers: [
-                const SliverAppBar.medium(
-                  backgroundColor: Colors.amber,
-                ),
                 SliverList.builder(
                   itemBuilder: (context, index) {
                     debugPrint('1st seq $index');
@@ -297,6 +291,7 @@ class TestScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
               // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
@@ -307,7 +302,7 @@ class TestScreen extends StatelessWidget {
             },
             child: const Text('Go to First Screen'),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
@@ -315,6 +310,7 @@ class TestScreen extends StatelessWidget {
             },
             child: const Text('POP'),
           ),
+          const SizedBox(height: 10),
         ],
       ),
     );

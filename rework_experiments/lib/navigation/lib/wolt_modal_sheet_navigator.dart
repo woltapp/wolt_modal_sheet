@@ -19,10 +19,6 @@ class WoltModalSheetNavigator<T> extends InheritedWidget {
   }
 
   static WoltModalSheetNavigator of(BuildContext context) {
-    return _of(context);
-  }
-
-  static WoltModalSheetNavigator _of(BuildContext context) {
     final result = context
         .getElementForInheritedWidgetOfExactType<WoltModalSheetNavigator>();
 

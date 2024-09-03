@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rework_experiments/navigation/lib/theme/theme_resolver.dart';
 import 'package:rework_experiments/navigation/lib/theme/wolt_modal_sheet_theme_data.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_coordinator.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_delegate.dart';
+import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_type_delegate.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_navigator.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_page.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
@@ -24,19 +24,19 @@ class WoltModalSheet extends StatefulWidget {
   /// Initial paths, that are shown on modal sheet appears.
   final List<WoltModalSheetPath> initialPath;
 
+  final BoxConstraints constraints;
+
   /// Callback function that is triggered whenever there is a change in navigation
   /// within the [WoltModalSheet].
   /// The function receives a list of the current active routes as a parameter, allowing
   /// you to track and respond to navigation changes.
   final Function(List<WoltModalSheetPath>)? onPathChangedInternal;
 
-  final WoltModalSheetStyle? style;
-
-  final BoxConstraints constraints;
-
   final AnimationController? appearingAnimationController;
 
   final WoltModalSheetDelegate? woltModalSheetDelegate;
+
+  final WoltModalSheetStyle? style;
 
   const WoltModalSheet({
     super.key,
@@ -75,9 +75,9 @@ class _WoltModalSheetState extends State<WoltModalSheet> {
 }
 
 class _NavigationSizeAdapter extends StatefulWidget {
-  final Function(List<WoltModalSheetPath>)? onPathChangedInternal;
   final List<WoltModalSheetPathSettings> supportedPaths;
   final List<WoltModalSheetPath> initialPath;
+  final Function(List<WoltModalSheetPath>)? onPathChangedInternal;
 
   const _NavigationSizeAdapter({
     super.key,
@@ -140,32 +140,37 @@ class _NavigationSizeAdapterState extends State<_NavigationSizeAdapter>
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<double>(
-      valueListenable: _sizeChangedNotifier,
-      builder: (context, height, child) => _AnimatedSizeWidget(
-        heightAnimation: _heightAnimation,
-        child: ClipRRect(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Builder(builder: (context) {
-                  return ConstrainedBox(
-                    constraints: ConstraintsProvider.of(context).constraints,
-                    child: WoltModalSheetNavigator(
-                      coordinator: _coordinator,
-                      child: _NavigationStack(
-                        changePagesNotifier: _coordinator.pagesPublisher,
-                        onTopPageChanged: _onTopPageChanged,
+    final constraints = ConstraintsProvider.of(context).constraints;
+
+    return ConstrainedBox(
+      constraints: constraints,
+      child: ValueListenableBuilder<double>(
+        valueListenable: _sizeChangedNotifier,
+        builder: (context, height, child) => _AnimatedSizeWidget(
+          heightAnimation: _heightAnimation,
+          child: ClipRRect(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Builder(builder: (context) {
+                    return ConstrainedBox(
+                      constraints: ConstraintsProvider.of(context).constraints,
+                      child: WoltModalSheetNavigator(
+                        coordinator: _coordinator,
+                        child: _NavigationStack(
+                          changePagesNotifier: _coordinator.pagesPublisher,
+                          onTopPageChanged: _onTopPageChanged,
+                        ),
                       ),
-                    ),
-                  );
-                }),
-              )
-            ],
+                    );
+                  }),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -234,13 +239,21 @@ class _NavigationSizeAdapterState extends State<_NavigationSizeAdapter>
           if (size != null) {
             final currentHeight = _sizeChangedNotifier.value;
             final targetHeight = size.height;
+            final minHeight =
+                ConstraintsProvider.of(context).constraints.minHeight;
 
             if (currentHeight == targetHeight) {
               return;
             }
 
-            _sizeChangedNotifier.value = targetHeight;
-            _heightAnimation = _createAnimation(currentHeight, targetHeight);
+            if (targetHeight < minHeight) {
+              _sizeChangedNotifier.value = minHeight;
+              _heightAnimation = _createAnimation(currentHeight, minHeight);
+            } else {
+              _sizeChangedNotifier.value = targetHeight;
+              _heightAnimation = _createAnimation(currentHeight, targetHeight);
+            }
+
             _sizeAnimationController.forward(from: isAnimated ? 0 : 1);
           }
         }
@@ -293,7 +306,11 @@ class _NavigationStackState extends State<_NavigationStack> {
         pages: listPages,
         clipBehavior: Clip.none,
         observers: [
-          _WoltNavigatorObserver(widget.onTopPageChanged, context),
+          _WoltNavigatorObserver(
+            context,
+            widget.onTopPageChanged,
+          ),
+          HeroController(),
         ],
         onDidRemovePage: (page) {},
       ),
@@ -305,7 +322,10 @@ class _WoltNavigatorObserver extends NavigatorObserver {
   final BuildContext context;
   final Function(GlobalKey?) onTopPageChanged;
 
-  _WoltNavigatorObserver(this.onTopPageChanged, this.context);
+  _WoltNavigatorObserver(
+    this.context,
+    this.onTopPageChanged,
+  );
 
   @override
   void didPush(Route route, Route? previousRoute) {

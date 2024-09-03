@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class WoltPage extends StatefulWidget {
+class WoltPageLayout extends StatefulWidget {
   final Widget? header;
   final Widget? footer;
   final List<Widget> slivers;
 
-  const WoltPage({
+  const WoltPageLayout({
     super.key,
     this.header,
     this.footer,
@@ -18,10 +18,10 @@ class WoltPage extends StatefulWidget {
   });
 
   @override
-  State<WoltPage> createState() => _WoltPageState();
+  State<WoltPageLayout> createState() => _WoltPageLayoutState();
 }
 
-class _WoltPageState extends State<WoltPage> {
+class _WoltPageLayoutState extends State<WoltPageLayout> with TickerProviderStateMixin {
   final _footerSizeDispatcher = ValueNotifier<double>(0);
 
   @override
@@ -33,12 +33,61 @@ class _WoltPageState extends State<WoltPage> {
         slivers: [
           if (widget.header != null)
             _Header(
-              child: widget.header!,
+              child: Hero(
+                  tag: 'Header',
+                  flightShuttleBuilder: (
+                    BuildContext flightContext,
+                    Animation<double> animation,
+                    HeroFlightDirection flightDirection,
+                    BuildContext fromHeroContext,
+                    BuildContext toHeroContext,
+                  ) {
+                    final anim =
+                        _HeaderAnimation(parent: animation, vsync: this);
+
+                    return FadeTransition(
+                      opacity: anim.appear,
+                      child: toHeroContext.widget,
+                    );
+                  },
+                  child: widget.header!),
             ),
           if (widget.footer != null)
             _Footer(
               sizeDispatcher: _footerSizeDispatcher,
-              child: widget.footer!,
+              child: Hero(
+                tag: 'Footer',
+                flightShuttleBuilder: (
+                  BuildContext flightContext,
+                  Animation<double> animation,
+                  HeroFlightDirection flightDirection,
+                  BuildContext fromHeroContext,
+                  BuildContext toHeroContext,
+                ) {
+                  return AnimatedBuilder(
+                    animation: animation,
+                    builder: (context, child) {
+                      final fromBox =
+                      fromHeroContext.findRenderObject() as RenderBox?;
+                      final toBox = toHeroContext.findRenderObject() as RenderBox?;
+                      if (fromBox == null || toBox == null) {
+                        return child!;
+                      }
+                      final correctionFrom =(fromBox.parent as _FooterRenderSliver)._correction;
+                      final correctionTo =(toBox.parent as _FooterRenderSliver)._correction;
+                      final av = animation.isForwardOrCompleted ? animation.value : 1 - animation.value;
+                      final offset = Offset(0, correctionFrom + (correctionTo - correctionFrom) * av);
+
+                      return Transform.translate(
+                        offset: offset,
+                        child: child,
+                      );
+                    },
+                    child: fromHeroContext.widget,
+                  );
+                },
+                child: widget.footer!,
+              ),
             ),
           ...widget.slivers,
           if (widget.footer != null)
@@ -125,9 +174,9 @@ class _RenderWoltPageViewPort extends RenderShrinkWrappingViewport {
     var child = firstChild;
 
     while (child != null) {
-      if (child is _IEfectiveExtentViewPortDependent) {
-        (child as _IEfectiveExtentViewPortDependent)
-            .performEfectiveExtent(extent);
+      if (child is _IEffectiveExtentViewPortDependent) {
+        (child as _IEffectiveExtentViewPortDependent)
+            .performEffectiveExtent(extent);
       }
 
       child = childAfter(child);
@@ -192,12 +241,12 @@ class _Footer extends SingleChildRenderObjectWidget {
   }
 }
 
-abstract interface class _IEfectiveExtentViewPortDependent {
-  void performEfectiveExtent(double extent);
+abstract interface class _IEffectiveExtentViewPortDependent {
+  void performEffectiveExtent(double extent);
 }
 
 class _FooterRenderSliver extends RenderSliverSingleBoxAdapter
-    implements _IEfectiveExtentViewPortDependent {
+    implements _IEffectiveExtentViewPortDependent {
   final LayerHandle<TransformLayer> _transformLayer =
       LayerHandle<TransformLayer>();
   Matrix4? _paintTransform;
@@ -234,7 +283,7 @@ class _FooterRenderSliver extends RenderSliverSingleBoxAdapter
   }
 
   @override
-  void performEfectiveExtent(double extent) {
+  void performEffectiveExtent(double extent) {
     _paintTransform = Matrix4.identity();
     final edgeOffset =
         constraints.viewportMainAxisExtent - constraints.remainingPaintExtent;
@@ -290,10 +339,10 @@ class _FooterRenderSliver extends RenderSliverSingleBoxAdapter
         crossAxisPosition >= 0.0 &&
         crossAxisPosition <= constraints.crossAxisExtent) {
       // make correction for child position
-      final adjustedmainAxisPosition =
+      final adjustedMainAxisPosition =
           mainAxisPosition - factMainStartPos - constraints.scrollOffset;
       var haveHit = hitTestChildren(result,
-          mainAxisPosition: adjustedmainAxisPosition,
+          mainAxisPosition: adjustedMainAxisPosition,
           crossAxisPosition: crossAxisPosition);
 
       if (!haveHit) {
@@ -368,5 +417,31 @@ class _DummySizeRenderSliver extends RenderSliver {
     scheduleMicrotask(() {
       markNeedsLayout();
     });
+  }
+}
+
+class _HeaderAnimation extends AnimationController {
+  final _disappearDuration = const Duration(milliseconds: 100);
+  final _appearDuration = const Duration(milliseconds: 200);
+
+  late final Animation<double> _appearAnimation;
+
+  Animation<double> get appear => _appearAnimation;
+
+  _HeaderAnimation({required Animation<double> parent, required super.vsync}) {
+    _appearAnimation = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1, end: 0)
+              .chain(CurveTween(curve: Curves.linear)),
+          weight: _disappearDuration.inMilliseconds.toDouble(),
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1)
+              .chain(CurveTween(curve: Curves.linear)),
+          weight: _appearDuration.inMilliseconds.toDouble(),
+        ),
+      ],
+    ).animate(parent);
   }
 }
