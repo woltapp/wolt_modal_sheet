@@ -66,10 +66,24 @@ class RouterViewModel {
   ValueListenable<CoffeeMakerStep> get visibleOrderScreenNavBarTab =>
       _visibleOrderScreenNavBarTab;
 
+  /// STEP #4: Inject dependencies into the ViewModel's constructor.
+  ///
+  /// In this step, the AuthService and OnboardingService are injected into the
+  /// RouterViewModel through its constructor. These services together represent the Model
+  /// in the MVVM pattern, providing the data and business logic related to authentication
+  /// and onboarding. By injecting these services, the ViewModel can interact with the
+  /// underlying data and logic, allowing it to manage the state of the View.
   RouterViewModel({
     required this.authService,
     required this.onboardingService,
   }) {
+    /// STEP #5: Subscribe to authentication state changes.
+    ///
+    /// Here, we listen to changes in the user's authentication state by subscribing
+    /// to the `authStateListenable` from AuthService. This allows the ViewModel to
+    /// respond to changes in the Model (AuthService) and update the UI (the View) accordingly.
+    /// For instance, when the user logs in or out, the ViewModel updates the list of pages to be
+    /// displayed in the app, ensuring the UI always reflects the current authentication state.
     authService.authStateListenable.addListener(_authStateChangeSubscription);
   }
 
@@ -101,6 +115,11 @@ class RouterViewModel {
   void onDrawerDestinationSelected(
     AppNavigationDrawerDestination destination,
   ) {
+    /// STEP #8: Implement the navigation logic for drawer destinations in the ViewModel.
+    ///
+    /// This step defines how the app should respond when a user selects an item from the
+    /// navigation drawer. Based on the selected destination, the ViewModel updates the
+    /// page stack to display the appropriate screen(s).
     switch (destination) {
       case AppNavigationDrawerDestination.ordersScreen:
         _pages.value = [OrdersRoutePage(_visibleOrderScreenNavBarTab)];
@@ -152,8 +171,9 @@ class RouterViewModel {
     }
   }
 
-  /// Handles the update of the routing URL (visible on the Browser address bar) when the app
-  /// navigation state changes.
+  /// Step #18: Handles the update of the routing URL (visible on the Browser
+  /// address bar) when the
+  /// app navigation state changes.
   ///
   /// This method is triggered by changes to either the [pages] list or the
   /// [visibleOrderScreenNavBarTab]. It constructs a new [AppRouteConfiguration]
@@ -171,6 +191,8 @@ class RouterViewModel {
     );
   }
 
+  /// Step #15: Respond to the parsing of a new URL route.
+  ///
   /// Responds to the parsing of a new URL route by the [RouteInformationParser] and returns sets
   /// the new navigation stack defined by the [pages] list based on the provided
   /// [AppRouteConfiguration].
