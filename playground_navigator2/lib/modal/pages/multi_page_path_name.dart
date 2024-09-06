@@ -18,8 +18,10 @@ enum MultiPagePathName {
   final int pageCount;
   final String queryParamName;
 
-  const MultiPagePathName(
-      {required this.pageCount, required this.queryParamName});
+  const MultiPagePathName({
+    required this.pageCount,
+    required this.queryParamName,
+  });
 
   WoltModalSheetPageListBuilder get pageListBuilder {
     WoltModalSheetPage root(BuildContext context) =>

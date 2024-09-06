@@ -135,7 +135,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool? enableDrag,
     bool? showDragHandle,
     RouteSettings? settings,
-    Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
@@ -154,7 +153,6 @@ class WoltModalSheet<T> extends StatefulWidget {
       enableDrag: enableDrag,
       showDragHandle: showDragHandle,
       settings: settings,
-      transitionDuration: transitionDuration,
       onModalDismissedWithBarrierTap: onModalDismissedWithBarrierTap,
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       transitionAnimationController: transitionAnimationController,
@@ -205,7 +203,6 @@ class WoltModalSheet<T> extends StatefulWidget {
     bool? enableDrag,
     bool? showDragHandle,
     RouteSettings? settings,
-    Duration? transitionDuration,
     VoidCallback? onModalDismissedWithBarrierTap,
     VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
@@ -473,7 +470,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Parameters:
   /// - [pages]: The List of [SliverWoltModalSheetPage] to be added to the stack. Can also be a single page.
   void addPages(List<SliverWoltModalSheetPage> pages) {
-    _pages = List<SliverWoltModalSheetPage>.from(_pages)..addAll(pages);
+    _pages = List<SliverWoltModalSheetPage>.of(_pages)..addAll(pages);
   }
 
   /// Overload of [addPages] for adding a single page.
@@ -504,12 +501,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   void addOrReplacePages(List<SliverWoltModalSheetPage> pages) {
     if (_currentPageIndex == _pages.length - 1) {
       // Append new pages if the current page is the last one.
-      _pages = List<SliverWoltModalSheetPage>.from(_pages)..addAll(pages);
+      _pages = List<SliverWoltModalSheetPage>.of(_pages)..addAll(pages);
     } else {
       // Replace all pages beyond the current one with new pages.
-      _pages = List<SliverWoltModalSheetPage>.from(
-          _pages.take(_currentPageIndex + 1))
-        ..addAll(pages);
+      _pages = List<SliverWoltModalSheetPage>.of(
+        _pages.take(_currentPageIndex + 1),
+      )..addAll(pages);
     }
   }
 
@@ -544,7 +541,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       throw ArgumentError('pages must not be empty.');
     }
 
-    _pages = List<SliverWoltModalSheetPage>.from(_pages)..addAll(pages);
+    _pages = List<SliverWoltModalSheetPage>.of(_pages)..addAll(pages);
     // Set the page index to the first of the newly added pages.
     _currentPageIndex = _pages.length - pages.length;
   }
@@ -574,7 +571,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///   had only one page left.
   bool popPage() {
     if (_pages.length > 1) {
-      _pages = List<SliverWoltModalSheetPage>.from(_pages)..removeLast();
+      _pages = List<SliverWoltModalSheetPage>.of(_pages)..removeLast();
       // Adjust the current page index if the removed page is the current page.
       if (_currentPageIndex == _pages.length) {
         _currentPageIndex--;
@@ -617,7 +614,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   bool removePage(Object id) {
     // Check if there are more than one page in the stack
     if (_pages.length > 1) {
-      final currentPages = List<SliverWoltModalSheetPage>.from(_pages);
+      final currentPages = List<SliverWoltModalSheetPage>.of(_pages);
       final index = currentPages.indexWhere((p) => p.id == id);
       final wasCurrentPage = index == _currentPageIndex;
 
@@ -642,19 +639,17 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           _pages = currentPages;
         }
         return true;
-      } else {
-        // If the page to remove is not the current page
-        currentPages.removeAt(index);
-        _pages = currentPages;
+      } // If the page to remove is not the current page
+      currentPages.removeAt(index);
+      _pages = currentPages;
 
-        // Adjust the current page index if the removed page is before the current page
-        if (index < _currentPageIndex) {
-          _currentPageIndex--;
-        }
-
-        // No need to call setState since the current page remains visible
-        return true;
+      // Adjust the current page index if the removed page is before the current page
+      if (index < _currentPageIndex) {
+        _currentPageIndex--;
       }
+
+      // No need to call setState since the current page remains visible
+      return true;
     }
 
     // Return false if there's only one page left or other conditions are not met
@@ -677,7 +672,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     if (indexToStopRemoving == -1 || indexToStopRemoving == _currentPageIndex) {
       return false;
     }
-    final sublist = List<SliverWoltModalSheetPage>.from(_pages)
+    final sublist = List<SliverWoltModalSheetPage>.of(_pages)
         .sublist(0, indexToStopRemoving + 1);
     _pages = sublist;
     // Update the indexToStopRemoving if the removed page is before the current page.
@@ -709,13 +704,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     } else if (index == _currentPageIndex) {
       replaceCurrentPage(page);
       return true;
-    } else {
-      // Replace the page in the list.
-      final currentPages = List<SliverWoltModalSheetPage>.from(_pages);
-      currentPages[index] = page;
-      _pages = currentPages;
-      return true;
-    }
+    } // Replace the page in the list.
+    final currentPages = List<SliverWoltModalSheetPage>.of(_pages);
+    currentPages[index] = page;
+    _pages = currentPages;
+    return true;
   }
 
   /// Replaces the current page with a new one, using a pagination animation.
@@ -733,7 +726,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// None.
   void replaceCurrentPage(SliverWoltModalSheetPage newPage) {
     setState(() {
-      _pages = List<SliverWoltModalSheetPage>.from(_pages);
+      _pages = List<SliverWoltModalSheetPage>.of(_pages);
       _pages[_currentPageIndex] = newPage; // Replace the current page
     });
   }
@@ -782,8 +775,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   /// None.
   void updateCurrentPage(
-      SliverWoltModalSheetPage Function(SliverWoltModalSheetPage)
-          updateFunction) {
+    SliverWoltModalSheetPage Function(SliverWoltModalSheetPage) updateFunction,
+  ) {
     setState(() {
       _pages[_currentPageIndex] = updateFunction(_pages[_currentPageIndex]);
     });
@@ -810,8 +803,10 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   ///   This method does not return a value.
-  void replaceAllPages(List<SliverWoltModalSheetPage> newPages,
-      {int? selectedPageIndex}) {
+  void replaceAllPages(
+    List<SliverWoltModalSheetPage> newPages, {
+    int? selectedPageIndex,
+  }) {
     if (newPages.isEmpty) {
       throw ArgumentError('newPages must not be empty.');
     }
@@ -820,11 +815,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     if (selectedPageIndex != null &&
         (selectedPageIndex >= newPages.length || selectedPageIndex < 0)) {
       throw ArgumentError(
-          'selectedPageIndex must be within the bounds of the newPages list.');
+        'selectedPageIndex must be within the bounds of the newPages list.',
+      );
     }
 
     setState(() {
-      _pages = List<SliverWoltModalSheetPage>.from(newPages);
+      _pages = List<SliverWoltModalSheetPage>.of(newPages);
       final newPageIndex = selectedPageIndex ?? _currentPageIndex;
       // Ensure the selected page index is within the bounds of the new list.
       _currentPageIndex = min(newPageIndex, _pages.length - 1);
@@ -937,7 +933,8 @@ class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(
-      covariant _WoltModalMultiChildLayoutDelegate oldDelegate) {
+    covariant _WoltModalMultiChildLayoutDelegate oldDelegate,
+  ) {
     return oldDelegate.modalType != modalType;
   }
 }

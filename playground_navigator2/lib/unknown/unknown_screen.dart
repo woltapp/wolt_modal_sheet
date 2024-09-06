@@ -7,8 +7,10 @@ class UnknownScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Unknown page :(',
-            style: Theme.of(context).textTheme.displayLarge!),
+        child: Text(
+          'Unknown page :(',
+          style: Theme.of(context).textTheme.displayLarge!,
+        ),
       ),
     );
   }

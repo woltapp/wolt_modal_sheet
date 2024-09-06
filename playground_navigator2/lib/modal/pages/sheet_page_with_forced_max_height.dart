@@ -5,7 +5,7 @@ import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithForcedMaxHeight {
-  SheetPageWithForcedMaxHeight._();
+  const SheetPageWithForcedMaxHeight._();
 
   static WoltModalSheetPage build(
     BuildContext context, {
@@ -28,7 +28,8 @@ class SheetPageWithForcedMaxHeight {
       ),
       hasTopBarLayer: false,
       pageTitle: const ModalSheetTitle(
-          'Page with forced max height and background color'),
+        'Page with forced max height and background color',
+      ),
       child: const Padding(
         padding: EdgeInsets.all(16.0),
         child: Text(

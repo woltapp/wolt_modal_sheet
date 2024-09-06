@@ -108,7 +108,7 @@ class _WoltModalSheetAnimatedSwitcherState
   void _resetScrollPositions() {
     _scrollPositions.clear();
     _scrollPositions = [
-      for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0)
+      for (int i = 0; i < _pagesCount; i++) ValueNotifier(0.0),
     ];
   }
 
@@ -117,7 +117,7 @@ class _WoltModalSheetAnimatedSwitcherState
     _scrollControllers = [
       for (int i = 0; i < _pagesCount; i++)
         (_page.scrollController ??
-            ScrollController(initialScrollOffset: _scrollPositions[i].value))
+            ScrollController(initialScrollOffset: _scrollPositions[i].value)),
     ];
   }
 
@@ -285,7 +285,8 @@ class _WoltModalSheetAnimatedSwitcherState
   }
 
   PaginatingWidgetsGroup _createIncomingWidgets(
-      AnimationController animationController) {
+    AnimationController animationController,
+  ) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final hasTopBarLayer = _hasTopBarLayer;

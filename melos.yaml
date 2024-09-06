@@ -20,7 +20,8 @@ command:
 
 scripts:
   analyze:
-    exec: dart analyze .
+    # DCM will handle static analysis
+    exec: dcm analyze .
   format:
     exec: dart format --set-exit-if-changed .
   test:

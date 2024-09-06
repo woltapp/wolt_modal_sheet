@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-switch-with-enums
+
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +10,7 @@ class AppThemeData {
       BorderRadius.all(Radius.circular(cornerRadiusLg));
   static final colorScheme =
       ColorScheme.fromSeed(seedColor: WoltColors.blue).copyWith(
-    background: const Color(0xFFF6F6F6),
+    surface: const Color(0xFFF6F6F6),
   );
 
   const AppThemeData();
@@ -19,7 +21,7 @@ class AppThemeData {
     return ThemeData(
       brightness: colorScheme.brightness,
       indicatorColor: Colors.transparent,
-      scaffoldBackgroundColor: colorScheme.background,
+      scaffoldBackgroundColor: colorScheme.surface,
       textTheme: textTheme,
       cardTheme: _cardThemeData,
       outlinedButtonTheme: _outlinedButtonThemeData(textTheme),
@@ -34,13 +36,11 @@ class AppThemeData {
       backgroundColor: colorScheme.surface,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
-      labelTextStyle: MaterialStateProperty.resolveWith(
-        (state) {
-          return state.contains(MaterialState.selected)
-              ? textTheme.labelSmall!.copyWith(color: colorScheme.primary)
-              : textTheme.labelSmall!;
-        },
-      ),
+      labelTextStyle: MaterialStateProperty.resolveWith((state) {
+        return state.contains(MaterialState.selected)
+            ? textTheme.labelSmall!.copyWith(color: colorScheme.primary)
+            : textTheme.labelSmall!;
+      }),
       iconTheme: MaterialStateProperty.resolveWith((state) {
         const iconSize = 24.0;
 

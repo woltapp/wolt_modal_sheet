@@ -46,11 +46,13 @@ class WoltBottomSheetDragHandle extends StatelessWidget {
 
   String semanticsLabel(BuildContext context) {
     return Localizations.of<MaterialLocalizations>(
-                context, MaterialLocalizations)
-            ?.modalBarrierDismissLabel ??
+          context,
+          MaterialLocalizations,
+        )?.modalBarrierDismissLabel ??
         Localizations.of<CupertinoLocalizations>(
-                context, CupertinoLocalizations)
-            ?.modalBarrierDismissLabel ??
+          context,
+          CupertinoLocalizations,
+        )?.modalBarrierDismissLabel ??
         const DefaultMaterialLocalizations().modalBarrierDismissLabel;
   }
 }

@@ -5,7 +5,7 @@ version: 0.1.0
 
 environment:
   sdk: '>=2.19.2 <4.0.0'
-  flutter: '>=3.7.2'
+  flutter: '>=3.13.0'
 
 dependencies:
   flutter:

@@ -1,1 +1,30 @@
 include: package:flutter_lints/flutter.yaml
+
+dart_code_metrics:
+  extends:
+    - recommended
+  rules:
+    - prefer-single-widget-per-file: false
+    - avoid-unsafe-collection-methods: false
+    - avoid-shadowing: false
+    - avoid-missing-image-alt: false
+    - dispose-fields: false
+    - avoid-incomplete-copy-with: false
+    - prefer-prefixed-global-constants: false
+    - move-variable-closer-to-its-usage: false
+    - prefer-match-file-name: false
+    - avoid-unnecessary-gesture-detector: false
+    - avoid-equal-expressions: false
+    - prefer-correct-callback-field-name: false
+    - match-getter-setter-field-names: false
+    - avoid-undisposed-instances: false
+    - always-remove-listener: false
+    - avoid-empty-setstate: false
+    - no-empty-block: false
+    - avoid-dynamic: false
+    - avoid-duplicate-test-assertions: false
+    - prefer-correct-test-file-name: false
+
+analyzer:
+  errors:
+    deprecated_member_use: ignore

@@ -20,6 +20,10 @@ jobs:
         with:
           flutter-version: '3.13.0' # Uses the minimum supported version.
           channel: stable
+      - name: Install DCM
+        uses: CQLabs/setup-dcm@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       # Get Flutter version
       - name: Get Flutter version
         run: flutter --version
@@ -37,7 +41,7 @@ jobs:
         run: flutter analyze
       - name: Check if flutter analyze passes
         run: echo $?
-      # Run melos analyze to find analzyer issues in demos
+      # Run melos analyze to find analzyer issues using DCM.dev for both Flutter and Dart
       - name: Run melos analyze
         run: melos analyze
       - name: Check if melos analyze passes

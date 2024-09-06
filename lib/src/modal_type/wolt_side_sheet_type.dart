@@ -12,7 +12,7 @@ class WoltSideSheetType extends WoltModalType {
     bool forceMaxHeight = true,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
-    WoltModalDismissDirection? dismissDirection =
+    WoltModalDismissDirection dismissDirection =
         WoltModalDismissDirection.endToStart,
     double minFlingVelocity = 365.0,
     double closeProgressThreshold = 0.5,
@@ -62,7 +62,9 @@ class WoltSideSheetType extends WoltModalType {
   @override
   BoxConstraints layoutModal(Size availableSize) {
     final width = min(
-        WoltBreakpoints.small.minValue, max(0.0, availableSize.width - 32.0));
+      WoltBreakpoints.small.minValue,
+      max(0.0, availableSize.width - 32.0),
+    );
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
@@ -106,8 +108,8 @@ class WoltSideSheetType extends WoltModalType {
     final TextDirection textDirection = Directionality.of(context);
     return useSafeArea
         ? SafeArea(
-            left: textDirection == TextDirection.ltr ? false : true,
-            right: textDirection == TextDirection.ltr ? true : false,
+            left: textDirection != TextDirection.ltr,
+            right: textDirection == TextDirection.ltr,
             top: true,
             bottom: true,
             child: child,
@@ -116,11 +118,7 @@ class WoltSideSheetType extends WoltModalType {
   }
 
   @override
-  Widget decorateModal(
-    BuildContext context,
-    Widget modal,
-    bool useSafeArea,
-  ) =>
+  Widget decorateModal(BuildContext context, Widget modal, bool useSafeArea) =>
       modal;
 
   /// Animates the modal's appearance with a slide transition adjusted for text direction.
@@ -148,10 +146,7 @@ class WoltSideSheetType extends WoltModalType {
     final reverseCubic = isClosing ? enteringCubic : exitingCubic;
 
     // Define the alpha animation for entering
-    final alphaAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(
+    final alphaAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animation,
         curve: interval,
@@ -173,10 +168,7 @@ class WoltSideSheetType extends WoltModalType {
 
     return FadeTransition(
       opacity: alphaAnimation,
-      child: SlideTransition(
-        position: positionAnimation,
-        child: child,
-      ),
+      child: SlideTransition(position: positionAnimation, child: child),
     );
   }
 
@@ -200,7 +192,7 @@ class WoltSideSheetType extends WoltModalType {
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:
           reverseTransitionDuration ?? this.reverseTransitionDuration,
-      dismissDirection: dismissDirection ?? this.dismissDirection,
+      dismissDirection: dismissDirection ?? this.dismissDirection!,
       minFlingVelocity: minFlingVelocity ?? this.minFlingVelocity,
       closeProgressThreshold:
           closeProgressThreshold ?? this.closeProgressThreshold,

@@ -80,7 +80,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  String? get barrierLabel => 'Modal barrier';
+  String get barrierLabel => 'Modal barrier';
 
   AnimationController? animationController;
 
@@ -115,11 +115,15 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   ) {
     final modalType = _determineCurrentModalType(context);
     return modalType.buildTransitions(
-        context, animation, secondaryAnimation, child);
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    );
   }
 
   @override
-  Color? get barrierColor {
+  Color get barrierColor {
     final context = navigator!.context;
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);

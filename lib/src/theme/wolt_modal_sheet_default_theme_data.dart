@@ -148,7 +148,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   /// would only be functional with a custom drag handle, limiting interaction flexibility on
   /// main content area.
   @override
-  ScrollPhysics? get mainContentScrollPhysics => const ClampingScrollPhysics();
+  ScrollPhysics get mainContentScrollPhysics => const ClampingScrollPhysics();
 
   @override
   WoltModalTypeBuilder get modalTypeBuilder => (context) {
