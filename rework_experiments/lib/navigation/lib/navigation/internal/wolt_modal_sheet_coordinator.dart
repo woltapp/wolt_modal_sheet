@@ -2,19 +2,27 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
 
-/// Navigation coordination point in the application.
+/// Coordinator for managing the navigation stack of modal sheets.
+/// This class is responsible for handling navigation change intents,
+/// both internal and external, resolving them, and publishing the resulting
+/// list of pages that should be displayed based on the most recent intent.
 class WoltModalSheetCoordinator {
   final void Function(List<WoltModalSheetPath>) _onPathChangedInternal;
+  final VoidCallback _onStackEmpty;
+
   final _pages = ValueNotifier<List<Page>>(<Page>[]);
 
   ValueListenable<List<Page>> get pagesPublisher => _pages;
   final _supportedPaths = <WoltModalSheetPathSettings>{};
   final _currentPaths = <WoltModalSheetPath>[];
 
-  WoltModalSheetCoordinator(this._onPathChangedInternal);
+  WoltModalSheetCoordinator(
+    this._onPathChangedInternal,
+    this._onStackEmpty,
+  );
 
   /// Makes initialization of the coordinator.
   /// Register available routes and initial state of the navigation stack.
@@ -55,6 +63,8 @@ class WoltModalSheetCoordinator {
       _currentPaths.removeLast();
       _pages.value = currentListPages;
       _onPathChangedInternal(_currentPaths);
+    } else {
+      _onStackEmpty();
     }
   }
 

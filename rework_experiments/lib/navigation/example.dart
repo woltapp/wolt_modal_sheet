@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_page.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_navigator.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_route.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_page.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_navigator.dart';
+import 'package:rework_experiments/navigation/lib/navigation/external/wolt_modal_sheet_route.dart';
 import 'package:rework_experiments/wolt_page_layout/wolt_page_layout.dart';
 
 void main() {
@@ -161,10 +161,7 @@ class FirstScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // This uses WoltModalSheetNavigator to navigate within the WoltModalSheet.
-                Navigator.of(
-                  context,
-                  rootNavigator: true,
-                ).pop();
+                WoltModalSheetNavigator.of(context).pop();
               },
               child: const Text('POP'),
             ),

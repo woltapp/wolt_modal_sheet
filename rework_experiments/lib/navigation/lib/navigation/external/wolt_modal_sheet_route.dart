@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
 
 /// An imperative way to show [WoltModalSheet].
 Future<T?> showWoltModalSheet<T>({
@@ -33,7 +33,7 @@ Future<T?> showWoltModalSheet<T>({
   );
 }
 
-/// Rout for displaying the [WoltModalSheet].
+/// Route for displaying the [WoltModalSheet].
 class WoltModalSheetRoute<T> extends PopupRoute<T> {
   /// All the pages that the bottom tire can display.
   final List<WoltModalSheetPathSettings> supportedPaths;

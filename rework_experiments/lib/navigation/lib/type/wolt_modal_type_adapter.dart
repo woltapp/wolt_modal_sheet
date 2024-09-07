@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rework_experiments/navigation/lib/theme/wolt_modal_sheet_theme_data.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_type_delegate.dart';
+import 'package:rework_experiments/navigation/lib/type/wolt_modal_sheet_type_delegate.dart';
 
-/// An entity responsible for deciding, based on the device’s size, in what
-/// form to display the provided child.
-/// For example, [BottomSheet] or [AlertDialog].
+/// An entity responsible for creating all necessary wrappers to form a content
+/// of modal sheet in appropriate form, for examle bottom sheet,
+/// alert dialog, etc.
+/// 
+/// The [WoltModalSheetDelegate] is responsible for desision which
+/// form it should be.
+/// 
+/// See also: [WoltModalSheetDelegate], [BottomSheet], [AlertDialog].
 class WoltModalTypeAdapter extends StatefulWidget {
   final Widget child;
   final WoltModalSheetDelegate _woltModalSheetDelegate;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_coordinator.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_coordinator.dart';
+import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
 import 'package:rework_experiments/navigation/lib/wolt_modal_sheet.dart';
 
-/// Point of interaction with the navigation inside the [WoltModalSheet].
-class WoltModalSheetNavigator<T> extends InheritedWidget {
+/// Point of interaction with [WoltModalSheet]s navigation internally
+/// (from the shown content).
+/// WoltModalSheetNavigator.of(context) is the way to reach it.
+class WoltModalSheetNavigator extends InheritedWidget {
   final WoltModalSheetCoordinator _coordinator;
 
   const WoltModalSheetNavigator({

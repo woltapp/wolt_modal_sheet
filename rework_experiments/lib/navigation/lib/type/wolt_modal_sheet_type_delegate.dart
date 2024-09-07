@@ -1,5 +1,6 @@
 const defaultModalTypeBreakPoint = 768.0;
 
+/// A delegate that determines the type of the modal sheet to be used.
 abstract class WoltModalSheetDelegate {
   WoltModalType getWoltModalSheetType(double deviceWidth);
 }
@@ -7,7 +8,7 @@ abstract class WoltModalSheetDelegate {
 /// Default implementation of the [WoltModalSheetDelegate].
 /// This class determines the type of ModalSheet to be used based on the device
 /// size.
-class DefaultWoltModalSheetDelegate  implements WoltModalSheetDelegate{
+class DefaultWoltModalSheetDelegate implements WoltModalSheetDelegate {
   const DefaultWoltModalSheetDelegate();
 
   @override
@@ -20,7 +21,7 @@ class DefaultWoltModalSheetDelegate  implements WoltModalSheetDelegate{
   }
 }
 
-/// Enum representing the type of the modal.
+/// Enum of possible types of the modal sheet.
 enum WoltModalType {
   bottomSheet,
   dialog;
