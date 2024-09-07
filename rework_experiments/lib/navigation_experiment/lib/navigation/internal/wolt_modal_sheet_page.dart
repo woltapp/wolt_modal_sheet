@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/type/wolt_modal_type_adapter.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_type_adapter.dart';
 
 /// An interface for pages in modal sheet that can be use to decide size of
 /// modal sheet.

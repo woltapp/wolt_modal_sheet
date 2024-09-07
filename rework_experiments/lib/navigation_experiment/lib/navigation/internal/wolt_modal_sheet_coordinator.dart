@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path.dart';
 
 /// Coordinator for managing the navigation stack of modal sheets.
 /// This class is responsible for handling navigation change intents,

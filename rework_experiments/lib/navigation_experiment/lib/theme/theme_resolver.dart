@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/theme/wolt_modal_sheet_theme_data.dart';
+import 'package:rework_experiments/navigation_experiment/lib/theme/wolt_modal_sheet_theme_data.dart';
 
 /// A widget that resolves the theme for the [WoltModalSheet] widget.
 /// Priority of resolving:

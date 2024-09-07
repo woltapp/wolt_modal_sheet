@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_coordinator.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_coordinator.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation_experiment/lib/wolt_modal_sheet.dart';
 
 /// Point of interaction with [WoltModalSheet]s navigation internally
 /// (from the shown content).

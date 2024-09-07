@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/theme/wolt_modal_sheet_theme_data.dart';
-import 'package:rework_experiments/navigation/lib/type/wolt_modal_sheet_type_delegate.dart';
+import 'package:rework_experiments/navigation_experiment/lib/theme/wolt_modal_sheet_theme_data.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_sheet_type_delegate.dart';
 
 /// An entity responsible for creating all necessary wrappers to form a content
 /// of modal sheet in appropriate form, for examle bottom sheet,

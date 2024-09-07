@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/theme/theme_resolver.dart';
-import 'package:rework_experiments/navigation/lib/theme/wolt_modal_sheet_theme_data.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_coordinator.dart';
-import 'package:rework_experiments/navigation/lib/type/wolt_modal_sheet_type_delegate.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_navigator.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_page.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
-import 'package:rework_experiments/navigation/lib/navigation/internal/wolt_modal_sheet_path.dart';
-import 'package:rework_experiments/navigation/lib/type/wolt_modal_type_adapter.dart';
+import 'package:rework_experiments/navigation_experiment/lib/theme/theme_resolver.dart';
+import 'package:rework_experiments/navigation_experiment/lib/theme/wolt_modal_sheet_theme_data.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_coordinator.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_sheet_type_delegate.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_navigator.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_page.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_type_adapter.dart';
 
 part 'navigation/navigation_stack.dart';
 part 'navigation/navigation_size_adapter.dart';
