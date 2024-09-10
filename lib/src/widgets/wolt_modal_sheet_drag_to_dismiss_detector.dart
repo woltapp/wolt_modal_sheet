@@ -19,18 +19,15 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
 
   AnimationController get _animationController => route.animationController!;
 
-  WoltModalDismissDirection? get _dismissDirection =>
-      modalType.dismissDirection;
+  WoltModalDismissDirection? get _dismissDirection => modalType.dismissDirection;
 
   double get _minFlingVelocity => modalType.minFlingVelocity;
 
-  bool get _isDismissUnderway =>
-      _animationController.status == AnimationStatus.reverse;
+  bool get _isDismissUnderway => _animationController.status == AnimationStatus.reverse;
 
   bool get _isDismissed => _animationController.isDismissed;
 
-  RenderBox get _renderBox =>
-      modalContentKey.currentContext!.findRenderObject()! as RenderBox;
+  RenderBox get _renderBox => modalContentKey.currentContext!.findRenderObject()! as RenderBox;
 
   double get _childHeight => _renderBox.size.height;
 
@@ -43,16 +40,14 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
 
     return NotificationListener(
       onNotification: (notification) {
-        if (notification is OverscrollNotification &&
-            notification.dragDetails != null) {
+        if (notification is OverscrollNotification && notification.dragDetails != null) {
           if (isVerticalDismissAllowed) {
             _handleVerticalDragUpdate(notification.dragDetails!);
           } else if (isHorizontalDismissAllowed) {
             _handleHorizontalDragUpdate(context, notification.dragDetails!);
           }
         }
-        if (notification is ScrollEndNotification &&
-            notification.dragDetails != null) {
+        if (notification is ScrollEndNotification && notification.dragDetails != null) {
           if (isVerticalDismissAllowed) {
             _handleVerticalDragEnd(context, notification.dragDetails!);
           } else if (isHorizontalDismissAllowed) {
@@ -63,18 +58,12 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
       },
       child: GestureDetector(
         excludeFromSemantics: true,
-        onVerticalDragUpdate: (details) => isVerticalDismissAllowed
-            ? _handleVerticalDragUpdate(details)
-            : null,
-        onVerticalDragEnd: (details) => isVerticalDismissAllowed
-            ? _handleVerticalDragEnd(context, details)
-            : null,
-        onHorizontalDragUpdate: (details) => isHorizontalDismissAllowed
-            ? _handleHorizontalDragUpdate(context, details)
-            : null,
-        onHorizontalDragEnd: (details) => isHorizontalDismissAllowed
-            ? _handleHorizontalDragEnd(context, details)
-            : null,
+        onVerticalDragUpdate: isVerticalDismissAllowed ? (details) => _handleVerticalDragUpdate(details) : null,
+        onVerticalDragEnd: isVerticalDismissAllowed ? (details) => _handleVerticalDragEnd(context, details) : null,
+        onHorizontalDragUpdate:
+            isHorizontalDismissAllowed ? (details) => _handleHorizontalDragUpdate(context, details) : null,
+        onHorizontalDragEnd:
+            isHorizontalDismissAllowed ? (details) => _handleHorizontalDragEnd(context, details) : null,
         child: child,
       ),
     );
@@ -108,8 +97,7 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
     bool isDraggingDownward = details.velocity.pixelsPerSecond.dy > 0;
     final isDismissUp = _dismissDirection?.isUp ?? false;
     final isDismissDown = _dismissDirection?.isDown ?? false;
-    final double flingVelocity =
-        details.velocity.pixelsPerSecond.dy / _childHeight;
+    final double flingVelocity = details.velocity.pixelsPerSecond.dy / _childHeight;
 
     if (isDraggingUpward && isDismissUp) {
       if (details.velocity.pixelsPerSecond.dy.abs() > _minFlingVelocity) {
@@ -185,12 +173,9 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
     bool isClosing = false;
     bool isDraggingToEnd = details.velocity.pixelsPerSecond.dx > 0;
     bool isDraggingToStart = details.velocity.pixelsPerSecond.dx < 0;
-    final isDismissToStart =
-        _dismissDirection == WoltModalDismissDirection.endToStart;
-    final isDismissToEnd =
-        _dismissDirection == WoltModalDismissDirection.startToEnd;
-    final double flingVelocity =
-        details.velocity.pixelsPerSecond.dx / _childWidth;
+    final isDismissToStart = _dismissDirection == WoltModalDismissDirection.endToStart;
+    final isDismissToEnd = _dismissDirection == WoltModalDismissDirection.startToEnd;
+    final double flingVelocity = details.velocity.pixelsPerSecond.dx / _childWidth;
 
     if (details.velocity.pixelsPerSecond.dx.abs() >= _minFlingVelocity) {
       final directionality = Directionality.of(context);
