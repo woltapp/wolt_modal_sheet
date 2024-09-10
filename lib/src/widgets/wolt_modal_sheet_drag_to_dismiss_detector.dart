@@ -63,17 +63,17 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
       },
       child: GestureDetector(
         excludeFromSemantics: true,
-        onVerticalDragUpdate: (details) => isVerticalDismissAllowed
-            ? _handleVerticalDragUpdate(details)
+        onVerticalDragUpdate: isVerticalDismissAllowed
+            ? (details) => _handleVerticalDragUpdate(details)
             : null,
-        onVerticalDragEnd: (details) => isVerticalDismissAllowed
-            ? _handleVerticalDragEnd(context, details)
+        onVerticalDragEnd: isVerticalDismissAllowed
+            ? (details) => _handleVerticalDragEnd(context, details)
             : null,
-        onHorizontalDragUpdate: (details) => isHorizontalDismissAllowed
-            ? _handleHorizontalDragUpdate(context, details)
+        onHorizontalDragUpdate: isHorizontalDismissAllowed
+            ? (details) => _handleHorizontalDragUpdate(context, details)
             : null,
-        onHorizontalDragEnd: (details) => isHorizontalDismissAllowed
-            ? _handleHorizontalDragEnd(context, details)
+        onHorizontalDragEnd: isHorizontalDismissAllowed
+            ? (details) => _handleHorizontalDragEnd(context, details)
             : null,
         child: child,
       ),
