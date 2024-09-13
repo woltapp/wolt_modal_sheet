@@ -10,6 +10,7 @@ packages:
   - playground
   - playground_navigator2
   - wolt_di
+  - wolt_state_management
 
 command:
   bootstrap:

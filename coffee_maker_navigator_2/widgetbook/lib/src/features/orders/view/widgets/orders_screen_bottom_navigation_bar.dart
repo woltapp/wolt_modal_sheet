@@ -5,6 +5,7 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/orders_
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+import 'package:wolt_state_management/wolt_state_management.dart';
 
 @UseCase(
   name: 'Filled',
@@ -14,7 +15,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 Widget ordersScreenBottomNavigationBarFilled(BuildContext context) {
   return Scaffold(
     bottomNavigationBar: OrdersScreenBottomNavigationBar(
-      ValueNotifier(
+      StatefulValueNotifier.idle(
         const GroupedCoffeeOrders(
           grindStateOrders: [
             CoffeeOrder(
@@ -61,7 +62,7 @@ Widget ordersScreenBottomNavigationBarFilled(BuildContext context) {
 Widget ordersScreenBottomNavigationBarEmpty(BuildContext context) {
   return Scaffold(
     bottomNavigationBar: OrdersScreenBottomNavigationBar(
-      ValueNotifier(GroupedCoffeeOrders.empty()),
+      StatefulValueNotifier.idle(GroupedCoffeeOrders.empty()),
       (_) {},
       ValueNotifier(
         context.knobs.list(
