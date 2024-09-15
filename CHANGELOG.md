@@ -1,3 +1,30 @@
+## 0.9.3
+- fix gesture detector onDrag callback [#325](https://github.com/woltapp/wolt_modal_sheet/pull/325) by [nico3587](https://github.com/nico3587)
+- [Demo app] Improve coffee maker demo documentation for Flutter & Friends workshop [#318](https://github.com/woltapp/wolt_modal_sheet/pull/318) by [ulusoyca](https://github.com/ulusoyca)
+- [Coffee Maker Demo app] Added dependency injection explanation in code diagram to main.dart [#316](https://github.com/woltapp/wolt_modal_sheet/pull/316) by [ulusoyca](https://github.com/ulusoyca)
+- feat(analyze): Add DCM and fix potentiall bugs, depreciations  [#315](https://github.com/woltapp/wolt_modal_sheet/pull/315) by [mhadaily](https://github.com/mhadaily)
+- [Coffee Maker App] Update bottom nav bar tab from the browser address bar [#314](https://github.com/woltapp/wolt_modal_sheet/pull/314) by [ulusoyca](https://github.com/ulusoyca)
+- [Coffee Maker App]  Add Web support for app navigation (Update browser address bar) [#312](https://github.com/woltapp/wolt_modal_sheet/pull/312) by [ulusoyca](https://github.com/ulusoyca)
+- [Coffee Maker App] Introduce AppLifecycleObserver Widget for App Lifecycle Management [#311](https://github.com/woltapp/wolt_modal_sheet/pull/311) by [ulusoyca](https://github.com/ulusoyca)
+- [Coffee Maker Example App] Simulate polling for fetching coffee orders [#309](https://github.com/woltapp/wolt_modal_sheet/pull/309) by [ulusoyca](https://github.com/ulusoyca)
+- Add a missing tests check and update `CONTRIBUTING.md` [#308](https://github.com/woltapp/wolt_modal_sheet/pull/308) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Refactor router view model in coffee maker demo app (Flutter&Friends preparation) [#307](https://github.com/woltapp/wolt_modal_sheet/pull/307) by [ulusoyca](https://github.com/ulusoyca)
+- [Example app] Add sliver padding to bottom to demonstrate how to show the area behind the sticky action bar [#306](https://github.com/woltapp/wolt_modal_sheet/pull/306) by [ulusoyca](https://github.com/ulusoyca)
+  - Fixes:
+    - [#305](https://github.com/woltapp/wolt_modal_sheet/issues/305) Sticky action bar covers input fields when keyboard is visible
+- Add `WoltModalSheet.modalBarrierColor` tests [#304](https://github.com/woltapp/wolt_modal_sheet/pull/304) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Remove KeyboardVisibilityListener dependency and add WoltKeyboardClosureListenerMixin [#303](https://github.com/woltapp/wolt_modal_sheet/pull/303) by [ulusoyca](https://github.com/ulusoyca)
+- Remove Provider state management dependency from coffee maker nav2 example [#301](https://github.com/woltapp/wolt_modal_sheet/pull/301) by [ulusoyca](https://github.com/ulusoyca)
+- Expose page list, current page, and getters for isAtLastPage / isAtFirstPage [#299](https://github.com/woltapp/wolt_modal_sheet/pull/299) by [ulusoyca](https://github.com/ulusoyca)
+- Add tests custom  `modalTypeBuilder`, `modalDecorator`, `pageContentDecorator`, and restructure the test class [#298](https://github.com/woltapp/wolt_modal_sheet/pull/298) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Prepare 0.9.2 [#293](https://github.com/woltapp/wolt_modal_sheet/pull/293) by [AcarFurkan](https://github.com/AcarFurkan)
+- Fix: screenshot url of the example app in the ReadMe  [#292](https://github.com/woltapp/wolt_modal_sheet/pull/292) by [AcarFurkan](https://github.com/AcarFurkan)
 ## 0.9.2
 - Fixed URL of the example screenshot in the Readme file for pub.dev. [#291](https://github.com/woltapp/wolt_modal_sheet/pull/291) by [AcarFurkan](https://github.com/AcarFurkan)
 ## 0.9.1
