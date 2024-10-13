@@ -4,6 +4,8 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/coffee_order_list_view_for_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/orders_screen_bottom_navigation_bar.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/top_bar.dart';
+import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_listenable_builder.dart';
+import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_notifier.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,7 @@ class OrderScreenContent extends StatelessWidget {
   });
 
   final ValueListenable<CoffeeMakerStep> selectedNavBarTabListenable;
-  final ValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
+  final StatefulValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
   final OnOrderScreenBottomNavBarItemSelected onNavBarItemSelected;
   final OnCoffeeOrderUpdate onGrindCoffeeStepSelected;
   final OnCoffeeOrderUpdate onAddWaterCoffeeStepSelected;
@@ -47,9 +49,15 @@ class OrderScreenContent extends StatelessWidget {
                 children: [
                   TopBar(selectedTab: selectedTab),
                   Expanded(
-                    child: ValueListenableBuilder(
+                    child: StatefulValueListenableBuilder(
                       valueListenable: groupedCoffeeOrders,
-                      builder: (context, orders, _) {
+                      idleBuilder: (BuildContext context,
+                          GroupedCoffeeOrders? orders, _) {
+                        if (orders == null) {
+                          return const Center(
+                              child: Text('No orders available'));
+                        }
+
                         return CoffeeOrderListViewForStep(
                           groupedCoffeeOrders: orders,
                           selectedBottomNavBarItem: selectedTab,
@@ -57,6 +65,28 @@ class OrderScreenContent extends StatelessWidget {
                           onAddWaterCoffeeStepSelected:
                               onAddWaterCoffeeStepSelected,
                           onReadyCoffeeStepSelected: onReadyCoffeeStepSelected,
+                        );
+                      },
+                      loadingBuilder: (BuildContext context,
+                          GroupedCoffeeOrders? value, _) {
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (BuildContext context, Object? error,
+                          GroupedCoffeeOrders? lastKnownValue, _) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Error: $error'),
+                              ElevatedButton(
+                                onPressed: () {
+                                  /// TODO(cagatay): call view model for retry.
+                                  // Retry by setting the last known value, call view model
+                                },
+                                child: const Text('Retry'),
+                              ),
+                            ],
+                          ),
                         );
                       },
                     ),

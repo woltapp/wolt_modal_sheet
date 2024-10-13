@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 /// An abstract class that extends [ValueListenable] for [ValueState] of type [T].
 ///
 /// It provides getters to check the current state and retrieve the current value.
-abstract class StatefulValueListenable<T> extends ValueListenable<ValueState<T>> {
+abstract class StatefulValueListenable<T>
+    extends ValueListenable<ValueState<T>> {
   /// Returns `true` if the current state is [IdleValueState].
   bool get isIdle;
 
@@ -24,6 +25,26 @@ abstract class StatefulValueListenable<T> extends ValueListenable<ValueState<T>>
 /// A notifier class that extends [ValueNotifier] for [ValueState] of type [T].
 ///
 /// It implements [StatefulValueListenable] and provides methods to update the state.
+///
+/// **Example:**
+/// ```dart
+/// final notifier = StatefulValueNotifier<String>();
+///
+/// notifier.addListener(() {
+///   final state = notifier.value;
+///   if (state is IdleValueState<String>) {
+///     print('Idle: ${state.value}');
+///   } else if (state is LoadingValueState<String>) {
+///     print('Loading: ${state.lastKnownValue}');
+///   } else if (state is ErrorValueState<String>) {
+///     print('Error: ${state.error}');
+///   }
+/// });
+///
+/// notifier.setLoading();
+/// notifier.setIdle('Hello, World!');
+/// notifier.setError(Exception('Something went wrong'));
+/// ```
 class StatefulValueNotifier<T> extends ValueNotifier<ValueState<T>>
     implements StatefulValueListenable<T> {
   /// Creates a [StatefulValueNotifier] with an optional initial value.
@@ -44,11 +65,15 @@ class StatefulValueNotifier<T> extends ValueNotifier<ValueState<T>>
 
   @override
   T? get currentValue {
-    return value.when(
-      idle: (value) => value,
-      loading: (lastKnownValue) => lastKnownValue,
-      error: (error, lastKnownValue) => lastKnownValue,
-    );
+    final state = value;
+    switch (state) {
+      case IdleValueState<T>():
+        return state.value;
+      case LoadingValueState<T>():
+        return state.lastKnownValue;
+      case ErrorValueState<T>():
+        return state.lastKnownValue;
+    }
   }
 
   /// Updates the state to [IdleValueState] with an optional [value].
@@ -58,11 +83,11 @@ class StatefulValueNotifier<T> extends ValueNotifier<ValueState<T>>
 
   /// Updates the state to [LoadingValueState] with an optional [lastKnownValue].
   void setLoading() {
-    value = ValueState<T>.loading(currentValue);
+    value = ValueState<T>.loading(lastKnownValue: currentValue);
   }
 
   /// Updates the state to [ErrorValueState] with an [error] and an optional [lastKnownValue].
-  void setError(Object? error) {
-    value = ValueState<T>.error(error, currentValue);
+  void setError(Exception error) {
+    value = ValueState<T>.error(error: error, lastKnownValue: currentValue);
   }
 }

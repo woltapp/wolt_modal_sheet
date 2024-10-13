@@ -1,22 +1,21 @@
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_notifier.dart';
 
 class OrdersScreenViewModel {
   OrdersScreenViewModel({required OrdersService ordersService})
       : _ordersService = ordersService {
-    final currentOrders = _ordersService.orders.value;
-    _groupedCoffeeOrders.value =
-        GroupedCoffeeOrders.fromCoffeeOrders(currentOrders);
+    _groupedCoffeeOrders.setLoading();
     _ordersService.orders.addListener(_onOrdersReceived);
   }
 
   final OrdersService _ordersService;
 
-  final _groupedCoffeeOrders = ValueNotifier(GroupedCoffeeOrders.empty());
+  final _groupedCoffeeOrders =
+      StatefulValueNotifier(GroupedCoffeeOrders.empty());
 
-  ValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
+  StatefulValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
       _groupedCoffeeOrders;
 
   void dispose() {
@@ -29,7 +28,7 @@ class OrdersScreenViewModel {
 
   void _onOrdersReceived() {
     final orders = _ordersService.orders.value;
-    _groupedCoffeeOrders.value = GroupedCoffeeOrders.fromCoffeeOrders(orders);
+    _groupedCoffeeOrders.setError(Exception('No orders available'));
   }
 
   bool orderExists(String orderId, CoffeeMakerStep step) {
