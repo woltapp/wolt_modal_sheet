@@ -2,6 +2,8 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_screen_content.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
+import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_listenable_builder.dart';
+import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_notifier.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
     super.key,
   });
 
-  final ValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
+  final StatefulValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
   final ValueListenable<CoffeeMakerStep> selectedBottomNavBarItem;
   final OnOrderScreenBottomNavBarItemSelected onBottomNavBarItemSelected;
 
@@ -28,9 +30,13 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedBottomNavBarItem,
       builder: (context, selectedTab, _) {
-        return ValueListenableBuilder(
+        return StatefulValueListenableBuilder(
           valueListenable: groupedCoffeeOrders,
-          builder: (context, orders, _) {
+          idleBuilder: (BuildContext context, GroupedCoffeeOrders? orders, _) {
+            if (orders == null) {
+              return const SizedBox.shrink();
+            }
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -51,6 +57,14 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
                 ),
               ],
             );
+          },
+          loadingBuilder:
+              (BuildContext context, GroupedCoffeeOrders? value, _) {
+            return const SizedBox.shrink();
+          },
+          errorBuilder: (BuildContext context, Object? error,
+              GroupedCoffeeOrders? lastKnownValue, _) {
+            return const SizedBox.shrink();
           },
         );
       },
