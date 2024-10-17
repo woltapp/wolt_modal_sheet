@@ -4,10 +4,7 @@ enum WoltBreakpoints {
   medium(minValue: 768.0, maxValue: 1399.0),
   large(minValue: 1400.0, maxValue: double.infinity);
 
-  const WoltBreakpoints({
-    required this.maxValue,
-    required this.minValue,
-  });
+  const WoltBreakpoints({required this.maxValue, required this.minValue});
 
   final double maxValue;
   final double minValue;

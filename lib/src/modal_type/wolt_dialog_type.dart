@@ -129,10 +129,8 @@ class WoltDialogType extends WoltModalType {
     final cubic = isClosing ? exitingCubic : enteringCubic;
     final reverseCubic = isClosing ? enteringCubic : exitingCubic;
 
-    final alphaAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
+    final alphaAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: animation,
       curve: interval,
       reverseCurve: reverseInterval,
@@ -152,10 +150,7 @@ class WoltDialogType extends WoltModalType {
 
     return FadeTransition(
       opacity: alphaAnimation,
-      child: SlideTransition(
-        position: positionAnimation,
-        child: child,
-      ),
+      child: SlideTransition(position: positionAnimation, child: child),
     );
   }
 
@@ -183,11 +178,7 @@ class WoltDialogType extends WoltModalType {
   /// We don't need to fill the safe area for the dialog because it's centered in the screen
   /// regardless.
   @override
-  Widget decorateModal(
-    BuildContext context,
-    Widget modal,
-    bool useSafeArea,
-  ) =>
+  Widget decorateModal(BuildContext context, Widget modal, bool useSafeArea) =>
       modal;
 
   /// We don't need to fill the safe area for the dialog because it's centered in the screen

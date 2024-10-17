@@ -29,43 +29,45 @@ void main() {
     });
 
     testWidgets(
-        'should use page title when top bar title is not provided and page title is Text',
-        (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WoltModalSheetTopBarTitle(
-              page: WoltModalSheetPage(
-                child: const SizedBox.shrink(),
-                pageTitle: Text('Page Title', key: pageTitleKey),
+      'should use page title when top bar title is not provided and page title is Text',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: WoltModalSheetTopBarTitle(
+                page: WoltModalSheetPage(
+                  child: const SizedBox.shrink(),
+                  pageTitle: Text('Page Title', key: pageTitleKey),
+                ),
+                pageTitleKey: pageTitleKey,
               ),
-              pageTitleKey: pageTitleKey,
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text('Page Title'), findsOneWidget);
-    });
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('Page Title'), findsOneWidget);
+      },
+    );
 
     testWidgets(
-        'should display nothing when neither top bar title nor page title is provided',
-        (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: WoltModalSheetTopBarTitle(
-              page: WoltModalSheetPage(
-                child: const SizedBox.shrink(),
+      'should display nothing when neither top bar title nor page title is provided',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: WoltModalSheetTopBarTitle(
+                page: WoltModalSheetPage(child: const SizedBox.shrink()),
+                pageTitleKey: pageTitleKey,
               ),
-              pageTitleKey: pageTitleKey,
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(tester.element(find.byType(WoltModalSheetTopBarTitle).at(0)).size,
-          Size.zero);
-    });
+        );
+        await tester.pumpAndSettle();
+        expect(
+          tester.element(find.byType(WoltModalSheetTopBarTitle).at(0)).size,
+          Size.zero,
+        );
+      },
+    );
   });
 }

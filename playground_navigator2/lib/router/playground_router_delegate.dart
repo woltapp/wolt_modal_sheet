@@ -34,7 +34,7 @@ class PlaygroundRouterDelegate
   final ValueNotifier<WoltModalSheetPageListBuilder> _pageListBuilderNotifier;
 
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
+  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class PlaygroundRouterDelegate
   }
 
   @override
-  Future<bool> popRoute() async {
+  Future<bool> popRoute() {
     if (_navigatorKey.currentState != null &&
         _navigatorKey.currentState!.canPop()) {
       _navigatorKey.currentState!.pop();
@@ -85,21 +85,23 @@ class PlaygroundRouterDelegate
         multiPagePathName: state.pathName,
         index: state.pageIndex,
       );
-    } else {
-      return PlaygroundRouterConfiguration.home();
     }
+    return PlaygroundRouterConfiguration.home();
   }
 
   @override
   Future<void> setNewRoutePath(
-      PlaygroundRouterConfiguration configuration) async {
+    PlaygroundRouterConfiguration configuration,
+  ) async {
     if (configuration.isUnknown) {
       _cubit.showOnUnknownScreen();
     } else if (configuration.isHomePage) {
       _cubit.closeSheet();
     } else if (configuration.isSheetPage) {
       _cubit.onPathAndPageIndexUpdated(
-          configuration.multiPagePathName!, configuration.pageIndex);
+        configuration.multiPagePathName!,
+        configuration.pageIndex,
+      );
     }
   }
 

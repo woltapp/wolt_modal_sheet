@@ -8,20 +8,13 @@ class SheetPageWithMinHeight {
 
   static const ModalPageName pageId = ModalPageName.minHeight;
 
-  static WoltModalSheetPage build({bool isLastPage = true}) {
+  static WoltModalSheetPage build() {
     return WoltModalSheetPage(
       id: pageId,
       hasTopBarLayer: false,
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Builder(builder: (context) {
-          return WoltElevatedButton(
-            onPressed: isLastPage
-                ? Navigator.of(context).pop
-                : WoltModalSheet.of(context).showNext,
-            child: Text(isLastPage ? "Close" : "Next"),
-          );
-        }),
+      stickyActionBar: const Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: WoltModalSheetCloseOrNextSab(),
       ),
       child: const Padding(
         padding: EdgeInsets.only(bottom: 100, top: 16, left: 16, right: 16),

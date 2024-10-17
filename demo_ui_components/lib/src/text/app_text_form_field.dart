@@ -199,7 +199,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         ),
         if (errorText.isNotEmpty) ...[
           const SizedBox(height: 12),
-          _FormFieldError(errorText)
+          _FormFieldError(errorText),
         ],
       ],
     );
@@ -246,10 +246,7 @@ Color _cursorColor(bool invalid) {
   return invalid ? WoltColors.red : WoltColors.blue;
 }
 
-Color _containerBorderColor({
-  required bool hasFocus,
-  required bool invalid,
-}) {
+Color _containerBorderColor({required bool hasFocus, required bool invalid}) {
   if (invalid) {
     return WoltColors.red64;
   }

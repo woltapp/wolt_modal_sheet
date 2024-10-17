@@ -8,25 +8,16 @@ class SheetPageWithLazyList {
 
   static const ModalPageName pageId = ModalPageName.lazyLoadingList;
 
-  static SliverWoltModalSheetPage build({bool isLastPage = true}) {
+  static SliverWoltModalSheetPage build() {
     final colors = allMaterialColors;
     const titleText = 'Material Colors';
     const heroImageHeight = 200.0;
     return SliverWoltModalSheetPage(
       id: pageId,
-      stickyActionBar: isLastPage
-          ? null
-          : Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Builder(builder: (context) {
-                return WoltElevatedButton(
-                  onPressed: isLastPage
-                      ? Navigator.of(context).pop
-                      : WoltModalSheet.of(context).showNext,
-                  child: const Text("Next"),
-                );
-              }),
-            ),
+      stickyActionBar: const Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: WoltModalSheetCloseOrNextSab(),
+      ),
       topBarTitle: const ModalSheetTopBarTitle(titleText),
       heroImageHeight: heroImageHeight,
       heroImage: const Stack(

@@ -72,7 +72,6 @@ class _DemoAppState extends State<DemoApp> {
             focusColor: WoltColors.blue,
           ),
           primaryColor: WoltColors.blue,
-          useMaterial3: true,
           fontFamily: 'Inter',
           textTheme: TextTheme(
             headlineMedium: TextStyle(

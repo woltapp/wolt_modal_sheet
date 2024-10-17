@@ -14,8 +14,7 @@ class WoltBottomSheetType extends WoltModalType {
     ShapeBorder shapeBorder = _defaultShapeBorder,
     bool? showDragHandle,
     bool forceMaxHeight = false,
-    WoltModalDismissDirection? dismissDirection =
-        WoltModalDismissDirection.down,
+    WoltModalDismissDirection dismissDirection = WoltModalDismissDirection.down,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
     minFlingVelocity = 700.0,
@@ -115,18 +114,8 @@ class WoltBottomSheetType extends WoltModalType {
   }
 
   @override
-  Widget decorateModal(
-    BuildContext context,
-    Widget modal,
-    bool useSafeArea,
-  ) =>
-      useSafeArea
-          ? SafeArea(
-              top: false,
-              bottom: false,
-              child: modal,
-            )
-          : modal;
+  Widget decorateModal(BuildContext context, Widget modal, bool useSafeArea) =>
+      useSafeArea ? SafeArea(top: false, bottom: false, child: modal) : modal;
 
   /// Defines the animation for the modal's appearance.
   ///
@@ -162,10 +151,7 @@ class WoltBottomSheetType extends WoltModalType {
       ),
     );
 
-    return SlideTransition(
-      position: positionAnimation,
-      child: child,
-    );
+    return SlideTransition(position: positionAnimation, child: child);
   }
 
   /// Provides a way to create a new `WoltBottomSheetType` instance with modified properties.
@@ -190,7 +176,7 @@ class WoltBottomSheetType extends WoltModalType {
       transitionDuration: transitionDuration ?? this.transitionDuration,
       reverseTransitionDuration:
           reverseTransitionDuration ?? this.reverseTransitionDuration,
-      dismissDirection: dismissDirection ?? this.dismissDirection,
+      dismissDirection: dismissDirection ?? this.dismissDirection!,
       minFlingVelocity: minFlingVelocity ?? this.minFlingVelocity,
       closeProgressThreshold:
           closeProgressThreshold ?? this.closeProgressThreshold,

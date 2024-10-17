@@ -8,6 +8,7 @@ packages:
   - demo_ui_components
   - playground
   - playground_navigator2
+  - wolt_di
 
 command:
   bootstrap:
@@ -19,6 +20,9 @@ command:
 
 scripts:
   analyze:
-    exec: dart analyze .
+    # DCM will handle static analysis
+    exec: dcm analyze .
   format:
     exec: dart format --set-exit-if-changed .
+  test:
+    exec: flutter test

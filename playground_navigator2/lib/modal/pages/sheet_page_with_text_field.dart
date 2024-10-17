@@ -5,7 +5,7 @@ import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SheetPageWithTextField {
-  SheetPageWithTextField._();
+  const SheetPageWithTextField._();
 
   static WoltModalSheetPage build(
     BuildContext context, {
@@ -42,7 +42,8 @@ class SheetPageWithTextField {
       topBarTitle: const ModalSheetTopBarTitle('Page with text field'),
       isTopBarLayerAlwaysVisible: true,
       leadingNavBarWidget: WoltModalSheetBackButton(
-          onBackPressed: () => cubit.goToPage(currentPage - 1)),
+        onBackPressed: () => cubit.goToPage(currentPage - 1),
+      ),
       trailingNavBarWidget:
           WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
       child: Padding(

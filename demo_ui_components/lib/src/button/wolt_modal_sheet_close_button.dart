@@ -26,8 +26,9 @@ class WoltModalSheetCloseButton extends StatelessWidget {
 
   String semanticsLabel(BuildContext context) {
     return Localizations.of<MaterialLocalizations>(
-                context, MaterialLocalizations)
-            ?.closeButtonLabel ??
+          context,
+          MaterialLocalizations,
+        )?.closeButtonLabel ??
         const DefaultMaterialLocalizations().closeButtonLabel;
   }
 }

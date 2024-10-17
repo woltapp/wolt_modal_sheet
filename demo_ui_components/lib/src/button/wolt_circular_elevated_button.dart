@@ -2,8 +2,11 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 class WoltCircularElevatedButton extends StatelessWidget {
-  const WoltCircularElevatedButton(
-      {required this.onPressed, required this.icon, super.key});
+  const WoltCircularElevatedButton({
+    required this.onPressed,
+    required this.icon,
+    super.key,
+  });
 
   final IconData icon;
   final VoidCallback onPressed;

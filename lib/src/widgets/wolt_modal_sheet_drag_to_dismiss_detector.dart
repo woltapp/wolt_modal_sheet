@@ -63,17 +63,17 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
       },
       child: GestureDetector(
         excludeFromSemantics: true,
-        onVerticalDragUpdate: (details) => isVerticalDismissAllowed
-            ? _handleVerticalDragUpdate(details)
+        onVerticalDragUpdate: isVerticalDismissAllowed
+            ? (details) => _handleVerticalDragUpdate(details)
             : null,
-        onVerticalDragEnd: (details) => isVerticalDismissAllowed
-            ? _handleVerticalDragEnd(context, details)
+        onVerticalDragEnd: isVerticalDismissAllowed
+            ? (details) => _handleVerticalDragEnd(context, details)
             : null,
-        onHorizontalDragUpdate: (details) => isHorizontalDismissAllowed
-            ? _handleHorizontalDragUpdate(context, details)
+        onHorizontalDragUpdate: isHorizontalDismissAllowed
+            ? (details) => _handleHorizontalDragUpdate(context, details)
             : null,
-        onHorizontalDragEnd: (details) => isHorizontalDismissAllowed
-            ? _handleHorizontalDragEnd(context, details)
+        onHorizontalDragEnd: isHorizontalDismissAllowed
+            ? (details) => _handleHorizontalDragEnd(context, details)
             : null,
         child: child,
       ),
@@ -86,10 +86,16 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
     }
 
     final deltaDiff = details.primaryDelta! / _childHeight;
-    if (_dismissDirection == WoltModalDismissDirection.down) {
-      _animationController.value -= deltaDiff;
-    } else if (_dismissDirection == WoltModalDismissDirection.up) {
-      _animationController.value += deltaDiff;
+
+    switch (_dismissDirection) {
+      case WoltModalDismissDirection.down:
+        _animationController.value -= deltaDiff;
+        break;
+      case WoltModalDismissDirection.up:
+        _animationController.value += deltaDiff;
+        break;
+      default:
+        break;
     }
   }
 
@@ -143,7 +149,9 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
   }
 
   void _handleHorizontalDragUpdate(
-      BuildContext context, DragUpdateDetails details) {
+    BuildContext context,
+    DragUpdateDetails details,
+  ) {
     if (_isDismissUnderway || _isDismissed) {
       return;
     }

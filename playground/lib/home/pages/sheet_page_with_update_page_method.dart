@@ -20,15 +20,9 @@ class SheetPageWithUpdatePage {
       enableDrag: enableDrag,
       hasTopBarLayer: hasTopBarLayer,
       stickyActionBar: Builder(builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: WoltElevatedButton(
-            onPressed: isLastPage
-                ? Navigator.of(context).pop
-                : WoltModalSheet.of(context).showNext,
-            colorName: WoltColorName.green,
-            child: Text(isLastPage ? "Close" : "Next"),
-          ),
+        return const Padding(
+          padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
         );
       }),
       isTopBarLayerAlwaysVisible: hasTopBarLayer,

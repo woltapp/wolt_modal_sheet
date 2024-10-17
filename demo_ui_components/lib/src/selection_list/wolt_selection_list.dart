@@ -74,7 +74,7 @@ class WoltSelectionList<T> extends StatefulWidget {
       tileCrossAxisAlignment: tileCrossAxisAlignment,
       selectionListType: WoltSelectionListType.singleSelect,
       onSelectionUpdateInWoltSelectionList: (selectedValues, updatedItemData) {
-        onSelectionUpdateInSingleSelectionList.call(updatedItemData);
+        onSelectionUpdateInSingleSelectionList(updatedItemData);
       },
     );
   }
@@ -98,8 +98,10 @@ class WoltSelectionList<T> extends StatefulWidget {
       tileCrossAxisAlignment: tileCrossAxisAlignment,
       selectionListType: WoltSelectionListType.multiSelect,
       onSelectionUpdateInWoltSelectionList: (selectedValues, updatedItemData) {
-        onSelectionUpdateInMultiSelectionList.call(
-            selectedValues, updatedItemData);
+        onSelectionUpdateInMultiSelectionList(
+          selectedValues,
+          updatedItemData,
+        );
       },
     );
   }

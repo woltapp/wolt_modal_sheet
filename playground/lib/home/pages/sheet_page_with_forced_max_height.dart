@@ -19,17 +19,9 @@ class SheetPageWithForcedMaxHeight {
           : WoltColors.green64,
       hasSabGradient: false,
       forceMaxHeight: true,
-      stickyActionBar: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Builder(builder: (context) {
-          return WoltElevatedButton(
-            onPressed: isLastPage
-                ? Navigator.of(context).pop
-                : WoltModalSheet.of(context).showNext,
-            colorName: WoltColorName.green,
-            child: Text(isLastPage ? "Close" : "Next"),
-          );
-        }),
+      stickyActionBar: const Padding(
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
       ),
       pageTitle: const ModalSheetTitle(
           'Page with forced max height and background color'),

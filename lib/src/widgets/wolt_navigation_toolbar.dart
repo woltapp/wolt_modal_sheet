@@ -67,7 +67,7 @@ class WoltNavigationToolbar extends StatelessWidget {
         middleSpacing: middleSpacing,
         textDirection: textDirection,
       ),
-      children: <Widget>[
+      children: [
         if (leading != null)
           LayoutId(id: _ToolbarSlot.leading, child: leading!),
         if (middle != null) LayoutId(id: _ToolbarSlot.middle, child: middle!),
@@ -152,7 +152,9 @@ class _ToolbarLayout extends MultiChildLayoutDelegate {
         leadingWidth = trailingWidth;
       }
       final double maxWidth = max(
-          size.width - leadingWidth - trailingWidth - middleSpacing * 2.0, 0.0);
+        size.width - leadingWidth - trailingWidth - middleSpacing * 2.0,
+        0.0,
+      );
       final BoxConstraints constraints =
           BoxConstraints.loose(size).copyWith(maxWidth: maxWidth);
       final Size middleSize = layoutChild(_ToolbarSlot.middle, constraints);

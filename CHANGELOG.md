@@ -1,3 +1,17 @@
+## 0.9.3
+- Fix gesture detection handling with null callbacks [#325](https://github.com/woltapp/wolt_modal_sheet/pull/325) by [nico3587](https://github.com/nico3587)
+- Add Dart Code Metrics and fix potentiall bugs [#315](https://github.com/woltapp/wolt_modal_sheet/pull/315) by [Majid Hajian](https://github.com/mhadaily)
+- Add a missing tests check and update `CONTRIBUTING.md` [#308](https://github.com/woltapp/wolt_modal_sheet/pull/308) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Add `WoltModalSheet.modalBarrierColor` tests [#304](https://github.com/woltapp/wolt_modal_sheet/pull/304) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
+- Remove KeyboardVisibilityListener dependency and add WoltKeyboardClosureListenerMixin [#303](https://github.com/woltapp/wolt_modal_sheet/pull/303) by [ulusoyca](https://github.com/ulusoyca)
+- Expose page list, current page, and getters for isAtLastPage / isAtFirstPage [#299](https://github.com/woltapp/wolt_modal_sheet/pull/299) by [ulusoyca](https://github.com/ulusoyca)
+- Add tests custom  `modalTypeBuilder`, `modalDecorator`, `pageContentDecorator`, and restructure the test class [#298](https://github.com/woltapp/wolt_modal_sheet/pull/298) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#211](https://github.com/woltapp/wolt_modal_sheet/issues/211) Prepare repository for tests requirement
 ## 0.9.2
 - Fixed URL of the example screenshot in the Readme file for pub.dev. [#291](https://github.com/woltapp/wolt_modal_sheet/pull/291) by [AcarFurkan](https://github.com/AcarFurkan)
 ## 0.9.1

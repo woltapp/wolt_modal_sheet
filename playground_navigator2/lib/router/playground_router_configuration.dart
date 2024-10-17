@@ -5,17 +5,17 @@ class PlaygroundRouterConfiguration {
   final bool isUnknown;
   final int pageIndex;
 
-  PlaygroundRouterConfiguration._({
+  const PlaygroundRouterConfiguration._({
     this.multiPagePathName,
     this.isUnknown = false,
     this.pageIndex = 0,
   });
 
   factory PlaygroundRouterConfiguration.home() =>
-      PlaygroundRouterConfiguration._();
+      const PlaygroundRouterConfiguration._();
 
   factory PlaygroundRouterConfiguration.unknown() =>
-      PlaygroundRouterConfiguration._(isUnknown: true);
+      const PlaygroundRouterConfiguration._(isUnknown: true);
 
   factory PlaygroundRouterConfiguration.modalSheet({
     required MultiPagePathName multiPagePathName,

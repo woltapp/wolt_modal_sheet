@@ -13,7 +13,7 @@ class PaginatingWidgetsGroup {
   final SabAnimatedBuilder sabAnimatedBuilder;
   final Widget offstagedMainContent;
 
-  PaginatingWidgetsGroup({
+  const PaginatingWidgetsGroup({
     required this.mainContentAnimatedBuilder,
     required this.topBarAnimatedBuilder,
     required this.navigationToolbarAnimatedBuilder,

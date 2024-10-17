@@ -285,7 +285,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
 
   return MaterialApp(
     themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
-    theme: ThemeData.light(useMaterial3: true).copyWith(
+    theme: ThemeData.light().copyWith(
       extensions: const <ThemeExtension>[
         WoltModalSheetThemeData(
           heroImageHeight: _heroImageHeight,
@@ -295,7 +295,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
         ),
       ],
     ),
-    darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+    darkTheme: ThemeData.dark().copyWith(
       extensions: const <ThemeExtension>[
         WoltModalSheetThemeData(
           topBarShadowColor: _darkThemeShadowColor,

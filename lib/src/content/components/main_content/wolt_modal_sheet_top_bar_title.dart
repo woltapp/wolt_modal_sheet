@@ -41,7 +41,6 @@ class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
     final pageTitleElement = widget.pageTitleKey.currentContext;
 
     if (widget.page.topBarTitle != null || isPageTitleTextWidget) {
-      return;
     } else if (pageTitleElement != null) {
       _visitAllDescendants(pageTitleElement);
     }
