@@ -118,7 +118,7 @@ class WoltModalBottomSheetStyle {
           const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
           ),
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
     );
   }
 
@@ -178,7 +178,8 @@ class WoltModalBottomSheetStyle {
       maxHeight: maxHeight ?? this.maxHeight,
       minHeight: minHeight ?? this.minHeight,
       enableDrag: enableDrag ?? this.enableDrag,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? this.resizeToAvoidBottomInset,
     );
   }
 

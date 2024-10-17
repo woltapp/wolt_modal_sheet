@@ -55,7 +55,7 @@ class WoltModalSheetCoordinator {
       _currentPaths.removeLast();
       _pages.value = currentListPages;
       _onPathChangedInternal(_currentPaths);
-    }
+    } else {}
   }
 
   void replaceAll(List<WoltModalSheetPath> paths) {

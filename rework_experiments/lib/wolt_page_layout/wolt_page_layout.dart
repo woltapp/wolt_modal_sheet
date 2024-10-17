@@ -21,7 +21,8 @@ class WoltPageLayout extends StatefulWidget {
   State<WoltPageLayout> createState() => _WoltPageLayoutState();
 }
 
-class _WoltPageLayoutState extends State<WoltPageLayout> with TickerProviderStateMixin {
+class _WoltPageLayoutState extends State<WoltPageLayout>
+    with TickerProviderStateMixin {
   final _footerSizeDispatcher = ValueNotifier<double>(0);
 
   @override
@@ -68,15 +69,23 @@ class _WoltPageLayoutState extends State<WoltPageLayout> with TickerProviderStat
                     animation: animation,
                     builder: (context, child) {
                       final fromBox =
-                      fromHeroContext.findRenderObject() as RenderBox?;
-                      final toBox = toHeroContext.findRenderObject() as RenderBox?;
+                          fromHeroContext.findRenderObject() as RenderBox?;
+                      final toBox =
+                          toHeroContext.findRenderObject() as RenderBox?;
                       if (fromBox == null || toBox == null) {
                         return child!;
                       }
-                      final correctionFrom =(fromBox.parent as _FooterRenderSliver)._correction;
-                      final correctionTo =(toBox.parent as _FooterRenderSliver)._correction;
-                      final av = animation.isForwardOrCompleted ? animation.value : 1 - animation.value;
-                      final offset = Offset(0, correctionFrom + (correctionTo - correctionFrom) * av);
+                      final correctionFrom =
+                          (fromBox.parent as _FooterRenderSliver)._correction;
+                      final correctionTo =
+                          (toBox.parent as _FooterRenderSliver)._correction;
+                      final av = animation.isForwardOrCompleted
+                          ? animation.value
+                          : 1 - animation.value;
+                      final offset = Offset(
+                          0,
+                          correctionFrom +
+                              (correctionTo - correctionFrom) * av);
 
                       return Transform.translate(
                         offset: offset,

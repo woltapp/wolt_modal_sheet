@@ -67,7 +67,6 @@ class WoltModalSheetRoute<T> extends PopupRoute<T> {
 
   late final BoxConstraints _constraints;
 
-
   WoltModalSheetRoute({
     required this.supportedPaths,
     required this.initialPath,

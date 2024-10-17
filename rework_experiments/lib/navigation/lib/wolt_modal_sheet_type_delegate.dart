@@ -7,7 +7,7 @@ abstract class WoltModalSheetDelegate {
 /// Default implementation of the [WoltModalSheetDelegate].
 /// This class determines the type of ModalSheet to be used based on the device
 /// size.
-class DefaultWoltModalSheetDelegate  implements WoltModalSheetDelegate{
+class DefaultWoltModalSheetDelegate implements WoltModalSheetDelegate {
   const DefaultWoltModalSheetDelegate();
 
   @override
