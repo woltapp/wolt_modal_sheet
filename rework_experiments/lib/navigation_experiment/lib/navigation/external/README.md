@@ -1,0 +1,1 @@
+This folder contains entities responsible for external navigation, such as showing modal sheet.
