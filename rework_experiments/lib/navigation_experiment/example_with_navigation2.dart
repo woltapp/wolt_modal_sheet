@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_page.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path_settings.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_path.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_navigator.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_sheet_route.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_page.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_navigator.dart';
+import 'package:rework_experiments/navigation_experiment/lib/navigation/external/wolt_modal_sheet_route.dart';
 
 void main() {
   runApp(const MyApp());

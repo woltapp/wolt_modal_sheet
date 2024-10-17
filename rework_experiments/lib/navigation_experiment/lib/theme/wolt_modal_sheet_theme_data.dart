@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+/// A theme extension for the [WoltModalSheet] widget.
 class WoltModalSheetTheme extends ThemeExtension<WoltModalSheetTheme> {
   final WoltModalSheetStyle style;
 
@@ -28,6 +29,7 @@ class WoltModalSheetTheme extends ThemeExtension<WoltModalSheetTheme> {
   }
 }
 
+/// Style of the modal sheet.
 class WoltModalSheetStyle {
   final WoltModalBottomSheetStyle bottomSheetStyle;
   final WoltModalDialogStyle dialogStyle;

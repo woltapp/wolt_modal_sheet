@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rework_experiments/navigation/lib/wolt_modal_type_adapter.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_type_adapter.dart';
 
-abstract class WoltModalPageRoute<T> extends PageRoute<T> {
-  WoltModalPageRoute({
-    required WoltModalInternalPage<T> page,
-  }) : super(settings: page) {
-    assert(opaque);
-  }
-
+/// An interface for pages in modal sheet that can be use to decide size of
+/// modal sheet.
+abstract interface class WoltModalPageRoute {
   GlobalKey get contentKey;
 }
 
@@ -32,11 +28,13 @@ class WoltModalInternalPage<T> extends Page<T> {
   }
 }
 
-class _WoltModalInternalPageRoute<T> extends WoltModalPageRoute<T>
-    with _WoltModalRouteTransitionMixin<T> {
+class _WoltModalInternalPageRoute<T> extends PageRoute<T>
+    with _WoltModalRouteTransitionMixin<T>
+    implements WoltModalPageRoute {
+  //
   _WoltModalInternalPageRoute({
     required WoltModalInternalPage<T> page,
-  }) : super(page: page);
+  }) : super(settings: page);
 
   WoltModalInternalPage<T> get _page => settings as WoltModalInternalPage<T>;
 
