@@ -2,11 +2,10 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_screen_content.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
-import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_listenable_builder.dart';
-import 'package:coffee_maker_navigator_2/utils/state_management/stateful_value_notifier.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wolt_state_management/wolt_state_management.dart';
 
 /// A custom bottom navigation bar for the home screen.
 ///
@@ -32,7 +31,7 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
       builder: (context, selectedTab, _) {
         return StatefulValueListenableBuilder(
           valueListenable: groupedCoffeeOrders,
-          idleBuilder: (BuildContext context, GroupedCoffeeOrders? orders, _) {
+          idleBuilder: (BuildContext context, GroupedCoffeeOrders? orders) {
             if (orders == null) {
               return const SizedBox.shrink();
             }
@@ -59,11 +58,11 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
             );
           },
           loadingBuilder:
-              (BuildContext context, GroupedCoffeeOrders? value, _) {
+              (BuildContext context, GroupedCoffeeOrders? value) {
             return const SizedBox.shrink();
           },
           errorBuilder: (BuildContext context, Object? error,
-              GroupedCoffeeOrders? lastKnownValue, _) {
+              GroupedCoffeeOrders? lastKnownValue) {
             return const SizedBox.shrink();
           },
         );
