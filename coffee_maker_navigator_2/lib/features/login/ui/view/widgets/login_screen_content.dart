@@ -1,10 +1,12 @@
+import 'package:coffee_maker_navigator_2/features/login/ui/view_model/login_screen_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
+import 'package:wolt_state_management/wolt_state_management.dart';
 
 class LoginScreenContent extends StatelessWidget {
-  const LoginScreenContent({super.key, required this.onLoginPressed});
+  final LoginScreenViewModel viewModel;
 
-  final void Function(String, String) onLoginPressed;
+  const LoginScreenContent({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +43,29 @@ class LoginScreenContent extends StatelessWidget {
                     textInputType: TextInputType.visiblePassword,
                   ),
                   const SizedBox(height: 30),
-                  WoltElevatedButton(
-                    onPressed: () {
-                      onLoginPressed('email', 'password');
+                  StatefulValueListenableBuilder<bool>(
+                    valueListenable: viewModel.loginState,
+                    idleBuilder: (context, isLoggedIn) {
+                      return WoltElevatedButton(
+                        onPressed: () => viewModel.onLoginPressed('email', 'password'),
+                        child: const Text('Sign in'),
+                      );
                     },
-                    child: const Text('Sign in'),
+                    loadingBuilder: (context, _) {
+                      return const CircularProgressIndicator();
+                    },
+                    errorBuilder: (context, error, _) {
+                      return Column(
+                        children: [
+                          Text('Error: $error', style: const TextStyle(color: Colors.red)),
+                          const SizedBox(height: 10),
+                          WoltElevatedButton(
+                            onPressed: () => viewModel.onLoginPressed('email', 'password'),
+                            child: const Text('Retry'),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

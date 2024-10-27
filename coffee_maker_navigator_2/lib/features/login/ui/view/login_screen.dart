@@ -12,25 +12,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen>
-    with
-        DependencyContainerSubscriptionMixin<LoginScreenDependencyContainer,
-            LoginScreen> {
+    with DependencyContainerSubscriptionMixin<LoginScreenDependencyContainer, LoginScreen> {
   late LoginScreenViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    final container =
-        DependencyInjector.container<LoginScreenDependencyContainer>(context);
+    final container = DependencyInjector.container<LoginScreenDependencyContainer>(context);
     _viewModel = container.createViewModel();
   }
 
   @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return LoginScreenContent(
-      onLoginPressed: (email, password) {
-        _viewModel.onLoginPressed(email, password);
-      },
-    );
+    return LoginScreenContent(viewModel: _viewModel);
   }
 }
