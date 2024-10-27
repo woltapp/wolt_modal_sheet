@@ -1,20 +1,19 @@
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/error_notification_widget.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 class AddWaterScreenFooter extends StatelessWidget {
-  const AddWaterScreenFooter(
-    this.isReadyToAddWater,
-    this.errorMessage,
-    this.onCheckValidity,
-    this.onAddWater,
-    this.onStepCompleted, {
+  const AddWaterScreenFooter({
     super.key,
+    required this.isReadyToAddWater,
+    required this.errorMessage,
+    required this.onCheckValidity,
+    required this.onAddWater,
+    required this.onStepCompleted,
   });
 
-  final ValueListenable<bool> isReadyToAddWater;
-  final ValueListenable<String?> errorMessage;
+  final bool isReadyToAddWater;
+  final String? errorMessage;
   final VoidCallback onCheckValidity;
   final VoidCallback onAddWater;
   final VoidCallback onStepCompleted;
@@ -31,33 +30,23 @@ class AddWaterScreenFooter extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ValueListenableBuilder<String?>(
-                  valueListenable: errorMessage,
-                  builder: (_, message, __) {
-                    return message == null
-                        ? const SizedBox.shrink()
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 12.0),
-                            child: ErrorNotificationWidget(message),
-                          );
-                  }),
+              if (errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: ErrorNotificationWidget(errorMessage!),
+                ),
               WoltElevatedButton(
                 onPressed: onCheckValidity,
-                child: const Text('Check '),
+                child: const Text('Check'),
               ),
               const SizedBox(height: 12),
-              ValueListenableBuilder<bool>(
-                valueListenable: isReadyToAddWater,
-                builder: (_, isEnabled, __) {
-                  return WoltElevatedButton(
-                    enabled: isEnabled,
-                    onPressed: () {
-                      onAddWater();
-                      onStepCompleted();
-                    },
-                    child: const Text('Add water'),
-                  );
+              WoltElevatedButton(
+                enabled: isReadyToAddWater,
+                onPressed: () {
+                  onAddWater();
+                  onStepCompleted();
                 },
+                child: const Text('Add water'),
               ),
             ],
           ),

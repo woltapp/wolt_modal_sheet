@@ -17,18 +17,14 @@ class AddWaterScreen extends StatefulWidget {
 }
 
 class _AddWaterScreenState extends State<AddWaterScreen>
-    with
-        DependencyContainerSubscriptionMixin<AddWaterDependencyContainer,
-            AddWaterScreen> {
+    with DependencyContainerSubscriptionMixin<AddWaterDependencyContainer, AddWaterScreen> {
   late AddWaterViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    final dependencyContainer =
-        DependencyInjector.container<AddWaterDependencyContainer>(context);
-    _viewModel = dependencyContainer.createViewModel()
-      ..onInit(widget.coffeeOrderId);
+    final dependencyContainer = DependencyInjector.container<AddWaterDependencyContainer>(context);
+    _viewModel = dependencyContainer.createViewModel()..onInit(widget.coffeeOrderId);
   }
 
   @override
@@ -41,8 +37,8 @@ class _AddWaterScreenState extends State<AddWaterScreen>
 
   @override
   void dispose() {
-    super.dispose();
     _viewModel.dispose();
+    super.dispose();
   }
 
   @override
@@ -55,18 +51,15 @@ class _AddWaterScreenState extends State<AddWaterScreen>
           child: _viewModel.orderExists
               ? AddWaterScreenContent(
                   onWaterQuantityUpdated: _viewModel.onWaterQuantityUpdated,
-                  onWaterTemperatureUpdated:
-                      _viewModel.onWaterTemperatureUpdated,
+                  onWaterTemperatureUpdated: _viewModel.onWaterTemperatureUpdated,
                   onWaterSourceUpdated: _viewModel.onWaterSourceUpdated,
-                  isReadyToAddWater: _viewModel.isReadyToAddWater,
-                  errorMessage: _viewModel.errorMessage,
+                  state: _viewModel.addWaterState,
                   onCheckValidityPressed: _viewModel.onCheckValidityPressed,
                   onAddWaterPressed: _viewModel.onAddWaterPressed,
                   onStepCompleted: context.routerViewModel.onOrderStepCompleted,
                 )
               : AddWaterStepOrderNotFound(
-                  onOrderStepCompleted:
-                      context.routerViewModel.onOrderStepCompleted,
+                  onOrderStepCompleted: context.routerViewModel.onOrderStepCompleted,
                 ),
         ),
       ),

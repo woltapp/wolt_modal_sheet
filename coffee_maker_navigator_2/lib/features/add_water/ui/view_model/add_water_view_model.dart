@@ -1,31 +1,22 @@
 import 'package:coffee_maker_navigator_2/features/add_water/domain/add_water_service.dart';
-import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/water_acceptance_result.dart';
+import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/add_water_state.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/water_source.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/orders_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:wolt_state_management/wolt_state_management.dart';
 
 class AddWaterViewModel {
   final AddWaterService _addWaterService;
   final OrdersService _ordersService;
-  String _waterQuantityInMl = '';
-  String _waterTemperatureInC = '';
-  WaterSource _waterSource = WaterSource.tap;
   late String _orderId;
 
-  final ValueNotifier<bool> _isReadyToAddWater = ValueNotifier(false);
+  final _addWaterState = StatefulValueNotifier.idle(AddWaterState.empty());
 
-  ValueListenable<bool> get isReadyToAddWater => _isReadyToAddWater;
-
-  final ValueNotifier<String?> _errorMessage = ValueNotifier(null);
-
-  ValueListenable<String?> get errorMessage => _errorMessage;
+  StatefulValueListenable<AddWaterState> get addWaterState => _addWaterState;
 
   bool get orderExists {
     return _ordersService.orders.value.any(
-      (order) =>
-          order.id == _orderId &&
-          order.coffeeMakerStep == CoffeeMakerStep.addWater,
+      (order) => order.id == _orderId && order.coffeeMakerStep == CoffeeMakerStep.addWater,
     );
   }
 
@@ -40,69 +31,55 @@ class AddWaterViewModel {
   }
 
   void onWaterQuantityUpdated(String value) {
-    _waterQuantityInMl = value;
+    final currentState = _addWaterState.value.value ?? AddWaterState.empty();
+    _addWaterState.setIdle(value: currentState.withQuantity(value));
   }
 
   void onWaterTemperatureUpdated(String value) {
-    _waterTemperatureInC = value;
+    final currentState = _addWaterState.value.value ?? AddWaterState.empty();
+    _addWaterState.setIdle(value: currentState.withTemperature(value));
   }
 
   void onWaterSourceUpdated(WaterSource value) {
-    _waterSource = value;
+    final currentState = _addWaterState.value.value ?? AddWaterState.empty();
+    _addWaterState.setIdle(value: currentState.withWaterSource(value));
   }
 
-  void checkWaterAcceptance() {
-    double? quantity = double.tryParse(_waterQuantityInMl);
-    double? temperature = double.tryParse(_waterTemperatureInC);
-
-    if (quantity == null) {
-      _errorMessage.value = WaterQuantityFailure().message;
-    } else if (temperature == null) {
-      _errorMessage.value = 'Invalid temperature value.';
-    }
-
-    final result = _addWaterService.checkWaterAcceptance(
-      waterQuantityInMl: quantity!,
-      waterTemperatureInC: temperature!,
-      waterSource: _waterSource,
-      currentDate: DateTime.now(),
-    );
-    if (!result.isAccepted) {
-      _errorMessage.value = result.message;
-    }
-  }
-
-  void dispose() {
-    _isReadyToAddWater.dispose();
-    _errorMessage.dispose();
-  }
-
-  // Method to check the validity of the current state
   void onCheckValidityPressed() {
-    _errorMessage.value = null; // Clear previous errors
-    double? quantity = double.tryParse(_waterQuantityInMl);
-    double? temperature = double.tryParse(_waterTemperatureInC);
+    final currentState = _addWaterState.value.value ?? AddWaterState.empty();
+    double? quantity = double.tryParse(currentState.waterQuantityInMl);
+    double? temperature = double.tryParse(currentState.waterTemperatureInC);
 
     if (quantity == null || temperature == null) {
-      _errorMessage.value =
-          "Invalid numeric values for quantity or temperature.";
-      _isReadyToAddWater.value = false;
+      _addWaterState.setIdle(
+        value: currentState.withValidationResult(
+          isReady: false,
+          error: "Invalid numeric values for quantity or temperature.",
+        ),
+      );
       return;
     }
 
     final result = _addWaterService.checkWaterAcceptance(
       waterQuantityInMl: quantity,
       waterTemperatureInC: temperature,
-      waterSource: _waterSource,
+      waterSource: currentState.waterSource,
       currentDate: DateTime.now(),
     );
-    _isReadyToAddWater.value = result.isAccepted;
-    if (!result.isAccepted) {
-      _errorMessage.value = result.message;
-    }
+
+    _addWaterState.setIdle(
+      value: currentState.withValidationResult(
+        isReady: result.isAccepted,
+        error: result.isAccepted ? null : result.message,
+      ),
+    );
   }
 
   void onAddWaterPressed() {
     _ordersService.updateOrder(_orderId, CoffeeMakerStep.ready);
+  }
+
+  void dispose() {
+    _addWaterState.dispose();
   }
 }
