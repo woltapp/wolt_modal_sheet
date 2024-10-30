@@ -5,10 +5,10 @@ import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_she
 /// An entity responsible for creating all necessary wrappers to form a content
 /// of modal sheet in appropriate form, for examle bottom sheet,
 /// alert dialog, etc.
-/// 
+///
 /// The [WoltModalSheetDelegate] is responsible for desision which
 /// form it should be.
-/// 
+///
 /// See also: [WoltModalSheetDelegate], [BottomSheet], [AlertDialog].
 class WoltModalTypeAdapter extends StatefulWidget {
   final Widget child;
@@ -56,9 +56,11 @@ class _WoltModalTypeAdapterState extends State<WoltModalTypeAdapter>
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.sizeOf(context).width;
+    final size = MediaQuery.sizeOf(context);
+    final availableWidth = size.width;
+    final availableHeight = size.height;
     final woltModalType =
-        widget._woltModalSheetDelegate.getWoltModalSheetType(deviceWidth);
+        widget._woltModalSheetDelegate.getWoltModalSheetType(availableWidth);
     final style = Theme.of(context).extension<WoltModalSheetTheme>()!.style;
     BoxConstraints constraints;
     Widget child;
@@ -66,12 +68,19 @@ class _WoltModalTypeAdapterState extends State<WoltModalTypeAdapter>
     switch (woltModalType) {
       case WoltModalType.bottomSheet:
         final bottomSheetStyle = style.bottomSheetStyle;
+        final styleMaxHeight = bottomSheetStyle.maxHeight;
+        final styleMinHeight = bottomSheetStyle.minHeight;
+        final maxHeight =
+            styleMaxHeight > availableHeight ? availableHeight : styleMaxHeight;
+        final minHeight =
+            styleMinHeight > availableHeight ? availableHeight : styleMinHeight;
         constraints = BoxConstraints(
-          maxHeight: bottomSheetStyle.maxHeight,
-          minHeight: bottomSheetStyle.minHeight,
+          maxHeight: maxHeight,
+          minHeight: minHeight,
           minWidth: double.infinity,
           maxWidth: double.infinity,
         );
+
         child = _BottomSheet(
           routeAnimationController: _routeAnimationController,
           style: bottomSheetStyle,
@@ -79,9 +88,16 @@ class _WoltModalTypeAdapterState extends State<WoltModalTypeAdapter>
         );
       case WoltModalType.dialog:
         final dialogStyle = style.dialogStyle;
+        final styleMaxHeight = dialogStyle.maxHeight;
+        final styleMinHeight = dialogStyle.minHeight;
+        final maxHeight =
+            styleMaxHeight > availableHeight ? availableHeight : styleMaxHeight;
+        final minHeight =
+            styleMinHeight > availableHeight ? availableHeight : styleMinHeight;
+
         constraints = BoxConstraints(
-          maxHeight: dialogStyle.maxHeight,
-          minHeight: dialogStyle.minHeight,
+          maxHeight: maxHeight,
+          minHeight: minHeight,
           maxWidth: dialogStyle.width,
           minWidth: dialogStyle.width,
         );

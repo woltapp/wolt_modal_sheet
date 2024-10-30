@@ -68,7 +68,7 @@ class _NavigationSizeAdapterState extends State<_NavigationSizeAdapter>
                   right: 0,
                   child: Builder(builder: (context) {
                     return ConstrainedBox(
-                      constraints: ConstraintsProvider.of(context).constraints,
+                      constraints: constraints,
                       child: _NavigationStack(
                         changePagesNotifier: widget.coordinator.pagesPublisher,
                         onTopPageChanged: _onTopPageChanged,
