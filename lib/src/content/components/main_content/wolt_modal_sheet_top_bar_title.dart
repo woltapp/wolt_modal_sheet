@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:wolt_modal_sheet/src/modal_page/sliver_wolt_modal_sheet_page.dart';
 
 /// A widget to display the top bar title in a modal sheet.
 ///
@@ -13,12 +12,14 @@ import 'package:wolt_modal_sheet/src/modal_page/sliver_wolt_modal_sheet_page.dar
 class WoltModalSheetTopBarTitle extends StatefulWidget {
   const WoltModalSheetTopBarTitle({
     Key? key,
-    required this.page,
     required this.pageTitleKey,
+    required this.topBarTitle,
+    required this.pageTitle,
   }) : super(key: key);
 
-  final SliverWoltModalSheetPage page;
   final GlobalKey pageTitleKey;
+  final Widget? topBarTitle;
+  final Widget? pageTitle;
 
   @override
   State<WoltModalSheetTopBarTitle> createState() =>
@@ -37,10 +38,10 @@ class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
   }
 
   void _extractPageTitleText() {
-    final isPageTitleTextWidget = widget.page.pageTitle is Text;
+    final isPageTitleTextWidget = widget.pageTitle is Text;
     final pageTitleElement = widget.pageTitleKey.currentContext;
 
-    if (widget.page.topBarTitle != null || isPageTitleTextWidget) {
+    if (widget.topBarTitle != null || isPageTitleTextWidget) {
     } else if (pageTitleElement != null) {
       _visitAllDescendants(pageTitleElement);
     }
@@ -48,9 +49,9 @@ class _WoltModalSheetTopBarTitleState extends State<WoltModalSheetTopBarTitle> {
 
   @override
   Widget build(BuildContext context) {
-    final topBarTitle = widget.page.topBarTitle;
-    final pageTitleText = (widget.page.pageTitle is Text)
-        ? (widget.page.pageTitle as Text).data
+    final topBarTitle = widget.topBarTitle;
+    final pageTitleText = (widget.pageTitle is Text)
+        ? (widget.pageTitle as Text).data
         : this.pageTitleText;
 
     if (topBarTitle != null) {

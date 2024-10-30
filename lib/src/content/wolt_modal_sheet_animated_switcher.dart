@@ -357,7 +357,7 @@ class _WoltModalSheetAnimatedSwitcherState
                     scrollAnimationStyle: animationStyle.scrollAnimationStyle,
                     page: _page,
                     scrollController: _currentPageScrollController,
-                    titleKey: _pageTitleKey,
+                    pageTitleKey: _pageTitleKey,
                     softKeyboardClosedListenable: softKeyboardClosureListenable,
                   ))
             : const SizedBox.shrink(),

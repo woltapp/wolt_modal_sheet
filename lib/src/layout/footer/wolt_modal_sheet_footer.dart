@@ -20,7 +20,8 @@ class WoltModalSheetFooter extends SingleChildRenderObjectWidget {
 
 class WoltModalSheetFooterRenderSliver extends RenderSliverSingleBoxAdapter
     implements EffectiveExtentViewPortDependent {
-  final LayerHandle<TransformLayer> _transformLayer = LayerHandle<TransformLayer>();
+  final LayerHandle<TransformLayer> _transformLayer =
+      LayerHandle<TransformLayer>();
   Matrix4? _paintTransform;
   final ValueNotifier<double> _sizeDispatcher;
   late double correction;
@@ -57,7 +58,8 @@ class WoltModalSheetFooterRenderSliver extends RenderSliverSingleBoxAdapter
   @override
   void performEffectiveExtent(double extent) {
     _paintTransform = Matrix4.identity();
-    final edgeOffset = constraints.viewportMainAxisExtent - constraints.remainingPaintExtent;
+    final edgeOffset =
+        constraints.viewportMainAxisExtent - constraints.remainingPaintExtent;
     correction = extent - _sizeDispatcher.value - edgeOffset;
 
     switch (constraints.axis) {
@@ -120,8 +122,9 @@ class WoltModalSheetFooterRenderSliver extends RenderSliverSingleBoxAdapter
 
       if (!haveHit) {
         // always false and not necessary if we don't want to make class extendable
-        haveHit =
-            hitTestSelf(mainAxisPosition: mainAxisPosition, crossAxisPosition: crossAxisPosition);
+        haveHit = hitTestSelf(
+            mainAxisPosition: mainAxisPosition,
+            crossAxisPosition: crossAxisPosition);
       }
 
       if (haveHit) {

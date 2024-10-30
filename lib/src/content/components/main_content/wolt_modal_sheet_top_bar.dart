@@ -13,36 +13,26 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 /// [WoltModalSheetThemeData] while falling back to [WoltModalSheetDefaultThemeData] for default
 /// theming values.
 class WoltModalSheetTopBar extends StatelessWidget {
-  /// The modal sheet page that contains the configuration and content settings.
-  final SliverWoltModalSheetPage page;
+  final double topBarHeight;
+  final Widget? topBar;
+  final Color? surfaceTintColor;
+  final Color? backgroundColor;
+  final Color? shadowColor;
+  final double elevation;
 
   /// Creates a new instance of [WoltModalSheetTopBar].
-  const WoltModalSheetTopBar({required this.page, Key? key}) : super(key: key);
+  const WoltModalSheetTopBar({
+    required this.topBarHeight,
+    required this.topBar,
+    required this.surfaceTintColor,
+    required this.backgroundColor,
+    required this.elevation,
+    required this.shadowColor,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Obtain the current theme and modal sheet-specific theme settings.
-    final theme = Theme.of(context);
-    final themeData = theme.extension<WoltModalSheetThemeData>();
-    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-
-    // Determine the top bar's elevation, shadow color, height, background color, and surface tint color.
-    final elevation =
-        themeData?.topBarElevation ?? defaultThemeData.topBarElevation;
-    final shadowColor = themeData?.topBarShadowColor ??
-        (theme.brightness == Brightness.light
-            ? const Color(0xFFE4E4E4)
-            : const Color(0xFF121212));
-    final topBarHeight = page.navBarHeight ??
-        themeData?.navBarHeight ??
-        defaultThemeData.navBarHeight;
-    final backgroundColor = page.backgroundColor ??
-        themeData?.backgroundColor ??
-        defaultThemeData.backgroundColor;
-    final surfaceTintColor = page.surfaceTintColor ??
-        themeData?.surfaceTintColor ??
-        defaultThemeData.surfaceTintColor;
-
     // Create the default top bar widget.
     SizedBox topBarWidget = SizedBox(
       height: topBarHeight - elevation,
@@ -50,11 +40,12 @@ class WoltModalSheetTopBar extends StatelessWidget {
     );
 
     // If page.topBar is not null, then wrap it in the default top bar widget.
-    if (page.topBar != null) {
+    final topBar = this.topBar;
+    if (topBar != null) {
       topBarWidget = SizedBox(
         height: topBarHeight - elevation,
         width: double.infinity,
-        child: page.topBar,
+        child: topBar,
       );
     }
 

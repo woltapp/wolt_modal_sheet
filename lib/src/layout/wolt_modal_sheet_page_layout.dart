@@ -17,10 +17,12 @@ class WoltModalSheetPageLayout extends StatefulWidget {
   });
 
   @override
-  State<WoltModalSheetPageLayout> createState() => _WoltModalSheetPageLayoutState();
+  State<WoltModalSheetPageLayout> createState() =>
+      _WoltModalSheetPageLayoutState();
 }
 
-class _WoltModalSheetPageLayoutState extends State<WoltModalSheetPageLayout> with TickerProviderStateMixin {
+class _WoltModalSheetPageLayoutState extends State<WoltModalSheetPageLayout>
+    with TickerProviderStateMixin {
   final _footerSizeDispatcher = ValueNotifier<double>(0);
 
   @override
@@ -64,18 +66,24 @@ class _WoltModalSheetPageLayoutState extends State<WoltModalSheetPageLayout> wit
                 return AnimatedBuilder(
                   animation: animation,
                   builder: (context, child) {
-                    final fromBox = fromHeroContext.findRenderObject() as RenderBox?;
-                    final toBox = toHeroContext.findRenderObject() as RenderBox?;
+                    final fromBox =
+                        fromHeroContext.findRenderObject() as RenderBox?;
+                    final toBox =
+                        toHeroContext.findRenderObject() as RenderBox?;
                     if (fromBox == null || toBox == null) {
                       return child!;
                     }
                     final correctionFrom =
-                        (fromBox.parent as WoltModalSheetFooterRenderSliver).correction;
+                        (fromBox.parent as WoltModalSheetFooterRenderSliver)
+                            .correction;
                     final correctionTo =
-                        (toBox.parent as WoltModalSheetFooterRenderSliver).correction;
-                    final av =
-                        animation.isForwardOrCompleted ? animation.value : 1 - animation.value;
-                    final offset = Offset(0, correctionFrom + (correctionTo - correctionFrom) * av);
+                        (toBox.parent as WoltModalSheetFooterRenderSliver)
+                            .correction;
+                    final av = animation.isForwardOrCompleted
+                        ? animation.value
+                        : 1 - animation.value;
+                    final offset = Offset(0,
+                        correctionFrom + (correctionTo - correctionFrom) * av);
 
                     return Transform.translate(offset: offset, child: child);
                   },
@@ -86,7 +94,8 @@ class _WoltModalSheetPageLayoutState extends State<WoltModalSheetPageLayout> wit
             ),
           ),
         ...widget.slivers,
-        if (widget.footer != null) DummySizeSliver(trackedSizeDispatcher: _footerSizeDispatcher),
+        if (widget.footer != null)
+          DummySizeSliver(trackedSizeDispatcher: _footerSizeDispatcher),
       ],
     );
   }
@@ -100,19 +109,21 @@ class _WoltModalSheetHeaderAnimationController extends AnimationController {
 
   Animation<double> get opacity => _opacityAnimation;
 
-  _WoltModalSheetHeaderAnimationController({required Animation<double> parent, required super.vsync}) {
+  _WoltModalSheetHeaderAnimationController(
+      {required Animation<double> parent, required super.vsync}) {
     _opacityAnimation = TweenSequence<double>(
       [
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1, end: 0).chain(CurveTween(curve: Curves.linear)),
+          tween: Tween<double>(begin: 1, end: 0)
+              .chain(CurveTween(curve: Curves.linear)),
           weight: _disappearDuration.inMilliseconds.toDouble(),
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1).chain(CurveTween(curve: Curves.linear)),
+          tween: Tween<double>(begin: 0, end: 1)
+              .chain(CurveTween(curve: Curves.linear)),
           weight: _appearDuration.inMilliseconds.toDouble(),
         ),
       ],
     ).animate(parent);
   }
 }
-

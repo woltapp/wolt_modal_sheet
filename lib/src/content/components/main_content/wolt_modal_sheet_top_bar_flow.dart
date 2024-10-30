@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
-import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/soft_keyboard_closed_event.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_layout_transformation_utils.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -14,44 +13,37 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 /// position and soft keyboard closing events, then, performs transformations to achieve the
 /// desired  effects on the top bar, such as fading in/out and translating vertically.
 class WoltModalSheetTopBarFlow extends StatelessWidget {
+  final WoltModalSheetTopBar woltModalSheetTopBar;
+  final double topBarHeight;
+  final double heroImageHeight;
   final ScrollController scrollController;
-  final GlobalKey titleKey;
-  final SliverWoltModalSheetPage page;
+  final GlobalKey pageTitleKey;
   final ValueListenable<SoftKeyboardClosedEvent> softKeyboardClosedListenable;
   final WoltModalSheetScrollAnimationStyle scrollAnimationStyle;
 
   const WoltModalSheetTopBarFlow({
-    required this.page,
+    Key? key,
+    required this.woltModalSheetTopBar,
+    required this.topBarHeight,
+    required this.heroImageHeight,
     required this.scrollController,
-    required this.titleKey,
+    required this.pageTitleKey,
     required this.softKeyboardClosedListenable,
     required this.scrollAnimationStyle,
-    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
-    final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final topBarHeight = page.navBarHeight ??
-        themeData?.navBarHeight ??
-        defaultThemeData.navBarHeight;
-    final heroImageHeight = page.heroImage == null
-        ? 0.0
-        : (page.heroImageHeight ??
-            themeData?.heroImageHeight ??
-            defaultThemeData.heroImageHeight);
-
     return Flow(
       delegate: _TopBarFlowDelegate(
         topBarHeight: topBarHeight,
         heroImageHeight: heroImageHeight,
         scrollController: scrollController,
-        titleKey: titleKey,
+        titleKey: pageTitleKey,
         softKeyboardClosedListenable: softKeyboardClosedListenable,
         scrollAnimationStyle: scrollAnimationStyle,
       ),
-      children: [WoltModalSheetTopBar(page: page)],
+      children: [woltModalSheetTopBar],
     );
   }
 }

@@ -53,8 +53,8 @@ class _WoltPageViewPort extends ShrinkWrappingViewport {
   RenderShrinkWrappingViewport createRenderObject(BuildContext context) {
     return _RenderWoltPageViewPort(
       axisDirection: axisDirection,
-      crossAxisDirection:
-          crossAxisDirection ?? Viewport.getDefaultCrossAxisDirection(context, axisDirection),
+      crossAxisDirection: crossAxisDirection ??
+          Viewport.getDefaultCrossAxisDirection(context, axisDirection),
       offset: offset,
       clipBehavior: clipBehavior,
     );
@@ -84,7 +84,8 @@ class _RenderWoltPageViewPort extends RenderShrinkWrappingViewport {
       // ignore: avoid-unrelated-type-assertions
       if (child is EffectiveExtentViewPortDependent) {
         // ignore: avoid-unrelated-type-casts
-        (child as EffectiveExtentViewPortDependent).performEffectiveExtent(extent);
+        (child as EffectiveExtentViewPortDependent)
+            .performEffectiveExtent(extent);
       }
 
       child = childAfter(child);
