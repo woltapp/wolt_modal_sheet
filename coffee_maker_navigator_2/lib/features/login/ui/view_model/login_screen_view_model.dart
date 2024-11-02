@@ -3,26 +3,26 @@ import 'package:wolt_state_management/wolt_state_management.dart';
 
 class LoginScreenViewModel {
   LoginScreenViewModel({required AuthService authService}) : _authService = authService {
-    _loginState.setIdle(value: false);
+    _isLoggedIn.setIdle(value: false);
   }
 
   final AuthService _authService;
 
-  final _loginState = StatefulValueNotifier<bool>.idle(false);
+  final _isLoggedIn = StatefulValueNotifier<bool>.idle(false);
 
-  StatefulValueListenable<bool> get loginState => _loginState;
+  StatefulValueListenable<bool> get isLoggedIn => _isLoggedIn;
 
   Future<void> onLoginPressed(String email, String password) async {
-    _loginState.setLoading();
+    _isLoggedIn.setLoading();
     try {
       await _authService.logIn(email, password);
-      _loginState.setIdle(value: true);
+      _isLoggedIn.setIdle(value: true);
     } catch (e) {
-      _loginState.setError(error: e);
+      _isLoggedIn.setError(error: e);
     }
   }
 
   void dispose() {
-    _loginState.dispose();
+    _isLoggedIn.dispose();
   }
 }

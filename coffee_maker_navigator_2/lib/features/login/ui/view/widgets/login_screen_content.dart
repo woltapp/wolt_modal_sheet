@@ -1,12 +1,16 @@
-import 'package:coffee_maker_navigator_2/features/login/ui/view_model/login_screen_view_model.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:wolt_state_management/wolt_state_management.dart';
 
 class LoginScreenContent extends StatelessWidget {
-  final LoginScreenViewModel viewModel;
+  final StatefulValueListenable<bool> isLoggedIn;
+  final void Function(String email, String password) onLoginPressed;
 
-  const LoginScreenContent({Key? key, required this.viewModel}) : super(key: key);
+  const LoginScreenContent({
+    Key? key,
+    required this.isLoggedIn,
+    required this.onLoginPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +48,10 @@ class LoginScreenContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   StatefulValueListenableBuilder<bool>(
-                    valueListenable: viewModel.loginState,
+                    valueListenable: isLoggedIn,
                     idleBuilder: (context, isLoggedIn) {
                       return WoltElevatedButton(
-                        onPressed: () => viewModel.onLoginPressed('email', 'password'),
+                        onPressed: () => onLoginPressed('email', 'password'),
                         child: const Text('Sign in'),
                       );
                     },
@@ -60,7 +64,7 @@ class LoginScreenContent extends StatelessWidget {
                           Text('Error: $error', style: const TextStyle(color: Colors.red)),
                           const SizedBox(height: 10),
                           WoltElevatedButton(
-                            onPressed: () => viewModel.onLoginPressed('email', 'password'),
+                            onPressed: () => onLoginPressed('email', 'password'),
                             child: const Text('Retry'),
                           ),
                         ],

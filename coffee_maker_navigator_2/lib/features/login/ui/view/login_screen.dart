@@ -30,6 +30,9 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    return LoginScreenContent(viewModel: _viewModel);
+    return LoginScreenContent(
+      isLoggedIn: _viewModel.isLoggedIn,
+      onLoginPressed: _viewModel.onLoginPressed,
+    );
   }
 }
