@@ -1,4 +1,3 @@
-import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/add_water_state.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/domain/entities/water_source.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_back_button.dart';
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_water_screen_body.dart';
@@ -9,21 +8,29 @@ import 'package:wolt_state_management/wolt_state_management.dart';
 class AddWaterScreenContent extends StatelessWidget {
   const AddWaterScreenContent({
     super.key,
+    required this.waterQuantity,
+    required this.waterTemperature,
+    required this.waterSource,
     required this.onWaterQuantityUpdated,
     required this.onWaterTemperatureUpdated,
     required this.onWaterSourceUpdated,
-    required this.onCheckValidityPressed,
-    required this.onAddWaterPressed,
-    required this.state,
+    required this.isReadyToAddWater,
+    required this.errorMessage,
+    required this.onCheckValidity,
+    required this.onAddWater,
     required this.onStepCompleted,
   });
 
+  final StatefulValueListenable<String> waterQuantity;
+  final StatefulValueListenable<String> waterTemperature;
+  final StatefulValueListenable<WaterSource> waterSource;
   final void Function(String) onWaterQuantityUpdated;
   final void Function(String) onWaterTemperatureUpdated;
   final void Function(WaterSource) onWaterSourceUpdated;
-  final StatefulValueListenable<AddWaterState> state;
-  final VoidCallback onCheckValidityPressed;
-  final VoidCallback onAddWaterPressed;
+  final StatefulValueListenable<bool> isReadyToAddWater;
+  final StatefulValueListenable<String?> errorMessage;
+  final VoidCallback onCheckValidity;
+  final VoidCallback onAddWater;
   final VoidCallback onStepCompleted;
 
   @override
@@ -31,28 +38,20 @@ class AddWaterScreenContent extends StatelessWidget {
     return Stack(
       children: [
         AddWaterScreenBody(
+          waterQuantity: waterQuantity,
+          waterTemperature: waterTemperature,
+          waterSource: waterSource,
           onWaterQuantityUpdated: onWaterQuantityUpdated,
           onWaterSourceUpdated: onWaterSourceUpdated,
           onWaterTemperatureUpdated: onWaterTemperatureUpdated,
         ),
         const AddWaterScreenBackButton(),
-        StatefulValueListenableBuilder<AddWaterState>(
-          valueListenable: state,
-          idleBuilder: (context, state) {
-            return AddWaterScreenFooter(
-              isReadyToAddWater: state!.isReadyToAddWater,
-              errorMessage: state.errorMessage,
-              onCheckValidity: onCheckValidityPressed,
-              onAddWater: onAddWaterPressed,
-              onStepCompleted: onStepCompleted,
-            );
-          },
-          loadingBuilder: (context, state) {
-            return const Center(child: CircularProgressIndicator());
-          },
-          errorBuilder: (context, error, state) {
-            return Center(child: Text('Error: $error'));
-          },
+        AddWaterScreenFooter(
+          isReadyToAddWater: isReadyToAddWater,
+          errorMessage: errorMessage,
+          onCheckValidity: onCheckValidity,
+          onAddWater: onAddWater,
+          onStepCompleted: onStepCompleted,
         ),
       ],
     );

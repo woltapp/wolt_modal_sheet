@@ -50,12 +50,16 @@ class _AddWaterScreenState extends State<AddWaterScreen>
           top: false,
           child: _viewModel.orderExists
               ? AddWaterScreenContent(
-                  onWaterQuantityUpdated: _viewModel.onWaterQuantityUpdated,
-                  onWaterTemperatureUpdated: _viewModel.onWaterTemperatureUpdated,
-                  onWaterSourceUpdated: _viewModel.onWaterSourceUpdated,
-                  state: _viewModel.addWaterState,
-                  onCheckValidityPressed: _viewModel.onCheckValidityPressed,
-                  onAddWaterPressed: _viewModel.onAddWaterPressed,
+                  waterQuantity: _viewModel.waterQuantity,
+                  waterTemperature: _viewModel.waterTemperature,
+                  waterSource: _viewModel.waterSource,
+                  onWaterQuantityUpdated: _viewModel.updateWaterQuantity,
+                  onWaterTemperatureUpdated: _viewModel.updateWaterTemperature,
+                  onWaterSourceUpdated: _viewModel.updateWaterSource,
+                  isReadyToAddWater: _viewModel.isReadyToAddWater,
+                  errorMessage: _viewModel.errorMessage,
+                  onCheckValidity: _viewModel.validateForm,
+                  onAddWater: _viewModel.onAddWaterPressed,
                   onStepCompleted: context.routerViewModel.onOrderStepCompleted,
                 )
               : AddWaterStepOrderNotFound(
