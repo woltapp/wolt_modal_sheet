@@ -17,8 +17,8 @@ class WoltBottomSheetType extends WoltModalType {
     WoltModalDismissDirection dismissDirection = WoltModalDismissDirection.down,
     Duration transitionDuration = _defaultEnterDuration,
     Duration reverseTransitionDuration = _defaultExitDuration,
-    minFlingVelocity = 700.0,
-    closeProgressThreshold = 0.5,
+    double minFlingVelocity = 700.0,
+    double closeProgressThreshold = 0.5,
     bool? barrierDismissible,
   }) : super(
           shapeBorder: shapeBorder,
