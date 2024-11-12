@@ -1,3 +1,5 @@
+## 0.9.4
+- Fix modalDecorator context wrapping in WoltModalSheet [#340](https://github.com/woltapp/wolt_modal_sheet/pull/340) by [ulusoyca](https://github.com/ulusoyca)
 ## 0.9.3
 - Fix gesture detection handling with null callbacks [#325](https://github.com/woltapp/wolt_modal_sheet/pull/325) by [nico3587](https://github.com/nico3587)
 - Add Dart Code Metrics and fix potentiall bugs [#315](https://github.com/woltapp/wolt_modal_sheet/pull/315) by [Majid Hajian](https://github.com/mhadaily)
