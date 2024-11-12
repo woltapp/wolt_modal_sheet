@@ -223,7 +223,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context).pop();
                             },
                             pageListBuilder: (BuildContext context) {
+                              assert(
+                                _MyModalDecorator.of(context) != null,
+                                'This is added to test the modalDecorator. It will throw a '
+                                'runtime error if the modalDecorator is broken.',
+                              );
+
                               return [RootSheetPage.build(context)];
+                            },
+                            modalDecorator: (child) {
+                              return _MyModalDecorator(
+                                data: 'Hello from _MyModalDecorator',
+                                child: child,
+                              );
                             },
                           );
                         },
@@ -262,6 +274,24 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: const Icon(Icons.notifications_active),
         ));
+  }
+}
+
+class _MyModalDecorator extends InheritedWidget {
+  final String data;
+
+  const _MyModalDecorator({
+    required this.data,
+    required Widget child,
+  }) : super(child: child);
+
+  static _MyModalDecorator? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<_MyModalDecorator>();
+  }
+
+  @override
+  bool updateShouldNotify(_MyModalDecorator oldWidget) {
+    return data != oldWidget.data;
   }
 }
 

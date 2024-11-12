@@ -9,7 +9,7 @@ class WoltAlertDialogType extends WoltDialogType {
 
   @override
   BoxConstraints layoutModal(Size availableSize) {
-    late double width;
+    double width;
     final availableWidth = availableSize.width;
     final screenType = WoltBreakpoints.getScreenTypeForWidth(availableWidth);
 
