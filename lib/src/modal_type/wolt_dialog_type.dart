@@ -57,7 +57,7 @@ class WoltDialogType extends WoltModalType {
     final double availableWidth = availableSize.width;
     final double availableHeight = availableSize.height;
 
-    late double width;
+    double width;
 
     if (availableWidth > horizontalBreakpoint) {
       width = minModalWidth;
