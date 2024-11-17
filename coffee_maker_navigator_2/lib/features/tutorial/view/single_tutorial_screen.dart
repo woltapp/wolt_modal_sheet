@@ -24,7 +24,10 @@ class SingleTutorialScreen extends StatelessWidget {
                         Image(
                           height: 200,
                           width: double.infinity,
-                          image: AssetImage(coffeeMakerStep.assetName),
+                          image: AssetImage(
+                            coffeeMakerStep.assetName,
+                            package: 'assets',
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ],

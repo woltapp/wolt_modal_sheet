@@ -19,7 +19,8 @@ class LoginScreenContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Image(
-                    image: AssetImage('lib/assets/images/dash_coffee.webp'),
+                    image: AssetImage('assets/images/dash_coffee.webp',
+                        package: 'assets'),
                     fit: BoxFit.cover,
                     height: 216,
                     width: 384,

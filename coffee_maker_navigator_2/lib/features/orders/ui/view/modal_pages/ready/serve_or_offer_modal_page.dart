@@ -8,7 +8,10 @@ class ServeOrOfferModalPage extends WoltModalSheetPage {
     required String coffeeOrderId,
   }) : super(
           heroImage: const Image(
-            image: AssetImage('lib/assets/images/coffee_is_ready.png'),
+            image: AssetImage(
+              'assets/images/coffee_is_ready.png',
+              package: 'assets',
+            ),
             fit: BoxFit.cover,
           ),
           stickyActionBar: Padding(

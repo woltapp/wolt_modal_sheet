@@ -18,6 +18,8 @@ dependencies:
     path: ..
   demo_ui_components:
     path: ../demo_ui_components
+  assets:
+    path: assets
 
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -25,6 +27,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - lib/assets/images/
