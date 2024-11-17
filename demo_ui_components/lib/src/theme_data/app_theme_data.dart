@@ -15,8 +15,8 @@ class AppThemeData {
 
   const AppThemeData();
 
-  static ThemeData themeData(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+  static ThemeData themeData() {
+    final textTheme = ThemeData().textTheme;
 
     return ThemeData(
       brightness: colorScheme.brightness,

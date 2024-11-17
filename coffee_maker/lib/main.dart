@@ -33,7 +33,7 @@ class _DemoAppState extends State<DemoApp> {
       scrollBehavior: const CustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       home: Theme(
-        data: AppThemeData.themeData(context),
+        data: AppThemeData.themeData(),
         child: HomeScreen(
           groupedCoffeeOrders: GroupedCoffeeOrders.fromCoffeeOrders(
             mockCoffeeOrders,

@@ -1,4 +1,5 @@
 import 'package:coffee_maker_navigator_2/app/app.dart';
+import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -22,6 +23,14 @@ class WidgetbookApp extends StatelessWidget {
       // it will be generated in the next step
       directories: directories,
       addons: [
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Default',
+              data: AppThemeData.themeData(),
+            )
+          ],
+        ),
         DeviceFrameAddon(
           devices: Devices.all,
           initialDevice: Devices.android.mediumPhone,
