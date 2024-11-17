@@ -22,7 +22,7 @@ class AddWaterScreenBody extends StatelessWidget {
         children: [
           const Image(
             image: AssetImage(
-              'assets/images/add_water_description.png',
+              'images/add_water_description.png',
               package: 'assets',
             ),
             fit: BoxFit.cover,

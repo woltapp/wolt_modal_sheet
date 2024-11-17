@@ -9,7 +9,7 @@ class ServeOrOfferModalPage extends WoltModalSheetPage {
   }) : super(
           heroImage: const Image(
             image: AssetImage(
-              'assets/images/coffee_is_ready.png',
+              'images/coffee_is_ready.png',
               package: 'assets',
             ),
             fit: BoxFit.cover,

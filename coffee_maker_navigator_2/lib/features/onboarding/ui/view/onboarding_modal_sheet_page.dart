@@ -14,8 +14,10 @@ We're excited to assist you with the orders. To ensure you get the most out of o
 '''),
           ),
           heroImage: const Image(
-            image: AssetImage('assets/images/welcome_modal.webp',
-                package: 'assets'),
+            image: AssetImage(
+              'images/welcome_modal.webp',
+              package: 'assets',
+            ),
             fit: BoxFit.cover,
           ),
           pageTitle: const Padding(

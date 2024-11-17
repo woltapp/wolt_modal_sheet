@@ -1,4 +1,3 @@
-import 'package:coffee_maker_navigator_2/app/app.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -22,6 +21,13 @@ class WidgetbookApp extends StatelessWidget {
       // The [directories] variable does not exist yet,
       // it will be generated in the next step
       directories: directories,
+      appBuilder: (context, child) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        backButtonDispatcher: RootBackButtonDispatcher(),
+        routerDelegate: SingleChildRouterDelegate(
+          child: child,
+        ),
+      ),
       addons: [
         MaterialThemeAddon(
           themes: [
@@ -36,6 +42,36 @@ class WidgetbookApp extends StatelessWidget {
           initialDevice: Devices.android.mediumPhone,
         ),
         TextScaleAddon(),
+      ],
+    );
+  }
+}
+
+final globalNavKey = GlobalKey<NavigatorState>();
+
+class SingleChildRouterDelegate extends RouterDelegate<int>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+  SingleChildRouterDelegate({
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  GlobalKey<NavigatorState> get navigatorKey => globalNavKey;
+
+  @override
+  Future<void> setNewRoutePath(int configuration) async {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: globalNavKey,
+      onDidRemovePage: (page) {},
+      pages: [
+        MaterialPage(
+          child: child,
+        ),
       ],
     );
   }

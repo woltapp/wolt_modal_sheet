@@ -1,4 +1,4 @@
-const String _imagePath = 'assets/images/coffee_maker_state';
+const String _imagePath = 'images/coffee_maker_state';
 
 enum CoffeeMakerStep {
   grind(

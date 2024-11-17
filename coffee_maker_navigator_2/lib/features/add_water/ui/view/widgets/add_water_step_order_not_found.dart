@@ -20,7 +20,7 @@ class AddWaterStepOrderNotFound extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Image(
-                image: AssetImage('assets/images/order_not_found.webp',
+                image: AssetImage('images/order_not_found.webp',
                     package: 'assets'),
                 fit: BoxFit.cover,
                 height: 200,
