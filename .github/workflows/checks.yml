@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: '3.13.0' # Uses the minimum supported version.
+          flutter-version: '3.16.0' # Uses the minimum supported version.
           channel: stable
       - name: Install DCM
         uses: CQLabs/setup-dcm@v1
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: '3.13.0' # Uses the minimum supported version.
+          flutter-version: '3.16.0' # Uses the minimum supported version.
           channel: stable
       # Get Flutter version
       - name: Get Flutter version
@@ -84,7 +84,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: '3.13.0' # Uses the minimum supported version.
+          flutter-version: '3.16.0' # Uses the minimum supported version.
           channel: stable
       # Get Flutter version
       - name: Get Flutter version
