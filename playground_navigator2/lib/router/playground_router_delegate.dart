@@ -108,6 +108,8 @@ class PlaygroundRouterDelegate
   @override
   void dispose() {
     _cubitSubscription.cancel();
+    _pageIndexNotifier.dispose();
+    _pageListBuilderNotifier.dispose();
     super.dispose();
   }
 }
