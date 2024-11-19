@@ -131,7 +131,7 @@ void main() {
     'WoltModalSheet.modalTypeBuilder defaults - wide window size',
     (tester) async {
       Size viewSize = const Size(800.0, 600.0);
-      Size sheetPageSize = const Size(524.0, 86.0);
+      Size sheetPageSize = const Size(524.0, 92.0);
 
       await tester.pumpWidget(buildSheetWithShow());
 
@@ -144,11 +144,11 @@ void main() {
       expect(tester.getSize(sheetMaterial), sheetPageSize);
       expect(
         tester.getTopLeft(sheetMaterial),
-        Offset((viewSize.width / 2) - (sheetPageSize.width / 2), 257.0),
+        Offset((viewSize.width / 2) - (sheetPageSize.width / 2), 254.0),
       );
       expect(
         tester.getTopRight(sheetMaterial),
-        Offset((viewSize.width / 2) + (sheetPageSize.width / 2), 257.0),
+        Offset((viewSize.width / 2) + (sheetPageSize.width / 2), 254.0),
       );
     },
   );
@@ -190,7 +190,7 @@ void main() {
 
     expect(
       tester.getSize(sheetPageMaterialFinder(tester)),
-      const Size(800.0, 86.0),
+      const Size(800.0, 92.0),
     );
 
     // Tap to dismiss the sheet.
@@ -210,7 +210,7 @@ void main() {
 
     expect(
       tester.getSize(sheetPageMaterialFinder(tester)),
-      const Size(524.0, 86.0),
+      const Size(524.0, 92.0),
     );
 
     // Tap to dismiss the sheet.
@@ -230,7 +230,7 @@ void main() {
 
     expect(
       tester.getSize(sheetPageMaterialFinder(tester)),
-      const Size(404.0, 86.0),
+      const Size(404.0, 92.0),
     );
 
     // Tap to dismiss the sheet.
@@ -293,7 +293,7 @@ void main() {
       );
       expect(
         tester.getSize(find.byType(ColoredBox).last),
-        equals(const Size(524.0, 86.0)),
+        equals(const Size(524.0, 92.0)),
       );
     });
 

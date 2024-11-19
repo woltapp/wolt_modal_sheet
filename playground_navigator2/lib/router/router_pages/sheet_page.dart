@@ -7,7 +7,7 @@ class SheetPage extends Page<void> {
   const SheetPage({
     required this.pageIndexNotifier,
     required this.pageListBuilderNotifier,
-  }) : super(key: const ValueKey('SheetPage'));
+  }) : super(key: const ValueKey('SheetPage'), name: SheetPage.routeName);
 
   final ValueNotifier<int> pageIndexNotifier;
   final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
@@ -28,7 +28,4 @@ class SheetPage extends Page<void> {
       settings: this,
     );
   }
-
-  @override
-  String get name => routeName;
 }

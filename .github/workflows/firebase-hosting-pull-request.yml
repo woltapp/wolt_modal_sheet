@@ -10,7 +10,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - uses: subosito/flutter-action@v2.16.0
         with:
-          flutter-version: '3.13.0' # Uses the minimum supported version.
+          flutter-version: '3.16.0' # Uses the minimum supported version.
           channel: stable
       - run: flutter build web --release --web-renderer=canvaskit
         working-directory: ./coffee_maker

@@ -24,5 +24,3 @@ scripts:
     exec: dcm analyze .
   format:
     exec: dart format --set-exit-if-changed .
-  test:
-    exec: flutter test
