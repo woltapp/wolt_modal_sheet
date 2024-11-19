@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   widgetbook: ^3.10.0
   widgetbook_annotation: ^3.2.0
+  wolt_modal_sheet:
+    path: ../..
   coffee_maker_navigator_2:
     path: ../
   demo_ui_components:
