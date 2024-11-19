@@ -5,6 +5,7 @@ packages:
   - . ## This is the root package
   - coffee_maker
   - coffee_maker_navigator_2
+  - coffee_maker_navigator_2/widgetbook
   - demo_ui_components
   - playground
   - playground_navigator2
