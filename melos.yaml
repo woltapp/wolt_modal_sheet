@@ -3,12 +3,12 @@ repository: https://github.com/woltapp/wolt_modal_sheet
 
 packages:
   - . ## This is the root package
-  # - coffee_maker
-  # - coffee_maker_navigator_2
-  # - demo_ui_components
-  # - playground
-  # - playground_navigator2
-  # - wolt_di
+  - coffee_maker
+  - coffee_maker_navigator_2
+  - demo_ui_components
+  - playground
+  - playground_navigator2
+  - wolt_di
 
 command:
   bootstrap:
@@ -24,5 +24,3 @@ scripts:
     exec: dcm analyze .
   format:
     exec: dart format --set-exit-if-changed .
-  test:
-    exec: flutter test

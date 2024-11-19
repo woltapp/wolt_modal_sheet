@@ -10,7 +10,7 @@ topics:
   - custom-modal
 screenshots:
   - description: 'WoltModalSheet page elements'
-    path: doc/bottom_sheet_elements.jpg
+    path: doc/bottom_sheet_elements.jpeg
   - description: 'WoltModalSheet page layers'
     path: doc/modal_sheet_page.png
   - description: 'Experience multi-page navigation in WoltModalSheet.'
