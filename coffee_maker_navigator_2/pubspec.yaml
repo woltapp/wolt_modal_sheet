@@ -20,6 +20,8 @@ dependencies:
     path: ../demo_ui_components
   assets:
     path: assets
+  wolt_state_management:
+    path: ../wolt_state_management
 
 dev_dependencies:
   flutter_lints: ^2.0.1

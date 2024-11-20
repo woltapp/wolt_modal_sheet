@@ -5,6 +5,7 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_s
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+import 'package:wolt_state_management/wolt_state_management.dart';
 
 @UseCase(
   name: 'OrderScreenContent',
@@ -19,7 +20,7 @@ Widget orderScreenContent(BuildContext context) {
         options: CoffeeMakerStep.values,
       ),
     ),
-    groupedCoffeeOrders: ValueNotifier(
+    groupedCoffeeOrders: StatefulValueNotifier.idle(
       GroupedCoffeeOrders.fromCoffeeOrders(
         const [
           CoffeeOrder(

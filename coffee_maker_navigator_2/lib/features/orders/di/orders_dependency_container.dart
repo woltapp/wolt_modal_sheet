@@ -33,6 +33,7 @@ class OrdersDependencyContainer extends FeatureLevelDependencyContainer {
 
   @override
   void dispose() {
+    unbindFrom<CoffeeMakerAppLevelDependencyContainer>();
     _ordersService.dispose();
     _ordersRemoteDataSource.dispose();
   }
