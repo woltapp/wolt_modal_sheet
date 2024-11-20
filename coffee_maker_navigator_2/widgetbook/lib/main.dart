@@ -67,7 +67,6 @@ class SingleChildRouterDelegate extends RouterDelegate<int>
   Widget build(BuildContext context) {
     return Navigator(
       key: globalNavKey,
-      onDidRemovePage: (page) {},
       pages: [
         MaterialPage(
           child: child,
