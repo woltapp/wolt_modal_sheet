@@ -1,4 +1,4 @@
-const String _assetPath = 'lib/assets/images/';
+const String _assetPath = 'images/';
 
 enum ExtraRecommendation {
   bananaBread(

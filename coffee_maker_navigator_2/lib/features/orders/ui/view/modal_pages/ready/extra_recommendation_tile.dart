@@ -55,7 +55,9 @@ class _ExtraRecommendationTileState extends State<ExtraRecommendationTile> {
                         borderRadius: BorderRadius.circular(12.0),
                         child: Image(
                             image: AssetImage(
-                                widget.recommendation.imageAssetPath),
+                              widget.recommendation.imageAssetPath,
+                              package: 'assets',
+                            ),
                             fit: BoxFit.cover),
                       ),
                     ),

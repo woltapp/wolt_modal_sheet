@@ -1,0 +1,30 @@
+name: widgetbook_workspace
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  widgetbook: ^3.10.0
+  widgetbook_annotation: ^3.2.0
+  coffee_maker_navigator_2:
+    path: ../
+  demo_ui_components:
+    path: ../../demo_ui_components
+  assets:
+    path: ../assets
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  widgetbook_generator: ^3.9.0
+  build_runner:  # Omit explicit version so it resolves to the supported version
+
+flutter:
+  uses-material-design: true

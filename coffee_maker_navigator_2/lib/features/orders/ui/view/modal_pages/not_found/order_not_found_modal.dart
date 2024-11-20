@@ -21,7 +21,7 @@ class OrderNotFoundModal extends WoltModalSheetPage {
             ),
           ),
           heroImage: const Image(
-            image: AssetImage('lib/assets/images/order_not_found.webp'),
+            image: AssetImage('images/order_not_found.webp', package: 'assets'),
             fit: BoxFit.cover,
           ),
           pageTitle: ModalSheetTitle(

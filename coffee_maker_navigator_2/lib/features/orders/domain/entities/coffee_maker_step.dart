@@ -1,11 +1,11 @@
-const String _imagePath = 'lib/assets/images/coffee_maker_state';
+const String _imagePath = 'images/coffee_maker_state';
 
 enum CoffeeMakerStep {
   grind(
       stepName: 'Grind',
       stepNumber: 0,
       actionName: 'Start grinding',
-      assetName: '${_imagePath}_grind.jpg',
+      assetName: '${_imagePath}_grind.webp',
       tutorialTitle: 'Tips for grinding',
       queryParamName: 'grind',
       tutorialContent: '''
@@ -17,7 +17,7 @@ The process of finding the perfect grind is not just about the size but also abo
     stepName: 'Add water',
     stepNumber: 1,
     actionName: 'Add water',
-    assetName: '${_imagePath}_water.jpg',
+    assetName: '${_imagePath}_water.webp',
     tutorialTitle: 'Adding water to coffee',
     queryParamName: 'water',
     tutorialContent: '''
@@ -30,7 +30,7 @@ Moreover, the quality of water used is paramount. The water source's pH level an
       stepName: 'Ready',
       stepNumber: 2,
       actionName: 'Ready',
-      assetName: '${_imagePath}_ready.jpg',
+      assetName: '${_imagePath}_ready.webp',
       tutorialTitle: 'Serving coffee',
       queryParamName: 'ready',
       tutorialContent: '''

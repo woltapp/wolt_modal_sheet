@@ -32,7 +32,9 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
                           height: 200,
                           width: double.infinity,
                           image: AssetImage(
-                              'lib/assets/images/welcome_modal.webp'),
+                            'images/welcome_modal.webp',
+                            package: 'assets',
+                          ),
                           fit: BoxFit.cover,
                         ),
                       ],
