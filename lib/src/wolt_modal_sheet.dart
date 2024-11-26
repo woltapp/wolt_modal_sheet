@@ -311,19 +311,18 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_pages.isEmpty) {
-      // Get the initial page list from the initially provided pageListBuilder.
-      final initialPages = widget.pageListBuilderNotifier.value(context);
-      assert(initialPages.isNotEmpty,
-          'pageListBuilder must return a non-empty list.');
-      _pages = initialPages;
+  Widget build(BuildContext context) {
+    final modalDecorator = widget.modalDecorator;
+    if (modalDecorator != null) {
+      return modalDecorator(Builder(builder: (decoratedContext) {
+        return _buildModalContent(decoratedContext);
+      }));
     }
+
+    return _buildModalContent(context);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildModalContent(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final modalType =
@@ -332,8 +331,17 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     Widget modalContent = ValueListenableBuilder(
       valueListenable: widget.pageIndexNotifier,
       builder: (context, currentPageIndex, __) {
+        if (_pages.isEmpty) {
+          final initialPages = widget.pageListBuilderNotifier.value(context);
+          assert(
+            initialPages.isNotEmpty,
+            'pageListBuilder must return a non-empty list.',
+          );
+          _pages = initialPages;
+        }
         final pages = _pages;
         final page = pages[currentPageIndex];
+
         final enableDrag = page.enableDrag ??
             widget.enableDrag ??
             modalType.isDragToDismissEnabled ??
@@ -440,10 +448,6 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         );
       },
     );
-
-    if (widget.modalDecorator != null) {
-      modalContent = widget.modalDecorator!(modalContent);
-    }
 
     return modalContent;
   }

@@ -5,6 +5,7 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wolt_state_management/wolt_state_management.dart';
 
 /// A custom bottom navigation bar for the home screen.
 ///
@@ -19,7 +20,7 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
     super.key,
   });
 
-  final ValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
+  final StatefulValueListenable<GroupedCoffeeOrders> groupedCoffeeOrders;
   final ValueListenable<CoffeeMakerStep> selectedBottomNavBarItem;
   final OnOrderScreenBottomNavBarItemSelected onBottomNavBarItemSelected;
 
@@ -28,9 +29,13 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedBottomNavBarItem,
       builder: (context, selectedTab, _) {
-        return ValueListenableBuilder(
+        return StatefulValueListenableBuilder(
           valueListenable: groupedCoffeeOrders,
-          builder: (context, orders, _) {
+          idleBuilder: (BuildContext context, GroupedCoffeeOrders? orders) {
+            if (orders == null) {
+              return const SizedBox.shrink();
+            }
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -51,6 +56,13 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
                 ),
               ],
             );
+          },
+          loadingBuilder: (BuildContext context, GroupedCoffeeOrders? value) {
+            return const SizedBox.shrink();
+          },
+          errorBuilder: (BuildContext context, Object? error,
+              GroupedCoffeeOrders? lastKnownValue) {
+            return const SizedBox.shrink();
           },
         );
       },

@@ -42,7 +42,10 @@ class CoffeeOrderListItemTile extends StatelessWidget {
             child: Stack(
               children: [
                 Image(
-                  image: AssetImage(step.assetName),
+                  image: AssetImage(
+                    step.assetName,
+                    package: 'assets',
+                  ),
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),

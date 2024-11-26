@@ -23,7 +23,7 @@ class CoffeeMakerApp extends StatelessWidget {
         return AppLifecycleObserver(
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            theme: AppThemeData.themeData(context),
+            theme: AppThemeData.themeData(),
             routerDelegate: appLevelDependencyContainer.appRouterDelegate,
             routeInformationParser:
                 appLevelDependencyContainer.appRouteInformationParser,
