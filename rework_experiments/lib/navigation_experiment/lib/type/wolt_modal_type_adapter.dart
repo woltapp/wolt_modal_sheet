@@ -57,10 +57,9 @@ class _WoltModalTypeAdapterState extends State<WoltModalTypeAdapter>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final availableWidth = size.width;
     final availableHeight = size.height;
     final woltModalType =
-        widget._woltModalSheetDelegate.getWoltModalSheetType(availableWidth);
+        widget._woltModalSheetDelegate.getWoltModalSheetType(context);
     final style = Theme.of(context).extension<WoltModalSheetTheme>()!.style;
     BoxConstraints constraints;
     Widget child;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_sheet_type_delegate.dart';
 import 'package:rework_experiments/navigation_experiment/lib/wolt_modal_sheet.dart';
 import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path.dart';
 import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
@@ -14,6 +15,7 @@ Future<T?> showWoltModalSheet<T>({
   Duration? transitionDuration,
   String? barrierLabel,
   RouteSettings? settings,
+  WoltModalSheetDelegate? woltModalSheetDelegate,
 }) {
   final NavigatorState navigator = Navigator.of(
     context,
@@ -29,6 +31,7 @@ Future<T?> showWoltModalSheet<T>({
       transitionDuration: transitionDuration,
       barrierLabel: barrierLabel,
       settings: settings,
+      woltModalSheetDelegate: woltModalSheetDelegate,
     ),
   );
 }
@@ -55,6 +58,8 @@ class WoltModalSheetRoute<T> extends PopupRoute<T> {
   /// Defaults to `Colors.black54` if not provided.
   final Color? modalBarrierColor;
 
+  final WoltModalSheetDelegate? woltModalSheetDelegate;
+
   /// Callback function that is triggered whenever there is a change in navigation
   /// within the [WoltModalSheet].
   /// The function receives a list of the current active routes as a parameter, allowing
@@ -73,6 +78,7 @@ class WoltModalSheetRoute<T> extends PopupRoute<T> {
     this.isDismissible = true,
     this.modalBarrierColor,
     this.onPathChangedInternal,
+    this.woltModalSheetDelegate,
     Duration? transitionDuration,
     String? barrierLabel,
     BoxConstraints? constraints,
@@ -103,6 +109,7 @@ class WoltModalSheetRoute<T> extends PopupRoute<T> {
       initialPath: initialPath,
       appearingAnimationController: routeController,
       onPathChangedInternal: onPathChangedInternal,
+      woltModalSheetDelegate: woltModalSheetDelegate,
     );
   }
 

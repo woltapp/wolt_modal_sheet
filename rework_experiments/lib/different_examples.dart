@@ -4,6 +4,7 @@ import 'package:rework_experiments/navigation_experiment/lib/navigation/internal
 import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_path_settings.dart';
 import 'package:rework_experiments/navigation_experiment/lib/navigation/internal/wolt_modal_sheet_navigator.dart';
 import 'package:rework_experiments/navigation_experiment/lib/navigation/external/wolt_modal_sheet_route.dart';
+import 'package:rework_experiments/navigation_experiment/lib/type/wolt_modal_sheet_type_delegate.dart';
 import 'package:rework_experiments/wolt_page_layout_experiment/wolt_page_layout.dart';
 
 void main() {
@@ -33,20 +34,67 @@ class _HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Function call for declarative use of navigation.
-            showWoltModalSheet(
-              supportedPaths: supportedPaths.values.toList(),
-              context: context,
-              initialPath: initialPath,
-              useRootNavigator: false,
-            );
-          },
-          child: const Text('Open WoltModalBottomSheet'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Function call for declarative use of navigation.
+                showWoltModalSheet(
+                  supportedPaths: supportedPaths.values.toList(),
+                  context: context,
+                  initialPath: initialPath,
+                  useRootNavigator: false,
+                );
+              },
+              child: const Text('Open with default WoltModalSheetDelegate'),
+            ),
+            const SizedBox(height: 40.0),
+            ElevatedButton(
+              onPressed: () {
+                // Function call for declarative use of navigation.
+                showWoltModalSheet(
+                  supportedPaths: supportedPaths.values.toList(),
+                  context: context,
+                  initialPath: initialPath,
+                  useRootNavigator: false,
+                  woltModalSheetDelegate: _AlwaysBottomSheetDelegate(),
+                );
+              },
+              child: const Text('Open with custom BottomSheetTypeDelegate'),
+            ),
+            const SizedBox(height: 40.0),
+            ElevatedButton(
+              onPressed: () {
+                // Function call for declarative use of navigation.
+                showWoltModalSheet(
+                  supportedPaths: supportedPaths.values.toList(),
+                  context: context,
+                  initialPath: initialPath,
+                  useRootNavigator: false,
+                  woltModalSheetDelegate: _AlwaysAlertDialogDelegate(),
+                );
+              },
+              child: const Text('Open with custom AlertDialogTypeDelegate'),
+            ),
+          ],
         ),
       ),
     );
+  }
+}
+
+class _AlwaysBottomSheetDelegate extends WoltModalSheetDelegate {
+  @override
+  WoltModalType getWoltModalSheetType(BuildContext context) {
+    return WoltModalType.bottomSheet;
+  }
+}
+
+class _AlwaysAlertDialogDelegate extends WoltModalSheetDelegate {
+  @override
+  WoltModalType getWoltModalSheetType(BuildContext context) {
+    return WoltModalType.dialog;
   }
 }
 

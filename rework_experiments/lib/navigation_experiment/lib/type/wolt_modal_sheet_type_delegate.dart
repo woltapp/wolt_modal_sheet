@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
+
 const defaultModalTypeBreakPoint = 768.0;
 
 /// A delegate that determines the type of the modal sheet to be used.
 abstract class WoltModalSheetDelegate {
-  WoltModalType getWoltModalSheetType(double deviceWidth);
+  WoltModalType getWoltModalSheetType(BuildContext context);
 }
 
 /// Default implementation of the [WoltModalSheetDelegate].
@@ -12,7 +14,8 @@ class DefaultWoltModalSheetDelegate implements WoltModalSheetDelegate {
   const DefaultWoltModalSheetDelegate();
 
   @override
-  WoltModalType getWoltModalSheetType(double deviceWidth) {
+  WoltModalType getWoltModalSheetType(BuildContext context) {
+    final deviceWidth = MediaQuery.sizeOf(context).width;
     if (deviceWidth < defaultModalTypeBreakPoint) {
       return WoltModalType.bottomSheet;
     } else {
