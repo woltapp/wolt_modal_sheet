@@ -2,13 +2,8 @@ name: wolt_modal_sheet
 repository: https://github.com/woltapp/wolt_modal_sheet
 
 packages:
+  - examples/*
   - . ## This is the root package
-  - coffee_maker
-  - coffee_maker_navigator_2
-  - coffee_maker_navigator_2/widgetbook
-  - demo_ui_components
-  - playground
-  - playground_navigator2
   - wolt_di
   - wolt_state_management
 

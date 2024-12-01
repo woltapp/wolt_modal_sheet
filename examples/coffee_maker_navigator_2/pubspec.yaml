@@ -13,15 +13,15 @@ dependencies:
   shared_preferences: ^2.2.1
   wolt_responsive_layout_grid: ^0.0.3
   wolt_di:
-    path: ../wolt_di
+    path: ../../wolt_di
   wolt_modal_sheet:
-    path: ..
+    path: ../..
   demo_ui_components:
     path: ../demo_ui_components
   assets:
     path: assets
   wolt_state_management:
-    path: ../wolt_state_management
+    path: ../../wolt_state_management
 
 dev_dependencies:
   flutter_lints: ^2.0.1

@@ -17,11 +17,11 @@ dependencies:
   wolt_modal_sheet:
     path: ../..
   coffee_maker_navigator_2:
-    path: ../
+    path: ../coffee_maker_navigator_2
   demo_ui_components:
-    path: ../../demo_ui_components
+    path: ../demo_ui_components
   assets:
-    path: ../assets
+    path: ../coffee_maker_navigator_2/assets
 
 dev_dependencies:
   flutter_test:

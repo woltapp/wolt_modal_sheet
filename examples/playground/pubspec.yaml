@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   equatable: ^2.0.5
   wolt_modal_sheet:
-    path: ..
+    path: ../..
   wolt_responsive_layout_grid: ^0.0.3
   demo_ui_components:
     path: ../demo_ui_components
