@@ -3,9 +3,8 @@ repository: https://github.com/woltapp/wolt_modal_sheet
 
 packages:
   - examples/*
+  - packages/*
   - . ## This is the root package
-  - wolt_di
-  - wolt_state_management
 
 command:
   bootstrap:
