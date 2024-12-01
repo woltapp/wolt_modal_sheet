@@ -2,8 +2,8 @@ name: wolt_modal_sheet
 repository: https://github.com/woltapp/wolt_modal_sheet
 
 packages:
-  - examples/*
-  - packages/*
+  - examples/**
+  - packages/**
   - . ## This is the root package
 
 command:
