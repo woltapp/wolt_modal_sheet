@@ -1,5 +1,5 @@
-name: playground
-description: A playground to test various use cases with the wolt modal sheet with imperative navigation
+name: playground_navigator2
+description: A playground to test various use cases with the wolt modal sheet with declarative navigation
 publish_to: "none"
 
 environment:
@@ -9,15 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
   equatable: ^2.0.5
+  flutter_bloc: ^8.1.3
   wolt_modal_sheet:
-    path: ..
-  wolt_responsive_layout_grid: ^0.0.3
+    path: ../..
   demo_ui_components:
     path: ../demo_ui_components
-  device_info_plus: ^9.1.1
 
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -28,4 +25,3 @@ flutter:
 
   assets:
     - lib/assets/images/
-    - lib/assets/fonts/
