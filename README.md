@@ -360,20 +360,20 @@ The example project above will create the following:
 
 ### Playground app with imperative navigation
 
-The playground app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground), [web app](https://playgroundwoltexample.web.app))
+The playground app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/examples/playground), [web app](https://playgroundwoltexample.web.app))
 demonstrates how to imperatively show the
 modal sheet. The purpose of this module is to play and experiment with various
 use cases.
 
 ### Playground app with declarative navigation
 
-The playground_navigator2 app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/playground_navigator2), [web app](https://playgroundnavigator2woltexample.web.app)) has the similar content with
-the [playground](./playground/) app but the modal sheet is shown using 
+The playground_navigator2 app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/examples/playground_navigator2), [web app](https://playgroundnavigator2woltexample.web.app)) has the similar content with
+the [playground](./examples/playground/) app but the modal sheet is shown using 
 Navigator 2.0 (Router API) in a declarative way.
 
 ### Coffee maker app for state management example
 
-The coffee_maker app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker), [web app](https://coffeemakerexample.web.app)) demonstrates how to manage the state among the page components with an opinionated use of the Provider state
+The coffee_maker app ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/examples/coffee_maker), [web app](https://coffeemakerexample.web.app)) demonstrates how to manage the state among the page components with an opinionated use of the Provider state
 management library.
 
 The following code snippet demonstrates how to decorate the modal sheet with a change
@@ -408,7 +408,7 @@ current state:
 
 ### Coffee maker app with Navigator 2.0
 
-The coffee_maker_navigator2 ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/coffee_maker_navigator_2), [web app](https://coffeemakernavigator2.web.app)) app demonstrates how to manage app navigation including the modal sheet with Navigator 2.0 by 
+The coffee_maker_navigator2 ([source code](https://github.com/woltapp/wolt_modal_sheet/tree/main/examples/coffee_maker_navigator_2), [web app](https://coffeemakernavigator2.web.app)) app demonstrates how to manage app navigation including the modal sheet with Navigator 2.0 by 
 applying the MVVM pattern with the Provide state management package.
 
 ### CupertinoApp support
@@ -424,7 +424,7 @@ CupertinoApp(
   localizationsDelegates: const <LocalizationsDelegate<dynamic>>[DefaultMaterialLocalizations.delegate],
 )
 ```
-To see its usage, please check [coffee maker example app](coffee_maker/lib/main.dart).
+To see its usage, please check [coffee maker example app](examples/coffee_maker/lib/main.dart).
 
 ## Features
 

@@ -1,5 +1,5 @@
-name: demo_ui_components
-description: Module to contain commonly shared ui components in example modules
+name: coffee_maker
+description: The coffee maker example project to demonstrate the usage of wolt_modal_sheet library
 publish_to: "none"
 
 environment:
@@ -10,11 +10,12 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^2.0.5
-  collection: ^1.16.0
+  provider: ^6.0.5
   wolt_responsive_layout_grid: ^0.0.3
-  google_fonts: 6.0.0
   wolt_modal_sheet:
-    path: ..
+    path: ../..
+  demo_ui_components:
+    path: ../demo_ui_components
 
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -22,3 +23,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - lib/assets/images/

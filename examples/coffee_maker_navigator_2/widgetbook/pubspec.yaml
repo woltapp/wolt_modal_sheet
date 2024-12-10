@@ -13,9 +13,9 @@ dependencies:
   widgetbook: ^3.10.0
   widgetbook_annotation: ^3.2.0
   wolt_state_management:
-    path: ../../wolt_state_management
+    path: ../../../packages/wolt_state_management
   wolt_modal_sheet:
-    path: ../..
+    path: ../../..
   coffee_maker_navigator_2:
     path: ../
   demo_ui_components:
