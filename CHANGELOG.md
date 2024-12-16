@@ -1,3 +1,7 @@
+## 0.10.0
+- Added `showPage<T extends SliverWoltModalSheetPage>` method, allowing direct navigation to any page by page type and optional criteria for more flexible and dynamic in-modal navigation. [#351](https://github.com/woltapp/wolt_modal_sheet/pull/351) by [gazialankus](https://github.com/gazialankus)
+  - Fixes:
+    - [#346](https://github.com/woltapp/wolt_modal_sheet/issues/346) Other ways of specifying the page to go to
 ## 0.9.4
 - Fix modalDecorator context wrapping in WoltModalSheet [#340](https://github.com/woltapp/wolt_modal_sheet/pull/340) by [ulusoyca](https://github.com/ulusoyca)
 ## 0.9.3
