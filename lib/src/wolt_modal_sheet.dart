@@ -903,6 +903,28 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     }
     return false;
   }
+
+  /// Navigates to a page identified by both type and a selector function parameter `where`.
+  ///
+  /// This method allows specifying the page to navigate using multiple criteria: the type of the
+  /// page specified by type `T` and arbitrary constraints on the page using the `where`
+  /// parameter. If no page that matches these criteria is found, no navigation will occur.
+  ///
+  /// Parameters:
+  ///   - [T]: The SliverWoltModalSheetPage descendant type of the page to find.
+  ///   - [where]: An optional selector function to further constrain the search.
+  ///
+  /// Returns:
+  ///   - [bool]: Returns `true` if navigation to the page was successful, `false` if no page
+  ///   that matches the given criteria is found in the stack.
+  bool showPage<T extends SliverWoltModalSheetPage>({bool Function(T page)? where}) {
+    final index = _pages.indexWhere(where == null ? (p) => p is T : (p) => p is T && where(p));
+    if (index != -1) {
+      _currentPageIndex = index;
+      return true;
+    }
+    return false;
+  }
 }
 
 class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
