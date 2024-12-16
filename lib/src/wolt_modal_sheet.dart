@@ -941,8 +941,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///   print("No MyCustomPage with the specified ID found in the stack.");
   /// }
   /// ```
-  bool showPage<T extends SliverWoltModalSheetPage>({bool Function(T page)? where}) {
-    final index = _pages.indexWhere(where == null ? (p) => p is T : (p) => p is T && where(p));
+  bool showPage<T extends SliverWoltModalSheetPage>({
+    bool Function(T page)? where,
+  }) {
+    final index = _pages
+        .indexWhere(where == null ? (p) => p is T : (p) => p is T && where(p));
     if (index != -1) {
       _currentPageIndex = index;
       return true;
