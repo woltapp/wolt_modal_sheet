@@ -928,9 +928,10 @@ This subsection details the methods for moving within the modal's navigation
 stack, allowing users to navigate through pages effectively.
 
 #### Direct navigation
-Navigate within the modal stack using specific methods to move directly to a 
-desired page. You can go to the next or previous page, jump to a page at a 
-specific index in the page list, or navigate to a page by its unique identifier.
+Navigate within the modal stack using specific methods to move directly to a
+desired page. You can go to the next or previous page, jump to a page at a
+specific index in the page list, navigate to a page by its unique identifier,
+or even navigate based on the page type with optional filtering criteria.
 
 ```dart
 // Move to the next page
@@ -944,6 +945,14 @@ bool navigatedByIndex = WoltModalSheet.of(context).showAtIndex(2);
 
 // Navigate to a page by its unique identifier
 bool navigatedById = WoltModalSheet.of(context).showPageWithId(pageId);
+
+// Navigate to a page by its type
+bool didShowPage = WoltModalSheet.of(context).showPage<MyCustomPage>();
+
+// Navigate to a page of a certain type that meets additional criteria
+bool didShowFilteredPage = WoltModalSheet.of(context).showPage<MyCustomPage>(
+  where: (page) => page.someProperty == "desiredValue",
+);
 ```
 
 #### Pushing Pages

@@ -1,5 +1,6 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
+import 'package:playground/home/pages/custom_sheet_pages/product_with_sku_page.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:playground/home/pages/sheet_page_with_custom_top_bar.dart';
 import 'package:playground/home/pages/sheet_page_with_min_height.dart';
@@ -27,6 +28,9 @@ class RootSheetPage {
         SheetPageWithTextField.build(),
         SheetPageWithMinHeight.build(),
         SheetPageWithInAppNavigation.build(),
+        ProductWithSkuPage(1),
+        ProductWithSkuPage(2),
+        ProductWithSkuPage(3),
         SheetPageWithCustomTopBar.build(),
         SheetPageWithNoPageTitleNoTopBar.build(),
         SheetPageWithUpdatePage.build(context, isLastPage: true),
@@ -153,8 +157,15 @@ class RootSheetPage {
                       destinationPage = SheetPageWithNonScrollingLayout.build();
                       break;
                     case ModalPageName.inAppNavigation:
-                      destinationPage = SheetPageWithInAppNavigation.build();
-                      break;
+                      WoltModalSheet.of(context).addOrReplacePages([
+                        SheetPageWithInAppNavigation.build(),
+                        ProductWithSkuPage(1),
+                        ProductWithSkuPage(2),
+                        ProductWithSkuPage(3),
+                      ]);
+                      isButtonEnabledNotifier.value =
+                          selectedItemData.isSelected;
+                      return;
                     case null:
                       WoltModalSheet.of(context).addOrReplacePages(
                         _constructAllPagesAfterRootPage(context),

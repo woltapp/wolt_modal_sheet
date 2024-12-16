@@ -903,6 +903,55 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     }
     return false;
   }
+
+  /// Navigates to a page identified by both type and an optional selector function parameter `where`.
+  ///
+  /// This method allows specifying the page to navigate using multiple criteria:
+  ///  - The type of the page specified by `T`.
+  ///  - Arbitrary constraints on the page using the `where` parameter.
+  ///
+  /// If no page that matches these criteria is found, no navigation will occur.
+  ///
+  /// Parameters:
+  ///   - [T]: The [SliverWoltModalSheetPage] descendant type of the page to find.
+  ///   - [where]: An optional selector function to further constrain the search. For example,
+  ///     `(page) => page.id == "desired_page_id"`.
+  ///
+  /// Returns:
+  ///   - [bool]: Returns `true` if navigation to the page was successful, `false` if no page
+  ///     that matches the given criteria is found in the stack.
+  ///
+  /// Usage Examples:
+  /// ```dart
+  /// // Example 1: Navigate to the first occurrence of a page by its type
+  /// bool didShowPage = WoltModalSheet.of(context).showPage<MyCustomPage>();
+  /// if (didShowPage) {
+  ///   print("Successfully navigated to MyCustomPage.");
+  /// } else {
+  ///   print("No MyCustomPage found in the stack.");
+  /// }
+  ///
+  /// // Example 2: Navigate to a page of a certain type that meets additional criteria
+  /// bool didShowFilteredPage = WoltModalSheet.of(context).showPage<MyCustomPage>(
+  ///   where: (page) => page.id == "some_unique_page_id",
+  /// );
+  /// if (didShowFilteredPage) {
+  ///   print("Successfully navigated to the MyCustomPage with ID 'some_unique_page_id'.");
+  /// } else {
+  ///   print("No MyCustomPage with the specified ID found in the stack.");
+  /// }
+  /// ```
+  bool showPage<T extends SliverWoltModalSheetPage>({
+    bool Function(T page)? where,
+  }) {
+    final index = _pages
+        .indexWhere(where == null ? (p) => p is T : (p) => p is T && where(p));
+    if (index != -1) {
+      _currentPageIndex = index;
+      return true;
+    }
+    return false;
+  }
 }
 
 class _WoltModalMultiChildLayoutDelegate extends MultiChildLayoutDelegate {
