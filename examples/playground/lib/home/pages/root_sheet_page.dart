@@ -157,8 +157,16 @@ class RootSheetPage {
                       destinationPage = SheetPageWithNonScrollingLayout.build();
                       break;
                     case ModalPageName.inAppNavigation:
-                      destinationPage = SheetPageWithInAppNavigation.build();
-                      break;
+                      WoltModalSheet.of(context).addOrReplacePages(
+                        [
+                          SheetPageWithInAppNavigation.build(),
+                          ProductWithSkuPage(1),
+                          ProductWithSkuPage(2),
+                          ProductWithSkuPage(3),
+                        ]
+                      );
+                      isButtonEnabledNotifier.value = selectedItemData.isSelected;
+                      return;
                     case null:
                       WoltModalSheet.of(context).addOrReplacePages(
                         _constructAllPagesAfterRootPage(context),

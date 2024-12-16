@@ -315,8 +315,14 @@ class _ButtonForShowProductWithSku extends StatelessWidget {
           Expanded(
             child: WoltElevatedButton(
               onPressed: () {
-                WoltModalSheet.of(context).showPage<ProductWithSkuPage>(where: (page) => page.sku == sku,);
-                _showMessage(context, 'Moved to product page with sku: $sku');
+                final didShowFilteredPage =
+                    WoltModalSheet.of(context).showPage<ProductWithSkuPage>(
+                  where: (page) => page.sku == sku,
+                );
+                String message = didShowFilteredPage
+                    ? 'Moved to product page with sku: $sku'
+                    : 'Cannot navigate: No product page with sku $sku found.';
+                _showMessage(context, message);
               },
               child: Text('SKU $sku'),
             ),
