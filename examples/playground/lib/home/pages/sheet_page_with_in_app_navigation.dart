@@ -1,5 +1,6 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
+import 'package:playground/home/pages/custom_sheet_pages/product_with_sku_page.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -44,6 +45,8 @@ class SheetPageWithInAppNavigation {
               _ButtonForShowAtIndex(),
               SizedBox(height: 16),
               _ButtonForShowPageWithId(),
+              SizedBox(height: 16),
+              _ButtonForShowProductWithSku(),
               SizedBox(height: 16),
             ],
           ),
@@ -296,6 +299,31 @@ class _ButtonForShowPageWithId extends StatelessWidget {
         },
         child: const Text('Show the page with id: ${RootSheetPage.pageId}'),
       ),
+    );
+  }
+}
+
+class _ButtonForShowProductWithSku extends StatelessWidget {
+  const _ButtonForShowProductWithSku();
+
+  @override
+  Widget build(BuildContext context) {
+    const skus = [1, 2, 3];
+    return Row(
+      children: [
+        for (final sku in skus) ...[
+          Expanded(
+            child: WoltElevatedButton(
+              onPressed: () {
+                WoltModalSheet.of(context).showPage<ProductWithSkuPage>(where: (page) => page.sku == sku,);
+                _showMessage(context, 'Moved to product page with sku: $sku');
+              },
+              child: Text('SKU $sku'),
+            ),
+          ),
+          if (sku != skus.last) const SizedBox(width: 8),
+        ],
+      ],
     );
   }
 }
