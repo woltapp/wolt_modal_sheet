@@ -18,15 +18,7 @@ class LoginScreenContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Image(
-                    image: AssetImage(
-                      'images/dash_coffee.webp',
-                      package: 'assets',
-                    ),
-                    fit: BoxFit.cover,
-                    height: 216,
-                    width: 384,
-                  ),
+                  FlutterLogo(size: 216),
                   Text(
                     'Welcome to Coffee Maker!',
                     style: Theme.of(context).textTheme.titleLarge!,
