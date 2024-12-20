@@ -20,7 +20,7 @@ class LoginScreenContent extends StatelessWidget {
                 children: <Widget>[
                   FlutterLogo(size: 216),
                   Text(
-                    'Welcome to Coffee Maker!',
+                    'Welcome to Coffee Maker Widgetbook Special!',
                     style: Theme.of(context).textTheme.titleLarge!,
                   ),
                   const SizedBox(height: 50),

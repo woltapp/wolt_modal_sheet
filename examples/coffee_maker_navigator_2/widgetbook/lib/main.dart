@@ -2,6 +2,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 // This file does not exist yet,
 // it will be generated in the next step
@@ -11,7 +12,14 @@ void main() {
   runApp(const WidgetbookApp());
 }
 
-@widgetbook.App()
+@widgetbook.App(
+  cloudAddonsConfigs: {
+    'Text Scale Addon': [
+      TextScaleAddonConfig(1.2),
+      TextScaleAddonConfig(2.0),
+    ],
+  },
+)
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
 
