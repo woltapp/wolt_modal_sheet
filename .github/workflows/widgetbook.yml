@@ -20,15 +20,15 @@ jobs:
           # app widgets available for Widgetbook
 
       - name: Build Widgetbook
-        working-directory: widgetbook
+        working-directory: examples/coffee_maker_navigator_2/widgetbook
         run: |
           flutter pub get
-          cd examples/coffee_maker_navigator_2/widgetbook && dart run build_runner build -d 
-          flutter build web -t examples/coffee_maker_navigator_2/widgetbook/lib/main.dart
+          dart run build_runner build -d 
+          flutter build web -t lib/main.dart
 
       - name: Install Widgetbook CLI
         run: dart pub global activate widgetbook_cli
 
       - name: Push Widgetbook Build
-        working-directory: widgetbook
+        working-directory: examples/coffee_maker_navigator_2/widgetbook
         run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
