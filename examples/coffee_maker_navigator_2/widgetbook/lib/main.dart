@@ -20,7 +20,7 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: directories,
       appBuilder: (context, child) => MaterialApp.router(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         backButtonDispatcher: RootBackButtonDispatcher(),
         routerDelegate: SingleChildRouterDelegate(
           child: child,
