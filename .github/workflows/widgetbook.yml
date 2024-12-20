@@ -23,7 +23,6 @@ jobs:
         working-directory: widgetbook
         run: |
           flutter pub get
-          dart run build_runner build -d
           flutter build web -t examples/coffee_maker_navigator_2/widgetbook/lib/main.dart
 
       - name: Install Widgetbook CLI
