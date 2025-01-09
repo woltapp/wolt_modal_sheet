@@ -7,7 +7,6 @@
     <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://img.shields.io/pub/v/wolt_modal_sheet?logo=dart&logoColor=white" alt="Pub Version"></a>
     <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/points/wolt_modal_sheet" alt="Pub points"></a>
     <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/likes/wolt_modal_sheet" alt="Pub Likes"></a>
-    <a href="https://pub.dev/packages/wolt_modal_sheet"><img src="https://badgen.net/pub/popularity/wolt_modal_sheet" alt="Pub popularity"></a>
     <br>    
     <a href="https://github.com/woltapp/wolt_modal_sheet"><img src="https://img.shields.io/github/stars/woltapp/wolt_modal_sheet?style=social" alt="Repo stars"></a>
     <a href="https://github.com/woltapp/wolt_modal_sheet/commits/main"><img src="https://img.shields.io/github/last-commit/woltapp/wolt_modal_sheet/main?logo=git" alt="Last Commit"></a>
