@@ -110,11 +110,10 @@ class _ToolbarLayout extends MultiChildLayoutDelegate {
     if (hasChild(_ToolbarSlot.leading)) {
       final BoxConstraints constraints = BoxConstraints(
         maxWidth: size.width,
-        minHeight:
-            size.height, // The height should be exactly the height of the bar.
         maxHeight: size.height,
       );
-      leadingWidth = layoutChild(_ToolbarSlot.leading, constraints).width;
+      final Size leadingSize = layoutChild(_ToolbarSlot.leading, constraints);
+      leadingWidth = leadingSize.width;
       final double leadingX;
       switch (textDirection) {
         case TextDirection.rtl:
@@ -124,7 +123,8 @@ class _ToolbarLayout extends MultiChildLayoutDelegate {
           leadingX = 0.0;
           break;
       }
-      positionChild(_ToolbarSlot.leading, Offset(leadingX, 0.0));
+      final double leadingY = (size.height - leadingSize.height) / 2.0;
+      positionChild(_ToolbarSlot.leading, Offset(leadingX, leadingY));
     }
 
     if (hasChild(_ToolbarSlot.trailing)) {
