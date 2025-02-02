@@ -1,3 +1,10 @@
+## 0.11.0
+- Fix WoltNavigationToolbar leading constraint. [#361](https://github.com/woltapp/wolt_modal_sheet/pull/351) by [TahaTesser](https://github.com/TahaTesser)
+  - Fixes:
+    - [#360](https://github.com/woltapp/wolt_modal_sheet/issues/346) leadingNavBarWidget uses more vertical space than trailingNavBarWidget
+- Remove popularity badge from README.md. [#359](https://github.com/woltapp/wolt_modal_sheet/pull/359) by [ueman](https://github.com/ueman)
+  - Fixes:
+    - [#358](https://github.com/woltapp/wolt_modal_sheet/issues/358) Popularity badge in the ReadMe not working
 ## 0.10.0
 - Added `showPage<T extends SliverWoltModalSheetPage>` method, allowing direct navigation to any page by page type and optional criteria for more flexible and dynamic in-modal navigation. [#351](https://github.com/woltapp/wolt_modal_sheet/pull/351) by [gazialankus](https://github.com/gazialankus)
   - Fixes:
