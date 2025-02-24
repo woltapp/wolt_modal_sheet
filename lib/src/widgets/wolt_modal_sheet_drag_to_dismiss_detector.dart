@@ -86,16 +86,14 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
     }
 
     final deltaDiff = details.primaryDelta! / _childHeight;
+    final newValue = switch (_dismissDirection) {
+      WoltModalDismissDirection.down => _animationController.value - deltaDiff,
+      WoltModalDismissDirection.up => _animationController.value + deltaDiff,
+      _ => _animationController.value,
+    };
 
-    switch (_dismissDirection) {
-      case WoltModalDismissDirection.down:
-        _animationController.value -= deltaDiff;
-        break;
-      case WoltModalDismissDirection.up:
-        _animationController.value += deltaDiff;
-        break;
-      default:
-        break;
+    if (newValue >= 0.01) {
+      _animationController.value = newValue;
     }
   }
 
@@ -157,23 +155,29 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
     }
 
     final delta = -details.primaryDelta! / _childWidth;
+    double newValue = _animationController.value;
+
     switch (_dismissDirection) {
       case WoltModalDismissDirection.startToEnd:
         if (Directionality.of(context) == TextDirection.ltr) {
-          _animationController.value -= delta;
+          newValue -= delta;
         } else {
-          _animationController.value += delta;
+          newValue += delta;
         }
         break;
       case WoltModalDismissDirection.endToStart:
         if (Directionality.of(context) == TextDirection.ltr) {
-          _animationController.value += delta;
+          newValue += delta;
         } else {
-          _animationController.value -= delta;
+          newValue -= delta;
         }
         break;
       default:
         break;
+    }
+
+    if (newValue >= 0.01) {
+      _animationController.value = newValue;
     }
   }
 
