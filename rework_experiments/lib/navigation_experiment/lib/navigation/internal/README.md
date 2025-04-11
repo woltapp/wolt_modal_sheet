@@ -1,0 +1,1 @@
+This folder contains entities responsible for internal navigation (navigation of content).
