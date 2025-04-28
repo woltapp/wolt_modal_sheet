@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+import 'package:wolt_modal_sheet/src/widgets/pixel_slide_transition.dart';
 
 /// A customizable side sheet modal that extends [WoltModalType].
 class WoltSideSheetType extends WoltModalType {
@@ -168,7 +169,7 @@ class WoltSideSheetType extends WoltModalType {
 
     return FadeTransition(
       opacity: alphaAnimation,
-      child: SlideTransition(position: positionAnimation, child: child),
+      child: PixelSlideTransition(position: positionAnimation, child: child),
     );
   }
 

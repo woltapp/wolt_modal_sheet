@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/src/widgets/pixel_slide_transition.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A customizable bottom sheet modal that extends [WoltModalType].
@@ -124,7 +125,7 @@ class WoltBottomSheetType extends WoltModalType {
   /// [secondaryAnimation] coordinates with the transitions of other routes.
   /// [child] is the content widget to be animated.
   ///
-  /// Returns a `SlideTransition` widget that manages the modal's entrance animation.
+  /// Returns a `PixelSlideTransition` widget that manages the modal's entrance animation.
   @override
   Widget buildTransitions(
     BuildContext context,
@@ -151,7 +152,8 @@ class WoltBottomSheetType extends WoltModalType {
       ),
     );
 
-    return SlideTransition(position: positionAnimation, child: child);
+    // Use PixelSlideTransition to avoid RenderFractionalTranslation layout asserts
+    return PixelSlideTransition(position: positionAnimation, child: child);
   }
 
   /// Provides a way to create a new `WoltBottomSheetType` instance with modified properties.

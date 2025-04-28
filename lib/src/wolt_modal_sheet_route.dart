@@ -113,12 +113,22 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final modalType = _determineCurrentModalType(context);
-    return modalType.buildTransitions(
-      context,
-      animation,
-      secondaryAnimation,
-      child,
+    // Prevent pointer events (e.g., mouse scroll) during entrance/exit animations
+    return AnimatedBuilder(
+      animation: animation,
+      child: child,
+      builder: (context, child) {
+        final modalType = _determineCurrentModalType(context);
+        final transition = modalType.buildTransitions(
+          context,
+          animation,
+          secondaryAnimation,
+          child!,
+        );
+        final isAnimating = animation.status != AnimationStatus.completed &&
+            animation.status != AnimationStatus.dismissed;
+        return AbsorbPointer(absorbing: isAnimating, child: transition);
+      },
     );
   }
 
