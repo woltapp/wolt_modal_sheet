@@ -56,7 +56,7 @@ mixin WoltKeyboardClosureListenerMixin<T extends StatefulWidget>
     _keyboardWasVisible = keyboardVisible;
   }
 
-  /// Returns a ValueNotifier<SoftKeyboardClosedEvent> to provide access to the notifier
+  /// Returns a `ValueNotifier<SoftKeyboardClosedEvent>` to provide access to the notifier
   /// from the widget tree, allowing other widgets to listen and react to keyboard closure events.
   ValueListenable<SoftKeyboardClosedEvent> get softKeyboardClosureListenable =>
       _keyboardClosedNotifier;
