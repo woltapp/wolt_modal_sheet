@@ -44,6 +44,7 @@ class CoffeeOrderListItemTile extends StatelessWidget {
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
+                // ignore: deprecated_member_use
                 Container(color: WoltColors.black.withOpacity(0.3)),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
