@@ -30,6 +30,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     required this.enableDrag,
     required this.showDragHandle,
     required this.useSafeArea,
+    required this.extraNotifier,
     super.key,
   });
 
@@ -42,6 +43,9 @@ class WoltModalSheet<T> extends StatefulWidget {
   /// to handle in-modal navigation without considering page index, you can ignore providing this
   /// notifier and use in-modal navigation methods.
   final ValueNotifier<int> pageIndexNotifier;
+
+  /// A ValueNotifier that holds the extra data for the current page.
+  final ValueNotifier<Object?> extraNotifier;
 
   /// A callback that is triggered when the modal is dismissed by tapping the modal barrier.
   /// This is useful to sync the app state with the modal state when declarative navigation is
@@ -139,6 +143,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
     Color? modalBarrierColor,
+    Object? extra,
   }) {
     return WoltModalSheet.showWithDynamicPath(
       context: context,
@@ -157,6 +162,7 @@ class WoltModalSheet<T> extends StatefulWidget {
       onModalDismissedWithDrag: onModalDismissedWithDrag,
       transitionAnimationController: transitionAnimationController,
       modalBarrierColor: modalBarrierColor,
+      extraNotifier: ValueNotifier(extra),
     );
   }
 
@@ -207,6 +213,7 @@ class WoltModalSheet<T> extends StatefulWidget {
     VoidCallback? onModalDismissedWithDrag,
     AnimationController? transitionAnimationController,
     Color? modalBarrierColor,
+    ValueNotifier<Object?>? extraNotifier,
   }) {
     final NavigatorState navigator =
         Navigator.of(context, rootNavigator: useRootNavigator);
@@ -226,6 +233,7 @@ class WoltModalSheet<T> extends StatefulWidget {
         transitionAnimationController: transitionAnimationController,
         useSafeArea: useSafeArea,
         modalBarrierColor: modalBarrierColor,
+        extraNotifier: extraNotifier ?? ValueNotifier(null),
       ),
     );
   }
@@ -281,6 +289,9 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns true if the current page is the first page in the stack.
   bool get isAtFirstPage => _currentPageIndex == 0;
 
+  /// The extra data for the current page.
+  Object? get extra => _extra;
+
   /// Returns true if the current page is the last page in the stack.
   bool get isAtLastPage => _currentPageIndex == _pages.length - 1;
 
@@ -289,6 +300,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   static const barrierLayoutId = 'barrierLayoutId';
 
   static const contentLayoutId = 'contentLayoutId';
+
+  Object? get _extra => widget.extraNotifier.value;
+
+  set _extra(Object? value) {
+    widget.extraNotifier.value = value;
+  }
 
   int get _currentPageIndex => widget.pageIndexNotifier.value;
 
@@ -473,16 +490,17 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Parameters:
   /// - [pages]: The List of [SliverWoltModalSheetPage] to be added to the stack. Can also be a single page.
-  void addPages(List<SliverWoltModalSheetPage> pages) {
+  void addPages(List<SliverWoltModalSheetPage> pages, {Object? extra}) {
     _pages = List<SliverWoltModalSheetPage>.of(_pages)..addAll(pages);
+    _extra = extra;
   }
 
   /// Overload of [addPages] for adding a single page.
   ///
   /// Parameters:
   /// - [page]: The single [SliverWoltModalSheetPage] to be added to the stack.
-  void addPage(SliverWoltModalSheetPage page) {
-    addPages([page]);
+  void addPage(SliverWoltModalSheetPage page, {Object? extra}) {
+    addPages([page], extra: extra);
   }
 
   /// Dynamically updates the navigation stack by adding new pages or replacing subsequent pages
@@ -502,7 +520,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   /// None.
-  void addOrReplacePages(List<SliverWoltModalSheetPage> pages) {
+  void addOrReplacePages(List<SliverWoltModalSheetPage> pages,
+      {Object? extra}) {
     if (_currentPageIndex == _pages.length - 1) {
       // Append new pages if the current page is the last one.
       _pages = List<SliverWoltModalSheetPage>.of(_pages)..addAll(pages);
@@ -512,6 +531,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         _pages.take(_currentPageIndex + 1),
       )..addAll(pages);
     }
+    _extra = extra;
   }
 
   /// Overload of [addOrReplaceLastPages] for adding a single page.
@@ -521,8 +541,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   /// None.
-  void addOrReplacePage(SliverWoltModalSheetPage page) {
-    return addOrReplacePages([page]);
+  void addOrReplacePage(SliverWoltModalSheetPage page, {Object? extra}) {
+    return addOrReplacePages([page], extra: extra);
   }
 
   /// Adds one or more new pages to the modal sheet stack and displays the first of the added
@@ -540,7 +560,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   /// None.
-  void pushPages(List<SliverWoltModalSheetPage> pages) {
+  void pushPages(List<SliverWoltModalSheetPage> pages, {Object? extra}) {
     if (pages.isEmpty) {
       throw ArgumentError('pages must not be empty.');
     }
@@ -548,6 +568,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     _pages = List<SliverWoltModalSheetPage>.of(_pages)..addAll(pages);
     // Set the page index to the first of the newly added pages.
     _currentPageIndex = _pages.length - pages.length;
+    _extra = extra;
   }
 
   /// Adds a new page to the modal sheet stack and displays it.
@@ -573,13 +594,14 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   /// - [bool]: Returns `true` if a page was successfully removed; `false` if the stack
   ///   had only one page left.
-  bool popPage() {
+  bool popPage({Object? extra}) {
     if (_pages.length > 1) {
       _pages = List<SliverWoltModalSheetPage>.of(_pages)..removeLast();
       // Adjust the current page index if the removed page is the current page.
       if (_currentPageIndex == _pages.length) {
         _currentPageIndex--;
       }
+      _extra = extra;
       return true;
     }
     return false;
@@ -615,7 +637,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// This method ensures that the navigation stack's integrity is preserved by adjusting
   /// indices appropriately and managing the visibility of pages dynamically. It updates the
   /// state of the application to reflect these changes if necessary.
-  bool removePage(Object id) {
+  bool removePage(Object id, {Object? extra}) {
     // Check if there are more than one page in the stack
     if (_pages.length > 1) {
       final currentPages = List<SliverWoltModalSheetPage>.of(_pages);
@@ -642,6 +664,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           currentPages.removeAt(index);
           _pages = currentPages;
         }
+        _extra = extra;
         return true;
       } // If the page to remove is not the current page
       currentPages.removeAt(index);
@@ -671,7 +694,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   ///  - `bool`: True if the pages were successfully removed; otherwise, false. This method also
   ///  returns false if the page with the specified [id] is not found or is currently visible.
-  bool removeUntil(Object id) {
+  bool removeUntil(Object id, {Object? extra}) {
     final indexToStopRemoving = _pages.indexWhere((p) => p.id == id);
     if (indexToStopRemoving == -1 || indexToStopRemoving == _currentPageIndex) {
       return false;
@@ -688,6 +711,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       // rebuild.
       setState(() {});
     }
+    _extra = extra;
     return true;
   }
 
@@ -701,12 +725,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   /// - [bool]: Returns `true` if replacing  page was successful, `false` if no page with the
   /// specified [id] is found.
-  bool replacePage(Object id, SliverWoltModalSheetPage page) {
+  bool replacePage(Object id, SliverWoltModalSheetPage page, {Object? extra}) {
     final index = _pages.indexWhere((p) => p.id == id);
     if (index == -1) {
       return false;
     } else if (index == _currentPageIndex) {
-      replaceCurrentPage(page);
+      replaceCurrentPage(page, extra: extra);
       return true;
     } // Replace the page in the list.
     final currentPages = List<SliverWoltModalSheetPage>.of(_pages);
@@ -728,10 +752,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   ///
   /// Returns:
   /// None.
-  void replaceCurrentPage(SliverWoltModalSheetPage newPage) {
+  void replaceCurrentPage(SliverWoltModalSheetPage newPage, {Object? extra}) {
     setState(() {
       _pages = List<SliverWoltModalSheetPage>.of(_pages);
       _pages[_currentPageIndex] = newPage; // Replace the current page
+      _extra = extra;
     });
   }
 
@@ -779,10 +804,12 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   /// None.
   void updateCurrentPage(
-    SliverWoltModalSheetPage Function(SliverWoltModalSheetPage) updateFunction,
-  ) {
+      SliverWoltModalSheetPage Function(SliverWoltModalSheetPage)
+          updateFunction,
+      {Object? extra}) {
     setState(() {
       _pages[_currentPageIndex] = updateFunction(_pages[_currentPageIndex]);
+      _extra = extra;
     });
   }
 
@@ -810,6 +837,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   void replaceAllPages(
     List<SliverWoltModalSheetPage> newPages, {
     int? selectedPageIndex,
+    Object? extra,
   }) {
     if (newPages.isEmpty) {
       throw ArgumentError('newPages must not be empty.');
@@ -828,6 +856,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       final newPageIndex = selectedPageIndex ?? _currentPageIndex;
       // Ensure the selected page index is within the bounds of the new list.
       _currentPageIndex = min(newPageIndex, _pages.length - 1);
+      _extra = extra;
     });
   }
 
@@ -840,9 +869,10 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   /// - [bool]: Returns `true` if the navigation to the next page was successful, `false` if
   ///   already on the last page and navigation did not occur.
-  bool showNext() {
+  bool showNext({Object? extra}) {
     if (_currentPageIndex < _pages.length - 1) {
       _currentPageIndex = _currentPageIndex + 1;
+      _extra = extra;
       return true;
     }
     return false; // No navigation occurred, already at the last page.
@@ -857,9 +887,10 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   /// - [bool]: Returns `true` if the navigation to the previous page was successful, `false` if
   ///   already on the first page and navigation did not occur.
-  bool showPrevious() {
+  bool showPrevious({Object? extra}) {
     if (_currentPageIndex > 0) {
       _currentPageIndex = _currentPageIndex - 1;
+      _extra = extra;
       return true;
     }
     return false; // No navigation occurred, already at the first page.
@@ -876,9 +907,10 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   ///   - [bool]: Returns `true` if the navigation to the specified index was successful, `false` if
   ///     the index is out of the navigation stack's bounds.
-  bool showAtIndex(int index) {
+  bool showAtIndex(int index, {Object? extra}) {
     if (index < _pages.length && index >= 0) {
       _currentPageIndex = index;
+      _extra = extra;
       return true;
     }
     return false; // No navigation occurred, already at the last page.
@@ -895,10 +927,11 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns:
   ///   - [bool]: Returns `true` if navigation to the page was successful, `false` if no page
   ///   with the specified ID is found in the stack.
-  bool showPageWithId(Object pageId) {
+  bool showPageWithId(Object pageId, {Object? extra}) {
     final index = _pages.indexWhere((p) => p.id == pageId);
     if (index != -1) {
       _currentPageIndex = index;
+      _extra = extra;
       return true;
     }
     return false;
