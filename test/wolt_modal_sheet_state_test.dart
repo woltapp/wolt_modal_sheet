@@ -32,6 +32,7 @@ void main() {
               enableDrag: null,
               showDragHandle: null,
               useSafeArea: false,
+              extraNotifier: ValueNotifier(null),
             );
           }),
         ),
@@ -74,6 +75,7 @@ void main() {
               modalDecorator: null,
               modalTypeBuilder: (_) => WoltModalType.bottomSheet(),
               transitionAnimationController: null,
+              extraNotifier: ValueNotifier(null),
               route: WoltModalSheetRoute(
                 pageListBuilderNotifier: pageListBuilderNotifier,
                 transitionAnimationController:
