@@ -44,7 +44,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   /// notifier and use in-modal navigation methods.
   final ValueNotifier<int> pageIndexNotifier;
 
-  /// A ValueNotifier that holds the extra data for the current page.
+  /// A ValueNotifier that holds the extra data for the current sheet.
   final ValueNotifier<Object?> extraNotifier;
 
   /// A callback that is triggered when the modal is dismissed by tapping the modal barrier.
@@ -123,6 +123,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///   - `onModalDismissedWithDrag`: Callback for when the modal is dismissed by dragging.
   ///   - `transitionAnimationController`: Controller for custom transition animations.
   ///   - `modalBarrierColor`: Color of the modal barrier.
+  ///   - `extra`: Extra data for the modal that is shared across all pages.
   ///
   /// Returns:
   ///   - A `Future` that resolves to the value returned when the modal is dismissed.
@@ -289,7 +290,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   /// Returns true if the current page is the first page in the stack.
   bool get isAtFirstPage => _currentPageIndex == 0;
 
-  /// The extra data for the current page.
+  /// The extra data from the modal sheet.
   Object? get extra => _extra;
 
   /// Returns true if the current page is the last page in the stack.
