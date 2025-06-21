@@ -11,18 +11,13 @@ class WoltDialogType extends WoltModalType {
 
   /// Creates a [WoltDialogType] with specified styles and behaviors.
   const WoltDialogType({
-    ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool forceMaxHeight = false,
-    Duration transitionDuration = _defaultEnterDuration,
-    Duration reverseTransitionDuration = _defaultExitDuration,
-    bool? barrierDismissible,
+    super.shapeBorder = _defaultShapeBorder,
+    super.forceMaxHeight = false,
+    super.transitionDuration = _defaultEnterDuration,
+    super.reverseTransitionDuration = _defaultExitDuration,
+    super.barrierDismissible,
   }) : super(
-          shapeBorder: shapeBorder,
-          forceMaxHeight: forceMaxHeight,
-          transitionDuration: transitionDuration,
-          reverseTransitionDuration: reverseTransitionDuration,
           showDragHandle: false,
-          barrierDismissible: barrierDismissible,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 300);

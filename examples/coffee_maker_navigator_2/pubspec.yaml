@@ -3,8 +3,8 @@ description: The coffee maker example project to demonstrate the usage of wolt_m
 publish_to: "none"
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.16.0'
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
 
 dependencies:
   flutter:
@@ -24,8 +24,9 @@ dependencies:
     path: ../../packages/wolt_state_management
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
-  test: ^1.18.2
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true

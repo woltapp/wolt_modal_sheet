@@ -20,8 +20,8 @@ class WoltModalSheetMainContent extends StatelessWidget {
     required this.page,
     required this.woltModalType,
     required this.scrollAnimationStyle,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -12,10 +12,10 @@ import 'package:wolt_modal_sheet/src/modal_page/sliver_wolt_modal_sheet_page.dar
 /// - If none of the above are applicable, it defaults to a `SizedBox.shrink`.
 class WoltModalSheetTopBarTitle extends StatefulWidget {
   const WoltModalSheetTopBarTitle({
-    Key? key,
+    super.key,
     required this.page,
     required this.pageTitleKey,
-  }) : super(key: key);
+  });
 
   final SliverWoltModalSheetPage page;
   final GlobalKey pageTitleKey;

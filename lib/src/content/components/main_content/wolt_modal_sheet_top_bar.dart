@@ -17,7 +17,7 @@ class WoltModalSheetTopBar extends StatelessWidget {
   final SliverWoltModalSheetPage page;
 
   /// Creates a new instance of [WoltModalSheetTopBar].
-  const WoltModalSheetTopBar({required this.page, Key? key}) : super(key: key);
+  const WoltModalSheetTopBar({required this.page, super.key});
 
   @override
   Widget build(BuildContext context) {

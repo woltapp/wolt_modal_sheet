@@ -8,25 +8,17 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WoltSideSheetType extends WoltModalType {
   /// Constructs a [WoltSideSheetType].
   const WoltSideSheetType({
-    ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool forceMaxHeight = true,
-    Duration transitionDuration = _defaultEnterDuration,
-    Duration reverseTransitionDuration = _defaultExitDuration,
-    WoltModalDismissDirection dismissDirection =
+    super.shapeBorder = _defaultShapeBorder,
+    super.forceMaxHeight = true,
+    super.transitionDuration = _defaultEnterDuration,
+    super.reverseTransitionDuration = _defaultExitDuration,
+    WoltModalDismissDirection super.dismissDirection =
         WoltModalDismissDirection.endToStart,
-    double minFlingVelocity = 365.0,
-    double closeProgressThreshold = 0.5,
-    bool? barrierDismissible,
+    super.minFlingVelocity = 365.0,
+    super.closeProgressThreshold = 0.5,
+    super.barrierDismissible,
   }) : super(
-          shapeBorder: shapeBorder,
           showDragHandle: false,
-          forceMaxHeight: forceMaxHeight,
-          transitionDuration: transitionDuration,
-          reverseTransitionDuration: reverseTransitionDuration,
-          dismissDirection: dismissDirection,
-          minFlingVelocity: minFlingVelocity,
-          closeProgressThreshold: closeProgressThreshold,
-          barrierDismissible: barrierDismissible,
         );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 300);

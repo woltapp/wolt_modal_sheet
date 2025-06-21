@@ -10,8 +10,7 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
   /// Constructs a `WoltStickyActionBarWrapper`.
   ///
   /// The [page] argument must not be null.
-  const WoltStickyActionBarWrapper({required this.page, Key? key})
-      : super(key: key);
+  const WoltStickyActionBarWrapper({required this.page, super.key});
 
   /// The [SliverWoltModalSheetPage] which provides configuration for the Sticky Action Bar
   /// and potentially its gradient overlay.

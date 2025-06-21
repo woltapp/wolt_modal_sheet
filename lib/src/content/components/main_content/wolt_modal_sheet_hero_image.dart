@@ -21,8 +21,8 @@ class WoltModalSheetHeroImage extends StatelessWidget {
     required this.topBarHeight,
     required this.heroImageHeight,
     required this.scrollAnimationStyle,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// The widget for the hero image.
   final Widget heroImage;

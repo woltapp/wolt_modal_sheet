@@ -18,14 +18,13 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     bool? useSafeArea,
     bool? barrierDismissible,
     AnimationController? transitionAnimationController,
-    RouteSettings? settings,
+    super.settings,
   })  : _enableDrag = enableDrag,
         _showDragHandle = showDragHandle,
         _useSafeArea = useSafeArea ?? true,
         _transitionAnimationController = transitionAnimationController,
         _barrierDismissible = barrierDismissible,
-        _modalTypeBuilder = modalTypeBuilder,
-        super(settings: settings);
+        _modalTypeBuilder = modalTypeBuilder;
 
   /// Applies additional decorations to the modal page content excluding the
   /// barrier. Use [modalDecorator] to apply decorations to the barrier and
