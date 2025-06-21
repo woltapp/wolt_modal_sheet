@@ -68,8 +68,8 @@ class AppThemeData {
     );
   }
 
-  static CardTheme get _cardThemeData {
-    return CardTheme(
+  static CardThemeData get _cardThemeData {
+    return CardThemeData(
       color: colorScheme.surface,
       shadowColor: colorScheme.shadow,
       surfaceTintColor: Colors.transparent,
