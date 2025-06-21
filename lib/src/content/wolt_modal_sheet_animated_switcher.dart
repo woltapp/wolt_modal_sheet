@@ -26,9 +26,8 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
     required this.woltModalType,
     required this.sheetWidth,
     required this.showDragHandle,
-    Key? key,
-  })  : assert(pageIndex >= 0 && pageIndex < pages.length),
-        super(key: key);
+    super.key,
+  })  : assert(pageIndex >= 0 && pageIndex < pages.length);
 
   @override
   State<WoltModalSheetAnimatedSwitcher> createState() =>

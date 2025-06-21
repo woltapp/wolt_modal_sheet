@@ -27,8 +27,8 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
     required this.topBarTitle,
     required this.softKeyboardClosedListenable,
     required this.scrollAnimationStyle,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

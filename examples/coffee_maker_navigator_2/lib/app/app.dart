@@ -5,7 +5,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/material.dart';
 
 class CoffeeMakerApp extends StatelessWidget {
-  const CoffeeMakerApp({Key? key}) : super(key: key);
+  const CoffeeMakerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
