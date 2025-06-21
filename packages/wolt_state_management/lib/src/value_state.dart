@@ -33,6 +33,7 @@ sealed class ValueState<T> {
   factory ValueState.error({required Object error, T? value}) =>
       ErrorValueState<T>(error: error, value: value);
 
+  @override
   String toString();
 
   /// Transitions to a [LoadingValueState], optionally retaining the current [value]
