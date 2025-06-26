@@ -94,7 +94,7 @@ class _WoltModalSheetAnimatedSwitcherState
     _resetGlobalKeys();
     _resetScrollPositions();
     _resetScrollControllers();
-    _subscribeToCurrentPageScrollPositionChanges();
+    _subscribeToPageScrollPositionChanges();
   }
 
   void _resetGlobalKeys() {
@@ -116,18 +116,18 @@ class _WoltModalSheetAnimatedSwitcherState
     _scrollControllers.clear();
     _scrollControllers = [
       for (int i = 0; i < _pagesCount; i++)
-        (_page.scrollController ??
+        (widget.pages[i].scrollController ??
             ScrollController(initialScrollOffset: _scrollPositions[i].value)),
     ];
   }
 
-  void _subscribeToCurrentPageScrollPositionChanges() {
-    for (final scrollController in _scrollControllers) {
+  void _subscribeToPageScrollPositionChanges() {
+    for (int i = 0; i < _scrollControllers.length; i++) {
+      final scrollController = _scrollControllers[i];
+      final notifier = _scrollPositions[i];
       scrollController.addListener(() {
-        if (_currentPageScrollController.hasClients) {
-          _currentPageScrollPosition.value =
-              _currentPageScrollController.position.pixels;
-        }
+        if (!scrollController.hasClients) return;
+        notifier.value = scrollController.position.pixels;
       });
     }
   }
@@ -151,7 +151,7 @@ class _WoltModalSheetAnimatedSwitcherState
     if (!isSamePageList) {
       _resetScrollPositions();
       _resetScrollControllers();
-      _subscribeToCurrentPageScrollPositionChanges();
+      _subscribeToPageScrollPositionChanges();
       _resetGlobalKeys();
     }
 
@@ -213,8 +213,13 @@ class _WoltModalSheetAnimatedSwitcherState
   @override
   void dispose() {
     _animationController?.dispose();
-    for (final element in _scrollControllers) {
-      element.dispose();
+    for (int i = 0; i < _scrollControllers.length; i++) {
+      final element = _scrollControllers[i];
+      // We dispose every controller that's not managed by the user (i.e. not
+      // provided by the user)
+      if (widget.pages[i].scrollController == null) {
+        element.dispose();
+      }
     }
     for (final element in _scrollPositions) {
       element.dispose();
