@@ -12,6 +12,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
     this.modalBarrierColor,
+    this.extraNotifier,
     WoltModalTypeBuilder? modalTypeBuilder,
     bool? enableDrag,
     bool? showDragHandle,
@@ -52,6 +53,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   final bool? _showDragHandle;
 
   final bool _useSafeArea;
+
+  final ValueNotifier<Object?>? extraNotifier;
 
   /// Specifies the color of the modal barrier that darkens everything below the
   /// bottom sheet.
@@ -103,6 +106,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
       enableDrag: _enableDrag,
       showDragHandle: _showDragHandle,
       useSafeArea: _useSafeArea,
+      extraNotifier: extraNotifier ?? ValueNotifier(null),
     );
   }
 
