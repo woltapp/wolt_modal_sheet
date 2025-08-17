@@ -29,7 +29,7 @@ class WaterQuantityFailure extends WaterAcceptanceFailure {
 }
 
 class TemperatureFailure extends WaterAcceptanceFailure {
-  TemperatureFailure(String message) : super(message);
+  TemperatureFailure(super.message);
 }
 
 class SourceFailure extends WaterAcceptanceFailure {
@@ -37,7 +37,7 @@ class SourceFailure extends WaterAcceptanceFailure {
 }
 
 class SeasonalTemperatureAdjustmentFailure extends WaterAcceptanceFailure {
-  SeasonalTemperatureAdjustmentFailure(String message) : super(message);
+  SeasonalTemperatureAdjustmentFailure(super.message);
 }
 
 class QualityCheckFailure extends WaterAcceptanceFailure {

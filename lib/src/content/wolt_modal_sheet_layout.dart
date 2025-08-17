@@ -11,8 +11,8 @@ class WoltModalSheetLayout extends StatelessWidget {
     required this.paginatingWidgetsGroup,
     required this.woltModalType,
     required this.showDragHandle,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final SliverWoltModalSheetPage page;
   final PaginatingWidgetsGroup paginatingWidgetsGroup;

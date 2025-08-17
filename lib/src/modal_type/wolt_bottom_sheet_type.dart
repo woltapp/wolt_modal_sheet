@@ -11,26 +11,16 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class WoltBottomSheetType extends WoltModalType {
   /// Creates a [WoltBottomSheetType] with optional customizations.
   const WoltBottomSheetType({
-    ShapeBorder shapeBorder = _defaultShapeBorder,
-    bool? showDragHandle,
-    bool forceMaxHeight = false,
-    WoltModalDismissDirection dismissDirection = WoltModalDismissDirection.down,
-    Duration transitionDuration = _defaultEnterDuration,
-    Duration reverseTransitionDuration = _defaultExitDuration,
-    double minFlingVelocity = 700.0,
-    double closeProgressThreshold = 0.5,
-    bool? barrierDismissible,
-  }) : super(
-          shapeBorder: shapeBorder,
-          forceMaxHeight: forceMaxHeight,
-          transitionDuration: transitionDuration,
-          reverseTransitionDuration: reverseTransitionDuration,
-          dismissDirection: dismissDirection,
-          minFlingVelocity: minFlingVelocity,
-          closeProgressThreshold: closeProgressThreshold,
-          showDragHandle: showDragHandle,
-          barrierDismissible: barrierDismissible,
-        );
+    super.shapeBorder = _defaultShapeBorder,
+    super.showDragHandle,
+    super.forceMaxHeight,
+    WoltModalDismissDirection super.dismissDirection = WoltModalDismissDirection.down,
+    super.transitionDuration = _defaultEnterDuration,
+    super.reverseTransitionDuration = _defaultExitDuration,
+    super.minFlingVelocity,
+    super.closeProgressThreshold,
+    super.barrierDismissible,
+  });
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
   static const Duration _defaultExitDuration = Duration(milliseconds: 250);

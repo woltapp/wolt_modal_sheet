@@ -30,7 +30,7 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 /// predictable by preventing errors from unhandled routes. It allows for clear and
 /// exhaustive pattern matching when managing navigation, reducing the chance of runtime errors.
 sealed class AppRoutePage<T> extends Page<T> {
-  const AppRoutePage({LocalKey? key}) : super(key: key);
+  const AppRoutePage({super.key});
 
   /// Provides dynamic query parameters for the route.
   /// By default, this method returns `null`, indicating no query parameters.

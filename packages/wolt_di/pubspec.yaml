@@ -3,16 +3,15 @@ description: This internal package provides a dependency injection mechanism
   for demo apps.
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
+  flutter_lints: ^6.0.0
   # Flutter test tools
   flutter_test:
     sdk: flutter
-  # Test lib.
-  test: ^1.18.2

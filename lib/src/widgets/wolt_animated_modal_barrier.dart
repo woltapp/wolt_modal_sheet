@@ -6,11 +6,11 @@ class WoltAnimatedModalBarrier extends StatelessWidget {
   final VoidCallback? onModalDismissedWithBarrierTap;
 
   const WoltAnimatedModalBarrier({
-    Key? key,
+    super.key,
     required this.animationController,
     required this.barrierDismissible,
     this.onModalDismissedWithBarrierTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

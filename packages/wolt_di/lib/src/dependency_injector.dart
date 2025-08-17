@@ -21,9 +21,8 @@ class DependencyInjector extends InheritedWidget {
   /// [key]: An optional key for the widget.
   /// [child]: The child widget which will have access to the DI system.
   /// [dependencyContainerResolver]: The [DependencyContainerResolver] instance to be provided.
-  DependencyInjector({Key? key, required Widget child})
-      : _resolver = DependencyContainerManager.instance,
-        super(key: key, child: child);
+  DependencyInjector({super.key, required super.child})
+      : _resolver = DependencyContainerManager.instance;
 
   /// Retrieves the [DependencyInjector] from the given `BuildContext`.
   ///
