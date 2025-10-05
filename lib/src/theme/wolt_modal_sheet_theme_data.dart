@@ -13,6 +13,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     this.showDragHandle,
     this.dragHandleColor,
     this.dragHandleSize,
+    this.dragHandleMargin,
     this.enableDrag,
     this.topBarShadowColor,
     this.topBarElevation,
@@ -77,6 +78,9 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
 
   /// The size of the drag handle.
   final Size? dragHandleSize;
+
+  /// The margin around the drag handle.
+  final EdgeInsetsGeometry? dragHandleMargin;
 
   /// Whether the bottom sheet can be dragged.
   final bool? enableDrag;
@@ -189,6 +193,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
     bool? showDragHandle,
     Color? dragHandleColor,
     Size? dragHandleSize,
+    EdgeInsetsGeometry? dragHandleMargin,
     Color? topBarShadowColor,
     double? topBarElevation,
     double? heroImageHeight,
@@ -213,6 +218,7 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       showDragHandle: showDragHandle ?? this.showDragHandle,
       dragHandleColor: dragHandleColor ?? this.dragHandleColor,
       dragHandleSize: dragHandleSize ?? this.dragHandleSize,
+      dragHandleMargin: dragHandleMargin ?? this.dragHandleMargin,
       topBarShadowColor: topBarShadowColor ?? this.topBarShadowColor,
       topBarElevation: topBarElevation ?? this.topBarElevation,
       heroImageHeight: heroImageHeight ?? this.heroImageHeight,
@@ -249,6 +255,8 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
           Color.lerp(modalBarrierColor, other.modalBarrierColor, t),
       dragHandleColor: Color.lerp(dragHandleColor, other.dragHandleColor, t),
       dragHandleSize: Size.lerp(dragHandleSize, other.dragHandleSize, t),
+      dragHandleMargin:
+          EdgeInsetsGeometry.lerp(dragHandleMargin, other.dragHandleMargin, t),
       topBarShadowColor:
           Color.lerp(topBarShadowColor, other.topBarShadowColor, t),
       topBarElevation: lerpDouble(topBarElevation, other.topBarElevation, t),
