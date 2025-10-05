@@ -67,6 +67,10 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
   @override
   Size get dragHandleSize => const Size(36, 4);
 
+  /// The margin around the drag handle.
+  @override
+  EdgeInsetsGeometry get dragHandleMargin => const EdgeInsets.only(top: 8);
+
   /// The elevation color of the modal bar.
   @override
   Color get shadowColor => Colors.transparent;
