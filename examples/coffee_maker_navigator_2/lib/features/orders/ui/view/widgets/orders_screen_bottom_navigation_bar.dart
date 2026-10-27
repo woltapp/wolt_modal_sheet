@@ -44,13 +44,15 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
                   destinations: [
                     for (CoffeeMakerStep step in CoffeeMakerStep.values)
                       step._navigationDestination(
-                          isSelected: step == selectedTab,
-                          count: orders.countForStep(step)),
+                        isSelected: step == selectedTab,
+                        count: orders.countForStep(step),
+                      ),
                   ],
                   selectedIndex: selectedTab.index,
                   onDestinationSelected: (i) {
-                    final selectedTab = CoffeeMakerStep.values
-                        .firstWhere((e) => e.stepNumber == i);
+                    final selectedTab = CoffeeMakerStep.values.firstWhere(
+                      (e) => e.stepNumber == i,
+                    );
                     onBottomNavBarItemSelected(selectedTab);
                   },
                 ),
@@ -60,10 +62,14 @@ class OrdersScreenBottomNavigationBar extends StatelessWidget {
           loadingBuilder: (BuildContext context, GroupedCoffeeOrders? value) {
             return const SizedBox.shrink();
           },
-          errorBuilder: (BuildContext context, Object? error,
-              GroupedCoffeeOrders? lastKnownValue) {
-            return const SizedBox.shrink();
-          },
+          errorBuilder:
+              (
+                BuildContext context,
+                Object? error,
+                GroupedCoffeeOrders? lastKnownValue,
+              ) {
+                return const SizedBox.shrink();
+              },
         );
       },
     );
@@ -150,8 +156,10 @@ class _DestinationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = Icon(iconData,
-        color: isSelected ? WoltColors.blue : WoltColors.black64);
+    final icon = Icon(
+      iconData,
+      color: isSelected ? WoltColors.blue : WoltColors.black64,
+    );
     return count == 0
         ? icon
         : Badge(

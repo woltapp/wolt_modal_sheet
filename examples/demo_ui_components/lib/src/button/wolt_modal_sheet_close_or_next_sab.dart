@@ -19,9 +19,11 @@ class WoltModalSheetCloseOrNextSab extends StatelessWidget {
       onPressed: isAtLastPage
           ? Navigator.of(context).pop
           : WoltModalSheet.of(context).showNext,
-      child: Text(isAtLastPage
-          ? "Close"
-          : "Next (${currentPageIndex + 1}/$totalPageCount)"),
+      child: Text(
+        isAtLastPage
+            ? "Close"
+            : "Next (${currentPageIndex + 1}/$totalPageCount)",
+      ),
     );
   }
 }

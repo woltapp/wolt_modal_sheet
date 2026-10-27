@@ -9,11 +9,8 @@ typedef ValueWidgetBuilder<T> = Widget Function(BuildContext context, T? value);
 /// A builder function that builds a widget based on the provided error and last known value.
 ///
 /// Used in [StatefulValueListenableBuilder.errorBuilder].
-typedef ErrorWidgetBuilder<T> = Widget Function(
-  BuildContext context,
-  Object? error,
-  T? value,
-);
+typedef ErrorWidgetBuilder<T> =
+    Widget Function(BuildContext context, Object? error, T? value);
 
 /// A widget that builds itself based on the latest value of a [StatefulValueListenable].
 ///

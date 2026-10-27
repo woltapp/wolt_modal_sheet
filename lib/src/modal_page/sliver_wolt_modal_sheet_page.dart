@@ -248,8 +248,10 @@ class SliverWoltModalSheetPage {
     this.isTopBarLayerAlwaysVisible,
     this.resizeToAvoidBottomInset,
     this.useSafeArea,
-  }) : assert(!(topBar != null && hasTopBarLayer == false),
-            "When topBar is provided, hasTopBarLayer must not be false");
+  }) : assert(
+         !(topBar != null && hasTopBarLayer == false),
+         "When topBar is provided, hasTopBarLayer must not be false",
+       );
 
   SliverWoltModalSheetPage copyWith({
     Object? id,
@@ -369,8 +371,8 @@ class SliverWoltModalSheetPage {
       return (_) => [SliverToBoxAdapter(child: child)];
     } else if (this is NonScrollingWoltModalSheetPage) {
       return (_) => [
-            SliverFillViewport(delegate: SliverChildListDelegate([child])),
-          ];
+        SliverFillViewport(delegate: SliverChildListDelegate([child])),
+      ];
     }
     return mainContentSliversBuilder;
   }

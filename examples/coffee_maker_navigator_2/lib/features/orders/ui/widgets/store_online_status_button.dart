@@ -19,22 +19,24 @@ class StoreOnlineStatusButton extends StatelessWidget {
       builder: (_, isOnline, __) {
         return OutlinedButton(
           style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
-                side: const MaterialStatePropertyAll(
-                    BorderSide(width: 2, color: WoltColors.gray)),
-              ),
+            side: const MaterialStatePropertyAll(
+              BorderSide(width: 2, color: WoltColors.gray),
+            ),
+          ),
           onPressed: () {
             _isStoreOnlineNotifier.value = !_isStoreOnlineNotifier.value;
           },
           child: Row(
             children: <Widget>[
               SizedBox.square(
-                  dimension: 12,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      shape: const CircleBorder(),
-                      color: isOnline ? WoltColors.green : WoltColors.red,
-                    ),
-                  )),
+                dimension: 12,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: isOnline ? WoltColors.green : WoltColors.red,
+                  ),
+                ),
+              ),
               const SizedBox(width: 8),
               WoltScreenWidthAdaptiveWidget(
                 smallScreenWidthChild: const Icon(

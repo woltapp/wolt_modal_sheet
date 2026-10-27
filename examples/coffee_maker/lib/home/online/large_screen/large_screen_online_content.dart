@@ -57,8 +57,9 @@ class _LargeScreenOnlineContentState extends State<LargeScreenOnlineContent> {
                     columnSpan: 3,
                     columnCellWidget: LargeScreenCoffeeOrderListSection(
                       coffeeMakerStep: CoffeeMakerStep.addWater,
-                      coffeeOrderListWidget: widget._coffeeMakerStepListWidgets[
-                          CoffeeMakerStep.addWater]!,
+                      coffeeOrderListWidget:
+                          widget._coffeeMakerStepListWidgets[CoffeeMakerStep
+                              .addWater]!,
                     ),
                   ),
                   WoltColumnSpanCell(

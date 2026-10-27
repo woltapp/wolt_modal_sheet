@@ -16,9 +16,7 @@ Widget onboardingModalSheetPage(BuildContext context) {
         onPressed: () {
           WoltModalSheet.show(
             context: context,
-            pageListBuilder: (context) => [
-              OnboardingModalSheetPage(),
-            ],
+            pageListBuilder: (context) => [OnboardingModalSheetPage()],
           );
         },
         child: const Text('Open OnboardingModalSheetPage'),

@@ -45,8 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: Listenable.merge(
-          [_isStoreOnlineNotifier, _isGridOverlayVisibleNotifier]),
+      animation: Listenable.merge([
+        _isStoreOnlineNotifier,
+        _isGridOverlayVisibleNotifier,
+      ]),
       builder: (_, __) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),

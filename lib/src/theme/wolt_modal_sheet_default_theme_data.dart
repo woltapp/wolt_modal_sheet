@@ -152,12 +152,12 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
 
   @override
   WoltModalTypeBuilder get modalTypeBuilder => (context) {
-        final width = MediaQuery.sizeOf(context).width;
-        if (width < WoltBreakpoints.small.minValue) {
-          return WoltModalType.bottomSheet();
-        }
-        return WoltModalType.dialog();
-      };
+    final width = MediaQuery.sizeOf(context).width;
+    if (width < WoltBreakpoints.small.minValue) {
+      return WoltModalType.bottomSheet();
+    }
+    return WoltModalType.dialog();
+  };
 
   /// Motion animation styles for both pagination and page scrolling.
   @override

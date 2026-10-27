@@ -61,8 +61,9 @@ class SystemUIAnnotationWrapper extends StatelessWidget {
     bool hasBottomNavigationBar,
   ) {
     const inverseBrightness = Brightness.dark;
-    final navigationBarColor =
-        hasBottomNavigationBar ? Colors.white : colorScheme.surface;
+    final navigationBarColor = hasBottomNavigationBar
+        ? Colors.white
+        : colorScheme.surface;
 
     return SystemUiOverlayStyle(
       // Honored in Android. Sets the background color of the navigation bar.

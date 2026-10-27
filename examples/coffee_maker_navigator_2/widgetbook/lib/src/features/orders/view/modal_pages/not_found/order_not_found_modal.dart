@@ -18,10 +18,7 @@ Widget rejectOrderModalPage(BuildContext context) {
           WoltModalSheet.show(
             context: context,
             pageListBuilder: (context) => [
-              OrderNotFoundModal(
-                '123',
-                CoffeeMakerStep.grind,
-              ),
+              OrderNotFoundModal('123', CoffeeMakerStep.grind),
             ],
           );
         },

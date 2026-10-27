@@ -30,8 +30,8 @@ class PlaygroundRouteInformationParser
         final pageIndexText = queryParams[pageIndexQueryParam];
         final pageIndex =
             pageIndexText != null && int.tryParse(pageIndexText) != null
-                ? int.parse(pageIndexText)
-                : null;
+            ? int.parse(pageIndexText)
+            : null;
         if (pageIndex != null &&
             path != null &&
             MultiPagePathName.isValidQueryParam(path, pageIndex)) {

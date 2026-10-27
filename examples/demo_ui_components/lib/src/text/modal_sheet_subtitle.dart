@@ -12,9 +12,9 @@ class ModalSheetSubtitle extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
       ),
     );
   }

@@ -41,10 +41,7 @@ class CoffeeOrderListItemTile extends StatelessWidget {
             child: Stack(
               children: [
                 Image(
-                  image: AssetImage(
-                    step.assetName,
-                    package: 'assets',
-                  ),
+                  image: AssetImage(step.assetName, package: 'assets'),
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
@@ -103,10 +100,10 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           onPressed: _onTap,
           child: Text(
             _coffeeOrder.id,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold, color: WoltColors.black),
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: WoltColors.black,
+            ),
           ),
         ),
         const SizedBox(width: 8),
@@ -114,9 +111,9 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           child: Text(
             _coffeeOrder.orderName,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: WoltColors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              color: WoltColors.white,
+              fontWeight: FontWeight.bold,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

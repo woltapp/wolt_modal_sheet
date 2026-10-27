@@ -45,43 +45,39 @@ class OfferRecommendationModalPage {
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       mainContentSliversBuilder: (context) => [
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (_, index) {
-              if (index == 0) {
-                return const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: ModalSheetContentText(
-                    'Please select any extras the customer would be interested in purchasing',
-                  ),
-                );
-              } else {
-                final recommendation = allRecommendations[index - 1];
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    16,
-                    16,
-                    16,
-                    index == tileCount - 1
-                        ? WoltElevatedButton.defaultHeight * 2
-                        : 0,
-                  ),
-                  child: ExtraRecommendationTile(
-                    recommendation: recommendation,
-                    onPressed: (isSelected) {
-                      isSelected
-                          ? selectedRecommendations.add(recommendation)
-                          : selectedRecommendations.remove(recommendation);
-                      selectedItemCountListener.value =
-                          selectedRecommendations.length;
-                    },
-                    isSelected:
-                        selectedRecommendations.contains(recommendation),
-                  ),
-                );
-              }
-            },
-            childCount: tileCount,
-          ),
+          delegate: SliverChildBuilderDelegate((_, index) {
+            if (index == 0) {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: ModalSheetContentText(
+                  'Please select any extras the customer would be interested in purchasing',
+                ),
+              );
+            } else {
+              final recommendation = allRecommendations[index - 1];
+              return Padding(
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  16,
+                  16,
+                  index == tileCount - 1
+                      ? WoltElevatedButton.defaultHeight * 2
+                      : 0,
+                ),
+                child: ExtraRecommendationTile(
+                  recommendation: recommendation,
+                  onPressed: (isSelected) {
+                    isSelected
+                        ? selectedRecommendations.add(recommendation)
+                        : selectedRecommendations.remove(recommendation);
+                    selectedItemCountListener.value =
+                        selectedRecommendations.length;
+                  },
+                  isSelected: selectedRecommendations.contains(recommendation),
+                ),
+              );
+            }
+          }, childCount: tileCount),
         ),
       ],
     );

@@ -15,15 +15,18 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen>
     with
-        DependencyContainerSubscriptionMixin<OrdersDependencyContainer,
-            OrdersScreen> {
+        DependencyContainerSubscriptionMixin<
+          OrdersDependencyContainer,
+          OrdersScreen
+        > {
   late OrdersScreenViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
-    viewModel = DependencyInjector.container<OrdersDependencyContainer>(context)
-        .createViewModel();
+    viewModel = DependencyInjector.container<OrdersDependencyContainer>(
+      context,
+    ).createViewModel();
   }
 
   @override

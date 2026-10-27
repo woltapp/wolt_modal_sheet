@@ -8,8 +8,9 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final deviceInfo = await DeviceInfoPlugin().deviceInfo;
-  final androidSdkVersion =
-      deviceInfo is AndroidDeviceInfo ? deviceInfo.version.sdkInt : 0;
+  final androidSdkVersion = deviceInfo is AndroidDeviceInfo
+      ? deviceInfo.version.sdkInt
+      : 0;
   runApp(DemoApp(androidSdkVersion: androidSdkVersion));
 }
 
@@ -63,8 +64,9 @@ class _DemoAppState extends State<DemoApp> {
     );
     return MaterialApp(
       themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
-      scrollBehavior:
-          CustomScrollBehavior(androidSdkVersion: widget.androidSdkVersion),
+      scrollBehavior: CustomScrollBehavior(
+        androidSdkVersion: widget.androidSdkVersion,
+      ),
       theme: ThemeData.light().copyWith(
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
@@ -98,12 +100,12 @@ class _DemoAppState extends State<DemoApp> {
       ],
       debugShowCheckedModeBanner: false,
       home: HomeScreen(
-          onThemeBrightnessChanged: (bool isLightTheme) => setState(
-                () => _isLightTheme = isLightTheme,
-              ),
-          onDirectionalityChanged: (TextDirection direction) {
-            setState(() => _direction = direction);
-          }),
+        onThemeBrightnessChanged: (bool isLightTheme) =>
+            setState(() => _isLightTheme = isLightTheme),
+        onDirectionalityChanged: (TextDirection direction) {
+          setState(() => _direction = direction);
+        },
+      ),
     );
   }
 }

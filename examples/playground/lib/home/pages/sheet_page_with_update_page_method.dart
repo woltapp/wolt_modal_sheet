@@ -19,26 +19,29 @@ class SheetPageWithUpdatePage {
       hasSabGradient: false,
       enableDrag: enableDrag,
       hasTopBarLayer: hasTopBarLayer,
-      stickyActionBar: Builder(builder: (context) {
-        return const Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
-        );
-      }),
+      stickyActionBar: Builder(
+        builder: (context) {
+          return const Padding(
+            padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
+          );
+        },
+      ),
       isTopBarLayerAlwaysVisible: hasTopBarLayer,
       topBarTitle: const ModalSheetTopBarTitle('Update page'),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
-      child: Builder(builder: (context) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              _ConfigSwitch(
-                label: 'Enable Drag for Bottom Sheet',
-                initialConfigValue: enableDrag,
-                updatePageCallback: ({required bool newValue}) {
-                  WoltModalSheet.of(context).updateCurrentPage((currentPage) {
-                    return currentPage.copyWith(
+      child: Builder(
+        builder: (context) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                _ConfigSwitch(
+                  label: 'Enable Drag for Bottom Sheet',
+                  initialConfigValue: enableDrag,
+                  updatePageCallback: ({required bool newValue}) {
+                    WoltModalSheet.of(context).updateCurrentPage((currentPage) {
+                      return currentPage.copyWith(
                         enableDrag: newValue,
                         mainContentSliversBuilder: (context) {
                           return [
@@ -50,38 +53,42 @@ class SheetPageWithUpdatePage {
                               ),
                             ),
                           ];
-                        });
-                  });
-                },
-              ),
-              _ConfigSwitch(
-                label: 'Is top bar layer visible',
-                initialConfigValue: hasTopBarLayer,
-                updatePageCallback: ({required bool newValue}) {
-                  WoltModalSheet.of(context).updateCurrentPage((currentPage) {
-                    return currentPage.copyWithChild(
-                      isTopBarLayerAlwaysVisible: newValue,
-                      hasTopBarLayer: newValue,
-                      topBarTitle: newValue
-                          ? const ModalSheetTopBarTitle('Update page')
-                          : const SizedBox.shrink(),
-                      leadingNavBarWidget: newValue
-                          ? const WoltModalSheetBackButton()
-                          : const SizedBox.shrink(),
-                      trailingNavBarWidget: newValue
-                          ? const WoltModalSheetCloseButton()
-                          : const SizedBox.shrink(),
-                      child: const Placeholder(
-                          fallbackHeight: 1200, color: Colors.pink),
-                    );
-                  });
-                },
-              ),
-              const Placeholder(fallbackHeight: 1200, color: Colors.grey),
-            ],
-          ),
-        );
-      }),
+                        },
+                      );
+                    });
+                  },
+                ),
+                _ConfigSwitch(
+                  label: 'Is top bar layer visible',
+                  initialConfigValue: hasTopBarLayer,
+                  updatePageCallback: ({required bool newValue}) {
+                    WoltModalSheet.of(context).updateCurrentPage((currentPage) {
+                      return currentPage.copyWithChild(
+                        isTopBarLayerAlwaysVisible: newValue,
+                        hasTopBarLayer: newValue,
+                        topBarTitle: newValue
+                            ? const ModalSheetTopBarTitle('Update page')
+                            : const SizedBox.shrink(),
+                        leadingNavBarWidget: newValue
+                            ? const WoltModalSheetBackButton()
+                            : const SizedBox.shrink(),
+                        trailingNavBarWidget: newValue
+                            ? const WoltModalSheetCloseButton()
+                            : const SizedBox.shrink(),
+                        child: const Placeholder(
+                          fallbackHeight: 1200,
+                          color: Colors.pink,
+                        ),
+                      );
+                    });
+                  },
+                ),
+                const Placeholder(fallbackHeight: 1200, color: Colors.grey),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

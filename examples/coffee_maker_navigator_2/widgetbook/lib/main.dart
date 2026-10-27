@@ -22,19 +22,15 @@ class WidgetbookApp extends StatelessWidget {
       appBuilder: (context, child) => MaterialApp.router(
         debugShowCheckedModeBanner: true,
         backButtonDispatcher: RootBackButtonDispatcher(),
-        routerDelegate: SingleChildRouterDelegate(
-          child: child,
-        ),
+        routerDelegate: SingleChildRouterDelegate(child: child),
       ),
       addons: [
         // MaterialThemeAddon still takes the SDK's ThemeData, so apply the
         // material_ui theme with a builder instead.
         BuilderAddon(
           name: 'Theme',
-          builder: (context, child) => Theme(
-            data: AppThemeData.themeData(),
-            child: child,
-          ),
+          builder: (context, child) =>
+              Theme(data: AppThemeData.themeData(), child: child),
         ),
         DeviceFrameAddon(
           devices: Devices.all,
@@ -50,9 +46,7 @@ final globalNavKey = GlobalKey<NavigatorState>();
 
 class SingleChildRouterDelegate extends RouterDelegate<int>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
-  SingleChildRouterDelegate({
-    required this.child,
-  });
+  SingleChildRouterDelegate({required this.child});
 
   final Widget child;
 
@@ -66,11 +60,7 @@ class SingleChildRouterDelegate extends RouterDelegate<int>
   Widget build(BuildContext context) {
     return Navigator(
       key: globalNavKey,
-      pages: [
-        MaterialPage(
-          child: child,
-        ),
-      ],
+      pages: [MaterialPage(child: child)],
     );
   }
 }

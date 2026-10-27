@@ -34,14 +34,15 @@ class WoltModalSheetTopBarTitleFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final topBarHeight = page.navBarHeight ??
+    final topBarHeight =
+        page.navBarHeight ??
         themeData?.navBarHeight ??
         defaultThemeData.navBarHeight;
     final heroImageHeight = page.heroImage == null
         ? 0.0
         : (page.heroImageHeight ??
-            themeData?.heroImageHeight ??
-            defaultThemeData.heroImageHeight);
+              themeData?.heroImageHeight ??
+              defaultThemeData.heroImageHeight);
     return Flow(
       delegate: _TopBarTitleFlowDelegate(
         topBarHeight: topBarHeight,
@@ -72,11 +73,11 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
     required this.softKeyboardClosedNotifier,
     required this.scrollAnimationStyle,
   }) : super(
-          repaint: Listenable.merge([
-            scrollController,
-            softKeyboardClosedNotifier,
-          ]),
-        );
+         repaint: Listenable.merge([
+           scrollController,
+           softKeyboardClosedNotifier,
+         ]),
+       );
 
   double get currentScrollPosition => scrollController.position.pixels;
 
@@ -89,28 +90,31 @@ class _TopBarTitleFlowDelegate extends FlowDelegate {
     final topBarTitleTranslationYEnd =
         topBarTitleTranslationYStart + topBarTitleTranslationYAmount;
 
-    final topBarTitleTranslationYAndOpacityStartPoint =
-        heroImageHeight == 0 ? 8 : heroImageHeight - topBarHeight;
+    final topBarTitleTranslationYAndOpacityStartPoint = heroImageHeight == 0
+        ? 8
+        : heroImageHeight - topBarHeight;
 
     /// Top Bar Title translation Y
     final topBarTitleTranslationY =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: pageTitleHeight,
-      progressInRangeInPx:
-          currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
-      startValue: topBarTitleTranslationYStart,
-      endValue: topBarTitleTranslationYEnd,
-    );
+          rangeInPx: pageTitleHeight,
+          progressInRangeInPx:
+              currentScrollPosition -
+              topBarTitleTranslationYAndOpacityStartPoint,
+          startValue: topBarTitleTranslationYStart,
+          endValue: topBarTitleTranslationYEnd,
+        );
 
     /// Top Bar Title Opacity
     final topBarTitleOpacity =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: pageTitleHeight / 2,
-      progressInRangeInPx:
-          currentScrollPosition - topBarTitleTranslationYAndOpacityStartPoint,
-      startValue: scrollAnimationStyle.topBarTitleOpacityStart,
-      endValue: scrollAnimationStyle.topBarTitleOpacityEnd,
-    );
+          rangeInPx: pageTitleHeight / 2,
+          progressInRangeInPx:
+              currentScrollPosition -
+              topBarTitleTranslationYAndOpacityStartPoint,
+          startValue: scrollAnimationStyle.topBarTitleOpacityStart,
+          endValue: scrollAnimationStyle.topBarTitleOpacityEnd,
+        );
 
     /// Paint Top Bar Title
     context.paintChild(

@@ -30,7 +30,9 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     SliverWoltModalSheetPage page1(
-        BuildContext modalSheetContext, TextTheme textTheme) {
+      BuildContext modalSheetContext,
+      TextTheme textTheme,
+    ) {
       return WoltModalSheetPage(
         hasSabGradient: false,
         stickyActionBar: Padding(
@@ -65,29 +67,31 @@ class _MainAppState extends State<MainApp> {
           onPressed: Navigator.of(modalSheetContext).pop,
         ),
         child: const Padding(
-            padding: EdgeInsets.fromLTRB(
-              _pagePadding,
-              _pagePadding,
-              _pagePadding,
-              _bottomPaddingForButton,
-            ),
-            child: Text(
-              '''
+          padding: EdgeInsets.fromLTRB(
+            _pagePadding,
+            _pagePadding,
+            _pagePadding,
+            _bottomPaddingForButton,
+          ),
+          child: Text('''
 Pagination involves a sequence of screens the user navigates sequentially. We chose a lateral motion for these transitions. When proceeding forward, the next screen emerges from the right; moving backward, the screen reverts to its original position. We felt that sliding the next screen entirely from the right could be overly distracting. As a result, we decided to move and fade in the next page using 30% of the modal side.
-''',
-            )),
+'''),
+        ),
       );
     }
 
     SliverWoltModalSheetPage page2(
-        BuildContext modalSheetContext, TextTheme textTheme) {
+      BuildContext modalSheetContext,
+      TextTheme textTheme,
+    ) {
       return SliverWoltModalSheetPage(
         pageTitle: Padding(
           padding: const EdgeInsets.all(_pagePadding),
           child: Text(
             'Material Colors',
-            style:
-                textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+            style: textTheme.headlineMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         heroImage: Image(
@@ -141,10 +145,7 @@ Pagination involves a sequence of screens the user navigates sequentially. We ch
             sliver: SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.all(_pagePadding),
-                child: Text(
-                  'Last Item',
-                  textAlign: TextAlign.center,
-                ),
+                child: Text('Last Item', textAlign: TextAlign.center),
               ),
             ),
           ),

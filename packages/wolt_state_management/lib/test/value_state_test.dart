@@ -295,8 +295,10 @@ void main() {
           final exception = Exception('An error occurred');
 
           // Act
-          final errorState =
-              idleState.setError(error: exception, retainValue: true);
+          final errorState = idleState.setError(
+            error: exception,
+            retainValue: true,
+          );
 
           // Assert
           expect(errorState, isA<ErrorValueState<int>>());
@@ -321,8 +323,10 @@ void main() {
 
       test('setIdle transitions to IdleValueState with null value', () {
         // Arrange
-        final errorState =
-            ValueState<int>.error(error: Exception('Error'), value: 42);
+        final errorState = ValueState<int>.error(
+          error: Exception('Error'),
+          value: 42,
+        );
 
         // Act
         final idleState = errorState.setIdle();

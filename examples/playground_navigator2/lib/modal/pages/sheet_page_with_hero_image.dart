@@ -31,8 +31,9 @@ class SheetPageWithHeroImage {
       leadingNavBarWidget: WoltModalSheetBackButton(
         onBackPressed: () => cubit.goToPage(currentPage - 1),
       ),
-      trailingNavBarWidget:
-          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      trailingNavBarWidget: WoltModalSheetCloseButton(
+        onClosed: cubit.closeSheet,
+      ),
       child: const Padding(
         padding: EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: ModalSheetContentText('''

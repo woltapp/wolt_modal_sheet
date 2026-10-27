@@ -18,8 +18,10 @@ class SabAnimatedBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final opacity =
-        pageTransitionState.sabOpacity(controller, paginationAnimationStyle);
+    final opacity = pageTransitionState.sabOpacity(
+      controller,
+      paginationAnimationStyle,
+    );
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext _, __) {

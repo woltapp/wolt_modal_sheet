@@ -32,18 +32,21 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(width: 16),
         ],
       ),
-      body: Builder(builder: (context) {
-        return Center(
-          child: SizedBox(
-            width: 200,
-            child: WoltElevatedButton(
-              onPressed:
-                  context.read<RouterCubit>().onShowModalSheetButtonPressed,
-              child: const Text('Show Modal Sheet'),
+      body: Builder(
+        builder: (context) {
+          return Center(
+            child: SizedBox(
+              width: 200,
+              child: WoltElevatedButton(
+                onPressed: context
+                    .read<RouterCubit>()
+                    .onShowModalSheetButtonPressed,
+                child: const Text('Show Modal Sheet'),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

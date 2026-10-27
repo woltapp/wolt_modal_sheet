@@ -22,10 +22,7 @@ Widget primaryButton(BuildContext context) {
         },
       ),
       child: Text(
-        context.knobs.string(
-          label: 'Text',
-          initialValue: 'Button',
-        ),
+        context.knobs.string(label: 'Text', initialValue: 'Button'),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),

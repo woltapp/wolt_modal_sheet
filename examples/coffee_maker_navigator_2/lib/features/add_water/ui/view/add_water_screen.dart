@@ -18,8 +18,10 @@ class AddWaterScreen extends StatefulWidget {
 
 class _AddWaterScreenState extends State<AddWaterScreen>
     with
-        DependencyContainerSubscriptionMixin<AddWaterDependencyContainer,
-            AddWaterScreen> {
+        DependencyContainerSubscriptionMixin<
+          AddWaterDependencyContainer,
+          AddWaterScreen
+        > {
   late AddWaterViewModel _viewModel;
 
   @override

@@ -26,21 +26,23 @@ class AddWaterScreenFooter extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
         child: Padding(
-          padding: const EdgeInsets.all(16.0) +
+          padding:
+              const EdgeInsets.all(16.0) +
               EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ValueListenableBuilder<String?>(
-                  valueListenable: errorMessage,
-                  builder: (_, message, __) {
-                    return message == null
-                        ? const SizedBox.shrink()
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 12.0),
-                            child: ErrorNotificationWidget(message),
-                          );
-                  }),
+                valueListenable: errorMessage,
+                builder: (_, message, __) {
+                  return message == null
+                      ? const SizedBox.shrink()
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: ErrorNotificationWidget(message),
+                        );
+                },
+              ),
               WoltElevatedButton(
                 onPressed: onCheckValidity,
                 child: const Text('Check '),

@@ -27,8 +27,9 @@ class StoreOfflineContent extends StatefulWidget {
 class _StoreOfflineContentState extends State<StoreOfflineContent> {
   @override
   Widget build(BuildContext context) {
-    final content =
-        _OfflineContent(isStoreOnlineNotifier: widget._isStoreOnlineNotifier);
+    final content = _OfflineContent(
+      isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
+    );
     final screenSize = MediaQuery.sizeOf(context).width < defaultWidthBreakPoint
         ? WoltScreenSize.small
         : WoltScreenSize.large;
@@ -40,8 +41,9 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
           children: [
             TopBar(
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
-              isGridOverlayVisibleNotifier:
-                  isLargeScreen ? widget._isGridOverlayVisibleNotifier : null,
+              isGridOverlayVisibleNotifier: isLargeScreen
+                  ? widget._isGridOverlayVisibleNotifier
+                  : null,
             ),
             Expanded(
               child: ColoredBox(
@@ -71,9 +73,7 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
 }
 
 class _OfflineContent extends StatelessWidget {
-  const _OfflineContent({
-    required this._isStoreOnlineNotifier,
-  });
+  const _OfflineContent({required this._isStoreOnlineNotifier});
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
 
@@ -86,18 +86,17 @@ class _OfflineContent extends StatelessWidget {
         Text(
           'You are offline',
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .displaySmall!
-              .copyWith(fontWeight: FontWeight.bold, color: WoltColors.white),
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: WoltColors.white,
+          ),
         ),
         const SizedBox(height: 12),
         Text(
           'Go online to receive new orders.',
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: WoltColors.white),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(color: WoltColors.white),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 32),

@@ -17,13 +17,13 @@ class WoltDialogType extends WoltModalType {
     Duration reverseTransitionDuration = _defaultExitDuration,
     bool? barrierDismissible,
   }) : super(
-          shapeBorder: shapeBorder,
-          forceMaxHeight: forceMaxHeight,
-          transitionDuration: transitionDuration,
-          reverseTransitionDuration: reverseTransitionDuration,
-          showDragHandle: false,
-          barrierDismissible: barrierDismissible,
-        );
+         shapeBorder: shapeBorder,
+         forceMaxHeight: forceMaxHeight,
+         transitionDuration: transitionDuration,
+         reverseTransitionDuration: reverseTransitionDuration,
+         showDragHandle: false,
+         barrierDismissible: barrierDismissible,
+       );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 300);
   static const Duration _defaultExitDuration = Duration(milliseconds: 250);
@@ -93,10 +93,14 @@ class WoltDialogType extends WoltModalType {
   /// Returns an [Offset] that centers the dialog within the available space.
   @override
   Offset positionModal(Size availableSize, Size modalContentSize, _) {
-    final xOffset =
-        max(0.0, (availableSize.width - modalContentSize.width) / 2);
-    final yOffset =
-        max(0.0, (availableSize.height - modalContentSize.height) / 2);
+    final xOffset = max(
+      0.0,
+      (availableSize.width - modalContentSize.width) / 2,
+    );
+    final yOffset = max(
+      0.0,
+      (availableSize.height - modalContentSize.height) / 2,
+    );
     return Offset(xOffset, yOffset);
   }
 
@@ -129,24 +133,26 @@ class WoltDialogType extends WoltModalType {
     final cubic = isClosing ? exitingCubic : enteringCubic;
     final reverseCubic = isClosing ? enteringCubic : exitingCubic;
 
-    final alphaAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: animation,
-      curve: interval,
-      reverseCurve: reverseInterval,
-    ));
-
-    // Position animation for entering (96px upwards) and exiting (96px downwards)
-    final positionAnimation = Tween<Offset>(
-      end: const Offset(0.0, 0.0),
-      begin: Offset(0.0, isClosing ? 0.05 : 0.1),
-    ).animate(
+    final alphaAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animation,
-        curve: cubic,
-        reverseCurve: reverseCubic,
+        curve: interval,
+        reverseCurve: reverseInterval,
       ),
     );
+
+    // Position animation for entering (96px upwards) and exiting (96px downwards)
+    final positionAnimation =
+        Tween<Offset>(
+          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, isClosing ? 0.05 : 0.1),
+        ).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: cubic,
+            reverseCurve: reverseCubic,
+          ),
+        );
 
     return FadeTransition(
       opacity: alphaAnimation,
@@ -188,6 +194,5 @@ class WoltDialogType extends WoltModalType {
     BuildContext context,
     Widget child,
     bool useSafeArea,
-  ) =>
-      child;
+  ) => child;
 }

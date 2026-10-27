@@ -21,20 +21,18 @@ Widget orderScreenContent(BuildContext context) {
       ),
     ),
     groupedCoffeeOrders: StatefulValueNotifier.idle(
-      GroupedCoffeeOrders.fromCoffeeOrders(
-        const [
-          CoffeeOrder(
-            id: '1',
-            coffeeMakerStep: CoffeeMakerStep.grind,
-            orderName: 'Latte',
-          ),
-          CoffeeOrder(
-            id: '2',
-            coffeeMakerStep: CoffeeMakerStep.addWater,
-            orderName: 'Espresso',
-          ),
-        ],
-      ),
+      GroupedCoffeeOrders.fromCoffeeOrders(const [
+        CoffeeOrder(
+          id: '1',
+          coffeeMakerStep: CoffeeMakerStep.grind,
+          orderName: 'Latte',
+        ),
+        CoffeeOrder(
+          id: '2',
+          coffeeMakerStep: CoffeeMakerStep.addWater,
+          orderName: 'Espresso',
+        ),
+      ]),
     ),
     onNavBarItemSelected: (_) {},
     onGrindCoffeeStepSelected: (_) {},

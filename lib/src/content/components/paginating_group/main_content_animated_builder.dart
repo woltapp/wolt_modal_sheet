@@ -64,7 +64,8 @@ class _MainContentAnimatedBuilderState
       builder: (BuildContext context, _) {
         return SizeTransition(
           axisAlignment: -1.0,
-          sizeFactor: _sizeFactor ??
+          sizeFactor:
+              _sizeFactor ??
               pageTransitionState.defaultMainContentSizeFactor(controller),
           child: Opacity(
             opacity: pageTransitionState

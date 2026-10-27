@@ -11,8 +11,9 @@ class OrdersScreenViewModel {
 
   final OrdersService _ordersService;
 
-  final _groupedCoffeeOrders =
-      StatefulValueNotifier.idle(GroupedCoffeeOrders.empty());
+  final _groupedCoffeeOrders = StatefulValueNotifier.idle(
+    GroupedCoffeeOrders.empty(),
+  );
 
   StatefulValueListenable<GroupedCoffeeOrders> get groupedCoffeeOrders =>
       _groupedCoffeeOrders;
@@ -28,11 +29,13 @@ class OrdersScreenViewModel {
   void _onOrdersReceived() {
     final orders = _ordersService.orders.value;
     _groupedCoffeeOrders.setIdle(
-        value: GroupedCoffeeOrders.fromCoffeeOrders(orders));
+      value: GroupedCoffeeOrders.fromCoffeeOrders(orders),
+    );
   }
 
   bool orderExists(String orderId, CoffeeMakerStep step) {
-    return _ordersService.orders.value
-        .any((order) => order.id == orderId && order.coffeeMakerStep == step);
+    return _ordersService.orders.value.any(
+      (order) => order.id == orderId && order.coffeeMakerStep == step,
+    );
   }
 }

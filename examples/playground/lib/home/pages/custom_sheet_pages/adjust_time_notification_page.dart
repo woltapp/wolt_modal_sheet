@@ -3,18 +3,12 @@ import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 enum AdjustTimeGridItemColors {
-  normal(
-    foregroundColor: WoltColors.blue,
-    backgroundColor: WoltColors.blue8,
-  ),
+  normal(foregroundColor: WoltColors.blue, backgroundColor: WoltColors.blue8),
   warning(
     foregroundColor: WoltColors.yellow,
     backgroundColor: WoltColors.yellow8,
   ),
-  alert(
-    foregroundColor: WoltColors.red,
-    backgroundColor: WoltColors.red8,
-  );
+  alert(foregroundColor: WoltColors.red, backgroundColor: WoltColors.red8);
 
   const AdjustTimeGridItemColors({
     required this.foregroundColor,
@@ -27,29 +21,29 @@ enum AdjustTimeGridItemColors {
 
 class AdjustTimeNotificationPage extends WoltModalSheetPage {
   AdjustTimeNotificationPage()
-      : super(
-          topBarTitle: const ModalSheetTopBarTitle('Adjust time'),
-          isTopBarLayerAlwaysVisible: true,
-          trailingNavBarWidget: const WoltModalSheetCloseButton(),
-          leadingNavBarWidget: const WoltModalSheetBackButton(),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GridView.builder(
-              padding: EdgeInsets.zero,
-              key: const Key('confirmTaskBottomSheep-suggestedTimeGrid'),
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                mainAxisExtent: 72,
-              ),
-              itemBuilder: (context, index) => _items[index],
-              itemCount: _items.length,
+    : super(
+        topBarTitle: const ModalSheetTopBarTitle('Adjust time'),
+        isTopBarLayerAlwaysVisible: true,
+        trailingNavBarWidget: const WoltModalSheetCloseButton(),
+        leadingNavBarWidget: const WoltModalSheetBackButton(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridView.builder(
+            padding: EdgeInsets.zero,
+            key: const Key('confirmTaskBottomSheep-suggestedTimeGrid'),
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              mainAxisExtent: 72,
             ),
+            itemBuilder: (context, index) => _items[index],
+            itemCount: _items.length,
           ),
-        );
+        ),
+      );
 
   static const pageId = 'adjust_time_notification_page';
 
@@ -68,10 +62,7 @@ class AdjustTimeNotificationPage extends WoltModalSheetPage {
 }
 
 class _GridItem extends StatelessWidget {
-  const _GridItem({
-    required this.colors,
-    required this.timeInMinutes,
-  });
+  const _GridItem({required this.colors, required this.timeInMinutes});
 
   final AdjustTimeGridItemColors colors;
   final int timeInMinutes;
@@ -97,8 +88,9 @@ class _GridItem extends StatelessWidget {
             ),
             Text(
               'minutes',
-              style: textTheme.labelMedium!
-                  .copyWith(color: colors.foregroundColor),
+              style: textTheme.labelMedium!.copyWith(
+                color: colors.foregroundColor,
+              ),
             ),
           ],
         ),

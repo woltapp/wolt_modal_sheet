@@ -6,12 +6,12 @@ import 'package:material_ui/material_ui.dart';
 class AppThemeData {
   static const navigationDrawerIconSize = 24.0;
   static const cornerRadiusLg = 12.0;
-  static const cardBorderRadius =
-      BorderRadius.all(Radius.circular(cornerRadiusLg));
-  static final colorScheme =
-      ColorScheme.fromSeed(seedColor: WoltColors.blue).copyWith(
-    surface: const Color(0xFFF6F6F6),
+  static const cardBorderRadius = BorderRadius.all(
+    Radius.circular(cornerRadiusLg),
   );
+  static final colorScheme = ColorScheme.fromSeed(
+    seedColor: WoltColors.blue,
+  ).copyWith(surface: const Color(0xFFF6F6F6));
 
   const AppThemeData();
 

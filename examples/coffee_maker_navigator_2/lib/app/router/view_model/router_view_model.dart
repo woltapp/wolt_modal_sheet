@@ -55,8 +55,9 @@ import 'package:flutter/foundation.dart';
 class RouterViewModel {
   final AuthService authService;
   final OnboardingService onboardingService;
-  late final ValueNotifier<List<AppRoutePage>> _pages =
-      ValueNotifier([const BootstrapRoutePage()]);
+  late final ValueNotifier<List<AppRoutePage>> _pages = ValueNotifier([
+    const BootstrapRoutePage(),
+  ]);
 
   ValueListenable<List<AppRoutePage>> get pages => _pages;
 
@@ -98,8 +99,9 @@ class RouterViewModel {
   /// for resource management and to ensure proper functionality in case the singleton usage
   /// pattern changes.
   void dispose() {
-    authService.authStateListenable
-        .removeListener(_authStateChangeSubscription);
+    authService.authStateListenable.removeListener(
+      _authStateChangeSubscription,
+    );
     _pages.dispose();
   }
 
@@ -112,9 +114,7 @@ class RouterViewModel {
   /// Parameters:
   ///   - destination: The [AppNavigationDrawerDestination] enum value indicating which drawer
   ///                  menu item was selected by the user.
-  void onDrawerDestinationSelected(
-    AppNavigationDrawerDestination destination,
-  ) {
+  void onDrawerDestinationSelected(AppNavigationDrawerDestination destination) {
     /// STEP #8: Implement the navigation logic for drawer destinations in the ViewModel.
     ///
     /// This step defines how the app should respond when a user selects an item from the
@@ -212,22 +212,19 @@ class RouterViewModel {
     final orderScreenNavBarTab =
         queryParams[AppRouteUriTemplate.queryParamKeyOrderScreenTab];
     if (orderScreenNavBarTab != null) {
-      _visibleOrderScreenNavBarTab.value =
-          CoffeeMakerStep.fromQueryParameter(orderScreenNavBarTab);
+      _visibleOrderScreenNavBarTab.value = CoffeeMakerStep.fromQueryParameter(
+        orderScreenNavBarTab,
+      );
     }
 
     late List<AppRoutePage> newPath;
 
     switch (configuration.appRouteUriTemplate) {
       case AppRouteUriTemplate.login:
-        newPath = [
-          const LoginRoutePage(),
-        ];
+        newPath = [const LoginRoutePage()];
         break;
       case AppRouteUriTemplate.orders:
-        newPath = [
-          OrdersRoutePage(_visibleOrderScreenNavBarTab),
-        ];
+        newPath = [OrdersRoutePage(_visibleOrderScreenNavBarTab)];
         break;
       case AppRouteUriTemplate.tutorials:
         newPath = [

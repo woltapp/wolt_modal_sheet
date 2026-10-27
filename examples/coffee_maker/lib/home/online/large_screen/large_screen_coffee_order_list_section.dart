@@ -58,8 +58,10 @@ class LargeScreenCoffeeOrderListSection extends StatelessWidget {
 ///
 /// This header displays the coffee maker step and the count of orders in that step.
 class _LargeScreenCoffeeOrderListHeader extends StatelessWidget {
-  const _LargeScreenCoffeeOrderListHeader(
-      {required this._coffeeMakerStep, required this._count});
+  const _LargeScreenCoffeeOrderListHeader({
+    required this._coffeeMakerStep,
+    required this._count,
+  });
 
   final CoffeeMakerStep _coffeeMakerStep;
   final int _count;
@@ -71,16 +73,16 @@ class _LargeScreenCoffeeOrderListHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.only(top: 16, bottom: 8),
       decoration: const ShapeDecoration(
-        shape:
-            StadiumBorder(side: BorderSide(color: WoltColors.gray, width: 2)),
+        shape: StadiumBorder(
+          side: BorderSide(color: WoltColors.gray, width: 2),
+        ),
         color: WoltColors.white,
       ),
       child: Text(
         '${_coffeeMakerStep.stepName} ($_count)',
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(color: Colors.black),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium!.copyWith(color: Colors.black),
         textAlign: TextAlign.center,
       ),
     );

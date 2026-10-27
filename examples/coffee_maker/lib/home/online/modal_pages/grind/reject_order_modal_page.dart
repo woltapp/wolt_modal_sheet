@@ -18,15 +18,17 @@ class RejectOrderModalPage {
         builder: (_, isEnabled, __) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Builder(builder: (context) {
-              return WoltElevatedButton(
-                onPressed: onRejectOrderTapped,
-                theme: WoltElevatedButtonTheme.secondary,
-                colorName: WoltColorName.red,
-                enabled: isEnabled,
-                child: const Text('Reject'),
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return WoltElevatedButton(
+                  onPressed: onRejectOrderTapped,
+                  theme: WoltElevatedButtonTheme.secondary,
+                  colorName: WoltColorName.red,
+                  enabled: isEnabled,
+                  child: const Text('Reject'),
+                );
+              },
+            ),
           );
         },
       ),
@@ -43,7 +45,8 @@ class RejectOrderModalPage {
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: ModalSheetContentText(
-                    'Please select a reason for rejecting the order'),
+                  'Please select a reason for rejecting the order',
+                ),
               ),
               WoltSelectionList<RejectOrderReason>.singleSelect(
                 itemTileDataGroup: WoltSelectionListItemDataGroup(

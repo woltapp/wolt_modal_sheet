@@ -32,11 +32,9 @@ class SheetPageWithForcedMaxHeight {
       ),
       child: const Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text(
-          '''
+        child: Text('''
 This page height is forced to be the max height according to the provided max height ratio regardless of the intrinsic height of the child widget. This page also doesn't have a top bar nor navigation bar controls. 
-''',
-        ),
+'''),
       ),
     );
   }

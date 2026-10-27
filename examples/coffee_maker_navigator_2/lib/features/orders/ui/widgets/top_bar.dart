@@ -4,10 +4,7 @@ import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:material_ui/material_ui.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({
-    required this._selectedTab,
-    super.key,
-  });
+  const TopBar({required this._selectedTab, super.key});
 
   final CoffeeMakerStep _selectedTab;
 

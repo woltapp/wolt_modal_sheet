@@ -135,8 +135,7 @@ abstract class WoltModalType {
     BuildContext context,
     Widget child,
     bool useSafeArea,
-  ) =>
-      child;
+  ) => child;
 
   /// Applies additional decorations to the modal content.
   ///

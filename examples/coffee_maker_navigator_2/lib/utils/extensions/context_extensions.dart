@@ -5,6 +5,7 @@ import 'package:wolt_di/wolt_di.dart';
 
 extension AppLevelDependencyContainerExtensions on BuildContext {
   RouterViewModel get routerViewModel =>
-      DependencyInjector.container<CoffeeMakerAppLevelDependencyContainer>(this)
-          .routerViewModel;
+      DependencyInjector.container<CoffeeMakerAppLevelDependencyContainer>(
+        this,
+      ).routerViewModel;
 }

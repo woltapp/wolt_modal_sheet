@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-enum AppLifeCycleState {
-  foreground,
-  background,
-}
+enum AppLifeCycleState { foreground, background }
 
 class AppLifeCycleService {
   late ValueNotifier<AppLifeCycleState> lifeCycleState;

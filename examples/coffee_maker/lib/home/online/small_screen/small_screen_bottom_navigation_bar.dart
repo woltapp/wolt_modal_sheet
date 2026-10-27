@@ -33,13 +33,15 @@ class SmallScreenBottomNavigationBar extends StatelessWidget {
           destinations: [
             for (CoffeeMakerStep step in CoffeeMakerStep.values)
               step._navigationDestination(
-                  isSelected: step == _selectedStep,
-                  count: _groupedCoffeeOrders.countForStep(step)),
+                isSelected: step == _selectedStep,
+                count: _groupedCoffeeOrders.countForStep(step),
+              ),
           ],
           selectedIndex: _selectedStep.index,
           onDestinationSelected: (i) {
             _onSelected(
-                CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i));
+              CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i),
+            );
           },
         ),
       ],
@@ -127,8 +129,10 @@ class _DestinationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = Icon(iconData,
-        color: isSelected ? WoltColors.blue : WoltColors.black64);
+    final icon = Icon(
+      iconData,
+      color: isSelected ? WoltColors.blue : WoltColors.black64,
+    );
     return count == 0
         ? icon
         : Badge(

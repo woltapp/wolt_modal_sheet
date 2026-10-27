@@ -8,7 +8,5 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
   path: 'Login/Widgets',
 )
 Widget loginScreenContent(BuildContext context) {
-  return LoginScreenContent(
-    onLoginPressed: (_, __) {},
-  );
+  return LoginScreenContent(onLoginPressed: (_, __) {});
 }

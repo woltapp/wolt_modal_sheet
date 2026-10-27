@@ -17,10 +17,9 @@ class ModalSheetTitle extends StatelessWidget {
       child: Text(
         text,
         textAlign: textAlign,
-        style: Theme.of(context)
-            .textTheme
-            .headlineSmall!
-            .copyWith(fontWeight: FontWeight.bold),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }

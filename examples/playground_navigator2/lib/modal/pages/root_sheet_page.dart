@@ -8,8 +8,9 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class RootSheetPage {
   const RootSheetPage._();
 
-  static final ValueNotifier<bool> _isButtonEnabledNotifier =
-      ValueNotifier(false);
+  static final ValueNotifier<bool> _isButtonEnabledNotifier = ValueNotifier(
+    false,
+  );
 
   static WoltModalSheetPage build(BuildContext context) {
     const title = 'Choose a use case';
@@ -67,9 +68,9 @@ class RootSheetPage {
                 ],
               ),
               onSelectionUpdateInSingleSelectionList: (selectedItemData) {
-                context
-                    .read<RouterCubit>()
-                    .onPathUpdated(selectedItemData.value);
+                context.read<RouterCubit>().onPathUpdated(
+                  selectedItemData.value,
+                );
                 _isButtonEnabledNotifier.value = selectedItemData.isSelected;
               },
             ),
@@ -99,9 +100,9 @@ class _AllPagesPushWidget extends StatelessWidget {
           ),
           onTap: () {
             context.read<RouterCubit>().onPathAndPageIndexUpdated(
-                  MultiPagePathName.allPagesPath,
-                  1,
-                );
+              MultiPagePathName.allPagesPath,
+              1,
+            );
           },
         ),
       ],

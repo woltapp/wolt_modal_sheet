@@ -20,21 +20,21 @@ class RootSheetPage {
   static const String pageId = 'RootSheetPage';
 
   static List<SliverWoltModalSheetPage> _constructAllPagesAfterRootPage(
-          BuildContext context) =>
-      [
-        SheetPageWithForcedMaxHeight.build(Theme.of(context).brightness),
-        SheetPageWithHeroImage.build(),
-        SheetPageWithLazyList.build(),
-        SheetPageWithTextField.build(),
-        SheetPageWithMinHeight.build(),
-        SheetPageWithInAppNavigation.build(),
-        ProductWithSkuPage(1),
-        ProductWithSkuPage(2),
-        ProductWithSkuPage(3),
-        SheetPageWithCustomTopBar.build(),
-        SheetPageWithNoPageTitleNoTopBar.build(),
-        SheetPageWithUpdatePage.build(context, isLastPage: true),
-      ];
+    BuildContext context,
+  ) => [
+    SheetPageWithForcedMaxHeight.build(Theme.of(context).brightness),
+    SheetPageWithHeroImage.build(),
+    SheetPageWithLazyList.build(),
+    SheetPageWithTextField.build(),
+    SheetPageWithMinHeight.build(),
+    SheetPageWithInAppNavigation.build(),
+    ProductWithSkuPage(1),
+    ProductWithSkuPage(2),
+    ProductWithSkuPage(3),
+    SheetPageWithCustomTopBar.build(),
+    SheetPageWithNoPageTitleNoTopBar.build(),
+    SheetPageWithUpdatePage.build(context, isLastPage: true),
+  ];
 
   static WoltModalSheetPage build(BuildContext context) {
     final ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
@@ -58,132 +58,142 @@ class RootSheetPage {
       pageTitle: const ModalSheetTitle(title),
       hasTopBarLayer: false,
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
-      child: Builder(builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(0, 16, 0, 120),
-          child: Column(
-            children: [
-              WoltSelectionList<ModalPageName?>.singleSelect(
-                itemTileDataGroup: const WoltSelectionListItemDataGroup(
-                  group: [
-                    WoltSelectionListItemData(
-                      title: 'Page with forced max height',
-                      value: SheetPageWithForcedMaxHeight.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with hero image',
-                      value: SheetPageWithHeroImage.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with lazy loading list',
-                      value: SheetPageWithLazyList.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with min height constraint',
-                      value: SheetPageWithMinHeight.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with auto-focus text field',
-                      value: SheetPageWithTextField.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with in-modal navigation',
-                      value: SheetPageWithInAppNavigation.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with custom top bar',
-                      value: SheetPageWithCustomTopBar.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with no title and no top bar',
-                      value: SheetPageWithNoPageTitleNoTopBar.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'Page with updateCurrentPage method',
-                      value: SheetPageWithUpdatePage.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'NonScrollingWoltModalSheetPage example',
-                      value: SheetPageWithNonScrollingLayout.pageId,
-                      isSelected: false,
-                    ),
-                    WoltSelectionListItemData(
-                      title: 'All the pages in one flow',
-                      value: null,
-                      isSelected: false,
-                    ),
-                  ],
+      child: Builder(
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(0, 16, 0, 120),
+            child: Column(
+              children: [
+                WoltSelectionList<ModalPageName?>.singleSelect(
+                  itemTileDataGroup: const WoltSelectionListItemDataGroup(
+                    group: [
+                      WoltSelectionListItemData(
+                        title: 'Page with forced max height',
+                        value: SheetPageWithForcedMaxHeight.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with hero image',
+                        value: SheetPageWithHeroImage.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with lazy loading list',
+                        value: SheetPageWithLazyList.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with min height constraint',
+                        value: SheetPageWithMinHeight.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with auto-focus text field',
+                        value: SheetPageWithTextField.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with in-modal navigation',
+                        value: SheetPageWithInAppNavigation.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with custom top bar',
+                        value: SheetPageWithCustomTopBar.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with no title and no top bar',
+                        value: SheetPageWithNoPageTitleNoTopBar.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'Page with updateCurrentPage method',
+                        value: SheetPageWithUpdatePage.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'NonScrollingWoltModalSheetPage example',
+                        value: SheetPageWithNonScrollingLayout.pageId,
+                        isSelected: false,
+                      ),
+                      WoltSelectionListItemData(
+                        title: 'All the pages in one flow',
+                        value: null,
+                        isSelected: false,
+                      ),
+                    ],
+                  ),
+                  onSelectionUpdateInSingleSelectionList: (selectedItemData) {
+                    final pathName = selectedItemData.value;
+                    late SliverWoltModalSheetPage destinationPage;
+                    switch (pathName) {
+                      case ModalPageName.forcedMaxHeight:
+                        destinationPage = SheetPageWithForcedMaxHeight.build(
+                          Theme.of(context).brightness,
+                        );
+                        break;
+                      case ModalPageName.heroImage:
+                        destinationPage = SheetPageWithHeroImage.build();
+                        break;
+                      case ModalPageName.lazyLoadingList:
+                        destinationPage = SheetPageWithLazyList.build();
+                        break;
+                      case ModalPageName.textField:
+                        destinationPage = SheetPageWithTextField.build();
+                        break;
+                      case ModalPageName.minHeight:
+                        destinationPage = SheetPageWithMinHeight.build();
+                        break;
+                      case ModalPageName.noTitleNoTopBar:
+                        destinationPage =
+                            SheetPageWithNoPageTitleNoTopBar.build();
+                        break;
+                      case ModalPageName.customTopBar:
+                        destinationPage = SheetPageWithCustomTopBar.build();
+                        break;
+                      case ModalPageName.updatePage:
+                        destinationPage = SheetPageWithUpdatePage.build(
+                          context,
+                        );
+                        break;
+                      case ModalPageName.flexibleLayout:
+                        destinationPage =
+                            SheetPageWithNonScrollingLayout.build();
+                        break;
+                      case ModalPageName.inAppNavigation:
+                        WoltModalSheet.of(context).addOrReplacePages([
+                          SheetPageWithInAppNavigation.build(),
+                          ProductWithSkuPage(1),
+                          ProductWithSkuPage(2),
+                          ProductWithSkuPage(3),
+                        ]);
+                        isButtonEnabledNotifier.value =
+                            selectedItemData.isSelected;
+                        return;
+                      case null:
+                        WoltModalSheet.of(context).addOrReplacePages(
+                          _constructAllPagesAfterRootPage(context),
+                        );
+                        return;
+                    }
+                    WoltModalSheet.of(
+                      context,
+                    ).addOrReplacePage(destinationPage);
+                    isButtonEnabledNotifier.value = selectedItemData.isSelected;
+                  },
                 ),
-                onSelectionUpdateInSingleSelectionList: (selectedItemData) {
-                  final pathName = selectedItemData.value;
-                  late SliverWoltModalSheetPage destinationPage;
-                  switch (pathName) {
-                    case ModalPageName.forcedMaxHeight:
-                      destinationPage = SheetPageWithForcedMaxHeight.build(
-                          Theme.of(context).brightness);
-                      break;
-                    case ModalPageName.heroImage:
-                      destinationPage = SheetPageWithHeroImage.build();
-                      break;
-                    case ModalPageName.lazyLoadingList:
-                      destinationPage = SheetPageWithLazyList.build();
-                      break;
-                    case ModalPageName.textField:
-                      destinationPage = SheetPageWithTextField.build();
-                      break;
-                    case ModalPageName.minHeight:
-                      destinationPage = SheetPageWithMinHeight.build();
-                      break;
-                    case ModalPageName.noTitleNoTopBar:
-                      destinationPage =
-                          SheetPageWithNoPageTitleNoTopBar.build();
-                      break;
-                    case ModalPageName.customTopBar:
-                      destinationPage = SheetPageWithCustomTopBar.build();
-                      break;
-                    case ModalPageName.updatePage:
-                      destinationPage = SheetPageWithUpdatePage.build(context);
-                      break;
-                    case ModalPageName.flexibleLayout:
-                      destinationPage = SheetPageWithNonScrollingLayout.build();
-                      break;
-                    case ModalPageName.inAppNavigation:
-                      WoltModalSheet.of(context).addOrReplacePages([
-                        SheetPageWithInAppNavigation.build(),
-                        ProductWithSkuPage(1),
-                        ProductWithSkuPage(2),
-                        ProductWithSkuPage(3),
-                      ]);
-                      isButtonEnabledNotifier.value =
-                          selectedItemData.isSelected;
-                      return;
-                    case null:
-                      WoltModalSheet.of(context).addOrReplacePages(
-                        _constructAllPagesAfterRootPage(context),
-                      );
-                      return;
-                  }
-                  WoltModalSheet.of(context).addOrReplacePage(destinationPage);
-                  isButtonEnabledNotifier.value = selectedItemData.isSelected;
-                },
-              ),
-              _AllPagesPushWidget(
-                allPagesAfterRootPage: _constructAllPagesAfterRootPage(context),
-                isButtonEnabledNotifier: isButtonEnabledNotifier,
-              )
-            ],
-          ),
-        );
-      }),
+                _AllPagesPushWidget(
+                  allPagesAfterRootPage: _constructAllPagesAfterRootPage(
+                    context,
+                  ),
+                  isButtonEnabledNotifier: isButtonEnabledNotifier,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

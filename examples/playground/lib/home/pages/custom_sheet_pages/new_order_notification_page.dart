@@ -6,11 +6,12 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class NewOrderNotificationPage extends WoltModalSheetPage {
   NewOrderNotificationPage()
-      : super(
-          hasTopBarLayer: false,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Builder(builder: (context) {
+    : super(
+        hasTopBarLayer: false,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Builder(
+            builder: (context) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -53,9 +54,10 @@ class NewOrderNotificationPage extends WoltModalSheetPage {
                   ),
                 ],
               );
-            }),
+            },
           ),
-        );
+        ),
+      );
 
   static const double _buttonHeight = 24.0;
 }

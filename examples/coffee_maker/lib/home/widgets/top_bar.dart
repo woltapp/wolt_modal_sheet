@@ -58,12 +58,14 @@ class TopBar extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               StoreOnlineStatusButton(
-                  isStoreOnlineNotifier: _isStoreOnlineNotifier),
+                isStoreOnlineNotifier: _isStoreOnlineNotifier,
+              ),
               if (isGridOverlayVisibleNotifier != null) ...[
                 const SizedBox(width: 16),
                 GridLayoutButton(
-                    isGridOverlayVisible: isGridOverlayVisibleNotifier),
-              ]
+                  isGridOverlayVisible: isGridOverlayVisibleNotifier,
+                ),
+              ],
             ],
           ),
         ),

@@ -24,12 +24,14 @@ class ServeOrOfferModalPage {
               child: const Text('Serve coffee'),
             ),
             const SizedBox(height: 8),
-            Builder(builder: (context) {
-              return WoltElevatedButton(
-                onPressed: WoltModalSheet.of(context).showNext,
-                child: const Text('Offer recommendations'),
-              );
-            }),
+            Builder(
+              builder: (context) {
+                return WoltElevatedButton(
+                  onPressed: WoltModalSheet.of(context).showNext,
+                  child: const Text('Offer recommendations'),
+                );
+              },
+            ),
           ],
         ),
       ),

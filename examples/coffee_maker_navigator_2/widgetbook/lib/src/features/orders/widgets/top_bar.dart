@@ -4,11 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-@UseCase(
-  name: 'TopBar',
-  type: TopBar,
-  path: 'Orders/Widgets',
-)
+@UseCase(name: 'TopBar', type: TopBar, path: 'Orders/Widgets')
 Widget storeOnlineStatusButton(BuildContext context) {
   return Center(
     child: TopBar(

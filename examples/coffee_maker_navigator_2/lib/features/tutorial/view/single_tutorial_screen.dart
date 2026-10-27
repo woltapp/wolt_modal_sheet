@@ -58,12 +58,15 @@ class SingleTutorialScreen extends StatelessWidget {
                   alignment: AlignmentDirectional.topStart,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
+                      horizontal: 16.0,
+                      vertical: 8.0,
+                    ),
                     child: SafeArea(
                       child: BackButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white),
+                          backgroundColor: MaterialStateProperty.all(
+                            Colors.white,
+                          ),
                         ),
                         onPressed: Navigator.of(context).pop,
                       ),

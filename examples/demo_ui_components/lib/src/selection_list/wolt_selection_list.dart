@@ -10,21 +10,22 @@ export 'wolt_selection_list_item_data.dart';
 export 'wolt_selection_list_item_data_group.dart';
 
 /// Callback function type for handling selection updates in [WoltSelectionList].
-typedef _OnSelectionUpdateInWoltSelectionList<T> = void Function(
-  List<T> selectedValues,
-  WoltSelectionListItemData<T> updatedItemData,
-);
+typedef _OnSelectionUpdateInWoltSelectionList<T> =
+    void Function(
+      List<T> selectedValues,
+      WoltSelectionListItemData<T> updatedItemData,
+    );
 
 /// Callback function type for handling selection updates in multi-selection [WoltSelectionList].
-typedef OnSelectionUpdateInMultiSelectionList<T> = void Function(
-  List<T> selectedValues,
-  WoltSelectionListItemData<T> updatedItemData,
-);
+typedef OnSelectionUpdateInMultiSelectionList<T> =
+    void Function(
+      List<T> selectedValues,
+      WoltSelectionListItemData<T> updatedItemData,
+    );
 
 /// Callback function type for handling selection updates in single-selection [WoltSelectionList].
-typedef OnSelectionUpdateInSingleSelectionList<T> = void Function(
-  WoltSelectionListItemData<T> updatedItemData,
-);
+typedef OnSelectionUpdateInSingleSelectionList<T> =
+    void Function(WoltSelectionListItemData<T> updatedItemData);
 
 /// A list widget that displays selectable items in a scrollable list.
 ///
@@ -50,7 +51,7 @@ class WoltSelectionList<T> extends StatefulWidget {
 
   /// Callback function that gets triggered when an item is selected in the list.
   final _OnSelectionUpdateInWoltSelectionList<T>
-      _onSelectionUpdateInWoltSelectionList;
+  _onSelectionUpdateInWoltSelectionList;
 
   final EdgeInsetsDirectional? tilePadding;
 
@@ -62,7 +63,7 @@ class WoltSelectionList<T> extends StatefulWidget {
   factory WoltSelectionList.singleSelect({
     required WoltSelectionListItemDataGroup<T> itemTileDataGroup,
     required OnSelectionUpdateInSingleSelectionList<T>
-        onSelectionUpdateInSingleSelectionList,
+    onSelectionUpdateInSingleSelectionList,
     EdgeInsetsDirectional? tilePadding,
     CrossAxisAlignment? tileCrossAxisAlignment,
   }) {
@@ -86,7 +87,7 @@ class WoltSelectionList<T> extends StatefulWidget {
   factory WoltSelectionList.multiSelect({
     required WoltSelectionListItemDataGroup<T> itemTileDataGroup,
     required OnSelectionUpdateInMultiSelectionList<T>
-        onSelectionUpdateInMultiSelectionList,
+    onSelectionUpdateInMultiSelectionList,
     CrossAxisAlignment? tileCrossAxisAlignment,
     EdgeInsetsDirectional? tilePadding,
   }) {
@@ -96,10 +97,7 @@ class WoltSelectionList<T> extends StatefulWidget {
       tileCrossAxisAlignment: tileCrossAxisAlignment,
       selectionListType: WoltSelectionListType.multiSelect,
       onSelectionUpdateInWoltSelectionList: (selectedValues, updatedItemData) {
-        onSelectionUpdateInMultiSelectionList(
-          selectedValues,
-          updatedItemData,
-        );
+        onSelectionUpdateInMultiSelectionList(selectedValues, updatedItemData);
       },
     );
   }

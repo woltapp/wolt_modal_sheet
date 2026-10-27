@@ -78,11 +78,7 @@ class WoltNavigationToolbar extends StatelessWidget {
   }
 }
 
-enum _ToolbarSlot {
-  leading,
-  middle,
-  trailing,
-}
+enum _ToolbarSlot { leading, middle, trailing }
 
 class _ToolbarLayout extends MultiChildLayoutDelegate {
   _ToolbarLayout({
@@ -155,8 +151,9 @@ class _ToolbarLayout extends MultiChildLayoutDelegate {
         size.width - leadingWidth - trailingWidth - middleSpacing * 2.0,
         0.0,
       );
-      final BoxConstraints constraints =
-          BoxConstraints.loose(size).copyWith(maxWidth: maxWidth);
+      final BoxConstraints constraints = BoxConstraints.loose(
+        size,
+      ).copyWith(maxWidth: maxWidth);
       final Size middleSize = layoutChild(_ToolbarSlot.middle, constraints);
 
       final double middleStartMargin = leadingWidth + middleSpacing;

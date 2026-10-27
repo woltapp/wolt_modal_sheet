@@ -18,16 +18,16 @@ class WoltSideSheetType extends WoltModalType {
     double closeProgressThreshold = 0.5,
     bool? barrierDismissible,
   }) : super(
-          shapeBorder: shapeBorder,
-          showDragHandle: false,
-          forceMaxHeight: forceMaxHeight,
-          transitionDuration: transitionDuration,
-          reverseTransitionDuration: reverseTransitionDuration,
-          dismissDirection: dismissDirection,
-          minFlingVelocity: minFlingVelocity,
-          closeProgressThreshold: closeProgressThreshold,
-          barrierDismissible: barrierDismissible,
-        );
+         shapeBorder: shapeBorder,
+         showDragHandle: false,
+         forceMaxHeight: forceMaxHeight,
+         transitionDuration: transitionDuration,
+         reverseTransitionDuration: reverseTransitionDuration,
+         dismissDirection: dismissDirection,
+         minFlingVelocity: minFlingVelocity,
+         closeProgressThreshold: closeProgressThreshold,
+         barrierDismissible: barrierDismissible,
+       );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 300);
   static const Duration _defaultExitDuration = Duration(milliseconds: 250);
@@ -155,16 +155,17 @@ class WoltSideSheetType extends WoltModalType {
     );
 
     // Define the position animation for entering
-    final positionAnimation = Tween<Offset>(
-      begin: isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: animation,
-        curve: cubic,
-        reverseCurve: reverseCubic,
-      ),
-    );
+    final positionAnimation =
+        Tween<Offset>(
+          begin: isRtl ? const Offset(-1.0, 0.0) : const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: cubic,
+            reverseCurve: reverseCubic,
+          ),
+        );
 
     return FadeTransition(
       opacity: alphaAnimation,

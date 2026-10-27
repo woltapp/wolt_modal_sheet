@@ -8,7 +8,5 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
   path: 'Orders/Widgets',
 )
 Widget coffeeMakerCustomDivider(BuildContext context) {
-  return const Scaffold(
-    body: Center(child: CoffeeMakerCustomDivider()),
-  );
+  return const Scaffold(body: Center(child: CoffeeMakerCustomDivider()));
 }

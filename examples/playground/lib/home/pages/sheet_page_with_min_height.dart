@@ -19,7 +19,8 @@ class SheetPageWithMinHeight {
       child: const Padding(
         padding: EdgeInsets.only(bottom: 100, top: 16, left: 16, right: 16),
         child: ModalSheetContentText(
-            'This page is added to test the constraints for minimum height.'),
+          'This page is added to test the constraints for minimum height.',
+        ),
       ),
     );
   }

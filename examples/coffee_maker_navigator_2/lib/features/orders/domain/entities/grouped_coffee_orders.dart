@@ -49,14 +49,17 @@ class GroupedCoffeeOrders extends Equatable {
 
   /// Gets a list of all coffee orders across all states.
   List<CoffeeOrder> get allOrders => [
-        ...grindStateOrders,
-        ...addWaterStateOrders,
-        ...readyStateOrders,
-      ];
+    ...grindStateOrders,
+    ...addWaterStateOrders,
+    ...readyStateOrders,
+  ];
 
   @override
-  List<Object?> get props =>
-      [grindStateOrders, addWaterStateOrders, readyStateOrders];
+  List<Object?> get props => [
+    grindStateOrders,
+    addWaterStateOrders,
+    readyStateOrders,
+  ];
 
   /// Returns the count of coffee orders for a specific coffee maker step.
   int countForStep(CoffeeMakerStep step) {

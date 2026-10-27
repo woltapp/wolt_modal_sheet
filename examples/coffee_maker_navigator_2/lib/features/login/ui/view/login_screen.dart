@@ -13,8 +13,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with
-        DependencyContainerSubscriptionMixin<LoginScreenDependencyContainer,
-            LoginScreen> {
+        DependencyContainerSubscriptionMixin<
+          LoginScreenDependencyContainer,
+          LoginScreen
+        > {
   late LoginScreenViewModel _viewModel;
 
   @override

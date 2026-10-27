@@ -24,7 +24,8 @@ class SheetPageWithForcedMaxHeight {
         child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
       ),
       pageTitle: const ModalSheetTitle(
-          'Page with forced max height and background color'),
+        'Page with forced max height and background color',
+      ),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(

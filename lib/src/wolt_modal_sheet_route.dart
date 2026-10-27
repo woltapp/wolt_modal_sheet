@@ -19,8 +19,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this._barrierDismissible,
     this._transitionAnimationController,
     RouteSettings? settings,
-  })  : _useSafeArea = useSafeArea ?? true,
-        super(settings: settings);
+  }) : _useSafeArea = useSafeArea ?? true,
+       super(settings: settings);
 
   /// Applies additional decorations to the modal page content excluding the
   /// barrier. Use [modalDecorator] to apply decorations to the barrier and
@@ -134,8 +134,9 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   @override
   Duration get reverseTransitionDuration {
-    return _determineCurrentModalType(navigator!.context)
-        .reverseTransitionDuration;
+    return _determineCurrentModalType(
+      navigator!.context,
+    ).reverseTransitionDuration;
   }
 
   @override

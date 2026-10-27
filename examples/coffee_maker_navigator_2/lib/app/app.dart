@@ -16,22 +16,26 @@ class CoffeeMakerApp extends StatelessWidget {
     /// to access the active dependency containers. By doing this, any widget can
     /// easily retrieve the necessary dependencies it needs.
     return DependencyInjector(
-      child: Builder(builder: (context) {
-        final appLevelDependencyContainer = DependencyInjector.container<
-            CoffeeMakerAppLevelDependencyContainer>(context);
+      child: Builder(
+        builder: (context) {
+          final appLevelDependencyContainer =
+              DependencyInjector.container<
+                CoffeeMakerAppLevelDependencyContainer
+              >(context);
 
-        return AppLifecycleObserver(
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: AppThemeData.themeData(),
-            routerDelegate: appLevelDependencyContainer.appRouterDelegate,
-            routeInformationParser:
-                appLevelDependencyContainer.appRouteInformationParser,
-            backButtonDispatcher:
-                appLevelDependencyContainer.backButtonDispatcher,
-          ),
-        );
-      }),
+          return AppLifecycleObserver(
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              theme: AppThemeData.themeData(),
+              routerDelegate: appLevelDependencyContainer.appRouterDelegate,
+              routeInformationParser:
+                  appLevelDependencyContainer.appRouteInformationParser,
+              backButtonDispatcher:
+                  appLevelDependencyContainer.backButtonDispatcher,
+            ),
+          );
+        },
+      ),
     );
   }
 }

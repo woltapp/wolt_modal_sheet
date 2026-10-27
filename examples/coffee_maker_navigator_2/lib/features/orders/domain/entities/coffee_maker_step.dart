@@ -2,17 +2,18 @@ const String _imagePath = 'images/coffee_maker_state';
 
 enum CoffeeMakerStep {
   grind(
-      stepName: 'Grind',
-      stepNumber: 0,
-      actionName: 'Start grinding',
-      assetName: '${_imagePath}_grind.webp',
-      tutorialTitle: 'Tips for grinding',
-      queryParamName: 'grind',
-      tutorialContent: '''
+    stepName: 'Grind',
+    stepNumber: 0,
+    actionName: 'Start grinding',
+    assetName: '${_imagePath}_grind.webp',
+    tutorialTitle: 'Tips for grinding',
+    queryParamName: 'grind',
+    tutorialContent: '''
 Grinding is crucial for brewing as it increases the surface area of coffee beans, enhancing water's ability to extract flavors effectively. However, the grind size needs to be optimal—not too fine nor too coarse—to prevent undesirable flavors from over- or under-extraction. Experts like Sierra Yeo emphasize that the right grind can significantly impact the taste of coffee, suggesting that coffee enthusiasts consider grinding their beans at home for the freshest, most flavorful results. Additionally, the consistency and shape of the coffee grounds also play critical roles in the brewing process, influencing the overall taste of the coffee.
 
 The process of finding the perfect grind is not just about the size but also about how uniformly the coffee is ground. Uneven grinding can lead to a mixture of under-extracted (sour) and over-extracted (bitter) flavors in the final brew. For those looking to achieve barista-quality coffee at home, investing in a good quality grinder might be as crucial as the coffee maker itself. This allows for precise control over the grind size and uniformity, ensuring every cup of coffee is as delicious as intended. Over time, the ability to tweak grind settings based on the brewing method—whether French press, espresso, or drip—can transform a daily coffee routine into a gourmet experience, elevating the ordinary to the extraordinary.
-'''),
+''',
+  ),
   addWater(
     stepName: 'Add water',
     stepNumber: 1,
@@ -27,19 +28,20 @@ Moreover, the quality of water used is paramount. The water source's pH level an
 ''',
   ),
   ready(
-      stepName: 'Ready',
-      stepNumber: 2,
-      actionName: 'Ready',
-      assetName: '${_imagePath}_ready.webp',
-      tutorialTitle: 'Serving coffee',
-      queryParamName: 'ready',
-      tutorialContent: '''
+    stepName: 'Ready',
+    stepNumber: 2,
+    actionName: 'Ready',
+    assetName: '${_imagePath}_ready.webp',
+    tutorialTitle: 'Serving coffee',
+    queryParamName: 'ready',
+    tutorialContent: '''
 Serving coffee, the final and perhaps the most gratifying step in the coffee-making process, is about more than merely pouring a brew into a cup. This stage is crucial for ensuring that the aroma and temperature of the coffee are optimal at the moment of enjoyment. Serving coffee at the right temperature is vital—not too hot to cause discomfort, nor too cool, which might dampen its rich flavors and aromas. Ideally, coffee should be served immediately after brewing, at a temperature between 155°F and 175°F (about 68°C to 80°C), to capture the full spectrum of flavors crafted during the brewing process.
 
 Additionally, the choice of serving vessel can significantly enhance the coffee-drinking experience. For instance, ceramic cups retain heat well and do not impart any additional flavors to the coffee, preserving its intended taste profile. In contrast, glass cups, while stylish, may lose heat more quickly but offer the visual pleasure of seeing the coffee's richness and color, which can be particularly appealing with layered drinks such as lattes or cappuccinos. Moreover, for those who take their coffee on the go, insulated travel mugs are an excellent choice to maintain the coffee’s temperature and flavor over time.
 
 Further elevating the serving experience, some advanced coffee machines integrate serving suggestions based on the type of coffee being made—whether it's an espresso, a creamy latte, or a bold French press. These suggestions might include the ideal cup size, the recommended serving temperature, and even pairing advice with certain breakfast foods or desserts. This tailored approach ensures that each cup of coffee not only tastes great but also complements the setting and occasion, making every coffee moment truly special. This final touch in the coffee journey connects all the careful preparation steps to the sensory pleasure of drinking, making each sip a testament to the art and science of coffee making.
-''');
+''',
+  );
 
   const CoffeeMakerStep({
     required this.stepName,

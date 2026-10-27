@@ -7,10 +7,7 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// This widget takes a coffee maker step and renders a message indicating that there are no tasks
 /// or orders available for that step.
 class EmptyCoffeeOrderList extends StatelessWidget {
-  const EmptyCoffeeOrderList({
-    super.key,
-    required this.coffeeMakerStep,
-  });
+  const EmptyCoffeeOrderList({super.key, required this.coffeeMakerStep});
 
   final CoffeeMakerStep coffeeMakerStep;
 
@@ -25,10 +22,9 @@ class EmptyCoffeeOrderList extends StatelessWidget {
           children: [
             Text(
               coffeeMakerStep.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),

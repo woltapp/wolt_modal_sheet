@@ -6,7 +6,7 @@ class WaterSourceList extends StatelessWidget {
   const WaterSourceList({super.key, required this.onWaterSourceSelected});
 
   final OnSelectionUpdateInSingleSelectionList<WaterSource>
-      onWaterSourceSelected;
+  onWaterSourceSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,10 @@ class WaterSourceList extends StatelessWidget {
             group: WaterSource.values
                 .map(
                   (e) => WoltSelectionListItemData(
-                      title: e.label, value: e, isSelected: false),
+                    title: e.label,
+                    value: e,
+                    isSelected: false,
+                  ),
                 )
                 .toList(),
           ),

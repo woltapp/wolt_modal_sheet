@@ -27,8 +27,8 @@ class WoltModalSheetAnimatedSwitcher extends StatefulWidget {
     required this.sheetWidth,
     required this.showDragHandle,
     Key? key,
-  })  : assert(pageIndex >= 0 && pageIndex < pages.length),
-        super(key: key);
+  }) : assert(pageIndex >= 0 && pageIndex < pages.length),
+       super(key: key);
 
   @override
   State<WoltModalSheetAnimatedSwitcher> createState() =>
@@ -168,7 +168,8 @@ class _WoltModalSheetAnimatedSwitcherState
     final outgoingWidgets = _outgoingPageWidgets;
     final animationController = _animationController;
     final animatePagination = _shouldAnimatePagination;
-    final isAnimating = animationController != null &&
+    final isAnimating =
+        animationController != null &&
         animatePagination &&
         animationController.isAnimating &&
         animationController.value != 1.0;
@@ -222,8 +223,9 @@ class _WoltModalSheetAnimatedSwitcherState
     super.dispose();
   }
 
-  List<GlobalKey<State<StatefulWidget>>> _createGlobalKeys() =>
-      [for (int i = 0; i < widget.pages.length; i++) GlobalKey()];
+  List<GlobalKey<State<StatefulWidget>>> _createGlobalKeys() => [
+    for (int i = 0; i < widget.pages.length; i++) GlobalKey(),
+  ];
 
   void _addPage({required bool animate}) {
     // We set the _shouldAnimatePagination to animate, which dictates whether the new page transition will be animated.
@@ -234,20 +236,21 @@ class _WoltModalSheetAnimatedSwitcherState
     final WoltModalSheetAnimationStyle animationStyle =
         themeData?.animationStyle ?? defaultThemeData.animationStyle;
     // An AnimationController is created and attached to this State object (with 'this' as the vsync).
-    _animationController = AnimationController(
-      duration: animationStyle.paginationAnimationStyle.paginationDuration,
-      vsync: this,
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          //  If the widget is disposed while the animation is still running calling setState
-          //  will throw an exception.
-          if (context.mounted) {
-            setState(() => _onPaginationAnimationComplete());
-          } else {
-            _onPaginationAnimationComplete();
+    _animationController =
+        AnimationController(
+          duration: animationStyle.paginationAnimationStyle.paginationDuration,
+          vsync: this,
+        )..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            //  If the widget is disposed while the animation is still running calling setState
+            //  will throw an exception.
+            if (context.mounted) {
+              setState(() => _onPaginationAnimationComplete());
+            } else {
+              _onPaginationAnimationComplete();
+            }
           }
-        }
-      });
+        });
 
     // We store the current widgets in currentWidgetsToBeOutgoing, as we're about to replace them.
     final currentWidgetsToBeOutgoing = _incomingPageWidgets;
@@ -290,18 +293,23 @@ class _WoltModalSheetAnimatedSwitcherState
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final hasTopBarLayer = _hasTopBarLayer;
-    final isTopBarLayerAlwaysVisible = _page.isTopBarLayerAlwaysVisible ??
+    final isTopBarLayerAlwaysVisible =
+        _page.isTopBarLayerAlwaysVisible ??
         themeData?.isTopBarLayerAlwaysVisible ??
         defaultThemeData.isTopBarLayerAlwaysVisible;
-    final topBarTitle =
-        WoltModalSheetTopBarTitle(page: _page, pageTitleKey: _pageTitleKey);
-    final navBarHeight = _page.navBarHeight ??
+    final topBarTitle = WoltModalSheetTopBarTitle(
+      page: _page,
+      pageTitleKey: _pageTitleKey,
+    );
+    final navBarHeight =
+        _page.navBarHeight ??
         themeData?.navBarHeight ??
         defaultThemeData.navBarHeight;
     final WoltModalSheetAnimationStyle animationStyle =
         themeData?.animationStyle ?? defaultThemeData.animationStyle;
-    const animatedBuilderKey =
-        ValueKey(WoltModalSheetPageTransitionState.incoming);
+    const animatedBuilderKey = ValueKey(
+      WoltModalSheetPageTransitionState.incoming,
+    );
     // If the page uses the default top bar, we should show the top bar title to be represented in
     // the middle of the navigation toolbar.
     final shouldShowTopBarTitle = hasTopBarLayer && _page.topBar == null;
@@ -351,15 +359,16 @@ class _WoltModalSheetAnimatedSwitcherState
         controller: animationController,
         child: hasTopBarLayer
             ? (isTopBarLayerAlwaysVisible ||
-                    _page is NonScrollingWoltModalSheetPage
-                ? WoltModalSheetTopBar(page: _page)
-                : WoltModalSheetTopBarFlow(
-                    scrollAnimationStyle: animationStyle.scrollAnimationStyle,
-                    page: _page,
-                    scrollController: _currentPageScrollController,
-                    titleKey: _pageTitleKey,
-                    softKeyboardClosedListenable: softKeyboardClosureListenable,
-                  ))
+                      _page is NonScrollingWoltModalSheetPage
+                  ? WoltModalSheetTopBar(page: _page)
+                  : WoltModalSheetTopBarFlow(
+                      scrollAnimationStyle: animationStyle.scrollAnimationStyle,
+                      page: _page,
+                      scrollController: _currentPageScrollController,
+                      titleKey: _pageTitleKey,
+                      softKeyboardClosedListenable:
+                          softKeyboardClosureListenable,
+                    ))
             : const SizedBox.shrink(),
       ),
       navigationToolbarAnimatedBuilder: NavigationToolbarAnimatedBuilder(
@@ -391,8 +400,9 @@ class _WoltModalSheetAnimatedSwitcherState
     AnimationController animationController,
     PaginatingWidgetsGroup currentWidgetsToBeOutgoing,
   ) {
-    const animatedBuilderKey =
-        ValueKey(WoltModalSheetPageTransitionState.outgoing);
+    const animatedBuilderKey = ValueKey(
+      WoltModalSheetPageTransitionState.outgoing,
+    );
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
     final WoltModalSheetAnimationStyle animationStyle =

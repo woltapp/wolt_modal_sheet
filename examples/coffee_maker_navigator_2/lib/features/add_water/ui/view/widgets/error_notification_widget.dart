@@ -23,8 +23,10 @@ class ErrorNotificationWidget extends StatelessWidget {
             const Icon(Icons.info, color: Colors.red),
             const SizedBox(width: 12),
             Expanded(
-              child:
-                  Text(message, style: Theme.of(context).textTheme.bodyMedium),
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
           ],
         ),

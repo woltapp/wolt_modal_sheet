@@ -7,14 +7,18 @@ import 'package:coffee_maker_navigator_2/features/orders/di/orders_dependency_co
 import 'package:material_ui/material_ui.dart';
 
 void _registerFeatureLevelDependencyContainers(
-    DependencyContainerManager manager) {
+  DependencyContainerManager manager,
+) {
   manager
     ..registerContainerFactory<OrdersDependencyContainer>(
-        () => OrdersDependencyContainer())
+      () => OrdersDependencyContainer(),
+    )
     ..registerContainerFactory<AddWaterDependencyContainer>(
-        () => AddWaterDependencyContainer())
+      () => AddWaterDependencyContainer(),
+    )
     ..registerContainerFactory<LoginScreenDependencyContainer>(
-        () => LoginScreenDependencyContainer());
+      () => LoginScreenDependencyContainer(),
+    );
 }
 
 /*
@@ -65,8 +69,9 @@ Future<void> main() async {
   /// as long as app is alive. These dependencies can be shared across multiple feature level
   /// dependency containers. It is the only container that is initialized asynchronously.
   final dependencyContainerManager = DependencyContainerManager.instance;
-  await dependencyContainerManager
-      .init(CoffeeMakerAppLevelDependencyContainer());
+  await dependencyContainerManager.init(
+    CoffeeMakerAppLevelDependencyContainer(),
+  );
 
   /// STEP #2: Register feature-level dependency containers.
   ///

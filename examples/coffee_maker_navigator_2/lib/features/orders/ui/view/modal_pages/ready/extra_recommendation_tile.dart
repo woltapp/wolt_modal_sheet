@@ -54,11 +54,12 @@ class _ExtraRecommendationTileState extends State<ExtraRecommendationTile> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12.0),
                         child: Image(
-                            image: AssetImage(
-                              widget.recommendation.imageAssetPath,
-                              package: 'assets',
-                            ),
-                            fit: BoxFit.cover),
+                          image: AssetImage(
+                            widget.recommendation.imageAssetPath,
+                            package: 'assets',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -72,17 +73,22 @@ class _ExtraRecommendationTileState extends State<ExtraRecommendationTile> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(widget.recommendation.label,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold)),
+                                    Text(
+                                      widget.recommendation.label,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
                                     const SizedBox(height: 1),
-                                    Text(widget.recommendation.price,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium),
+                                    Text(
+                                      widget.recommendation.price,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium,
+                                    ),
                                   ],
                                 ),
                               ),

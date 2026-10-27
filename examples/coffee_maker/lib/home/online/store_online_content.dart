@@ -16,8 +16,8 @@ import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
-typedef OnCoffeeOrderStatusChange = Function(String coffeeOrderId,
-    [CoffeeMakerStep? newStep]);
+typedef OnCoffeeOrderStatusChange =
+    Function(String coffeeOrderId, [CoffeeMakerStep? newStep]);
 
 class StoreOnlineContent extends StatefulWidget {
   const StoreOnlineContent({
@@ -37,7 +37,8 @@ class StoreOnlineContent extends StatefulWidget {
 
 class _StoreOnlineContentState extends State<StoreOnlineContent> {
   Map<CoffeeMakerStep, CoffeeOrderListWidget> _getCoffeeMakerStepListWidgets(
-      BuildContext context) {
+    BuildContext context,
+  ) {
     final model = context.read<StoreOnlineViewModel>();
 
     return {
@@ -65,20 +66,23 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<StoreOnlineViewModel>(
-      create: (context) => StoreOnlineViewModel()
-        ..onInit(groupedCoffeeOrders: widget._groupedCoffeeOrders),
+      create: (context) =>
+          StoreOnlineViewModel()
+            ..onInit(groupedCoffeeOrders: widget._groupedCoffeeOrders),
       child: Consumer<StoreOnlineViewModel>(
         builder: (context, model, _) {
           return WoltScreenWidthAdaptiveWidget(
             smallScreenWidthChild: SmallScreenOnlineContent(
-              coffeeMakerStepListWidgets:
-                  _getCoffeeMakerStepListWidgets(context),
+              coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(
+                context,
+              ),
               groupedCoffeeOrders: model.groupedCoffeeOrders,
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
             ),
             largeScreenWidthChild: LargeScreenOnlineContent(
-              coffeeMakerStepListWidgets:
-                  _getCoffeeMakerStepListWidgets(context),
+              coffeeMakerStepListWidgets: _getCoffeeMakerStepListWidgets(
+                context,
+              ),
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
               isGridOverlayVisibleNotifier:
                   widget._isGridOverlayVisibleNotifier,
@@ -90,7 +94,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   }
 
   void _onCoffeeOrderSelectedInGrindState(
-      BuildContext context, String coffeeOrderId) {
+    BuildContext context,
+    String coffeeOrderId,
+  ) {
     final viewModel = context.read<StoreOnlineViewModel>();
 
     WoltModalSheet.show(
@@ -100,7 +106,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
           coffeeOrderId: coffeeOrderId,
           onGrindCoffeeTapped: () {
             viewModel.onCoffeeOrderStatusChange(
-                coffeeOrderId, CoffeeMakerStep.addWater);
+              coffeeOrderId,
+              CoffeeMakerStep.addWater,
+            );
             Navigator.pop(context);
           },
         ),
@@ -123,7 +131,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   }
 
   void _onCoffeeOrderSelectedInAddWaterState(
-      BuildContext context, String coffeeOrderId) {
+    BuildContext context,
+    String coffeeOrderId,
+  ) {
     final viewModel = context.read<StoreOnlineViewModel>();
 
     WoltModalSheet.show(
@@ -147,7 +157,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
             coffeeOrderId,
             onFinishAddingWater: () {
               viewModel.onCoffeeOrderStatusChange(
-                  coffeeOrderId, CoffeeMakerStep.ready);
+                coffeeOrderId,
+                CoffeeMakerStep.ready,
+              );
               Navigator.pop(context);
             },
           ),
@@ -158,7 +170,9 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
   }
 
   void _onCoffeeOrderSelectedInReadyState(
-      BuildContext context, String coffeeOrderId) {
+    BuildContext context,
+    String coffeeOrderId,
+  ) {
     final viewModel = context.read<StoreOnlineViewModel>();
 
     WoltModalSheet.show(
@@ -173,11 +187,12 @@ class _StoreOnlineContentState extends State<StoreOnlineContent> {
             },
           ),
           OfferRecommendationModalPage.build(
-              coffeeOrderId: coffeeOrderId,
-              onServeWithRecommendation: () {
-                viewModel.onCoffeeOrderStatusChange(coffeeOrderId);
-                Navigator.pop(context);
-              }),
+            coffeeOrderId: coffeeOrderId,
+            onServeWithRecommendation: () {
+              viewModel.onCoffeeOrderStatusChange(coffeeOrderId);
+              Navigator.pop(context);
+            },
+          ),
         ];
       },
       modalDecorator: (child) {

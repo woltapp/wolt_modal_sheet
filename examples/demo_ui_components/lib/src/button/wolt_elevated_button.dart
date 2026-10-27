@@ -29,20 +29,20 @@ class WoltElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.resolveWith(
-          (Set<MaterialState> states) {
-            return states.contains(MaterialState.disabled)
-                ? theme.disabledForegroundColor(colorName)
-                : theme.enabledForegroundColor(colorName);
-          },
-        ),
-        backgroundColor: MaterialStateProperty.resolveWith(
-          (Set<MaterialState> states) {
-            return states.contains(MaterialState.disabled)
-                ? theme.disabledBackgroundColor(colorName)
-                : theme.enabledBackgroundColor(colorName);
-          },
-        ),
+        foregroundColor: MaterialStateProperty.resolveWith((
+          Set<MaterialState> states,
+        ) {
+          return states.contains(MaterialState.disabled)
+              ? theme.disabledForegroundColor(colorName)
+              : theme.enabledForegroundColor(colorName);
+        }),
+        backgroundColor: MaterialStateProperty.resolveWith((
+          Set<MaterialState> states,
+        ) {
+          return states.contains(MaterialState.disabled)
+              ? theme.disabledBackgroundColor(colorName)
+              : theme.enabledBackgroundColor(colorName);
+        }),
         overlayColor: MaterialStateProperty.all(theme.splashColor(colorName)),
         shadowColor: MaterialStateProperty.all(Colors.transparent),
         shape: MaterialStateProperty.all<OutlinedBorder>(

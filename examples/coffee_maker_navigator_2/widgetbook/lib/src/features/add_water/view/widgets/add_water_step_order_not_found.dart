@@ -8,9 +8,5 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
   path: 'Add Water/Widgets',
 )
 Widget addWaterStepOrderNotFound(BuildContext context) {
-  return Scaffold(
-    body: AddWaterStepOrderNotFound(
-      onOrderStepCompleted: () {},
-    ),
-  );
+  return Scaffold(body: AddWaterStepOrderNotFound(onOrderStepCompleted: () {}));
 }

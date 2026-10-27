@@ -49,8 +49,8 @@ class _SmallScreenOnlineContentState extends State<SmallScreenOnlineContent> {
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 color: WoltColors.black8,
-                child: widget._coffeeMakerStepListWidgets[
-                    _selectedStepForBottomNavigationBar]!,
+                child: widget
+                    ._coffeeMakerStepListWidgets[_selectedStepForBottomNavigationBar]!,
               ),
             ),
           ],

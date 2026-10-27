@@ -44,11 +44,16 @@ class SheetPageWithTextField {
       leadingNavBarWidget: WoltModalSheetBackButton(
         onBackPressed: () => cubit.goToPage(currentPage - 1),
       ),
-      trailingNavBarWidget:
-          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      trailingNavBarWidget: WoltModalSheetCloseButton(
+        onClosed: cubit.closeSheet,
+      ),
       child: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
+        padding: const EdgeInsets.only(
+          bottom: 80,
+          top: 16,
+          right: 16,
+          left: 16,
+        ),
         child: Column(
           children: [
             const ModalSheetContentText('''

@@ -11,11 +11,11 @@ import 'package:wolt_state_management/wolt_state_management.dart';
 
 typedef OnCoffeeOrderUpdate = void Function(String coffeeOrderId);
 
-typedef OnCoffeeOrderStatusChange = void Function(String coffeeOrderId,
-    [CoffeeMakerStep? coffeeMakerStep]);
+typedef OnCoffeeOrderStatusChange =
+    void Function(String coffeeOrderId, [CoffeeMakerStep? coffeeMakerStep]);
 
-typedef OnOrderScreenBottomNavBarItemSelected = void Function(
-    CoffeeMakerStep selectedStep);
+typedef OnOrderScreenBottomNavBarItemSelected =
+    void Function(CoffeeMakerStep selectedStep);
 
 class OrderScreenContent extends StatelessWidget {
   const OrderScreenContent({
@@ -52,45 +52,51 @@ class OrderScreenContent extends StatelessWidget {
                       valueListenable: groupedCoffeeOrders,
                       idleBuilder:
                           (BuildContext context, GroupedCoffeeOrders? orders) {
-                        if (orders == null) {
-                          return const Center(
-                              child: Text('No orders available'));
-                        }
+                            if (orders == null) {
+                              return const Center(
+                                child: Text('No orders available'),
+                              );
+                            }
 
-                        return CoffeeOrderListViewForStep(
-                          groupedCoffeeOrders: orders,
-                          selectedBottomNavBarItem: selectedTab,
-                          onGrindCoffeeStepSelected: onGrindCoffeeStepSelected,
-                          onAddWaterCoffeeStepSelected:
-                              onAddWaterCoffeeStepSelected,
-                          onReadyCoffeeStepSelected: onReadyCoffeeStepSelected,
-                        );
-                      },
+                            return CoffeeOrderListViewForStep(
+                              groupedCoffeeOrders: orders,
+                              selectedBottomNavBarItem: selectedTab,
+                              onGrindCoffeeStepSelected:
+                                  onGrindCoffeeStepSelected,
+                              onAddWaterCoffeeStepSelected:
+                                  onAddWaterCoffeeStepSelected,
+                              onReadyCoffeeStepSelected:
+                                  onReadyCoffeeStepSelected,
+                            );
+                          },
                       loadingBuilder:
                           (BuildContext context, GroupedCoffeeOrders? value) {
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                      errorBuilder: (
-                        BuildContext context,
-                        Object? error,
-                        GroupedCoffeeOrders? lastKnownValue,
-                      ) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Error: $error'),
-                              ElevatedButton(
-                                onPressed: () {
-                                  /// TODO: call view model for retry.
-                                  // Retry by setting the last known value, call view model
-                                },
-                                child: const Text('Retry'),
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                      errorBuilder:
+                          (
+                            BuildContext context,
+                            Object? error,
+                            GroupedCoffeeOrders? lastKnownValue,
+                          ) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Error: $error'),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      /// TODO: call view model for retry.
+                                      // Retry by setting the last known value, call view model
+                                    },
+                                    child: const Text('Retry'),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      },
+                            );
+                          },
                     ),
                   ),
                 ],

@@ -226,7 +226,6 @@ void main() {
           ..addListener(() {
             notificationCount++;
           })
-
           // Act
           ..value = notifier.value; // Setting the same value
 
@@ -309,8 +308,10 @@ void main() {
           final error = Exception('Test Error');
 
           // Act
-          final notifier =
-              StatefulValueNotifier<int>.error(error, initialValue);
+          final notifier = StatefulValueNotifier<int>.error(
+            error,
+            initialValue,
+          );
 
           // Assert
           expect(notifier.value, isA<ErrorValueState<int>>());

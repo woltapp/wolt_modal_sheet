@@ -98,27 +98,29 @@ class _HeroImageFlowDelegate extends FlowDelegate {
     // Calculate scale
     final double scale =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      startValue: scrollAnimationStyle.heroImageScaleStart,
-      endValue: scrollAnimationStyle.heroImageScaleEnd,
-      rangeInPx: heroImageHeight - topBarHeight - 8,
-      progressInRangeInPx: currentScrollPosition,
-    );
+          startValue: scrollAnimationStyle.heroImageScaleStart,
+          endValue: scrollAnimationStyle.heroImageScaleEnd,
+          rangeInPx: heroImageHeight - topBarHeight - 8,
+          progressInRangeInPx: currentScrollPosition,
+        );
 
     // Calculate opacity
     final double opacity =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: (((heroImageHeight - topBarHeight) / 2) - 8),
-      progressInRangeInPx:
-          currentScrollPosition - ((heroImageHeight - topBarHeight) / 2),
-      startValue: scrollAnimationStyle.heroImageOpacityStart,
-      endValue: scrollAnimationStyle.heroImageOpacityEnd,
-    );
+          rangeInPx: (((heroImageHeight - topBarHeight) / 2) - 8),
+          progressInRangeInPx:
+              currentScrollPosition - ((heroImageHeight - topBarHeight) / 2),
+          startValue: scrollAnimationStyle.heroImageOpacityStart,
+          endValue: scrollAnimationStyle.heroImageOpacityEnd,
+        );
 
     // Calculate the translation to center the image
-    final double translationX = (flowPaintingContext.size.width -
+    final double translationX =
+        (flowPaintingContext.size.width -
             (flowPaintingContext.getChildSize(0)?.width ?? 0) * scale) /
         2;
-    final double translationY = (flowPaintingContext.size.height -
+    final double translationY =
+        (flowPaintingContext.size.height -
             (flowPaintingContext.getChildSize(0)?.height ?? 0) * scale) /
         2;
     // Create the transformation matrix

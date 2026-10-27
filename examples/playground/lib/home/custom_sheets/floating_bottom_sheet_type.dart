@@ -9,19 +9,20 @@ class FloatingBottomSheetType extends WoltModalType {
   const FloatingBottomSheetType({
     this.padding = const EdgeInsetsDirectional.all(16.0),
   }) : super(
-          shapeBorder: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(28.0)),
-          ),
-          showDragHandle: false,
-          dismissDirection: WoltModalDismissDirection.down,
-          transitionDuration: _defaultEnterDuration,
-          reverseTransitionDuration: _defaultExitDuration,
-        );
+         shapeBorder: const RoundedRectangleBorder(
+           borderRadius: BorderRadius.all(Radius.circular(28.0)),
+         ),
+         showDragHandle: false,
+         dismissDirection: WoltModalDismissDirection.down,
+         transitionDuration: _defaultEnterDuration,
+         reverseTransitionDuration: _defaultExitDuration,
+       );
 
   @override
   String routeLabel(BuildContext context) {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations = MaterialLocalizations.of(
+      context,
+    );
     return localizations.bottomSheetLabel;
   }
 
@@ -49,7 +50,10 @@ class FloatingBottomSheetType extends WoltModalType {
 
   @override
   Offset positionModal(
-      Size availableSize, Size modalContentSize, TextDirection textDirection) {
+    Size availableSize,
+    Size modalContentSize,
+    TextDirection textDirection,
+  ) {
     return Offset(
       availableSize.width - modalContentSize.width - padding.end,
       availableSize.height - modalContentSize.height - padding.bottom,
@@ -63,39 +67,29 @@ class FloatingBottomSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final alphaAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
-      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
-    ));
+    final alphaAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
+        reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+      ),
+    );
 
     final slideAnimation = Tween<Offset>(
       begin: const Offset(1, 1),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: Curves.easeInOutCubic,
-    ));
+    ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
 
     final scaleAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: Curves.easeInOutCubic,
-    ));
+    ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
 
     return FadeTransition(
       opacity: alphaAnimation,
       child: SlideTransition(
         position: slideAnimation,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: child,
-        ),
+        child: ScaleTransition(scale: scaleAnimation, child: child),
       ),
     );
   }

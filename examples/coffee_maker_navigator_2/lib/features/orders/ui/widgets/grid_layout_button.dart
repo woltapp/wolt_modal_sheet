@@ -4,10 +4,7 @@ import 'package:material_ui/material_ui.dart';
 /// The `GridLayoutButton` widget displays a button indicating the visibility of the grid layout.
 /// It is a toggle button that allows the user to switch the grid layout visibility states.
 class GridLayoutButton extends StatelessWidget {
-  const GridLayoutButton({
-    required this._isGridOverlayVisible,
-    super.key,
-  });
+  const GridLayoutButton({required this._isGridOverlayVisible, super.key});
 
   final ValueNotifier<bool> _isGridOverlayVisible;
 
@@ -18,19 +15,17 @@ class GridLayoutButton extends StatelessWidget {
       builder: (_, isVisible, __) {
         return OutlinedButton(
           style: Theme.of(context).outlinedButtonTheme.style!.copyWith(
-                side: const MaterialStatePropertyAll(
-                  BorderSide(
-                    width: 2,
-                    color: WoltColors.gray,
-                  ),
-                ),
-              ),
+            side: const MaterialStatePropertyAll(
+              BorderSide(width: 2, color: WoltColors.gray),
+            ),
+          ),
           onPressed: () {
             _isGridOverlayVisible.value = !_isGridOverlayVisible.value;
           },
           child: Icon(
-              _isGridOverlayVisible.value ? Icons.grid_off : Icons.grid_on,
-              size: 16),
+            _isGridOverlayVisible.value ? Icons.grid_off : Icons.grid_on,
+            size: 16,
+          ),
         );
       },
     );

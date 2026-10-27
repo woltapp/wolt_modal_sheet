@@ -71,13 +71,16 @@ enum WoltModalSheetPageTransitionState {
     required bool isForwardMove,
     required TextDirection textDirection,
   }) {
-    final directionMultiplier = (textDirection == TextDirection.ltr ? 1 : -1) *
+    final directionMultiplier =
+        (textDirection == TextDirection.ltr ? 1 : -1) *
         (isForwardMove ? 1 : -1);
 
     switch (this) {
       case WoltModalSheetPageTransitionState.incoming:
-        final incomingBeginOffset =
-            Offset(sheetWidth * 0.3 * directionMultiplier / screenWidth, 0);
+        final incomingBeginOffset = Offset(
+          sheetWidth * 0.3 * directionMultiplier / screenWidth,
+          0,
+        );
 
         return Tween<Offset>(
           begin:
@@ -91,8 +94,10 @@ enum WoltModalSheetPageTransitionState {
         );
 
       case WoltModalSheetPageTransitionState.outgoing:
-        final outgoingEndOffset =
-            Offset(sheetWidth * 0.3 * -directionMultiplier / screenWidth, 0);
+        final outgoingEndOffset = Offset(
+          sheetWidth * 0.3 * -directionMultiplier / screenWidth,
+          0,
+        );
 
         return Tween<Offset>(
           begin: style.outgoingMainContentSlideBeginOffset,

@@ -46,8 +46,9 @@ class OrdersService {
 
     if (orderToUpdate != null) {
       if ([CoffeeMakerStep.addWater, CoffeeMakerStep.ready].contains(newStep)) {
-        _ordersRepository
-            .updateOrder(orderToUpdate.copyWith(coffeeMakerStep: newStep));
+        _ordersRepository.updateOrder(
+          orderToUpdate.copyWith(coffeeMakerStep: newStep),
+        );
       } else {
         _ordersRepository.archiveOrder(orderId);
       }
@@ -86,9 +87,7 @@ class OrdersService {
   void _log(List<CoffeeOrder> updatedOrders) {
     final now = DateTime.now();
     debugPrint(
-      '${now.hour}:${now.minute}:${now.second} Polling for orders: ${updatedOrders.map(
-            (e) => (e.id, e.coffeeMakerStep.stepName),
-          ).toList()}',
+      '${now.hour}:${now.minute}:${now.second} Polling for orders: ${updatedOrders.map((e) => (e.id, e.coffeeMakerStep.stepName)).toList()}',
     );
   }
 }

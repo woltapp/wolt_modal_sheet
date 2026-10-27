@@ -60,19 +60,21 @@ class WoltAlertDialogType extends WoltDialogType {
     final cubic = isClosing ? exitingCubic : enteringCubic;
     final reverseCubic = isClosing ? enteringCubic : exitingCubic;
 
-    final alphaAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: animation,
-      curve: interval,
-      reverseCurve: reverseInterval,
-    ));
+    final alphaAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: interval,
+        reverseCurve: reverseInterval,
+      ),
+    );
 
-    final scaleAnimation =
-        Tween<double>(begin: 0.6, end: 1.0).animate(CurvedAnimation(
-      parent: animation,
-      curve: cubic,
-      reverseCurve: reverseCubic,
-    ));
+    final scaleAnimation = Tween<double>(begin: 0.6, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: cubic,
+        reverseCurve: reverseCubic,
+      ),
+    );
 
     return ScaleTransition(
       scale: scaleAnimation,

@@ -14,11 +14,12 @@ class WoltAnimatedModalBarrier extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final alphaAnimation =
-        Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-      parent: animationController,
-      curve: const Interval(0.0, 1.0, curve: Curves.linear),
-    ));
+    final alphaAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.0, 1.0, curve: Curves.linear),
+      ),
+    );
 
     return FadeTransition(
       opacity: alphaAnimation,

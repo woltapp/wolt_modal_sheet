@@ -32,7 +32,8 @@ class AddWaterScreenBody extends StatelessWidget {
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
             child: Padding(
-              padding: const EdgeInsets.all(16.0) +
+              padding:
+                  const EdgeInsets.all(16.0) +
                   const EdgeInsets.only(bottom: 200),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,8 +41,8 @@ class AddWaterScreenBody extends StatelessWidget {
                   Text(
                     'Add water to the coffee',
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -51,8 +52,9 @@ class AddWaterScreenBody extends StatelessWidget {
                   const SizedBox(height: 24),
                   AppTextFormField(
                     controller: TextEditingController(),
-                    textInputType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    textInputType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onChanged: onWaterQuantityUpdated,
                     onSubmitted: onWaterQuantityUpdated,
                     inputFormatters: [
@@ -64,8 +66,9 @@ class AddWaterScreenBody extends StatelessWidget {
                   const SizedBox(height: 16),
                   AppTextFormField(
                     controller: TextEditingController(),
-                    textInputType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    textInputType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     onChanged: onWaterTemperatureUpdated,
                     onSubmitted: onWaterTemperatureUpdated,
                     inputFormatters: [
@@ -81,20 +84,24 @@ class AddWaterScreenBody extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   WoltSelectionList<WaterSource>.singleSelect(
-                    tilePadding:
-                        const EdgeInsetsDirectional.symmetric(vertical: 8),
+                    tilePadding: const EdgeInsetsDirectional.symmetric(
+                      vertical: 8,
+                    ),
                     itemTileDataGroup: WoltSelectionListItemDataGroup(
                       group: WaterSource.values
                           .map(
                             (e) => WoltSelectionListItemData(
-                                title: e.label, value: e, isSelected: false),
+                              title: e.label,
+                              value: e,
+                              isSelected: false,
+                            ),
                           )
                           .toList(),
                     ),
                     onSelectionUpdateInSingleSelectionList: (item) {
                       onWaterSourceUpdated(item.value);
                     },
-                  )
+                  ),
                 ],
               ),
             ),

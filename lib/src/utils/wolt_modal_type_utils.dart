@@ -11,10 +11,11 @@ class WoltModalTypeUtils {
     WoltModalTypeBuilder? modalTypeBuilder,
     BuildContext context,
   ) {
-    final builder = modalTypeBuilder ??
-        Theme.of(context)
-            .extension<WoltModalSheetThemeData>()
-            ?.modalTypeBuilder ??
+    final builder =
+        modalTypeBuilder ??
+        Theme.of(
+          context,
+        ).extension<WoltModalSheetThemeData>()?.modalTypeBuilder ??
         WoltModalSheetDefaultThemeData(context).modalTypeBuilder;
     return builder(context);
   }

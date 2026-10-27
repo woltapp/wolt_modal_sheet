@@ -39,32 +39,31 @@ void main() {
         },
       );
 
-      testWidgets(
-        'should rebuild idleBuilder when the value changes',
-        (tester) async {
-          // Arrange
-          final valueNotifier = StatefulValueNotifier<int>.idle(42);
+      testWidgets('should rebuild idleBuilder when the value changes', (
+        tester,
+      ) async {
+        // Arrange
+        final valueNotifier = StatefulValueNotifier<int>.idle(42);
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: StatefulValueListenableBuilder<int>(
-                valueListenable: valueNotifier,
-                idleBuilder: (context, value) {
-                  return Text('Idle State. Value: $value');
-                },
-              ),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: StatefulValueListenableBuilder<int>(
+              valueListenable: valueNotifier,
+              idleBuilder: (context, value) {
+                return Text('Idle State. Value: $value');
+              },
             ),
-          );
-          await tester.pumpAndSettle();
+          ),
+        );
+        await tester.pumpAndSettle();
 
-          // Act
-          valueNotifier.setIdle(value: 100);
-          await tester.pumpAndSettle();
+        // Act
+        valueNotifier.setIdle(value: 100);
+        await tester.pumpAndSettle();
 
-          // Assert
-          expect(find.text('Idle State. Value: 100'), findsOneWidget);
-        },
-      );
+        // Assert
+        expect(find.text('Idle State. Value: 100'), findsOneWidget);
+      });
     });
 
     group('Loading State', () {
@@ -286,31 +285,28 @@ void main() {
     });
 
     group('Edge Cases', () {
-      testWidgets(
-        'should handle null value in idle state',
-        (tester) async {
-          // Arrange
-          final valueNotifier = StatefulValueNotifier<int?>.idle();
+      testWidgets('should handle null value in idle state', (tester) async {
+        // Arrange
+        final valueNotifier = StatefulValueNotifier<int?>.idle();
 
-          await tester.pumpWidget(
-            MaterialApp(
-              home: StatefulValueListenableBuilder<int?>(
-                valueListenable: valueNotifier,
-                idleBuilder: (context, value) {
-                  return Text('Idle State. Value: ${value ?? 'null'}');
-                },
-              ),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: StatefulValueListenableBuilder<int?>(
+              valueListenable: valueNotifier,
+              idleBuilder: (context, value) {
+                return Text('Idle State. Value: ${value ?? 'null'}');
+              },
             ),
-          );
-          await tester.pumpAndSettle();
+          ),
+        );
+        await tester.pumpAndSettle();
 
-          // Act
-          // No action needed.
+        // Act
+        // No action needed.
 
-          // Assert
-          expect(find.text('Idle State. Value: null'), findsOneWidget);
-        },
-      );
+        // Assert
+        expect(find.text('Idle State. Value: null'), findsOneWidget);
+      });
     });
   });
 }

@@ -9,27 +9,29 @@ class TopNotificationSheetType extends WoltModalType {
   const TopNotificationSheetType({
     this.padding = const EdgeInsetsDirectional.all(32.0),
   }) : super(
-          shapeBorder: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(24)),
-          ),
-          dismissDirection: WoltModalDismissDirection.up,
-          showDragHandle: false,
-          closeProgressThreshold: 0.8,
-          barrierDismissible: false,
-        );
+         shapeBorder: const RoundedRectangleBorder(
+           borderRadius: BorderRadius.all(Radius.circular(24)),
+         ),
+         dismissDirection: WoltModalDismissDirection.up,
+         showDragHandle: false,
+         closeProgressThreshold: 0.8,
+         barrierDismissible: false,
+       );
 
   @override
   String routeLabel(BuildContext context) {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations = MaterialLocalizations.of(
+      context,
+    );
     return localizations.dialogLabel;
   }
 
   @override
   BoxConstraints layoutModal(Size availableSize) {
     final availableWidth = availableSize.width;
-    double width =
-        availableWidth > 523.0 ? 312.0 : availableWidth - padding.end;
+    double width = availableWidth > 523.0
+        ? 312.0
+        : availableWidth - padding.end;
 
     if (availableWidth > 523.0) {
       width = 312.0;
@@ -48,9 +50,14 @@ class TopNotificationSheetType extends WoltModalType {
 
   @override
   Offset positionModal(
-      Size availableSize, Size modalContentSize, TextDirection textDirection) {
-    final xOffset =
-        max(0.0, (availableSize.width - modalContentSize.width) / 2);
+    Size availableSize,
+    Size modalContentSize,
+    TextDirection textDirection,
+  ) {
+    final xOffset = max(
+      0.0,
+      (availableSize.width - modalContentSize.width) / 2,
+    );
     final yOffset = padding.top;
     return Offset(xOffset, yOffset);
   }
@@ -62,14 +69,13 @@ class TopNotificationSheetType extends WoltModalType {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final alphaAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
-      reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
-    ));
+    final alphaAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Interval(0.0, 100.0 / 300.0, curve: Curves.linear),
+        reverseCurve: const Interval(100.0 / 250.0, 1.0, curve: Curves.linear),
+      ),
+    );
 
     return FadeTransition(
       opacity: alphaAnimation,
