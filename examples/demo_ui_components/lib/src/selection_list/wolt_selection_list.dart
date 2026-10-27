@@ -34,13 +34,11 @@ class WoltSelectionList<T> extends StatefulWidget {
   const WoltSelectionList._({
     required this.itemTileDataGroup,
     required this.selectionListType,
-    required _OnSelectionUpdateInWoltSelectionList<T>
-        onSelectionUpdateInWoltSelectionList,
+    required this._onSelectionUpdateInWoltSelectionList,
     this.tilePadding,
     this.tileCrossAxisAlignment = CrossAxisAlignment.start,
     super.key,
-  }) : _onSelectionUpdateInWoltSelectionList =
-            onSelectionUpdateInWoltSelectionList;
+  });
 
   /// The list of data for each selectable item in the list.
   final WoltSelectionListItemDataGroup<T> itemTileDataGroup;

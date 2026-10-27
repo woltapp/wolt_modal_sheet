@@ -13,13 +13,11 @@ typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
 /// The selected step is highlighted with a different color.
 class SmallScreenBottomNavigationBar extends StatelessWidget {
   const SmallScreenBottomNavigationBar({
-    required CoffeeMakerStep selectedStep,
-    required void Function(CoffeeMakerStep) onSelected,
-    required GroupedCoffeeOrders groupedCoffeeOrders,
+    required this._selectedStep,
+    required this._onSelected,
+    required this._groupedCoffeeOrders,
     super.key,
-  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _onSelected = onSelected,
-        _selectedStep = selectedStep;
+  });
 
   final CoffeeMakerStep _selectedStep;
   final OnCoffeeMakerStepSelected _onSelected;

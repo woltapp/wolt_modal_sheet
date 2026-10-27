@@ -347,7 +347,10 @@ void main() {
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
 
-    final ColoredBox coloredBox = tester.widget(find.byType(ColoredBox));
+    final ColoredBox coloredBox = tester.widget(find.descendant(
+      of: find.byType(ModalBarrier),
+      matching: find.byType(ColoredBox),
+    ));
     expect(coloredBox.color, barrierColor);
   });
 
@@ -359,7 +362,10 @@ void main() {
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
 
-    final ColoredBox coloredBox = tester.widget(find.byType(ColoredBox));
+    final ColoredBox coloredBox = tester.widget(find.descendant(
+      of: find.byType(ModalBarrier),
+      matching: find.byType(ColoredBox),
+    ));
     expect(coloredBox.color, barrierColor);
   });
 }

@@ -11,10 +11,9 @@ import 'package:material_ui/material_ui.dart';
 class LargeScreenCoffeeOrderListSection extends StatelessWidget {
   const LargeScreenCoffeeOrderListSection({
     super.key,
-    required CoffeeOrderListWidget coffeeOrderListWidget,
-    required CoffeeMakerStep coffeeMakerStep,
-  })  : _coffeeMakerStep = coffeeMakerStep,
-        _coffeeOrderListWidget = coffeeOrderListWidget;
+    required this._coffeeOrderListWidget,
+    required this._coffeeMakerStep,
+  });
 
   final CoffeeOrderListWidget _coffeeOrderListWidget;
   final CoffeeMakerStep _coffeeMakerStep;
@@ -60,9 +59,7 @@ class LargeScreenCoffeeOrderListSection extends StatelessWidget {
 /// This header displays the coffee maker step and the count of orders in that step.
 class _LargeScreenCoffeeOrderListHeader extends StatelessWidget {
   const _LargeScreenCoffeeOrderListHeader(
-      {required CoffeeMakerStep coffeeMakerStep, required int count})
-      : _count = count,
-        _coffeeMakerStep = coffeeMakerStep;
+      {required this._coffeeMakerStep, required this._count});
 
   final CoffeeMakerStep _coffeeMakerStep;
   final int _count;

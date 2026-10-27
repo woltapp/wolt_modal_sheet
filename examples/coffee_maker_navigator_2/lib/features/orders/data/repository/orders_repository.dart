@@ -4,8 +4,7 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_
 class OrdersRepository {
   final OrdersRemoteDataSource _ordersRemoteDataSource;
 
-  OrdersRepository({required OrdersRemoteDataSource ordersRemoteDataSource})
-      : _ordersRemoteDataSource = ordersRemoteDataSource;
+  OrdersRepository({required this._ordersRemoteDataSource});
 
   Future<List<CoffeeOrder>> fetchOrders() async {
     return await _ordersRemoteDataSource.fetchOrders();

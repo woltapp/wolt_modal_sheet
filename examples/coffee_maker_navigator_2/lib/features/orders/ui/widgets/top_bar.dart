@@ -5,9 +5,9 @@ import 'package:material_ui/material_ui.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({
-    required CoffeeMakerStep selectedTab,
+    required this._selectedTab,
     super.key,
-  }) : _selectedTab = selectedTab;
+  });
 
   final CoffeeMakerStep _selectedTab;
 

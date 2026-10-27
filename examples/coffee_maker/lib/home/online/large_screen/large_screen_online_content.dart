@@ -12,14 +12,11 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// The [isStoreOnlineNotifier] is a [ValueNotifier] that notifies the widget of changes in the store's online status.
 class LargeScreenOnlineContent extends StatefulWidget {
   const LargeScreenOnlineContent({
-    required Map<CoffeeMakerStep, CoffeeOrderListWidget>
-        coffeeMakerStepListWidgets,
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-    required ValueNotifier<bool> isGridOverlayVisibleNotifier,
+    required this._coffeeMakerStepListWidgets,
+    required this._isStoreOnlineNotifier,
+    required this._isGridOverlayVisibleNotifier,
     super.key,
-  })  : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets,
-        _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier;
+  });
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
   final ValueNotifier<bool> _isStoreOnlineNotifier;

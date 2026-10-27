@@ -14,14 +14,11 @@ import 'package:material_ui/material_ui.dart';
 /// The [_groupedCoffeeOrders] represents the grouped coffee orders in different states.
 class SmallScreenOnlineContent extends StatefulWidget {
   const SmallScreenOnlineContent({
-    required Map<CoffeeMakerStep, CoffeeOrderListWidget>
-        coffeeMakerStepListWidgets,
-    required GroupedCoffeeOrders groupedCoffeeOrders,
-    required ValueNotifier<bool> isStoreOnlineNotifier,
+    required this._coffeeMakerStepListWidgets,
+    required this._groupedCoffeeOrders,
+    required this._isStoreOnlineNotifier,
     super.key,
-  })  : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets,
-        _groupedCoffeeOrders = groupedCoffeeOrders,
-        _isStoreOnlineNotifier = isStoreOnlineNotifier;
+  });
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
   final GroupedCoffeeOrders _groupedCoffeeOrders;

@@ -15,9 +15,9 @@ class OrdersService {
   static const Duration pollingInterval = Duration(seconds: 3);
 
   OrdersService({
-    required OrdersRepository ordersRepository,
+    required this._ordersRepository,
     required AppLifeCycleService appLifeCycleService,
-  }) : _ordersRepository = ordersRepository {
+  }) {
     _startPolling();
     appLifeCycleService.appLifeStateListenable.addListener(() {
       _onAppLifeCycleChange(appLifeCycleService.appLifeStateListenable.value);

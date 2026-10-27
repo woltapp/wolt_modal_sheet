@@ -33,11 +33,11 @@ void main() {
       );
 
       final Size leadingSize = tester.getSize(find.ancestor(
-          of: find.byIcon(leadingIcon), matching: find.byType(ColoredBox)));
+          of: find.byIcon(leadingIcon), matching: find.byType(ColoredBox)).first);
       expect(leadingSize, const Size.square(iconSize));
 
       final Size trailingSize = tester.getSize(find.ancestor(
-          of: find.byIcon(trailingIcon), matching: find.byType(ColoredBox)));
+          of: find.byIcon(trailingIcon), matching: find.byType(ColoredBox)).first);
       expect(trailingSize, const Size.square(iconSize));
     },
   );

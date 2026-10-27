@@ -21,13 +21,11 @@ typedef OnCoffeeOrderStatusChange = Function(String coffeeOrderId,
 
 class StoreOnlineContent extends StatefulWidget {
   const StoreOnlineContent({
-    required GroupedCoffeeOrders groupedCoffeeOrders,
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-    required ValueNotifier<bool> isGridOverlayVisibleNotifier,
+    required this._groupedCoffeeOrders,
+    required this._isStoreOnlineNotifier,
+    required this._isGridOverlayVisibleNotifier,
     super.key,
-  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier;
+  });
 
   final GroupedCoffeeOrders _groupedCoffeeOrders;
   final ValueNotifier<bool> _isStoreOnlineNotifier;

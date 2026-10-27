@@ -10,13 +10,12 @@ const defaultWidthBreakPoint = 768;
 class StoreOfflineContent extends StatefulWidget {
   /// Creates a new instance of [StoreOfflineContent] widget.
   ///
-  /// The [isStoreOnlineNotifier] is a [ValueNotifier] that tracks the online state of the store.
+  /// The [_isStoreOnlineNotifier] is a [ValueNotifier] that tracks the online state of the store.
   const StoreOfflineContent({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-    ValueNotifier<bool>? isGridOverlayVisibleNotifier,
+    required this._isStoreOnlineNotifier,
+    this._isGridOverlayVisibleNotifier,
     super.key,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier;
+  });
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
   final ValueNotifier<bool>? _isGridOverlayVisibleNotifier;
@@ -73,8 +72,8 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
 
 class _OfflineContent extends StatelessWidget {
   const _OfflineContent({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-  }) : _isStoreOnlineNotifier = isStoreOnlineNotifier;
+    required this._isStoreOnlineNotifier,
+  });
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
 

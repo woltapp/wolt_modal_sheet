@@ -7,16 +7,14 @@ import 'package:material_ui/material_ui.dart';
 class HomeScreen extends StatefulWidget {
   /// Creates a new instance of [HomeScreen] widget.
   ///
-  /// The [groupedCoffeeOrders] represents the grouped coffee orders to be displayed on the screen.
-  /// The [isStoreOnline] indicates whether the store is currently in the online state.
+  /// The [_groupedCoffeeOrders] represents the grouped coffee orders to be displayed on the screen.
+  /// The [_isStoreOnline] indicates whether the store is currently in the online state.
   const HomeScreen({
     super.key,
-    required GroupedCoffeeOrders groupedCoffeeOrders,
-    required bool isStoreOnline,
-    required bool isGridOverlayVisible,
-  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _isStoreOnline = isStoreOnline,
-        _isGridOverlayVisible = isGridOverlayVisible;
+    required this._groupedCoffeeOrders,
+    required this._isStoreOnline,
+    required this._isGridOverlayVisible,
+  });
 
   final GroupedCoffeeOrders _groupedCoffeeOrders;
   final bool _isStoreOnline;

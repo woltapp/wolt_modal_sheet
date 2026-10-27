@@ -6,9 +6,9 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// It is a toggle button that allows the user to switch the store between online and offline states.
 class StoreOnlineStatusButton extends StatelessWidget {
   const StoreOnlineStatusButton({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
+    required this._isStoreOnlineNotifier,
     super.key,
-  }) : _isStoreOnlineNotifier = isStoreOnlineNotifier;
+  });
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
 

@@ -15,13 +15,10 @@ class PlaygroundRouterDelegate
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<PlaygroundRouterConfiguration> {
   PlaygroundRouterDelegate({
-    required RouterCubit cubit,
-    required ValueNotifier<int> pageIndexNotifier,
-    required ValueNotifier<WoltModalSheetPageListBuilder>
-        pageListBuilderNotifier,
-  })  : _cubit = cubit,
-        _pageIndexNotifier = pageIndexNotifier,
-        _pageListBuilderNotifier = pageListBuilderNotifier {
+    required this._cubit,
+    required this._pageIndexNotifier,
+    required this._pageListBuilderNotifier,
+  }) {
     _cubitSubscription = _cubit.stream.listen((state) {
       notifyListeners(); // Notify router that configuration has changed whenever the state updates
     });

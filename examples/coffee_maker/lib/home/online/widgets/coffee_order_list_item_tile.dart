@@ -10,10 +10,9 @@ import 'package:material_ui/material_ui.dart';
 class CoffeeOrderListItemTile extends StatelessWidget {
   const CoffeeOrderListItemTile({
     super.key,
-    required CoffeeOrder coffeeOrder,
-    required void Function(String) onSelected,
-  })  : _onSelected = onSelected,
-        _coffeeOrder = coffeeOrder;
+    required this._coffeeOrder,
+    required this._onSelected,
+  });
 
   final CoffeeOrder _coffeeOrder;
   final ValueChanged<String> _onSelected;
@@ -85,10 +84,9 @@ class CoffeeOrderListItemTile extends StatelessWidget {
 /// This section displays the order ID and order name of a coffee order.
 class _CoffeeOrderListItemDetails extends StatelessWidget {
   const _CoffeeOrderListItemDetails({
-    required CoffeeOrder coffeeOrder,
-    required void Function() onTap,
-  })  : _onTap = onTap,
-        _coffeeOrder = coffeeOrder;
+    required this._coffeeOrder,
+    required this._onTap,
+  });
 
   final CoffeeOrder _coffeeOrder;
   final VoidCallback _onTap;

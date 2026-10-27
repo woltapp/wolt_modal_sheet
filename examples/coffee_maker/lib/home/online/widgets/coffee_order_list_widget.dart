@@ -11,11 +11,10 @@ import 'package:material_ui/material_ui.dart';
 class CoffeeOrderListWidget extends StatelessWidget {
   const CoffeeOrderListWidget({
     required this.coffeeOrders,
-    required CoffeeMakerStep coffeeMakerStep,
-    required void Function(String) onCoffeeOrderSelected,
+    required this._coffeeMakerStep,
+    required this._onCoffeeOrderSelected,
     super.key,
-  })  : _onCoffeeOrderSelected = onCoffeeOrderSelected,
-        _coffeeMakerStep = coffeeMakerStep;
+  });
 
   final List<CoffeeOrder> coffeeOrders;
   final CoffeeMakerStep _coffeeMakerStep;

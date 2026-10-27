@@ -13,14 +13,11 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// size and store online status.
 class TopBar extends StatelessWidget {
   const TopBar({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-    ValueNotifier<bool>? isGridOverlayVisibleNotifier,
-    CoffeeMakerStep? selectedStepForBottomNavigationBar,
+    required this._isStoreOnlineNotifier,
+    this._isGridOverlayVisibleNotifier,
+    this._selectedStepForBottomNavigationBar,
     super.key,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier,
-        _selectedStepForBottomNavigationBar =
-            selectedStepForBottomNavigationBar;
+  });
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
   final ValueNotifier<bool>? _isGridOverlayVisibleNotifier;

@@ -56,8 +56,8 @@ class CoffeeOrderListViewForStep extends StatelessWidget {
 class _CoffeeOrderListView extends StatelessWidget {
   const _CoffeeOrderListView({
     required this.coffeeOrders,
-    required OnCoffeeOrderUpdate onCoffeeOrderSelected,
-  }) : _onCoffeeOrderSelected = onCoffeeOrderSelected;
+    required this._onCoffeeOrderSelected,
+  });
 
   final List<CoffeeOrder> coffeeOrders;
   final ValueChanged<String> _onCoffeeOrderSelected;
