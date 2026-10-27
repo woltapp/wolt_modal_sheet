@@ -39,7 +39,7 @@ class WoltSelectionListItemData<T> {
   }) {
     return WoltSelectionListItemData(
       title: title ?? this.title,
-      subtitle: description ?? this.subtitle,
+      subtitle: description ?? subtitle,
       value: value ?? this.value,
       isSelected: isSelected ?? this.isSelected,
       leadingIcon: leadingIcon ?? this.leadingIcon,

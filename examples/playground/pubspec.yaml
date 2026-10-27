@@ -15,7 +15,7 @@ dependencies:
   wolt_responsive_layout_grid: ^0.0.3
   demo_ui_components:
     path: ../demo_ui_components
-  device_info_plus: ^9.1.1
+  device_info_plus: ^13.0.0
 
   material_ui: ^1.0.0
 dev_dependencies:
