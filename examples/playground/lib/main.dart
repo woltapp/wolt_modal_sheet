@@ -1,8 +1,7 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:playground/home/home_screen.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -89,11 +88,7 @@ class _DemoAppState extends State<DemoApp> {
           ),
         ],
       ),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       locale: _direction == TextDirection.ltr
           ? const Locale('en')
           : const Locale('he'),

@@ -1,7 +1,7 @@
 import 'package:coffee_maker/entities/coffee_order.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A tile widget representing a coffee order item in a list.
 ///

@@ -11,7 +11,7 @@ import 'package:coffee_maker/home/online/small_screen/small_screen_online_conten
 import 'package:coffee_maker/home/online/view_model/store_online_view_model.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:playground_navigator2/bloc/router_state.dart';
 import 'package:playground_navigator2/router/playground_router_configuration.dart';

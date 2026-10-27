@@ -1,6 +1,6 @@
 import 'package:coffee_maker/home/widgets/top_bar.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// /// By default, the `widthBreakPoint` is set to 768, which corresponds to the common breakpoint between small and large screens.

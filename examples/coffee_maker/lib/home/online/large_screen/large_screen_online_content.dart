@@ -2,7 +2,7 @@ import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/home/online/large_screen/large_screen_coffee_order_list_section.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:coffee_maker/home/widgets/top_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// A widget that represents the online content for large screens.

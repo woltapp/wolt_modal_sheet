@@ -4,7 +4,7 @@ import 'package:coffee_maker_navigator_2/features/add_water/ui/view/widgets/add_
 import 'package:coffee_maker_navigator_2/features/add_water/ui/view_model/add_water_view_model.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_di/wolt_di.dart';
 
 class AddWaterScreen extends StatefulWidget {

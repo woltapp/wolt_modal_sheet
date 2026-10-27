@@ -8,8 +8,8 @@ import 'package:coffee_maker_navigator_2/features/onboarding/data/repository/onb
 import 'package:coffee_maker_navigator_2/features/onboarding/domain/onboarding_service.dart';
 import 'package:coffee_maker_navigator_2/app/router/view/app_router_delegate.dart';
 import 'package:coffee_maker_navigator_2/app/router/view_model/router_view_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wolt_di/wolt_di.dart';
 

@@ -2,7 +2,7 @@ import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker/home/widgets/coffee_maker_custom_divider.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
 

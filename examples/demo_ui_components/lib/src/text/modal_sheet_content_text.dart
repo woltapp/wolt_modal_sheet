@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ModalSheetContentText extends StatelessWidget {
   const ModalSheetContentText(this.text, {super.key});

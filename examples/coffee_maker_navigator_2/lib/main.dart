@@ -4,7 +4,7 @@ import 'package:coffee_maker_navigator_2/features/add_water/di/add_water_depende
 import 'package:coffee_maker_navigator_2/features/login/di/login_screen_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/app/di/coffee_maker_app_level_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/features/orders/di/orders_dependency_container.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void _registerFeatureLevelDependencyContainers(
     DependencyContainerManager manager) {

@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// The `StoreOnlineStatusButton` widget displays a button indicating the online status of the store.

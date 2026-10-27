@@ -1,7 +1,7 @@
 import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A section that displays a list of coffee orders on a large screen.
 ///

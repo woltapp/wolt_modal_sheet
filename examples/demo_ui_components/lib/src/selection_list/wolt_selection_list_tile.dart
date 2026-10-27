@@ -2,7 +2,7 @@ import 'package:demo_ui_components/src/colors/wolt_colors.dart';
 import 'package:demo_ui_components/src/selection_list/wolt_selection_list_item_data.dart';
 import 'package:demo_ui_components/src/selection_list/wolt_selection_list_tile_trailing.dart';
 import 'package:demo_ui_components/src/selection_list/wolt_selection_list_type.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Represents a selectable list item in the WoltSelectionList widget.
 class WoltSelectionListTile<T> extends StatefulWidget {

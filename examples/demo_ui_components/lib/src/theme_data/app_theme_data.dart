@@ -1,7 +1,7 @@
 // ignore_for_file: prefer-switch-with-enums
 
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppThemeData {
   static const navigationDrawerIconSize = 24.0;
@@ -68,8 +68,8 @@ class AppThemeData {
     );
   }
 
-  static CardTheme get _cardThemeData {
-    return CardTheme(
+  static CardThemeData get _cardThemeData {
+    return CardThemeData(
       color: colorScheme.surface,
       shadowColor: colorScheme.shadow,
       surfaceTintColor: Colors.transparent,

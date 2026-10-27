@@ -1,7 +1,7 @@
 import 'package:coffee_maker/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker/home/offline/store_offline_content.dart';
 import 'package:coffee_maker/home/online/store_online_content.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The home screen of the CoffeeMaker demo app.
 class HomeScreen extends StatefulWidget {

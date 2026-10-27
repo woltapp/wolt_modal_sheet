@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The `GridLayoutButton` widget displays a button indicating the visibility of the grid layout.
 /// It is a toggle button that allows the user to switch the grid layout visibility states.

@@ -2,7 +2,7 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_order.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/orders_screen_bottom_navigation_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:wolt_state_management/wolt_state_management.dart';

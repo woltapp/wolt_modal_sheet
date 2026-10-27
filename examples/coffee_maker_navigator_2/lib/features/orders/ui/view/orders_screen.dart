@@ -3,7 +3,7 @@ import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_screen_content.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/view_model/orders_screen_view_model.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_di/wolt_di.dart';
 
 class OrdersScreen extends StatefulWidget {

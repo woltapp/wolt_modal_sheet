@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class ServeOrOfferModalPage extends WoltModalSheetPage {

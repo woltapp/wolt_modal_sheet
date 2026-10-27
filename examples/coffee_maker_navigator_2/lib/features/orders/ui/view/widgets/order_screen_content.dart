@@ -6,7 +6,7 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/orders_
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/top_bar.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_state_management/wolt_state_management.dart';
 
 typedef OnCoffeeOrderUpdate = void Function(String coffeeOrderId);

@@ -4,7 +4,7 @@ import 'package:coffee_maker_navigator_2/features/orders/ui/view/widgets/order_s
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_state_management/wolt_state_management.dart';
 
 /// A custom bottom navigation bar for the home screen.

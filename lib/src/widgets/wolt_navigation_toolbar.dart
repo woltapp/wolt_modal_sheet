@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// [WoltNavigationToolbar] is a modified version of the [NavigationToolbar] widget in the
 /// Flutter SDK. The primary modification is in the [performLayout] method of the

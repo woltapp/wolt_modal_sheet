@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/app/router/entities/app_route_page.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The [AppRouteObserver] class extends the [RouteObserver] class, allowing it to observe and
 /// respond to changes in the app's navigation stack. This is particularly useful for setting

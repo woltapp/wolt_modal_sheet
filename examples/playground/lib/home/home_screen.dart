@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:playground/home/custom_sheets/attached_floating_bottom_sheet_type.dart';
 import 'package:playground/home/custom_sheets/floating_bottom_sheet_type.dart';

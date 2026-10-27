@@ -1,7 +1,7 @@
 import 'package:coffee_maker/home/online/modal_pages/ready/extra_recommendation.dart';
 import 'package:coffee_maker/home/online/modal_pages/ready/extra_recommendation_tile.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class OfferRecommendationModalPage {

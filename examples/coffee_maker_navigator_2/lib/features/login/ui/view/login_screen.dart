@@ -1,7 +1,7 @@
 import 'package:coffee_maker_navigator_2/features/login/di/login_screen_dependency_container.dart';
 import 'package:coffee_maker_navigator_2/features/login/ui/view/widgets/login_screen_content.dart';
 import 'package:coffee_maker_navigator_2/features/login/ui/view_model/login_screen_view_model.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_di/wolt_di.dart';
 
 class LoginScreen extends StatefulWidget {

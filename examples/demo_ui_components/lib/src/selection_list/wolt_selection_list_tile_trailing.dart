@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/src/colors/wolt_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'wolt_selection_list_type.dart';
 

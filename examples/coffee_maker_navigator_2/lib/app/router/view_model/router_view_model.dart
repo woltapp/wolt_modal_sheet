@@ -7,7 +7,7 @@ import 'package:coffee_maker_navigator_2/app/router/entities/app_route_uri_templ
 import 'package:coffee_maker_navigator_2/app/ui/widgets/app_navigation_drawer.dart';
 import 'package:coffee_maker_navigator_2/features/onboarding/domain/onboarding_service.dart';
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
 
 /// The `RouterViewModel` class acts as the central manager for navigation state within the application.

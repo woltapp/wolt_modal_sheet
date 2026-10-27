@@ -1,7 +1,7 @@
 // ignore_for_file: prefer-switch-with-enums
 
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 export 'wolt_elevated_button_theme.dart';
 

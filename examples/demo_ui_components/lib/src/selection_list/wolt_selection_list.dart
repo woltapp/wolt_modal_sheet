@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'wolt_selection_list_item_data.dart';
 import 'wolt_selection_list_item_data_group.dart';

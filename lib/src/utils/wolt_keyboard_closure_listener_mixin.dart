@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/utils/soft_keyboard_closed_event.dart';
 
 /// Mixin [WoltKeyboardClosureListenerMixin] adds functionality to track the soft keyboard's

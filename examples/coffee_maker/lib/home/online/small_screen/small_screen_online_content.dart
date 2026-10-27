@@ -4,7 +4,7 @@ import 'package:coffee_maker/home/online/small_screen/small_screen_bottom_naviga
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:coffee_maker/home/widgets/top_bar.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A widget that represents the online content for small screens.
 ///

@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SingleTutorialScreen extends StatelessWidget {
   const SingleTutorialScreen({super.key, required this.coffeeMakerStep});

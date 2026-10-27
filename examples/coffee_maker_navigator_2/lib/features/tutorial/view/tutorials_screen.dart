@@ -2,7 +2,7 @@ import 'package:coffee_maker_navigator_2/app/ui/widgets/app_navigation_drawer.da
 import 'package:coffee_maker_navigator_2/features/orders/domain/entities/coffee_maker_step.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class TutorialsScreen extends StatefulWidget {
   const TutorialsScreen({super.key});

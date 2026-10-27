@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Represents the data for a list item in the WoltSelectionList widget.
 class WoltSelectionListItemData<T> {

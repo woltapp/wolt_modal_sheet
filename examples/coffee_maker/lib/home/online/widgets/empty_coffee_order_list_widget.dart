@@ -1,5 +1,5 @@
 import 'package:coffee_maker/entities/coffee_maker_step.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// A widget that displays a message when the coffee order list is empty for a specific coffee maker step.

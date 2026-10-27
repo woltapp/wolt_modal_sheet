@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/app/router/entities/app_route_configuration.dart';
 import 'package:coffee_maker_navigator_2/app/router/entities/app_route_uri_template.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Parses and restores [RouteInformation] for the application, facilitating the interaction
 /// between the app's internal navigation state and the external representation in the browser's URL.

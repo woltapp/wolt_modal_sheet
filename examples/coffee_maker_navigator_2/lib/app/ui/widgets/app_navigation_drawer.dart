@@ -1,5 +1,5 @@
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 enum AppNavigationDrawerDestination {
   ordersScreen(label: Text("Orders"), icon: Icon(Icons.coffee)),

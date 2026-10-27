@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:playground_navigator2/modal/pages/root_sheet_page.dart';
 import 'package:playground_navigator2/modal/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground_navigator2/modal/pages/sheet_page_with_hero_image.dart';
