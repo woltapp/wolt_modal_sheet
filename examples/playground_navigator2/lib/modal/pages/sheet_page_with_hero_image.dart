@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -31,8 +31,9 @@ class SheetPageWithHeroImage {
       leadingNavBarWidget: WoltModalSheetBackButton(
         onBackPressed: () => cubit.goToPage(currentPage - 1),
       ),
-      trailingNavBarWidget:
-          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      trailingNavBarWidget: WoltModalSheetCloseButton(
+        onClosed: cubit.closeSheet,
+      ),
       child: const Padding(
         padding: EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
         child: ModalSheetContentText('''

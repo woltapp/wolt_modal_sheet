@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -27,23 +27,22 @@ class SheetPageWithLazyList {
             child: SizedBox(height: heroImageHeight, width: double.infinity),
           ),
           Placeholder(
-              fallbackHeight: heroImageHeight, color: Colors.yellowAccent),
+            fallbackHeight: heroImageHeight,
+            color: Colors.yellowAccent,
+          ),
         ],
       ),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       mainContentSliversBuilder: (_) => [
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (_, index) {
-              if (index == 0) {
-                return const _HorizontalPrimaryColorList();
-              }
-              return ColorTile(color: colors[index - 1]);
-            },
-            childCount: colors.length + 1,
-          ),
-        )
+          delegate: SliverChildBuilderDelegate((_, index) {
+            if (index == 0) {
+              return const _HorizontalPrimaryColorList();
+            }
+            return ColorTile(color: colors[index - 1]);
+          }, childCount: colors.length + 1),
+        ),
       ],
     );
   }

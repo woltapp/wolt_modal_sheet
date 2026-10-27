@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -36,19 +36,17 @@ class SheetPageWithLazyList {
       leadingNavBarWidget: WoltModalSheetBackButton(
         onBackPressed: () => cubit.goToPage(currentPage - 1),
       ),
-      trailingNavBarWidget:
-          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      trailingNavBarWidget: WoltModalSheetCloseButton(
+        onClosed: cubit.closeSheet,
+      ),
       mainContentSliversBuilder: (context) => [
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (_, index) {
-              if (index == 0) {
-                return const _HorizontalPrimaryColorList();
-              }
-              return ColorTile(color: colors[index - 1]);
-            },
-            childCount: colors.length + 1,
-          ),
+          delegate: SliverChildBuilderDelegate((_, index) {
+            if (index == 0) {
+              return const _HorizontalPrimaryColorList();
+            }
+            return ColorTile(color: colors[index - 1]);
+          }, childCount: colors.length + 1),
         ),
       ],
     );

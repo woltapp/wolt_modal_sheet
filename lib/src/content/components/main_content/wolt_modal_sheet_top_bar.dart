@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -29,17 +29,21 @@ class WoltModalSheetTopBar extends StatelessWidget {
     // Determine the top bar's elevation, shadow color, height, background color, and surface tint color.
     final elevation =
         themeData?.topBarElevation ?? defaultThemeData.topBarElevation;
-    final shadowColor = themeData?.topBarShadowColor ??
+    final shadowColor =
+        themeData?.topBarShadowColor ??
         (theme.brightness == Brightness.light
             ? const Color(0xFFE4E4E4)
             : const Color(0xFF121212));
-    final topBarHeight = page.navBarHeight ??
+    final topBarHeight =
+        page.navBarHeight ??
         themeData?.navBarHeight ??
         defaultThemeData.navBarHeight;
-    final backgroundColor = page.backgroundColor ??
+    final backgroundColor =
+        page.backgroundColor ??
         themeData?.backgroundColor ??
         defaultThemeData.backgroundColor;
-    final surfaceTintColor = page.surfaceTintColor ??
+    final surfaceTintColor =
+        page.surfaceTintColor ??
         themeData?.surfaceTintColor ??
         defaultThemeData.surfaceTintColor;
 

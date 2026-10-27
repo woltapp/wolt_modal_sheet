@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/wolt_modal_sheet_page_transition_state.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -36,27 +36,44 @@ class _MainContentAnimatedBuilderState
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(() {
-      BuildContext? incomingContext =
-          widget.incomingOffstagedMainContentKey.currentContext;
-      BuildContext? outgoingContext =
-          widget.outgoingOffstagedMainContentKey.currentContext;
-      if (_sizeFactor == null &&
-          incomingContext?.mounted == true &&
-          outgoingContext?.mounted == true) {
-        _sizeFactor = widget.pageTransitionState.mainContentHeightTransition(
-          widget.controller,
-          widget.paginationAnimationStyle,
-          incomingMainContentHeight: incomingContext!.size!.height,
-          outgoingMainContentHeight: outgoingContext!.size!.height,
-        );
-      }
-    });
+    widget.controller.addListener(_updateSizeFactor);
+  }
+
+  @override
+  void didUpdateWidget(covariant MainContentAnimatedBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_updateSizeFactor);
+      widget.controller.addListener(_updateSizeFactor);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_updateSizeFactor);
+    super.dispose();
+  }
+
+  void _updateSizeFactor() {
+    final incomingContext =
+        widget.incomingOffstagedMainContentKey.currentContext;
+    final outgoingContext =
+        widget.outgoingOffstagedMainContentKey.currentContext;
+    if (_sizeFactor == null &&
+        incomingContext?.mounted == true &&
+        outgoingContext?.mounted == true) {
+      _sizeFactor = widget.pageTransitionState.mainContentHeightTransition(
+        widget.controller,
+        widget.paginationAnimationStyle,
+        incomingMainContentHeight: incomingContext!.size!.height,
+        outgoingMainContentHeight: outgoingContext!.size!.height,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenWidth = MediaQuery.widthOf(context);
     final controller = widget.controller;
     final pageTransitionState = widget.pageTransitionState;
     return AnimatedBuilder(
@@ -64,7 +81,8 @@ class _MainContentAnimatedBuilderState
       builder: (BuildContext context, _) {
         return SizeTransition(
           axisAlignment: -1.0,
-          sizeFactor: _sizeFactor ??
+          sizeFactor:
+              _sizeFactor ??
               pageTransitionState.defaultMainContentSizeFactor(controller),
           child: Opacity(
             opacity: pageTransitionState

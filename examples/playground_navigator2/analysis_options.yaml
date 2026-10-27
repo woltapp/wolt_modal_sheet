@@ -16,7 +16,7 @@ dart_code_metrics:
     - prefer-single-widget-per-file: false
     - avoid-unsafe-collection-methods: false
     - avoid-shadowing: false
-    - avoid-missing-image-alt: false
+    - provide-image-semantic-label: false
     - dispose-fields: false
     - avoid-incomplete-copy-with: false
     - prefer-prefixed-global-constants: false

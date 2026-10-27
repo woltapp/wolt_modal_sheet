@@ -20,9 +20,9 @@ class AddWaterDependencyContainer extends FeatureLevelDependencyContainer {
   }
 
   AddWaterViewModel createViewModel() => AddWaterViewModel(
-        addWaterService: _addWaterService,
-        ordersService: _ordersService,
-      );
+    addWaterService: _addWaterService,
+    ordersService: _ordersService,
+  );
 
   @override
   void dispose() {

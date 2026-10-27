@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 typedef FocusListener = ValueChanged<bool>;
@@ -50,14 +50,14 @@ class AppTextFormField extends StatefulWidget {
     this.autoValidateMode,
     this.enableSuggestions = true,
     super.key,
-  })  : assert(
-          (obscureText && !autocorrect) || !obscureText,
-          'If obscureText defined, ensure autocorrect is disabled',
-        ),
-        assert(
-          (obscureText && !(maxLines == null || maxLines > 1)) || !obscureText,
-          'If obscureText defined, max lines must be 1',
-        );
+  }) : assert(
+         (obscureText && !autocorrect) || !obscureText,
+         'If obscureText defined, ensure autocorrect is disabled',
+       ),
+       assert(
+         (obscureText && !(maxLines == null || maxLines > 1)) || !obscureText,
+         'If obscureText defined, max lines must be 1',
+       );
 
   @override
   State<StatefulWidget> createState() => _AppTextFormFieldState();
@@ -217,10 +217,9 @@ TextStyle _labelStyleNoError(BuildContext context, bool hasFocus) {
 }
 
 TextStyle _errorLabelStyle(BuildContext context) {
-  return Theme.of(context)
-      .textTheme
-      .bodyMedium!
-      .copyWith(color: WoltColors.red);
+  return Theme.of(
+    context,
+  ).textTheme.bodyMedium!.copyWith(color: WoltColors.red);
 }
 
 TextStyle _labelStyle({
@@ -230,10 +229,9 @@ TextStyle _labelStyle({
   required bool hasFocus,
 }) {
   if (!enabled) {
-    return Theme.of(context)
-        .textTheme
-        .bodyMedium!
-        .copyWith(color: WoltColors.black48);
+    return Theme.of(
+      context,
+    ).textTheme.bodyMedium!.copyWith(color: WoltColors.black48);
   }
 
   if (invalid) {

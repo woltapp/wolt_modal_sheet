@@ -16,8 +16,9 @@ class AddWaterService {
       return WaterQuantityFailure();
     }
 
-    CoffeeSeason currentSeason =
-        CoffeeSeason.determineCurrentSeason(currentDate);
+    CoffeeSeason currentSeason = CoffeeSeason.determineCurrentSeason(
+      currentDate,
+    );
 
     final temperatureResult = _checkTemperatureValidity(
       waterTemperatureInC,
@@ -41,7 +42,9 @@ class AddWaterService {
   }
 
   bool _isWaterSourceValidForQuantity(
-      WaterSource waterSource, double waterQuantityInMl) {
+    WaterSource waterSource,
+    double waterQuantityInMl,
+  ) {
     return !(waterSource == WaterSource.filtered && waterQuantityInMl <= 500);
   }
 

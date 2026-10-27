@@ -19,7 +19,8 @@ class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
     super.initState();
     final appLevelDependencyContainer =
         DependencyInjector.container<CoffeeMakerAppLevelDependencyContainer>(
-            context);
+          context,
+        );
     final appLifeCycleService = appLevelDependencyContainer.appLifeCycleService;
     listener = AppLifecycleListener(
       onShow: () {

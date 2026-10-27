@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground/home/pages/custom_sheet_pages/product_with_sku_page.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:playground/home/pages/root_sheet_page.dart';
@@ -17,41 +17,43 @@ class SheetPageWithInAppNavigation {
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       hasTopBarLayer: true,
       pageTitle: const ModalSheetTitle('In-modal navigation'),
-      child: Builder(builder: (context) {
-        return const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'This page demonstrates in-modal navigation within a modal '
-                'sheet. Choose a button for testing a navigation option.',
-              ),
-              SizedBox(height: 16),
-              _ButtonForAddSinglePageToStack(),
-              SizedBox(height: 16),
-              _ButtonForAddMultiplePagesToStack(),
-              SizedBox(height: 16),
-              _ButtonForReplaceCurrentPage(),
-              SizedBox(height: 16),
-              _ButtonForReplacePageWithId(),
-              SizedBox(height: 16),
-              _ButtonForReplaceAllPages(),
-              SizedBox(height: 16),
-              _ButtonForPopPage(),
-              SizedBox(height: 16),
-              _ButtonForRemovePage(),
-              SizedBox(height: 16),
-              _ButtonForShowAtIndex(),
-              SizedBox(height: 16),
-              _ButtonForShowPageWithId(),
-              SizedBox(height: 16),
-              _ButtonForShowProductWithSku(),
-              SizedBox(height: 16),
-            ],
-          ),
-        );
-      }),
+      child: Builder(
+        builder: (context) {
+          return const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'This page demonstrates in-modal navigation within a modal '
+                  'sheet. Choose a button for testing a navigation option.',
+                ),
+                SizedBox(height: 16),
+                _ButtonForAddSinglePageToStack(),
+                SizedBox(height: 16),
+                _ButtonForAddMultiplePagesToStack(),
+                SizedBox(height: 16),
+                _ButtonForReplaceCurrentPage(),
+                SizedBox(height: 16),
+                _ButtonForReplacePageWithId(),
+                SizedBox(height: 16),
+                _ButtonForReplaceAllPages(),
+                SizedBox(height: 16),
+                _ButtonForPopPage(),
+                SizedBox(height: 16),
+                _ButtonForRemovePage(),
+                SizedBox(height: 16),
+                _ButtonForShowAtIndex(),
+                SizedBox(height: 16),
+                _ButtonForShowPageWithId(),
+                SizedBox(height: 16),
+                _ButtonForShowProductWithSku(),
+                SizedBox(height: 16),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -62,46 +64,50 @@ class _SinglePage extends WoltModalSheetPage {
     required bool isLastPage,
     bool isFirstPage = false,
   }) : super(
-          leadingNavBarWidget: isFirstPage
-              ? const SizedBox.shrink()
-              : const WoltModalSheetBackButton(),
-          trailingNavBarWidget: const WoltModalSheetCloseButton(),
-          hasTopBarLayer: false,
-          stickyActionBar: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Builder(
-              builder: (context) {
-                return WoltElevatedButton(
-                  onPressed: () => isLastPage
-                      ? WoltModalSheet.of(context)
-                          .removeUntil(RootSheetPage.pageId)
-                      : WoltModalSheet.of(context).showNext(),
-                  child: Text(isLastPage ? "Remove until root page" : "Next"),
-                );
-              },
-            ),
-          ),
-          child: SizedBox(
-            height: 200,
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Text(text, style: const TextStyle(fontSize: 24)),
-            ),
-          ),
-        );
+         leadingNavBarWidget: isFirstPage
+             ? const SizedBox.shrink()
+             : const WoltModalSheetBackButton(),
+         trailingNavBarWidget: const WoltModalSheetCloseButton(),
+         hasTopBarLayer: false,
+         stickyActionBar: Padding(
+           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+           child: Builder(
+             builder: (context) {
+               return WoltElevatedButton(
+                 onPressed: () => isLastPage
+                     ? WoltModalSheet.of(
+                         context,
+                       ).removeUntil(RootSheetPage.pageId)
+                     : WoltModalSheet.of(context).showNext(),
+                 child: Text(isLastPage ? "Remove until root page" : "Next"),
+               );
+             },
+           ),
+         ),
+         child: SizedBox(
+           height: 200,
+           child: Padding(
+             padding: const EdgeInsets.all(32.0),
+             child: Text(text, style: const TextStyle(fontSize: 24)),
+           ),
+         ),
+       );
 }
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _showMessage(
   BuildContext context,
   String pageActionName,
 ) {
-  return ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text(pageActionName)));
+  return ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(pageActionName)));
 }
 
 class _PageRow extends StatelessWidget {
-  const _PageRow(
-      {required this.primaryActionButton, this.secondaryActionButton});
+  const _PageRow({
+    required this.primaryActionButton,
+    this.secondaryActionButton,
+  });
 
   final Widget? secondaryActionButton;
   final Widget primaryActionButton;
@@ -128,9 +134,9 @@ class _ButtonForAddSinglePageToStack extends StatelessWidget {
     return _PageRow(
       primaryActionButton: WoltElevatedButton(
         onPressed: () {
-          WoltModalSheet.of(context).addPage(
-            _SinglePage(text: 'New single page', isLastPage: true),
-          );
+          WoltModalSheet.of(
+            context,
+          ).addPage(_SinglePage(text: 'New single page', isLastPage: true));
           _showMessage(context, 'Pushed single page');
         },
         child: const Text('Add single page to stack'),
@@ -151,12 +157,10 @@ class _ButtonForAddMultiplePagesToStack extends StatelessWidget {
     return _PageRow(
       primaryActionButton: WoltElevatedButton(
         onPressed: () {
-          WoltModalSheet.of(context).addOrReplacePages(
-            [
-              _SinglePage(text: 'First pushed page', isLastPage: false),
-              _SinglePage(text: 'Second pushed page', isLastPage: true),
-            ],
-          );
+          WoltModalSheet.of(context).addOrReplacePages([
+            _SinglePage(text: 'First pushed page', isLastPage: false),
+            _SinglePage(text: 'Second pushed page', isLastPage: true),
+          ]);
           _showMessage(context, 'Pushed 2 new pages');
         },
         child: const Text('Add multiple pages to stack'),
@@ -199,10 +203,15 @@ class _ButtonForReplacePageWithId extends StatelessWidget {
           WoltModalSheet.of(context).replacePage(
             RootSheetPage.pageId,
             _SinglePage(
-                text: 'Replaced page', isLastPage: false, isFirstPage: true),
+              text: 'Replaced page',
+              isLastPage: false,
+              isFirstPage: true,
+            ),
           );
-          _showMessage(context,
-              'Replaced the root page with a new page. Press back to see it');
+          _showMessage(
+            context,
+            'Replaced the root page with a new page. Press back to see it',
+          );
         },
         child: const Text('Replace previous page using id'),
       ),
@@ -218,14 +227,14 @@ class _ButtonForReplaceAllPages extends StatelessWidget {
     return _PageRow(
       primaryActionButton: WoltElevatedButton(
         onPressed: () {
-          WoltModalSheet.of(context).replaceAllPages(
-            [
-              _SinglePage(
-                  text: 'First new page', isLastPage: false, isFirstPage: true),
-              _SinglePage(text: 'Second new page', isLastPage: true),
-            ],
-            selectedPageIndex: 1,
-          );
+          WoltModalSheet.of(context).replaceAllPages([
+            _SinglePage(
+              text: 'First new page',
+              isLastPage: false,
+              isFirstPage: true,
+            ),
+            _SinglePage(text: 'Second new page', isLastPage: true),
+          ], selectedPageIndex: 1);
           _showMessage(context, 'Replaced all pages with 2 new pages');
         },
         child: const Text('Replace all pages'),
@@ -295,7 +304,9 @@ class _ButtonForShowPageWithId extends StatelessWidget {
         onPressed: () {
           WoltModalSheet.of(context).showPageWithId(RootSheetPage.pageId);
           _showMessage(
-              context, 'Moved to page with id: ${RootSheetPage.pageId}');
+            context,
+            'Moved to page with id: ${RootSheetPage.pageId}',
+          );
         },
         child: const Text('Show the page with id: ${RootSheetPage.pageId}'),
       ),
@@ -315,10 +326,10 @@ class _ButtonForShowProductWithSku extends StatelessWidget {
           Expanded(
             child: WoltElevatedButton(
               onPressed: () {
-                final didShowFilteredPage =
-                    WoltModalSheet.of(context).showPage<ProductWithSkuPage>(
-                  where: (page) => page.sku == sku,
-                );
+                final didShowFilteredPage = WoltModalSheet.of(context)
+                    .showPage<ProductWithSkuPage>(
+                      where: (page) => page.sku == sku,
+                    );
                 String message = didShowFilteredPage
                     ? 'Moved to product page with sku: $sku'
                     : 'Cannot navigate: No product page with sku $sku found.';

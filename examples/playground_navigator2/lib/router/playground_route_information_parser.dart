@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
 import 'package:playground_navigator2/router/playground_router_configuration.dart';
 
@@ -30,8 +30,8 @@ class PlaygroundRouteInformationParser
         final pageIndexText = queryParams[pageIndexQueryParam];
         final pageIndex =
             pageIndexText != null && int.tryParse(pageIndexText) != null
-                ? int.parse(pageIndexText)
-                : null;
+            ? int.parse(pageIndexText)
+            : null;
         if (pageIndex != null &&
             path != null &&
             MultiPagePathName.isValidQueryParam(path, pageIndex)) {

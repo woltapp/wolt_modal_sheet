@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:playground_navigator2/bloc/router_state.dart';
 import 'package:playground_navigator2/router/playground_router_configuration.dart';
@@ -15,13 +15,10 @@ class PlaygroundRouterDelegate
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<PlaygroundRouterConfiguration> {
   PlaygroundRouterDelegate({
-    required RouterCubit cubit,
-    required ValueNotifier<int> pageIndexNotifier,
-    required ValueNotifier<WoltModalSheetPageListBuilder>
-        pageListBuilderNotifier,
-  })  : _cubit = cubit,
-        _pageIndexNotifier = pageIndexNotifier,
-        _pageListBuilderNotifier = pageListBuilderNotifier {
+    required this._cubit,
+    required this._pageIndexNotifier,
+    required this._pageListBuilderNotifier,
+  }) {
     _cubitSubscription = _cubit.stream.listen((state) {
       notifyListeners(); // Notify router that configuration has changed whenever the state updates
     });

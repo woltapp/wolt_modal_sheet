@@ -27,10 +27,12 @@ class RouterCubit extends Cubit<RouterState> {
   void onPathUpdated(MultiPagePathName pathName) {
     final currentState = state;
     if (currentState is ModalSheetVisibleState) {
-      emit(ModalSheetVisibleState(
-        pageIndex: currentState.pageIndex,
-        pathName: pathName,
-      ));
+      emit(
+        ModalSheetVisibleState(
+          pageIndex: currentState.pageIndex,
+          pathName: pathName,
+        ),
+      );
     }
   }
 

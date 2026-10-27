@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -11,15 +11,16 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
   ///
   /// The [page] argument must not be null.
   const WoltStickyActionBarWrapper({required this.page, Key? key})
-      : super(key: key);
+    : super(key: key);
 
   /// The [SliverWoltModalSheetPage] which provides configuration for the Sticky Action Bar
   /// and potentially its gradient overlay.
   final SliverWoltModalSheetPage page;
 
   @visibleForTesting
-  static const gradientWidgetKey =
-      ValueKey("WoltStickyActionBarWrapperGradient");
+  static const gradientWidgetKey = ValueKey(
+    "WoltStickyActionBarWrapperGradient",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +33,21 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
     }
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final pageBackgroundColor = page.backgroundColor ??
+    final pageBackgroundColor =
+        page.backgroundColor ??
         themeData?.backgroundColor ??
         defaultThemeData.backgroundColor;
-    final backgroundColor = page.sabGradientColor ??
+    final backgroundColor =
+        page.sabGradientColor ??
         themeData?.sabGradientColor ??
         defaultThemeData.sabGradientColor ??
         pageBackgroundColor;
-    final hasSabGradient = page.hasSabGradient ??
+    final hasSabGradient =
+        page.hasSabGradient ??
         themeData?.hasSabGradient ??
         defaultThemeData.hasSabGradient;
-    final surfaceTintColor = page.surfaceTintColor ??
+    final surfaceTintColor =
+        page.surfaceTintColor ??
         themeData?.surfaceTintColor ??
         defaultThemeData.surfaceTintColor;
     final modalElevation =
@@ -64,7 +69,8 @@ class WoltStickyActionBarWrapper extends StatelessWidget {
         if (hasSabGradient)
           Container(
             key: gradientWidgetKey,
-            height: themeData?.sabGradientHeight ??
+            height:
+                themeData?.sabGradientHeight ??
                 defaultThemeData.sabGradientHeight,
             width: double.infinity,
             decoration: BoxDecoration(

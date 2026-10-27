@@ -3,8 +3,7 @@ import 'package:coffee_maker_navigator_2/features/onboarding/data/repository/onb
 class OnboardingService {
   final OnboardingRepository _tutorialRepository;
 
-  OnboardingService({required OnboardingRepository tutorialRepository})
-      : _tutorialRepository = tutorialRepository;
+  OnboardingService({required this._tutorialRepository});
 
   bool isTutorialShown() {
     return _tutorialRepository.isTutorialShown();

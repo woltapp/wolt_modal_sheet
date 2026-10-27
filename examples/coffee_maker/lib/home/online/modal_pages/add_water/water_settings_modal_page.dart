@@ -1,7 +1,7 @@
 import 'package:coffee_maker/home/online/modal_pages/add_water/widgets/water_quantity_temperature_input.dart';
 import 'package:coffee_maker/home/online/modal_pages/add_water/widgets/water_source_list.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WaterSettingsModalPage {

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:playground_navigator2/modal/pages/root_sheet_page.dart';
 import 'package:playground_navigator2/modal/pages/sheet_page_with_forced_max_height.dart';
 import 'package:playground_navigator2/modal/pages/sheet_page_with_hero_image.dart';
@@ -6,11 +6,16 @@ import 'package:playground_navigator2/modal/pages/sheet_page_with_lazy_list.dart
 import 'package:playground_navigator2/modal/pages/sheet_page_with_text_field.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+const _twoPagePathCount = 2;
+
 enum MultiPagePathName {
-  forcedMaxHeight(pageCount: 2, queryParamName: "forcedMaxHeight"),
-  heroImage(pageCount: 2, queryParamName: "heroImage"),
-  lazyLoadingList(pageCount: 2, queryParamName: "lazyList"),
-  textField(pageCount: 2, queryParamName: "textField"),
+  forcedMaxHeight(
+    pageCount: _twoPagePathCount,
+    queryParamName: "forcedMaxHeight",
+  ),
+  heroImage(pageCount: _twoPagePathCount, queryParamName: "heroImage"),
+  lazyLoadingList(pageCount: _twoPagePathCount, queryParamName: "lazyList"),
+  textField(pageCount: _twoPagePathCount, queryParamName: "textField"),
   allPagesPath(pageCount: 5, queryParamName: "all");
 
   static const defaultPath = MultiPagePathName.allPagesPath;
@@ -31,50 +36,48 @@ enum MultiPagePathName {
       BuildContext context, {
       bool isLastPage = true,
       required int currentPage,
-    }) =>
-        SheetPageWithForcedMaxHeight.build(
-          context,
-          isLastPage: isLastPage,
-          currentPage: currentPage,
-        );
+    }) => SheetPageWithForcedMaxHeight.build(
+      context,
+      isLastPage: isLastPage,
+      currentPage: currentPage,
+    );
 
     WoltModalSheetPage heroImage(
       BuildContext context, {
       bool isLastPage = true,
       required int currentPage,
-    }) =>
-        SheetPageWithHeroImage.build(
-          context,
-          isLastPage: isLastPage,
-          currentPage: currentPage,
-        );
+    }) => SheetPageWithHeroImage.build(
+      context,
+      isLastPage: isLastPage,
+      currentPage: currentPage,
+    );
 
     SliverWoltModalSheetPage lazyList(
       BuildContext context, {
       bool isLastPage = true,
       required int currentPage,
-    }) =>
-        SheetPageWithLazyList.build(
-          context,
-          isLastPage: isLastPage,
-          currentPage: currentPage,
-        );
+    }) => SheetPageWithLazyList.build(
+      context,
+      isLastPage: isLastPage,
+      currentPage: currentPage,
+    );
 
     WoltModalSheetPage textField(
       BuildContext context, {
       bool isLastPage = true,
       required int currentPage,
-    }) =>
-        SheetPageWithTextField.build(
-          context,
-          isLastPage: isLastPage,
-          currentPage: currentPage,
-        );
+    }) => SheetPageWithTextField.build(
+      context,
+      isLastPage: isLastPage,
+      currentPage: currentPage,
+    );
 
     switch (this) {
       case MultiPagePathName.forcedMaxHeight:
-        return (context) =>
-            [root(context), forcedMaxHeight(context, currentPage: 1)];
+        return (context) => [
+          root(context),
+          forcedMaxHeight(context, currentPage: 1),
+        ];
       case MultiPagePathName.heroImage:
         return (context) => [root(context), heroImage(context, currentPage: 1)];
       case MultiPagePathName.lazyLoadingList:
@@ -83,12 +86,12 @@ enum MultiPagePathName {
         return (context) => [root(context), textField(context, currentPage: 1)];
       case MultiPagePathName.allPagesPath:
         return (context) => [
-              root(context),
-              heroImage(context, isLastPage: false, currentPage: 1),
-              lazyList(context, isLastPage: false, currentPage: 2),
-              textField(context, isLastPage: false, currentPage: 3),
-              forcedMaxHeight(context, isLastPage: true, currentPage: 4),
-            ];
+          root(context),
+          heroImage(context, isLastPage: false, currentPage: 1),
+          lazyList(context, isLastPage: false, currentPage: 2),
+          textField(context, isLastPage: false, currentPage: 3),
+          forcedMaxHeight(context, isLastPage: true, currentPage: 4),
+        ];
     }
   }
 

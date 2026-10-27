@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/content/components/main_content/wolt_modal_sheet_top_bar.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/soft_keyboard_closed_event.dart';
@@ -33,14 +33,15 @@ class WoltModalSheetTopBarFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final topBarHeight = page.navBarHeight ??
+    final topBarHeight =
+        page.navBarHeight ??
         themeData?.navBarHeight ??
         defaultThemeData.navBarHeight;
     final heroImageHeight = page.heroImage == null
         ? 0.0
         : (page.heroImageHeight ??
-            themeData?.heroImageHeight ??
-            defaultThemeData.heroImageHeight);
+              themeData?.heroImageHeight ??
+              defaultThemeData.heroImageHeight);
 
     return Flow(
       delegate: _TopBarFlowDelegate(
@@ -72,11 +73,11 @@ class _TopBarFlowDelegate extends FlowDelegate {
     required this.scrollAnimationStyle,
     required this.softKeyboardClosedListenable,
   }) : super(
-          repaint: Listenable.merge([
-            scrollController,
-            softKeyboardClosedListenable,
-          ]),
-        );
+         repaint: Listenable.merge([
+           scrollController,
+           softKeyboardClosedListenable,
+         ]),
+       );
 
   double get currentScrollOffset => scrollController.position.pixels;
 
@@ -87,28 +88,29 @@ class _TopBarFlowDelegate extends FlowDelegate {
     final topBarTranslationYStart =
         -1 * scrollAnimationStyle.topBarTranslationYInPixels;
     const topBarTranslationYEnd = 0.0;
-    final topBarTranslationYAndOpacityStartPoint =
-        heroImageHeight == 0 ? 0 : heroImageHeight - topBarHeight - 8;
+    final topBarTranslationYAndOpacityStartPoint = heroImageHeight == 0
+        ? 0
+        : heroImageHeight - topBarHeight - 8;
 
     /// Top bar translation Y
     final topBarTranslationY =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: 8 + pageTitleHeight,
-      progressInRangeInPx:
-          currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
-      startValue: topBarTranslationYStart,
-      endValue: topBarTranslationYEnd,
-    );
+          rangeInPx: 8 + pageTitleHeight,
+          progressInRangeInPx:
+              currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
+          startValue: topBarTranslationYStart,
+          endValue: topBarTranslationYEnd,
+        );
 
     /// Top bar opacity
     final topBarOpacity =
         WoltLayoutTransformationUtils.calculateTransformationValue(
-      rangeInPx: 8,
-      progressInRangeInPx:
-          currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
-      startValue: scrollAnimationStyle.topBarOpacityStart,
-      endValue: scrollAnimationStyle.topBarOpacityEnd,
-    );
+          rangeInPx: 8,
+          progressInRangeInPx:
+              currentScrollOffset - topBarTranslationYAndOpacityStartPoint,
+          startValue: scrollAnimationStyle.topBarOpacityStart,
+          endValue: scrollAnimationStyle.topBarOpacityEnd,
+        );
 
     /// Paint Top Bar
     context.paintChild(

@@ -4,7 +4,7 @@ import 'package:coffee_maker/home/online/small_screen/small_screen_bottom_naviga
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_widget.dart';
 import 'package:coffee_maker/home/widgets/top_bar.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A widget that represents the online content for small screens.
 ///
@@ -14,14 +14,11 @@ import 'package:flutter/material.dart';
 /// The [_groupedCoffeeOrders] represents the grouped coffee orders in different states.
 class SmallScreenOnlineContent extends StatefulWidget {
   const SmallScreenOnlineContent({
-    required Map<CoffeeMakerStep, CoffeeOrderListWidget>
-        coffeeMakerStepListWidgets,
-    required GroupedCoffeeOrders groupedCoffeeOrders,
-    required ValueNotifier<bool> isStoreOnlineNotifier,
+    required this._coffeeMakerStepListWidgets,
+    required this._groupedCoffeeOrders,
+    required this._isStoreOnlineNotifier,
     super.key,
-  })  : _coffeeMakerStepListWidgets = coffeeMakerStepListWidgets,
-        _groupedCoffeeOrders = groupedCoffeeOrders,
-        _isStoreOnlineNotifier = isStoreOnlineNotifier;
+  });
 
   final Map<CoffeeMakerStep, CoffeeOrderListWidget> _coffeeMakerStepListWidgets;
   final GroupedCoffeeOrders _groupedCoffeeOrders;
@@ -52,8 +49,8 @@ class _SmallScreenOnlineContentState extends State<SmallScreenOnlineContent> {
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 color: WoltColors.black8,
-                child: widget._coffeeMakerStepListWidgets[
-                    _selectedStepForBottomNavigationBar]!,
+                child: widget
+                    ._coffeeMakerStepListWidgets[_selectedStepForBottomNavigationBar]!,
               ),
             ),
           ],

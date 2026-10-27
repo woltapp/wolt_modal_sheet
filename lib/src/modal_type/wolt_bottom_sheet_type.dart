@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A customizable bottom sheet modal that extends [WoltModalType].
@@ -21,16 +21,16 @@ class WoltBottomSheetType extends WoltModalType {
     double closeProgressThreshold = 0.5,
     bool? barrierDismissible,
   }) : super(
-          shapeBorder: shapeBorder,
-          forceMaxHeight: forceMaxHeight,
-          transitionDuration: transitionDuration,
-          reverseTransitionDuration: reverseTransitionDuration,
-          dismissDirection: dismissDirection,
-          minFlingVelocity: minFlingVelocity,
-          closeProgressThreshold: closeProgressThreshold,
-          showDragHandle: showDragHandle,
-          barrierDismissible: barrierDismissible,
-        );
+         shapeBorder: shapeBorder,
+         forceMaxHeight: forceMaxHeight,
+         transitionDuration: transitionDuration,
+         reverseTransitionDuration: reverseTransitionDuration,
+         dismissDirection: dismissDirection,
+         minFlingVelocity: minFlingVelocity,
+         closeProgressThreshold: closeProgressThreshold,
+         showDragHandle: showDragHandle,
+         barrierDismissible: barrierDismissible,
+       );
 
   static const Duration _defaultEnterDuration = Duration(milliseconds: 350);
   static const Duration _defaultExitDuration = Duration(milliseconds: 250);
@@ -140,16 +140,14 @@ class WoltBottomSheetType extends WoltModalType {
     final cubic = isClosing ? exitingCubic : enteringCubic;
     final reverseCubic = isClosing ? enteringCubic : exitingCubic;
 
-    final positionAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 1.0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: animation,
-        curve: cubic,
-        reverseCurve: reverseCubic,
-      ),
-    );
+    final positionAnimation =
+        Tween<Offset>(begin: const Offset(0.0, 1.0), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: cubic,
+            reverseCurve: reverseCubic,
+          ),
+        );
 
     return SlideTransition(position: positionAnimation, child: child);
   }

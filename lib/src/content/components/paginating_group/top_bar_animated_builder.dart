@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/content/components/paginating_group/wolt_modal_sheet_page_transition_state.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -18,8 +18,10 @@ class TopBarAnimatedBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final opacity =
-        pageTransitionState.sabOpacity(controller, paginationAnimationStyle);
+    final opacity = pageTransitionState.sabOpacity(
+      controller,
+      paginationAnimationStyle,
+    );
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext _, __) {

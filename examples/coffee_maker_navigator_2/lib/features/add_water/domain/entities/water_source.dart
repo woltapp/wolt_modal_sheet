@@ -6,10 +6,7 @@ enum WaterSource {
   final double phLevel;
   final double hardness;
 
-  const WaterSource({
-    required this.phLevel,
-    required this.hardness,
-  });
+  const WaterSource({required this.phLevel, required this.hardness});
 
   String get label {
     switch (this) {

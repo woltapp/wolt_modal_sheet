@@ -20,11 +20,10 @@ class PlaygroundRouterConfiguration {
   factory PlaygroundRouterConfiguration.modalSheet({
     required MultiPagePathName multiPagePathName,
     required int index,
-  }) =>
-      PlaygroundRouterConfiguration._(
-        multiPagePathName: multiPagePathName,
-        pageIndex: index,
-      );
+  }) => PlaygroundRouterConfiguration._(
+    multiPagePathName: multiPagePathName,
+    pageIndex: index,
+  );
 
   bool get isHomePage => multiPagePathName == null && !isUnknown;
 

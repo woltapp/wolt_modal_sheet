@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ErrorNotificationWidget extends StatelessWidget {
   final String message;
@@ -23,8 +23,10 @@ class ErrorNotificationWidget extends StatelessWidget {
             const Icon(Icons.info, color: Colors.red),
             const SizedBox(width: 12),
             Expanded(
-              child:
-                  Text(message, style: Theme.of(context).textTheme.bodyMedium),
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
           ],
         ),

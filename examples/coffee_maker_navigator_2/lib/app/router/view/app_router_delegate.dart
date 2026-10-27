@@ -1,7 +1,7 @@
 import 'package:coffee_maker_navigator_2/app/router/entities/app_route_configuration.dart';
 import 'package:coffee_maker_navigator_2/app/router/view/app_route_observer.dart';
 import 'package:coffee_maker_navigator_2/app/router/view_model/router_view_model.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The [AppRouterDelegate] is the core component of the navigation system, specifically designed
 /// to work with the Navigator 2.0 API. It extends the [RouterDelegate] class, which

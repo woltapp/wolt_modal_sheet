@@ -1,16 +1,17 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground/home/pages/custom_sheet_pages/adjust_time_notification_page.dart';
 import 'package:playground/home/pages/custom_sheet_pages/reject_order_notification_page.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class NewOrderNotificationPage extends WoltModalSheetPage {
   NewOrderNotificationPage()
-      : super(
-          hasTopBarLayer: false,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Builder(builder: (context) {
+    : super(
+        hasTopBarLayer: false,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Builder(
+            builder: (context) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -53,9 +54,10 @@ class NewOrderNotificationPage extends WoltModalSheetPage {
                   ),
                 ],
               );
-            }),
+            },
           ),
-        );
+        ),
+      );
 
   static const double _buttonHeight = 24.0;
 }

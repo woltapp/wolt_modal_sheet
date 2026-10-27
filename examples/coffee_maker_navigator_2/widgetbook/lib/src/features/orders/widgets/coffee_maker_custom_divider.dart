@@ -1,5 +1,5 @@
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 @UseCase(
@@ -8,7 +8,5 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
   path: 'Orders/Widgets',
 )
 Widget coffeeMakerCustomDivider(BuildContext context) {
-  return const Scaffold(
-    body: Center(child: CoffeeMakerCustomDivider()),
-  );
+  return const Scaffold(body: Center(child: CoffeeMakerCustomDivider()));
 }

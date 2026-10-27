@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 enum RejectOrderReason {
@@ -34,11 +34,12 @@ final _buttonEnabledListener = ValueNotifier(false);
 
 class RejectOrderNotificationPage extends WoltModalSheetPage {
   RejectOrderNotificationPage()
-      : super(
-          stickyActionBar: ValueListenableBuilder<bool>(
-            valueListenable: _buttonEnabledListener,
-            builder: (_, isEnabled, __) {
-              return Builder(builder: (context) {
+    : super(
+        stickyActionBar: ValueListenableBuilder<bool>(
+          valueListenable: _buttonEnabledListener,
+          builder: (_, isEnabled, __) {
+            return Builder(
+              builder: (context) {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: WoltElevatedButton(
@@ -53,33 +54,34 @@ class RejectOrderNotificationPage extends WoltModalSheetPage {
                     child: const Text('Reject'),
                   ),
                 );
-              });
+              },
+            );
+          },
+        ),
+        isTopBarLayerAlwaysVisible: true,
+        topBarTitle: const ModalSheetTopBarTitle('Reject reason'),
+        trailingNavBarWidget: const WoltModalSheetCloseButton(),
+        leadingNavBarWidget: const WoltModalSheetBackButton(),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 72),
+          child: WoltSelectionList<RejectOrderReason>.singleSelect(
+            itemTileDataGroup: WoltSelectionListItemDataGroup(
+              group: RejectOrderReason.values
+                  .map(
+                    (e) => WoltSelectionListItemData(
+                      title: e.title,
+                      subtitle: e.subtitle,
+                      leadingIcon: e.leadingIcon,
+                      value: e,
+                      isSelected: false,
+                    ),
+                  )
+                  .toList(),
+            ),
+            onSelectionUpdateInSingleSelectionList: (selectedItemData) {
+              _buttonEnabledListener.value = selectedItemData.isSelected;
             },
           ),
-          isTopBarLayerAlwaysVisible: true,
-          topBarTitle: const ModalSheetTopBarTitle('Reject reason'),
-          trailingNavBarWidget: const WoltModalSheetCloseButton(),
-          leadingNavBarWidget: const WoltModalSheetBackButton(),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 72),
-            child: WoltSelectionList<RejectOrderReason>.singleSelect(
-              itemTileDataGroup: WoltSelectionListItemDataGroup(
-                group: RejectOrderReason.values
-                    .map(
-                      (e) => WoltSelectionListItemData(
-                        title: e.title,
-                        subtitle: e.subtitle,
-                        leadingIcon: e.leadingIcon,
-                        value: e,
-                        isSelected: false,
-                      ),
-                    )
-                    .toList(),
-              ),
-              onSelectionUpdateInSingleSelectionList: (selectedItemData) {
-                _buttonEnabledListener.value = selectedItemData.isSelected;
-              },
-            ),
-          ),
-        );
+        ),
+      );
 }

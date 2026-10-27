@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A [WoltModalType] that displays a floating bottom sheet which is dynamically positioned
@@ -38,17 +38,16 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
   /// [_alignment] is the alignment of the bottom sheet to the anchor. Default is [Alignment.center]
   ///
   /// If the anchor is not found, the bottom sheet will be centered on the screen
-  AttachedFloatingBottomSheetType({
-    required GlobalKey anchorKey,
-  }) : super(
-          shapeBorder: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(28.0)),
-          ),
-          showDragHandle: false,
-          dismissDirection: WoltModalDismissDirection.down,
-          transitionDuration: _defaultEnterDuration,
-          reverseTransitionDuration: _defaultExitDuration,
-        ) {
+  AttachedFloatingBottomSheetType({required GlobalKey anchorKey})
+    : super(
+        shapeBorder: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(28.0)),
+        ),
+        showDragHandle: false,
+        dismissDirection: WoltModalDismissDirection.down,
+        transitionDuration: _defaultEnterDuration,
+        reverseTransitionDuration: _defaultExitDuration,
+      ) {
     final renderBox =
         anchorKey.currentContext?.findRenderObject() as RenderBox?;
     _anchorPosition = renderBox?.localToGlobal(Offset.zero);
@@ -61,9 +60,13 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
 
   @override
   Offset positionModal(
-      Size availableSize, Size modalContentSize, TextDirection textDirection) {
+    Size availableSize,
+    Size modalContentSize,
+    TextDirection textDirection,
+  ) {
     final anchorPosition = _anchorPosition;
-    final isOffscreen = anchorPosition == null ||
+    final isOffscreen =
+        anchorPosition == null ||
         anchorPosition.dx < 0 ||
         anchorPosition.dx > availableSize.width ||
         anchorPosition.dy < 0 ||
@@ -92,8 +95,9 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
 
   @override
   String routeLabel(BuildContext context) {
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations = MaterialLocalizations.of(
+      context,
+    );
     return localizations.bottomSheetLabel;
   }
 
@@ -177,14 +181,8 @@ class AttachedFloatingBottomSheetType extends WoltModalType {
     final alphaAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: Curves.easeInOutCubic,
-    ));
+    ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
 
-    return FadeTransition(
-      opacity: alphaAnimation,
-      child: child,
-    );
+    return FadeTransition(opacity: alphaAnimation, child: child);
   }
 }

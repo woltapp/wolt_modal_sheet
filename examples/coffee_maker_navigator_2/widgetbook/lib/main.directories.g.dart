@@ -107,7 +107,7 @@ final directories = <_i1.WidgetbookNode>[
             ),
           ),
         ],
-      )
+      ),
     ],
   ),
   _i1.WidgetbookFolder(
@@ -122,9 +122,9 @@ final directories = <_i1.WidgetbookNode>[
               name: 'LoginScreenContent',
               builder: _i8.loginScreenContent,
             ),
-          )
+          ),
         ],
-      )
+      ),
     ],
   ),
   _i1.WidgetbookFolder(
@@ -139,9 +139,9 @@ final directories = <_i1.WidgetbookNode>[
               name: 'OnboardingModalSheetPage',
               builder: _i9.onboardingModalSheetPage,
             ),
-          )
+          ),
         ],
-      )
+      ),
     ],
   ),
   _i1.WidgetbookFolder(
@@ -181,7 +181,7 @@ final directories = <_i1.WidgetbookNode>[
                       name: 'OrderNotFoundModal',
                       builder: _i12.rejectOrderModalPage,
                     ),
-                  )
+                  ),
                 ],
               ),
               _i1.WidgetbookFolder(
@@ -297,7 +297,7 @@ final directories = <_i1.WidgetbookNode>[
           name: 'Primary',
           builder: _i24.primaryButton,
         ),
-      )
+      ),
     ],
   ),
 ];

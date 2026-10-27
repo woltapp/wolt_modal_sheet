@@ -2,7 +2,7 @@ import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/entities/coffee_order.dart';
 import 'package:coffee_maker/home/online/widgets/coffee_order_list_item_tile.dart';
 import 'package:coffee_maker/home/online/widgets/empty_coffee_order_list_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A widget that displays a list of coffee orders for a specific coffee maker step.
 ///
@@ -11,11 +11,10 @@ import 'package:flutter/material.dart';
 class CoffeeOrderListWidget extends StatelessWidget {
   const CoffeeOrderListWidget({
     required this.coffeeOrders,
-    required CoffeeMakerStep coffeeMakerStep,
-    required void Function(String) onCoffeeOrderSelected,
+    required this._coffeeMakerStep,
+    required this._onCoffeeOrderSelected,
     super.key,
-  })  : _onCoffeeOrderSelected = onCoffeeOrderSelected,
-        _coffeeMakerStep = coffeeMakerStep;
+  });
 
   final List<CoffeeOrder> coffeeOrders;
   final CoffeeMakerStep _coffeeMakerStep;

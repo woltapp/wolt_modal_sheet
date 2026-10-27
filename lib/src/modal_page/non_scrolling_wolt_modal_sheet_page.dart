@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// A [NonScrollingWoltModalSheetPage] is a specialized page for the [WoltModalSheet]
@@ -37,9 +37,9 @@ class NonScrollingWoltModalSheetPage extends SliverWoltModalSheetPage {
     super.navBarHeight,
     super.useSafeArea,
   }) : super(
-          isTopBarLayerAlwaysVisible: hasTopBarLayer,
-          mainContentSliversBuilder: (_) => [
-            SliverFillViewport(delegate: SliverChildListDelegate([child])),
-          ],
-        );
+         isTopBarLayerAlwaysVisible: hasTopBarLayer,
+         mainContentSliversBuilder: (_) => [
+           SliverFillViewport(delegate: SliverChildListDelegate([child])),
+         ],
+       );
 }

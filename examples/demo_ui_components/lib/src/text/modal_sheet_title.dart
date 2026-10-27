@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ModalSheetTitle extends StatelessWidget {
   const ModalSheetTitle(
@@ -17,10 +17,9 @@ class ModalSheetTitle extends StatelessWidget {
       child: Text(
         text,
         textAlign: textAlign,
-        style: Theme.of(context)
-            .textTheme
-            .headlineSmall!
-            .copyWith(fontWeight: FontWeight.bold),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }

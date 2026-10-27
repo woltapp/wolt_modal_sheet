@@ -201,9 +201,11 @@ void main() {
         final notifier = StatefulValueNotifier<int>.idle(42);
         final states = <ValueState<int>>[];
 
-        notifier.addListener(() {
+        void onStateChanged() {
           states.add(notifier.value);
-        });
+        }
+
+        notifier.addListener(onStateChanged);
 
         // Act
         notifier.setLoading();
@@ -222,11 +224,12 @@ void main() {
         final notifier = StatefulValueNotifier<int>.idle(42);
         int notificationCount = 0;
 
-        notifier
-          ..addListener(() {
-            notificationCount++;
-          })
+        void onNotified() {
+          notificationCount++;
+        }
 
+        notifier
+          ..addListener(onNotified)
           // Act
           ..value = notifier.value; // Setting the same value
 
@@ -309,8 +312,10 @@ void main() {
           final error = Exception('Test Error');
 
           // Act
-          final notifier =
-              StatefulValueNotifier<int>.error(error, initialValue);
+          final notifier = StatefulValueNotifier<int>.error(
+            error,
+            initialValue,
+          );
 
           // Assert
           expect(notifier.value, isA<ErrorValueState<int>>());

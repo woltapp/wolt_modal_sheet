@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// [WoltNavigationToolbar] is a modified version of the [NavigationToolbar] widget in the
 /// Flutter SDK. The primary modification is in the [performLayout] method of the
@@ -78,11 +78,7 @@ class WoltNavigationToolbar extends StatelessWidget {
   }
 }
 
-enum _ToolbarSlot {
-  leading,
-  middle,
-  trailing,
-}
+enum _ToolbarSlot { leading, middle, trailing }
 
 class _ToolbarLayout extends MultiChildLayoutDelegate {
   _ToolbarLayout({
@@ -155,8 +151,9 @@ class _ToolbarLayout extends MultiChildLayoutDelegate {
         size.width - leadingWidth - trailingWidth - middleSpacing * 2.0,
         0.0,
       );
-      final BoxConstraints constraints =
-          BoxConstraints.loose(size).copyWith(maxWidth: maxWidth);
+      final BoxConstraints constraints = BoxConstraints.loose(
+        size,
+      ).copyWith(maxWidth: maxWidth);
       final Size middleSize = layoutChild(_ToolbarSlot.middle, constraints);
 
       final double middleStartMargin = leadingWidth + middleSpacing;

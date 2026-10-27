@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:playground_navigator2/modal/pages/multi_page_path_name.dart';
@@ -8,8 +8,9 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class RootSheetPage {
   const RootSheetPage._();
 
-  static final ValueNotifier<bool> _isButtonEnabledNotifier =
-      ValueNotifier(false);
+  static final ValueNotifier<bool> _isButtonEnabledNotifier = ValueNotifier(
+    false,
+  );
 
   static WoltModalSheetPage build(BuildContext context) {
     const title = 'Choose a use case';
@@ -67,9 +68,9 @@ class RootSheetPage {
                 ],
               ),
               onSelectionUpdateInSingleSelectionList: (selectedItemData) {
-                context
-                    .read<RouterCubit>()
-                    .onPathUpdated(selectedItemData.value);
+                context.read<RouterCubit>().onPathUpdated(
+                  selectedItemData.value,
+                );
                 _isButtonEnabledNotifier.value = selectedItemData.isSelected;
               },
             ),
@@ -99,9 +100,9 @@ class _AllPagesPushWidget extends StatelessWidget {
           ),
           onTap: () {
             context.read<RouterCubit>().onPathAndPageIndexUpdated(
-                  MultiPagePathName.allPagesPath,
-                  1,
-                );
+              MultiPagePathName.allPagesPath,
+              1,
+            );
           },
         ),
       ],

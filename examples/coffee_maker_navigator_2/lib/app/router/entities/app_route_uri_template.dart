@@ -52,7 +52,7 @@ enum AppRouteUriTemplate {
 
   final String path; // The URL path for the route.
   final List<String>
-      params; // Optional list of query parameter keys associated with the route.
+  params; // Optional list of query parameter keys associated with the route.
 
   static const queryParamKeyId =
       'id'; // Standard query parameter for item identification.

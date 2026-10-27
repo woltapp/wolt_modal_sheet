@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
@@ -12,20 +12,15 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
     this.modalBarrierColor,
-    WoltModalTypeBuilder? modalTypeBuilder,
-    bool? enableDrag,
-    bool? showDragHandle,
+    this._modalTypeBuilder,
+    this._enableDrag,
+    this._showDragHandle,
     bool? useSafeArea,
-    bool? barrierDismissible,
-    AnimationController? transitionAnimationController,
+    this._barrierDismissible,
+    this._transitionAnimationController,
     RouteSettings? settings,
-  })  : _enableDrag = enableDrag,
-        _showDragHandle = showDragHandle,
-        _useSafeArea = useSafeArea ?? true,
-        _transitionAnimationController = transitionAnimationController,
-        _barrierDismissible = barrierDismissible,
-        _modalTypeBuilder = modalTypeBuilder,
-        super(settings: settings);
+  }) : _useSafeArea = useSafeArea ?? true,
+       super(settings: settings);
 
   /// Applies additional decorations to the modal page content excluding the
   /// barrier. Use [modalDecorator] to apply decorations to the barrier and
@@ -139,8 +134,9 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
 
   @override
   Duration get reverseTransitionDuration {
-    return _determineCurrentModalType(navigator!.context)
-        .reverseTransitionDuration;
+    return _determineCurrentModalType(
+      navigator!.context,
+    ).reverseTransitionDuration;
   }
 
   @override

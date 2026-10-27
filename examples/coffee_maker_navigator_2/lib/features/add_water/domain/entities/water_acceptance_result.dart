@@ -2,26 +2,17 @@ sealed class WaterAcceptanceResult {
   final bool isAccepted;
   final String message;
 
-  WaterAcceptanceResult({
-    required this.isAccepted,
-    required this.message,
-  });
+  WaterAcceptanceResult({required this.isAccepted, required this.message});
 }
 
 class WaterAcceptanceSuccess extends WaterAcceptanceResult {
   WaterAcceptanceSuccess()
-      : super(
-          isAccepted: true,
-          message: 'Water condition is accepted',
-        );
+    : super(isAccepted: true, message: 'Water condition is accepted');
 }
 
 abstract class WaterAcceptanceFailure extends WaterAcceptanceResult {
   WaterAcceptanceFailure(String message)
-      : super(
-          isAccepted: false,
-          message: message,
-        );
+    : super(isAccepted: false, message: message);
 }
 
 class WaterQuantityFailure extends WaterAcceptanceFailure {
@@ -42,5 +33,5 @@ class SeasonalTemperatureAdjustmentFailure extends WaterAcceptanceFailure {
 
 class QualityCheckFailure extends WaterAcceptanceFailure {
   QualityCheckFailure()
-      : super('Failed water quality check for specified source');
+    : super('Failed water quality check for specified source');
 }

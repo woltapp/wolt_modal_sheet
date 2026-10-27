@@ -15,7 +15,7 @@ import 'package:coffee_maker_navigator_2/features/tutorial/view/single_tutorial_
 import 'package:coffee_maker_navigator_2/features/tutorial/view/tutorials_screen.dart';
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_di/wolt_di.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -59,11 +59,8 @@ class BootstrapRoutePage extends AppRoutePage<void> {
   @override
   Route<void> createRoute(BuildContext context) {
     return MaterialPageRoute<void>(
-      builder: (context) => const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+      builder: (context) =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
       settings: this,
     );
   }
@@ -95,9 +92,9 @@ class OrdersRoutePage extends AppRoutePage<void> {
 
   @override
   QueryParams? get queryParams => {
-        AppRouteUriTemplate.queryParamKeyOrderScreenTab:
-            _visibleOrderScreenNavBarTab.value.queryParamName
-      };
+    AppRouteUriTemplate.queryParamKeyOrderScreenTab:
+        _visibleOrderScreenNavBarTab.value.queryParamName,
+  };
 
   @override
   String get name => routeName;
@@ -105,7 +102,7 @@ class OrdersRoutePage extends AppRoutePage<void> {
   static const String routeName = 'orders';
 
   const OrdersRoutePage(this._visibleOrderScreenNavBarTab)
-      : super(key: const ValueKey('OrdersRoutePage'));
+    : super(key: const ValueKey('OrdersRoutePage'));
 
   final ValueListenable<CoffeeMakerStep> _visibleOrderScreenNavBarTab;
 
@@ -123,8 +120,9 @@ class AddWaterRoutePage extends AppRoutePage<void> {
   AppRouteUriTemplate get appRouteUriTemplate => AppRouteUriTemplate.addWater;
 
   @override
-  QueryParams? get queryParams =>
-      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
+  QueryParams? get queryParams => {
+    AppRouteUriTemplate.queryParamKeyId: coffeeOrderId,
+  };
 
   @override
   String get name => routeName;
@@ -163,7 +161,7 @@ class SingleTutorialRoutePage extends AppRoutePage<void> {
   static const String routeName = 'singleTutorial';
 
   SingleTutorialRoutePage(this.coffeeMakerStep)
-      : super(key: ValueKey(coffeeMakerStep));
+    : super(key: ValueKey(coffeeMakerStep));
 
   final CoffeeMakerStep coffeeMakerStep;
 
@@ -207,7 +205,7 @@ class OnboardingModalRoutePage extends AppRoutePage<void> {
   static const String routeName = 'onboarding';
 
   const OnboardingModalRoutePage()
-      : super(key: const ValueKey('OnboardingRoutePage'));
+    : super(key: const ValueKey('OnboardingRoutePage'));
 
   @override
   Route<void> createRoute(BuildContext context) {
@@ -226,8 +224,9 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
       AppRouteUriTemplate.grindCoffeeModal;
 
   @override
-  QueryParams? get queryParams =>
-      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
+  QueryParams? get queryParams => {
+    AppRouteUriTemplate.queryParamKeyId: coffeeOrderId,
+  };
 
   @override
   String get name => routeName;
@@ -237,44 +236,43 @@ class GrindCoffeeModalRoutePage extends AppRoutePage<void> {
   final String coffeeOrderId;
 
   GrindCoffeeModalRoutePage({required this.coffeeOrderId})
-      : super(
-          key: ValueKey('GrindCoffeeModalRoutePage-$coffeeOrderId'),
-        );
+    : super(key: ValueKey('GrindCoffeeModalRoutePage-$coffeeOrderId'));
 
   @override
   Route<void> createRoute(BuildContext context) {
-    final viewModel =
-        DependencyInjector.container<OrdersDependencyContainer>(context)
-            .createViewModel();
+    final viewModel = DependencyInjector.container<OrdersDependencyContainer>(
+      context,
+    ).createViewModel();
     return WoltModalSheetRoute(
       settings: this,
-      pageListBuilderNotifier: ValueNotifier(
-        (context) {
-          final orderExists = viewModel.orderExists(
-            coffeeOrderId,
-            CoffeeMakerStep.grind,
-          );
-          return [
-            if (orderExists) ...[
-              GrindOrRejectModalPage(
-                  coffeeOrderId: coffeeOrderId,
-                  onCoffeeOrderGrindCompleted: () {
-                    viewModel.onOrderStatusChange(
-                        coffeeOrderId, CoffeeMakerStep.addWater);
-                    context.routerViewModel.onOrderStepCompleted();
-                  }),
-              RejectOrderModalPage(
-                coffeeOrderId: coffeeOrderId,
-                onCoffeeOrderRejected: () {
-                  viewModel.onOrderStatusChange(coffeeOrderId);
-                  context.routerViewModel.onOrderStepCompleted();
-                },
-              ),
-            ] else
-              OrderNotFoundModal(coffeeOrderId, CoffeeMakerStep.grind),
-          ];
-        },
-      ),
+      pageListBuilderNotifier: ValueNotifier((context) {
+        final orderExists = viewModel.orderExists(
+          coffeeOrderId,
+          CoffeeMakerStep.grind,
+        );
+        return [
+          if (orderExists) ...[
+            GrindOrRejectModalPage(
+              coffeeOrderId: coffeeOrderId,
+              onCoffeeOrderGrindCompleted: () {
+                viewModel.onOrderStatusChange(
+                  coffeeOrderId,
+                  CoffeeMakerStep.addWater,
+                );
+                context.routerViewModel.onOrderStepCompleted();
+              },
+            ),
+            RejectOrderModalPage(
+              coffeeOrderId: coffeeOrderId,
+              onCoffeeOrderRejected: () {
+                viewModel.onOrderStatusChange(coffeeOrderId);
+                context.routerViewModel.onOrderStepCompleted();
+              },
+            ),
+          ] else
+            OrderNotFoundModal(coffeeOrderId, CoffeeMakerStep.grind),
+        ];
+      }),
     );
   }
 }
@@ -285,8 +283,9 @@ class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
       AppRouteUriTemplate.readyCoffeeModal;
 
   @override
-  QueryParams? get queryParams =>
-      {AppRouteUriTemplate.queryParamKeyId: coffeeOrderId};
+  QueryParams? get queryParams => {
+    AppRouteUriTemplate.queryParamKeyId: coffeeOrderId,
+  };
 
   @override
   String get name => routeName;
@@ -296,13 +295,13 @@ class ReadyCoffeeModalRoutePage extends AppRoutePage<void> {
   final String coffeeOrderId;
 
   ReadyCoffeeModalRoutePage({required this.coffeeOrderId})
-      : super(key: ValueKey('ReadyCoffeeModalRoutePage-$coffeeOrderId'));
+    : super(key: ValueKey('ReadyCoffeeModalRoutePage-$coffeeOrderId'));
 
   @override
   Route<void> createRoute(BuildContext context) {
-    final viewModel =
-        DependencyInjector.container<OrdersDependencyContainer>(context)
-            .createViewModel();
+    final viewModel = DependencyInjector.container<OrdersDependencyContainer>(
+      context,
+    ).createViewModel();
     return WoltModalSheetRoute(
       settings: this,
       pageListBuilderNotifier: ValueNotifier((context) {

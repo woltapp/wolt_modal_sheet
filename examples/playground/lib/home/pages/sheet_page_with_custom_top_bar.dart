@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -24,12 +24,14 @@ class SheetPageWithCustomTopBar {
       ),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       isTopBarLayerAlwaysVisible: false,
-      topBar: Builder(builder: (context) {
-        return _CustomTopBar(
-          onClosed: Navigator.of(context).pop,
-          onBackPressed: WoltModalSheet.of(context).showPrevious,
-        );
-      }),
+      topBar: Builder(
+        builder: (context) {
+          return _CustomTopBar(
+            onClosed: Navigator.of(context).pop,
+            onBackPressed: WoltModalSheet.of(context).showPrevious,
+          );
+        },
+      ),
       pageTitle: const ModalSheetTitle('Page with custom top bar'),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,10 +39,13 @@ class SheetPageWithCustomTopBar {
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-                'Scroll to see the custom top bar with a search field in it.'),
+              'Scroll to see the custom top bar with a search field in it.',
+            ),
           ),
           Placeholder(
-              fallbackHeight: _placeholderHeight, color: WoltColors.blue),
+            fallbackHeight: _placeholderHeight,
+            color: WoltColors.blue,
+          ),
         ],
       ),
     );
@@ -51,8 +56,12 @@ class SheetPageWithCustomTopBar {
 class _CustomTopBar extends StatelessWidget {
   const _CustomTopBar({required this.onClosed, required this.onBackPressed});
 
-  static const _searchBarPadding =
-      EdgeInsetsDirectional.only(start: 64, top: 16, bottom: 16, end: 0);
+  static const _searchBarPadding = EdgeInsetsDirectional.only(
+    start: 64,
+    top: 16,
+    bottom: 16,
+    end: 0,
+  );
 
   final VoidCallback onClosed;
   final VoidCallback onBackPressed;

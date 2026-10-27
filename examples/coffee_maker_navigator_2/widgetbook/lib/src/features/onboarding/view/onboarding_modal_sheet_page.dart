@@ -1,6 +1,6 @@
 import 'package:coffee_maker_navigator_2/features/onboarding/ui/view/onboarding_modal_sheet_page.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -16,9 +16,7 @@ Widget onboardingModalSheetPage(BuildContext context) {
         onPressed: () {
           WoltModalSheet.show(
             context: context,
-            pageListBuilder: (context) => [
-              OnboardingModalSheetPage(),
-            ],
+            pageListBuilder: (context) => [OnboardingModalSheetPage()],
           );
         },
         child: const Text('Open OnboardingModalSheetPage'),

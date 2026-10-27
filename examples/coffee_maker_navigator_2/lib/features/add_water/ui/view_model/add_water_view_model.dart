@@ -30,10 +30,9 @@ class AddWaterViewModel {
   }
 
   AddWaterViewModel({
-    required AddWaterService addWaterService,
-    required OrdersService ordersService,
-  })  : _addWaterService = addWaterService,
-        _ordersService = ordersService;
+    required this._addWaterService,
+    required this._ordersService,
+  });
 
   void onInit(String orderId) {
     _orderId = orderId;

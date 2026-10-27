@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/modal_page/sliver_wolt_modal_sheet_page.dart';
 
 /// [WoltModalSheetPage] is a specialized subclass of [SliverWoltModalSheetPage], designed
@@ -66,8 +66,8 @@ class WoltModalSheetPage extends SliverWoltModalSheetPage {
     super.topBar,
     super.useSafeArea,
   }) : super(
-          mainContentSliversBuilder: (context) => [
-            SliverToBoxAdapter(child: child),
-          ],
-        );
+         mainContentSliversBuilder: (context) => [
+           SliverToBoxAdapter(child: child),
+         ],
+       );
 }

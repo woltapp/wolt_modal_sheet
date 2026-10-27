@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
@@ -32,18 +32,21 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(width: 16),
         ],
       ),
-      body: Builder(builder: (context) {
-        return Center(
-          child: SizedBox(
-            width: 200,
-            child: WoltElevatedButton(
-              onPressed:
-                  context.read<RouterCubit>().onShowModalSheetButtonPressed,
-              child: const Text('Show Modal Sheet'),
+      body: Builder(
+        builder: (context) {
+          return Center(
+            child: SizedBox(
+              width: 200,
+              child: WoltElevatedButton(
+                onPressed: context
+                    .read<RouterCubit>()
+                    .onShowModalSheetButtonPressed,
+                child: const Text('Show Modal Sheet'),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltModalSheetCloseOrNextSab extends StatelessWidget {
@@ -19,9 +19,11 @@ class WoltModalSheetCloseOrNextSab extends StatelessWidget {
       onPressed: isAtLastPage
           ? Navigator.of(context).pop
           : WoltModalSheet.of(context).showNext,
-      child: Text(isAtLastPage
-          ? "Close"
-          : "Next (${currentPageIndex + 1}/$totalPageCount)"),
+      child: Text(
+        isAtLastPage
+            ? "Close"
+            : "Next (${currentPageIndex + 1}/$totalPageCount)",
+      ),
     );
   }
 }

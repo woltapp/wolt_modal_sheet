@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/src/button/wolt_circular_elevated_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class WoltModalSheetCloseButton extends StatelessWidget {
   const WoltModalSheetCloseButton({this.onClosed, super.key});

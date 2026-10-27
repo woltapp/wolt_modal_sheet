@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -12,39 +12,42 @@ void main() {
     Color? modalBarrierColor,
   }) {
     return MaterialApp(
-      home: Scaffold(body: Center(
-        child: Builder(
-          builder: (context) {
-            return ElevatedButton(
-              onPressed: () {
-                WoltModalSheet.show(
-                  context: context,
-                  modalTypeBuilder: modalTypeBuilder,
-                  pageContentDecorator: pageContentDecorator,
-                  modalDecorator: modalDecorator,
-                  barrierDismissible: barrierDismissible,
-                  modalBarrierColor: modalBarrierColor,
-                  pageListBuilder: pageListBuilder ??
-                      (context) {
-                        return <WoltModalSheetPage>[
-                          WoltModalSheetPage(
-                            child: const Center(
-                              child: Text('Wolt modal sheet page'),
+      home: Scaffold(
+        body: Center(
+          child: Builder(
+            builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  WoltModalSheet.show(
+                    context: context,
+                    modalTypeBuilder: modalTypeBuilder,
+                    pageContentDecorator: pageContentDecorator,
+                    modalDecorator: modalDecorator,
+                    barrierDismissible: barrierDismissible,
+                    modalBarrierColor: modalBarrierColor,
+                    pageListBuilder:
+                        pageListBuilder ??
+                        (context) {
+                          return <WoltModalSheetPage>[
+                            WoltModalSheetPage(
+                              child: const Center(
+                                child: Text('Wolt modal sheet page'),
+                              ),
                             ),
-                          ),
-                        ];
-                      },
-                );
-              },
-              child: const Text('Open sheet'),
-            );
-          },
+                          ];
+                        },
+                  );
+                },
+                child: const Text('Open sheet'),
+              );
+            },
+          ),
         ),
-      )),
+      ),
     );
   }
 
-  Finder sheetPageMaterialFinder([WidgetTester? _]) {
+  Finder sheetPageMaterialFinder(WidgetTester _) {
     return find
         .ancestor(
           of: find.text('Wolt modal sheet page'),
@@ -63,11 +66,13 @@ void main() {
     });
 
     testWidgets('Empty pageListBuilder throws an error', (tester) async {
-      await tester.pumpWidget(buildSheetWithShow(
-        pageListBuilder: (context) {
-          return <WoltModalSheetPage>[];
-        },
-      ));
+      await tester.pumpWidget(
+        buildSheetWithShow(
+          pageListBuilder: (context) {
+            return <WoltModalSheetPage>[];
+          },
+        ),
+      );
 
       await tester.tap(find.text('Open sheet'));
       await tester.pumpAndSettle();
@@ -98,92 +103,92 @@ void main() {
       },
     );
 
-    testWidgets(
-      'Does dismiss on barrier tap if barrierDismissible is true',
-      (tester) async {
-        await tester.pumpWidget(buildSheetWithShow(barrierDismissible: true));
+    testWidgets('Does dismiss on barrier tap if barrierDismissible is true', (
+      tester,
+    ) async {
+      await tester.pumpWidget(buildSheetWithShow(barrierDismissible: true));
 
-        await tester.tap(find.text('Open sheet'));
-        await tester.pumpAndSettle();
-        expect(find.text('Wolt modal sheet page'), findsOneWidget);
+      await tester.tap(find.text('Open sheet'));
+      await tester.pumpAndSettle();
+      expect(find.text('Wolt modal sheet page'), findsOneWidget);
 
-        // Tap on the barrier.
-        await tester.tapAt(const Offset(50, 50));
-        await tester.pumpAndSettle();
-        expect(find.text('Wolt modal sheet page'), findsNothing);
-      },
-    );
+      // Tap on the barrier.
+      await tester.tapAt(const Offset(50, 50));
+      await tester.pumpAndSettle();
+      expect(find.text('Wolt modal sheet page'), findsNothing);
+    });
   });
 
   testWidgets('Empty pageListBuilder throws an error', (tester) async {
-    await tester.pumpWidget(buildSheetWithShow(
-      pageListBuilder: (context) {
-        return <WoltModalSheetPage>[];
-      },
-    ));
+    await tester.pumpWidget(
+      buildSheetWithShow(
+        pageListBuilder: (context) {
+          return <WoltModalSheetPage>[];
+        },
+      ),
+    );
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNotNull);
   });
 
-  testWidgets(
-    'WoltModalSheet.modalTypeBuilder defaults - wide window size',
-    (tester) async {
-      Size viewSize = const Size(800.0, 600.0);
-      Size sheetPageSize = const Size(524.0, 92.0);
+  testWidgets('WoltModalSheet.modalTypeBuilder defaults - wide window size', (
+    tester,
+  ) async {
+    Size viewSize = const Size(800.0, 600.0);
+    Size sheetPageSize = const Size(524.0, 92.0);
 
-      await tester.pumpWidget(buildSheetWithShow());
+    await tester.pumpWidget(buildSheetWithShow());
 
-      await tester.tap(find.text('Open sheet'));
-      await tester.pumpAndSettle();
+    await tester.tap(find.text('Open sheet'));
+    await tester.pumpAndSettle();
 
-      Finder sheetMaterial = sheetPageMaterialFinder(tester);
+    Finder sheetMaterial = sheetPageMaterialFinder(tester);
 
-      // The default modalTypeBuilder should be a dialog on wide screens.
-      expect(tester.getSize(sheetMaterial), sheetPageSize);
-      expect(
-        tester.getTopLeft(sheetMaterial),
-        Offset((viewSize.width / 2) - (sheetPageSize.width / 2), 254.0),
-      );
-      expect(
-        tester.getTopRight(sheetMaterial),
-        Offset((viewSize.width / 2) + (sheetPageSize.width / 2), 254.0),
-      );
-    },
-  );
+    // The default modalTypeBuilder should be a dialog on wide screens.
+    expect(tester.getSize(sheetMaterial), sheetPageSize);
+    expect(
+      tester.getTopLeft(sheetMaterial),
+      Offset((viewSize.width / 2) - (sheetPageSize.width / 2), 254.0),
+    );
+    expect(
+      tester.getTopRight(sheetMaterial),
+      Offset((viewSize.width / 2) + (sheetPageSize.width / 2), 254.0),
+    );
+  });
 
-  testWidgets(
-    'WoltModalSheet.modalTypeBuilder defaults - narrow window size',
-    (tester) async {
-      Size viewSize = const Size(300.0, 600.0);
-      Size sheetPageSize = Size(viewSize.width, 86.0);
+  testWidgets('WoltModalSheet.modalTypeBuilder defaults - narrow window size', (
+    tester,
+  ) async {
+    Size viewSize = const Size(300.0, 600.0);
+    Size sheetPageSize = Size(viewSize.width, 86.0);
 
-      tester.view.physicalSize = viewSize;
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.reset);
+    tester.view.physicalSize = viewSize;
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
 
-      await tester.pumpWidget(buildSheetWithShow());
+    await tester.pumpWidget(buildSheetWithShow());
 
-      await tester.tap(find.text('Open sheet'));
-      await tester.pumpAndSettle();
+    await tester.tap(find.text('Open sheet'));
+    await tester.pumpAndSettle();
 
-      Finder sheetMaterial = sheetPageMaterialFinder(tester);
+    Finder sheetMaterial = sheetPageMaterialFinder(tester);
 
-      // The default modalTypeBuilder should be a bottom sheet on narrow screens.
-      expect(tester.getSize(sheetMaterial), sheetPageSize);
-      expect(tester.getTopLeft(sheetMaterial), const Offset(0.0, 514.0));
-      expect(tester.getTopRight(sheetMaterial), Offset(viewSize.width, 514.0));
-    },
-    skip: true,
-  ); // [Intended]: This is skipped due to a bug in the framework.
+    // The default modalTypeBuilder should be a bottom sheet on narrow screens.
+    expect(tester.getSize(sheetMaterial), sheetPageSize);
+    expect(tester.getTopLeft(sheetMaterial), const Offset(0.0, 514.0));
+    expect(tester.getTopRight(sheetMaterial), Offset(viewSize.width, 514.0));
+  }, skip: true); // [Intended]: This is skipped due to a bug in the framework.
 
   testWidgets('Custom WoltModalSheet.modalTypeBuilder', (tester) async {
-    await tester.pumpWidget(buildSheetWithShow(
-      modalTypeBuilder: (context) {
-        return WoltModalType.bottomSheet();
-      },
-    ));
+    await tester.pumpWidget(
+      buildSheetWithShow(
+        modalTypeBuilder: (context) {
+          return WoltModalType.bottomSheet();
+        },
+      ),
+    );
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
@@ -199,11 +204,13 @@ void main() {
 
     expect(find.text('Wolt modal sheet page'), findsNothing);
 
-    await tester.pumpWidget(buildSheetWithShow(
-      modalTypeBuilder: (context) {
-        return WoltModalType.dialog();
-      },
-    ));
+    await tester.pumpWidget(
+      buildSheetWithShow(
+        modalTypeBuilder: (context) {
+          return WoltModalType.dialog();
+        },
+      ),
+    );
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
@@ -218,12 +225,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Wolt modal sheet page'), findsNothing);
-    await tester.pumpWidget(buildSheetWithShow(
-      barrierDismissible: true,
-      modalTypeBuilder: (context) {
-        return WoltModalType.alertDialog();
-      },
-    ));
+    await tester.pumpWidget(
+      buildSheetWithShow(
+        barrierDismissible: true,
+        modalTypeBuilder: (context) {
+          return WoltModalType.alertDialog();
+        },
+      ),
+    );
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
@@ -239,11 +248,13 @@ void main() {
 
     expect(find.text('Wolt modal sheet page'), findsNothing);
 
-    await tester.pumpWidget(buildSheetWithShow(
-      modalTypeBuilder: (context) {
-        return WoltModalType.sideSheet();
-      },
-    ));
+    await tester.pumpWidget(
+      buildSheetWithShow(
+        modalTypeBuilder: (context) {
+          return WoltModalType.sideSheet();
+        },
+      ),
+    );
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
@@ -257,11 +268,13 @@ void main() {
   group("Decorators", () {
     testWidgets('Custom WoltModalSheet.modalDecorator', (tester) async {
       const Color coloredBoxColor = Color(0xFFFF0000);
-      await tester.pumpWidget(buildSheetWithShow(
-        modalDecorator: (child) {
-          return ColoredBox(color: coloredBoxColor, child: child);
-        },
-      ));
+      await tester.pumpWidget(
+        buildSheetWithShow(
+          modalDecorator: (child) {
+            return ColoredBox(color: coloredBoxColor, child: child);
+          },
+        ),
+      );
 
       await tester.tap(find.text('Open sheet'));
       await tester.pumpAndSettle();
@@ -278,11 +291,13 @@ void main() {
 
     testWidgets('Custom WoltModalSheet.pageContentDecorator', (tester) async {
       const Color coloredBoxColor = Color(0xFFFF00FF);
-      await tester.pumpWidget(buildSheetWithShow(
-        pageContentDecorator: (child) {
-          return ColoredBox(color: coloredBoxColor, child: child);
-        },
-      ));
+      await tester.pumpWidget(
+        buildSheetWithShow(
+          pageContentDecorator: (child) {
+            return ColoredBox(color: coloredBoxColor, child: child);
+          },
+        ),
+      );
 
       await tester.tap(find.text('Open sheet'));
       await tester.pumpAndSettle();
@@ -302,20 +317,25 @@ void main() {
       (tester) async {
         const page1Id = 'page1';
         const page2Id = 'page2';
-        final page1 =
-            WoltModalSheetPage(child: const Text('Page 1'), id: page1Id);
-        final page2 =
-            WoltModalSheetPage(child: const Text('Page 2'), id: page2Id);
+        final page1 = WoltModalSheetPage(
+          child: const Text('Page 1'),
+          id: page1Id,
+        );
+        final page2 = WoltModalSheetPage(
+          child: const Text('Page 2'),
+          id: page2Id,
+        );
 
-        await tester.pumpWidget(buildSheetWithShow(
-          pageListBuilder: (_) => [page1, page2],
-        ));
+        await tester.pumpWidget(
+          buildSheetWithShow(pageListBuilder: (_) => [page1, page2]),
+        );
 
         await tester.tap(find.text('Open sheet'));
         await tester.pumpAndSettle();
 
-        final WoltModalSheetState modal =
-            WoltModalSheet.of(tester.element(find.text('Page 1')));
+        final WoltModalSheetState modal = WoltModalSheet.of(
+          tester.element(find.text('Page 1')),
+        );
 
         expect(modal.pages.length, 2);
         expect(modal.pages[0].id, page1Id);
@@ -347,19 +367,30 @@ void main() {
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
 
-    final ColoredBox coloredBox = tester.widget(find.byType(ColoredBox));
+    final ColoredBox coloredBox = tester.widget(
+      find.descendant(
+        of: find.byType(ModalBarrier),
+        matching: find.byType(ColoredBox),
+      ),
+    );
     expect(coloredBox.color, barrierColor);
   });
 
   testWidgets('Custom WoltModalSheet.modalBarrierColor', (tester) async {
     Color barrierColor = const Color(0xFFFF0000);
-    await tester
-        .pumpWidget(buildSheetWithShow(modalBarrierColor: barrierColor));
+    await tester.pumpWidget(
+      buildSheetWithShow(modalBarrierColor: barrierColor),
+    );
 
     await tester.tap(find.text('Open sheet'));
     await tester.pumpAndSettle();
 
-    final ColoredBox coloredBox = tester.widget(find.byType(ColoredBox));
+    final ColoredBox coloredBox = tester.widget(
+      find.descendant(
+        of: find.byType(ModalBarrier),
+        matching: find.byType(ColoredBox),
+      ),
+    );
     expect(coloredBox.color, barrierColor);
   });
 }

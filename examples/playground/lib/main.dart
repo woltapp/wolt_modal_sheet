@@ -1,16 +1,16 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:playground/home/home_screen.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final deviceInfo = await DeviceInfoPlugin().deviceInfo;
-  final androidSdkVersion =
-      deviceInfo is AndroidDeviceInfo ? deviceInfo.version.sdkInt : 0;
+  final androidSdkVersion = deviceInfo is AndroidDeviceInfo
+      ? deviceInfo.version.sdkInt
+      : 0;
   runApp(DemoApp(androidSdkVersion: androidSdkVersion));
 }
 
@@ -64,8 +64,9 @@ class _DemoAppState extends State<DemoApp> {
     );
     return MaterialApp(
       themeMode: _isLightTheme ? ThemeMode.light : ThemeMode.dark,
-      scrollBehavior:
-          CustomScrollBehavior(androidSdkVersion: widget.androidSdkVersion),
+      scrollBehavior: CustomScrollBehavior(
+        androidSdkVersion: widget.androidSdkVersion,
+      ),
       theme: ThemeData.light().copyWith(
         brightness: Brightness.light,
         inputDecorationTheme: inputDecorationTheme,
@@ -89,11 +90,7 @@ class _DemoAppState extends State<DemoApp> {
           ),
         ],
       ),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       locale: _direction == TextDirection.ltr
           ? const Locale('en')
           : const Locale('he'),
@@ -103,12 +100,12 @@ class _DemoAppState extends State<DemoApp> {
       ],
       debugShowCheckedModeBanner: false,
       home: HomeScreen(
-          onThemeBrightnessChanged: (bool isLightTheme) => setState(
-                () => _isLightTheme = isLightTheme,
-              ),
-          onDirectionalityChanged: (TextDirection direction) {
-            setState(() => _direction = direction);
-          }),
+        onThemeBrightnessChanged: (bool isLightTheme) =>
+            setState(() => _isLightTheme = isLightTheme),
+        onDirectionalityChanged: (TextDirection direction) {
+          setState(() => _direction = direction);
+        },
+      ),
     );
   }
 }

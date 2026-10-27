@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -24,7 +24,8 @@ class SheetPageWithForcedMaxHeight {
         child: WoltModalSheetCloseOrNextSab(colorName: WoltColorName.green),
       ),
       pageTitle: const ModalSheetTitle(
-          'Page with forced max height and background color'),
+        'Page with forced max height and background color',
+      ),
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: const Padding(

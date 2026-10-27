@@ -1,6 +1,6 @@
 import 'package:coffee_maker/home/widgets/top_bar.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// /// By default, the `widthBreakPoint` is set to 768, which corresponds to the common breakpoint between small and large screens.
@@ -10,13 +10,12 @@ const defaultWidthBreakPoint = 768;
 class StoreOfflineContent extends StatefulWidget {
   /// Creates a new instance of [StoreOfflineContent] widget.
   ///
-  /// The [isStoreOnlineNotifier] is a [ValueNotifier] that tracks the online state of the store.
+  /// The [_isStoreOnlineNotifier] is a [ValueNotifier] that tracks the online state of the store.
   const StoreOfflineContent({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-    ValueNotifier<bool>? isGridOverlayVisibleNotifier,
+    required this._isStoreOnlineNotifier,
+    this._isGridOverlayVisibleNotifier,
     super.key,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier;
+  });
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
   final ValueNotifier<bool>? _isGridOverlayVisibleNotifier;
@@ -28,8 +27,9 @@ class StoreOfflineContent extends StatefulWidget {
 class _StoreOfflineContentState extends State<StoreOfflineContent> {
   @override
   Widget build(BuildContext context) {
-    final content =
-        _OfflineContent(isStoreOnlineNotifier: widget._isStoreOnlineNotifier);
+    final content = _OfflineContent(
+      isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
+    );
     final screenSize = MediaQuery.sizeOf(context).width < defaultWidthBreakPoint
         ? WoltScreenSize.small
         : WoltScreenSize.large;
@@ -41,8 +41,9 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
           children: [
             TopBar(
               isStoreOnlineNotifier: widget._isStoreOnlineNotifier,
-              isGridOverlayVisibleNotifier:
-                  isLargeScreen ? widget._isGridOverlayVisibleNotifier : null,
+              isGridOverlayVisibleNotifier: isLargeScreen
+                  ? widget._isGridOverlayVisibleNotifier
+                  : null,
             ),
             Expanded(
               child: ColoredBox(
@@ -72,9 +73,7 @@ class _StoreOfflineContentState extends State<StoreOfflineContent> {
 }
 
 class _OfflineContent extends StatelessWidget {
-  const _OfflineContent({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-  }) : _isStoreOnlineNotifier = isStoreOnlineNotifier;
+  const _OfflineContent({required this._isStoreOnlineNotifier});
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
 
@@ -87,18 +86,17 @@ class _OfflineContent extends StatelessWidget {
         Text(
           'You are offline',
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .displaySmall!
-              .copyWith(fontWeight: FontWeight.bold, color: WoltColors.white),
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: WoltColors.white,
+          ),
         ),
         const SizedBox(height: 12),
         Text(
           'Go online to receive new orders.',
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: WoltColors.white),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(color: WoltColors.white),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 32),

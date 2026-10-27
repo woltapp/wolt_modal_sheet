@@ -1,10 +1,12 @@
 import 'package:coffee_maker_navigator_2/utils/extensions/context_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 enum AppNavigationDrawerDestination {
   ordersScreen(label: Text("Orders"), icon: Icon(Icons.coffee)),
   tutorialsScreen(
-      label: Text("Tutorials"), icon: Icon(Icons.menu_book_outlined)),
+    label: Text("Tutorials"),
+    icon: Icon(Icons.menu_book_outlined),
+  ),
   logOut(label: Text("Log out"), icon: Icon(Icons.logout));
 
   const AppNavigationDrawerDestination({
@@ -104,8 +106,10 @@ class _NavigationDrawerHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
-          Text('Coffee Maker',
-              style: Theme.of(context).textTheme.headlineMedium),
+          Text(
+            'Coffee Maker',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           const SizedBox(height: 8),
         ],
       ),

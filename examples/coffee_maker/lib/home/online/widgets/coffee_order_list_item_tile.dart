@@ -1,7 +1,7 @@
 import 'package:coffee_maker/entities/coffee_order.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A tile widget representing a coffee order item in a list.
 ///
@@ -10,10 +10,9 @@ import 'package:flutter/material.dart';
 class CoffeeOrderListItemTile extends StatelessWidget {
   const CoffeeOrderListItemTile({
     super.key,
-    required CoffeeOrder coffeeOrder,
-    required void Function(String) onSelected,
-  })  : _onSelected = onSelected,
-        _coffeeOrder = coffeeOrder;
+    required this._coffeeOrder,
+    required this._onSelected,
+  });
 
   final CoffeeOrder _coffeeOrder;
   final ValueChanged<String> _onSelected;
@@ -85,10 +84,9 @@ class CoffeeOrderListItemTile extends StatelessWidget {
 /// This section displays the order ID and order name of a coffee order.
 class _CoffeeOrderListItemDetails extends StatelessWidget {
   const _CoffeeOrderListItemDetails({
-    required CoffeeOrder coffeeOrder,
-    required void Function() onTap,
-  })  : _onTap = onTap,
-        _coffeeOrder = coffeeOrder;
+    required this._coffeeOrder,
+    required this._onTap,
+  });
 
   final CoffeeOrder _coffeeOrder;
   final VoidCallback _onTap;
@@ -101,10 +99,10 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           onPressed: _onTap,
           child: Text(
             _coffeeOrder.id,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold, color: WoltColors.black),
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: WoltColors.black,
+            ),
           ),
         ),
         const SizedBox(width: 8),
@@ -112,9 +110,9 @@ class _CoffeeOrderListItemDetails extends StatelessWidget {
           child: Text(
             _coffeeOrder.orderName,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: WoltColors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              color: WoltColors.white,
+              fontWeight: FontWeight.bold,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

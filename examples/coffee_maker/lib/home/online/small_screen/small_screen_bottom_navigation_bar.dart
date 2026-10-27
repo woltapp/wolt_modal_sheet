@@ -2,7 +2,7 @@ import 'package:coffee_maker/entities/coffee_maker_step.dart';
 import 'package:coffee_maker/entities/grouped_coffee_orders.dart';
 import 'package:coffee_maker/home/widgets/coffee_maker_custom_divider.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
 
@@ -13,13 +13,11 @@ typedef OnCoffeeMakerStepSelected = void Function(CoffeeMakerStep selectedStep);
 /// The selected step is highlighted with a different color.
 class SmallScreenBottomNavigationBar extends StatelessWidget {
   const SmallScreenBottomNavigationBar({
-    required CoffeeMakerStep selectedStep,
-    required void Function(CoffeeMakerStep) onSelected,
-    required GroupedCoffeeOrders groupedCoffeeOrders,
+    required this._selectedStep,
+    required this._onSelected,
+    required this._groupedCoffeeOrders,
     super.key,
-  })  : _groupedCoffeeOrders = groupedCoffeeOrders,
-        _onSelected = onSelected,
-        _selectedStep = selectedStep;
+  });
 
   final CoffeeMakerStep _selectedStep;
   final OnCoffeeMakerStepSelected _onSelected;
@@ -35,13 +33,15 @@ class SmallScreenBottomNavigationBar extends StatelessWidget {
           destinations: [
             for (CoffeeMakerStep step in CoffeeMakerStep.values)
               step._navigationDestination(
-                  isSelected: step == _selectedStep,
-                  count: _groupedCoffeeOrders.countForStep(step)),
+                isSelected: step == _selectedStep,
+                count: _groupedCoffeeOrders.countForStep(step),
+              ),
           ],
           selectedIndex: _selectedStep.index,
           onDestinationSelected: (i) {
             _onSelected(
-                CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i));
+              CoffeeMakerStep.values.firstWhere((e) => e.stepNumber == i),
+            );
           },
         ),
       ],
@@ -129,8 +129,10 @@ class _DestinationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = Icon(iconData,
-        color: isSelected ? WoltColors.blue : WoltColors.black64);
+    final icon = Icon(
+      iconData,
+      color: isSelected ? WoltColors.blue : WoltColors.black64,
+    );
     return count == 0
         ? icon
         : Badge(

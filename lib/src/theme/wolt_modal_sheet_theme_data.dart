@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_animation_style.dart';
 import 'package:wolt_modal_sheet/src/wolt_modal_sheet.dart';
 
@@ -243,19 +243,29 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
       modalElevation: lerpDouble(modalElevation, other.modalElevation, t),
       showDragHandle: t < 0.5 ? showDragHandle : other.showDragHandle,
-      resizeToAvoidBottomInset:
-          t < 0.5 ? resizeToAvoidBottomInset : other.resizeToAvoidBottomInset,
-      modalBarrierColor:
-          Color.lerp(modalBarrierColor, other.modalBarrierColor, t),
+      resizeToAvoidBottomInset: t < 0.5
+          ? resizeToAvoidBottomInset
+          : other.resizeToAvoidBottomInset,
+      modalBarrierColor: Color.lerp(
+        modalBarrierColor,
+        other.modalBarrierColor,
+        t,
+      ),
       dragHandleColor: Color.lerp(dragHandleColor, other.dragHandleColor, t),
       dragHandleSize: Size.lerp(dragHandleSize, other.dragHandleSize, t),
-      topBarShadowColor:
-          Color.lerp(topBarShadowColor, other.topBarShadowColor, t),
+      topBarShadowColor: Color.lerp(
+        topBarShadowColor,
+        other.topBarShadowColor,
+        t,
+      ),
       topBarElevation: lerpDouble(topBarElevation, other.topBarElevation, t),
       heroImageHeight: lerpDouble(heroImageHeight, other.heroImageHeight, t),
       hasSabGradient: t < 0.5 ? hasSabGradient : other.hasSabGradient,
-      sabGradientHeight:
-          lerpDouble(sabGradientHeight, other.sabGradientHeight, t),
+      sabGradientHeight: lerpDouble(
+        sabGradientHeight,
+        other.sabGradientHeight,
+        t,
+      ),
       navBarHeight: lerpDouble(navBarHeight, other.navBarHeight, t),
       hasTopBarLayer: t < 0.5 ? hasTopBarLayer : other.hasTopBarLayer,
       isTopBarLayerAlwaysVisible: t < 0.5
@@ -264,8 +274,9 @@ class WoltModalSheetThemeData extends ThemeExtension<WoltModalSheetThemeData> {
       surfaceTintColor: Color.lerp(surfaceTintColor, other.surfaceTintColor, t),
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
-      mainContentScrollPhysics:
-          t < 0.5 ? mainContentScrollPhysics : other.mainContentScrollPhysics,
+      mainContentScrollPhysics: t < 0.5
+          ? mainContentScrollPhysics
+          : other.mainContentScrollPhysics,
       animationStyle: t < 0.5 ? animationStyle : other.animationStyle,
       useSafeArea: t < 0.5 ? useSafeArea : other.useSafeArea,
       modalTypeBuilder: modalTypeBuilder,

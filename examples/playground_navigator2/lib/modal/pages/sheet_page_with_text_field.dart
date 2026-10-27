@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:playground_navigator2/bloc/router_cubit.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -14,9 +14,11 @@ class SheetPageWithTextField {
   }) {
     ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     final textEditingController = TextEditingController();
-    textEditingController.addListener(() {
-      isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
-    });
+    final buttonEnabler = _SubmitButtonEnabler(
+      textEditingController,
+      isButtonEnabledNotifier,
+    );
+    textEditingController.addListener(buttonEnabler.onChanged);
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage(
       stickyActionBar: ValueListenableBuilder<bool>(
@@ -44,11 +46,16 @@ class SheetPageWithTextField {
       leadingNavBarWidget: WoltModalSheetBackButton(
         onBackPressed: () => cubit.goToPage(currentPage - 1),
       ),
-      trailingNavBarWidget:
-          WoltModalSheetCloseButton(onClosed: cubit.closeSheet),
+      trailingNavBarWidget: WoltModalSheetCloseButton(
+        onClosed: cubit.closeSheet,
+      ),
       child: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
+        padding: const EdgeInsets.only(
+          bottom: 80,
+          top: 16,
+          right: 16,
+          left: 16,
+        ),
         child: Column(
           children: [
             const ModalSheetContentText('''
@@ -67,5 +74,16 @@ This page has a text field and always visible top bar title. We wait for the key
         ),
       ),
     );
+  }
+}
+
+class _SubmitButtonEnabler {
+  const _SubmitButtonEnabler(this._controller, this._isEnabled);
+
+  final TextEditingController _controller;
+  final ValueNotifier<bool> _isEnabled;
+
+  void onChanged() {
+    _isEnabled.value = _controller.text.isNotEmpty;
   }
 }

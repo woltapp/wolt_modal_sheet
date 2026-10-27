@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:playground/home/pages/modal_page_name.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -41,8 +41,12 @@ class SheetPageWithTextField {
       leadingNavBarWidget: const WoltModalSheetBackButton(),
       trailingNavBarWidget: const WoltModalSheetCloseButton(),
       child: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 80, top: 16, right: 16, left: 16),
+        padding: const EdgeInsets.only(
+          bottom: 80,
+          top: 16,
+          right: 16,
+          left: 16,
+        ),
         child: Column(
           children: [
             const ModalSheetContentText('''

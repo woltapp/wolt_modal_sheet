@@ -1,5 +1,5 @@
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:playground/home/custom_sheets/attached_floating_bottom_sheet_type.dart';
 import 'package:playground/home/custom_sheets/floating_bottom_sheet_type.dart';
@@ -37,33 +37,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Wolt Modal Sheet Playground'),
-          leading: IconButton(
-            key: _attachedAppBarKey,
-            icon: const Icon(Icons.anchor),
-            onPressed: () {
-              WoltModalSheet.show(
-                context: context,
-                modalTypeBuilder: (_) => AttachedFloatingBottomSheetType(
-                  anchorKey: _attachedAppBarKey,
-                ),
-                pageListBuilder: (_) => [NewOrderNotificationPage()],
-              );
-            },
-          ),
-          actions: [
-            WoltCircularElevatedButton(
-              onPressed: () {
-                timeDilation = _isSlowAnimation ? 1.0 : 8.0;
-                _isSlowAnimation = !_isSlowAnimation;
-              },
-              icon: Icons.speed_outlined,
-            ),
-            const SizedBox(width: 16),
-          ],
+      appBar: AppBar(
+        title: const Text('Wolt Modal Sheet Playground'),
+        leading: IconButton(
+          key: _attachedAppBarKey,
+          icon: const Icon(Icons.anchor),
+          onPressed: () {
+            WoltModalSheet.show(
+              context: context,
+              modalTypeBuilder: (_) => AttachedFloatingBottomSheetType(
+                anchorKey: _attachedAppBarKey,
+              ),
+              pageListBuilder: (_) => [NewOrderNotificationPage()],
+            );
+          },
         ),
-        body: Builder(builder: (context) {
+        actions: [
+          WoltCircularElevatedButton(
+            onPressed: () {
+              timeDilation = _isSlowAnimation ? 1.0 : 8.0;
+              _isSlowAnimation = !_isSlowAnimation;
+            },
+            icon: Icons.speed_outlined,
+          ),
+          const SizedBox(width: 16),
+        ],
+      ),
+      body: Builder(
+        builder: (context) {
           return Align(
             alignment: Alignment.center,
             child: SizedBox(
@@ -79,14 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'Select responsiveness',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
+                          style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         WoltSelectionList<_Responsiveness>.singleSelect(
                           tilePadding: const EdgeInsetsDirectional.symmetric(
-                              vertical: 8),
+                            vertical: 8,
+                          ),
                           itemTileDataGroup: WoltSelectionListItemDataGroup(
                             group: _Responsiveness.values
                                 .map(
@@ -100,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           onSelectionUpdateInSingleSelectionList:
                               (selectedItem) {
-                            _selectedResponsiveness = selectedItem.value;
-                          },
+                                _selectedResponsiveness = selectedItem.value;
+                              },
                         ),
                       ],
                     ),
@@ -137,30 +137,33 @@ class _HomeScreenState extends State<HomeScreen> {
                               _selectedDirection = newValue
                                   ? TextDirection.rtl
                                   : TextDirection.ltr;
-                              widget
-                                  .onDirectionalityChanged(_selectedDirection);
+                              widget.onDirectionalityChanged(
+                                _selectedDirection,
+                              );
                             },
                           ),
                         ),
                         const Text('RTL'),
                         Expanded(
-                            child: Center(
-                          child: IconButton(
-                            key: _attachedRandomKey,
-                            icon: const Icon(Icons.anchor),
-                            onPressed: () {
-                              WoltModalSheet.show(
-                                context: context,
-                                modalTypeBuilder: (_) =>
-                                    AttachedFloatingBottomSheetType(
-                                  anchorKey: _attachedRandomKey,
-                                ),
-                                pageListBuilder: (_) =>
-                                    [NewOrderNotificationPage()],
-                              );
-                            },
+                          child: Center(
+                            child: IconButton(
+                              key: _attachedRandomKey,
+                              icon: const Icon(Icons.anchor),
+                              onPressed: () {
+                                WoltModalSheet.show(
+                                  context: context,
+                                  modalTypeBuilder: (_) =>
+                                      AttachedFloatingBottomSheetType(
+                                        anchorKey: _attachedRandomKey,
+                                      ),
+                                  pageListBuilder: (_) => [
+                                    NewOrderNotificationPage(),
+                                  ],
+                                );
+                              },
+                            ),
                           ),
-                        ))
+                        ),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -205,8 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 case _Responsiveness.alwaysSideSheet:
                                   return sideSheetType;
                                 case _Responsiveness.auto:
-                                  final width =
-                                      MediaQuery.sizeOf(context).width;
+                                  final width = MediaQuery.sizeOf(
+                                    context,
+                                  ).width;
                                   return width < _breakPoint
                                       ? bottomSheetType
                                       : woltDialogType;
@@ -214,12 +218,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             onModalDismissedWithDrag: () {
                               debugPrint(
-                                  'Bottom sheet is dismissed with drag.');
+                                'Bottom sheet is dismissed with drag.',
+                              );
                               Navigator.of(context).pop();
                             },
                             onModalDismissedWithBarrierTap: () {
                               debugPrint(
-                                  'Modal is dismissed with barrier tap.');
+                                'Modal is dismissed with barrier tap.',
+                              );
                               Navigator.of(context).pop();
                             },
                             pageListBuilder: (BuildContext context) {
@@ -251,39 +257,40 @@ class _HomeScreenState extends State<HomeScreen> {
                             context: context,
                             modalTypeBuilder: (_) =>
                                 const TopNotificationSheetType(),
-                            pageListBuilder: (_) =>
-                                [NewOrderNotificationPage()],
+                            pageListBuilder: (_) => [
+                              NewOrderNotificationPage(),
+                            ],
                           );
                         },
                         child: const Text('Show Custom Modal Sheet'),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
           );
-        }),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            WoltModalSheet.show(
-              context: context,
-              modalTypeBuilder: (_) => const FloatingBottomSheetType(),
-              pageListBuilder: (_) => [NewOrderNotificationPage()],
-            );
-          },
-          child: const Icon(Icons.notifications_active),
-        ));
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          WoltModalSheet.show(
+            context: context,
+            modalTypeBuilder: (_) => const FloatingBottomSheetType(),
+            pageListBuilder: (_) => [NewOrderNotificationPage()],
+          );
+        },
+        child: const Icon(Icons.notifications_active),
+      ),
+    );
   }
 }
 
 class _MyModalDecorator extends InheritedWidget {
   final String data;
 
-  const _MyModalDecorator({
-    required this.data,
-    required Widget child,
-  }) : super(child: child);
+  const _MyModalDecorator({required this.data, required Widget child})
+    : super(child: child);
 
   static _MyModalDecorator? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<_MyModalDecorator>();

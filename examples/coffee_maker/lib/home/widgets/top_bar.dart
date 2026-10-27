@@ -3,7 +3,7 @@ import 'package:coffee_maker/home/widgets/coffee_maker_custom_divider.dart';
 import 'package:coffee_maker/home/widgets/grid_layout_button.dart';
 import 'package:coffee_maker/home/widgets/store_online_status_button.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 
 /// The top bar widget is displayed in both offline and online states of the Coffee Maker app.
@@ -13,14 +13,11 @@ import 'package:wolt_responsive_layout_grid/wolt_responsive_layout_grid.dart';
 /// size and store online status.
 class TopBar extends StatelessWidget {
   const TopBar({
-    required ValueNotifier<bool> isStoreOnlineNotifier,
-    ValueNotifier<bool>? isGridOverlayVisibleNotifier,
-    CoffeeMakerStep? selectedStepForBottomNavigationBar,
+    required this._isStoreOnlineNotifier,
+    this._isGridOverlayVisibleNotifier,
+    this._selectedStepForBottomNavigationBar,
     super.key,
-  })  : _isStoreOnlineNotifier = isStoreOnlineNotifier,
-        _isGridOverlayVisibleNotifier = isGridOverlayVisibleNotifier,
-        _selectedStepForBottomNavigationBar =
-            selectedStepForBottomNavigationBar;
+  });
 
   final ValueNotifier<bool> _isStoreOnlineNotifier;
   final ValueNotifier<bool>? _isGridOverlayVisibleNotifier;
@@ -61,12 +58,14 @@ class TopBar extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               StoreOnlineStatusButton(
-                  isStoreOnlineNotifier: _isStoreOnlineNotifier),
+                isStoreOnlineNotifier: _isStoreOnlineNotifier,
+              ),
               if (isGridOverlayVisibleNotifier != null) ...[
                 const SizedBox(width: 16),
                 GridLayoutButton(
-                    isGridOverlayVisible: isGridOverlayVisibleNotifier),
-              ]
+                  isGridOverlayVisible: isGridOverlayVisibleNotifier,
+                ),
+              ],
             ],
           ),
         ),

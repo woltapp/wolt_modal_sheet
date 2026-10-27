@@ -1,7 +1,7 @@
 import 'package:coffee_maker_navigator_2/features/orders/ui/view/modal_pages/ready/extra_recommendation.dart';
 import 'package:coffee_maker_navigator_2/features/orders/ui/widgets/coffee_maker_custom_divider.dart';
 import 'package:demo_ui_components/demo_ui_components.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ExtraRecommendationTile extends StatefulWidget {
   const ExtraRecommendationTile({
@@ -54,11 +54,12 @@ class _ExtraRecommendationTileState extends State<ExtraRecommendationTile> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12.0),
                         child: Image(
-                            image: AssetImage(
-                              widget.recommendation.imageAssetPath,
-                              package: 'assets',
-                            ),
-                            fit: BoxFit.cover),
+                          image: AssetImage(
+                            widget.recommendation.imageAssetPath,
+                            package: 'assets',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -72,17 +73,22 @@ class _ExtraRecommendationTileState extends State<ExtraRecommendationTile> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(widget.recommendation.label,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold)),
+                                    Text(
+                                      widget.recommendation.label,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
                                     const SizedBox(height: 1),
-                                    Text(widget.recommendation.price,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium),
+                                    Text(
+                                      widget.recommendation.price,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium,
+                                    ),
                                   ],
                                 ),
                               ),

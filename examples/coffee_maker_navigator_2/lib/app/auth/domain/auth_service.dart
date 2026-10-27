@@ -20,8 +20,7 @@ class AuthServiceImpl implements AuthService {
 
   final ValueNotifier<bool?> _authStateNotifier = ValueNotifier(null);
 
-  AuthServiceImpl({required AuthRepository authRepository})
-      : _authRepository = authRepository;
+  AuthServiceImpl({required this._authRepository});
 
   @override
   void onInit() {

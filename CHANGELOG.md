@@ -1,3 +1,9 @@
+## 0.12.0
+- **Breaking:** Migrated from the in-framework `package:flutter/material.dart` and `package:flutter/cupertino.dart` to the standalone [`material_ui`](https://pub.dev/packages/material_ui) and [`cupertino_ui`](https://pub.dev/packages/cupertino_ui) packages. See the [Flutter migration guide](https://docs.flutter.dev/release/breaking-changes/material-ui-and-cupertino-ui).
+  - The minimum supported versions are now Flutter 3.44 and Dart 3.12.
+  - `WoltModalSheetThemeData` now extends `material_ui`'s `ThemeExtension`. Apps that register it in `ThemeData.extensions` need to migrate to `material_ui` too. Apps that stay on the in-framework Material libraries should stay on 0.11.x.
+  - Fixes:
+    - [#398](https://github.com/woltapp/wolt_modal_sheet/issues/398) Migrate to package:material_ui / package:cupertino_ui
 ## 0.11.0
 - Fix WoltNavigationToolbar leading constraint. [#361](https://github.com/woltapp/wolt_modal_sheet/pull/351) by [TahaTesser](https://github.com/TahaTesser)
   - Fixes:

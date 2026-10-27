@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/content/wolt_modal_sheet_animated_switcher.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
@@ -9,9 +9,8 @@ import 'package:wolt_modal_sheet/src/widgets/wolt_modal_sheet_drag_to_dismiss_de
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 /// Signature for a function that builds a list of [SliverWoltModalSheetPage] based on the given [BuildContext].
-typedef WoltModalSheetPageListBuilder = List<SliverWoltModalSheetPage> Function(
-  BuildContext context,
-);
+typedef WoltModalSheetPageListBuilder =
+    List<SliverWoltModalSheetPage> Function(BuildContext context);
 
 /// Signature for a function that returns the [WoltModalType] based on the given [BuildContext].
 typedef WoltModalTypeBuilder = WoltModalType Function(BuildContext context);
@@ -192,7 +191,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   static Future<T?> showWithDynamicPath<T>({
     required BuildContext context,
     required ValueNotifier<WoltModalSheetPageListBuilder>
-        pageListBuilderNotifier,
+    pageListBuilderNotifier,
     WoltModalTypeBuilder? modalTypeBuilder,
     ValueNotifier<int>? pageIndexNotifier,
     Widget Function(Widget)? pageContentDecorator,
@@ -208,8 +207,10 @@ class WoltModalSheet<T> extends StatefulWidget {
     AnimationController? transitionAnimationController,
     Color? modalBarrierColor,
   }) {
-    final NavigatorState navigator =
-        Navigator.of(context, rootNavigator: useRootNavigator);
+    final NavigatorState navigator = Navigator.of(
+      context,
+      rootNavigator: useRootNavigator,
+    );
     return navigator.push<T>(
       WoltModalSheetRoute<T>(
         pageContentDecorator: pageContentDecorator,
@@ -244,13 +245,12 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static WoltModalSheetState of(BuildContext context) {
-    // Handles the case where the input context is a navigator element.
-    WoltModalSheetState? woltModalSheetState;
-    if (context is StatefulElement && context.state is WoltModalSheetState) {
-      woltModalSheetState = context.state as WoltModalSheetState;
-    }
-    woltModalSheetState ??=
-        context.findAncestorStateOfType<WoltModalSheetState>();
+    // Handles the case where the input context is the sheet element itself.
+    // findAncestorStateOfType does not include that element.
+    final WoltModalSheetState? woltModalSheetState =
+        context is StatefulElement && context.state is WoltModalSheetState
+        ? context.state as WoltModalSheetState
+        : context.findAncestorStateOfType<WoltModalSheetState>();
 
     assert(() {
       if (woltModalSheetState == null) {
@@ -299,14 +299,16 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   @override
   void initState() {
     super.initState();
-    widget.pageListBuilderNotifier
-        .addListener(_onPageListBuilderNotifierValueUpdated);
+    widget.pageListBuilderNotifier.addListener(
+      _onPageListBuilderNotifierValueUpdated,
+    );
   }
 
   @override
   void dispose() {
-    widget.pageListBuilderNotifier
-        .removeListener(_onPageListBuilderNotifierValueUpdated);
+    widget.pageListBuilderNotifier.removeListener(
+      _onPageListBuilderNotifierValueUpdated,
+    );
     super.dispose();
   }
 
@@ -314,9 +316,13 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   Widget build(BuildContext context) {
     final modalDecorator = widget.modalDecorator;
     if (modalDecorator != null) {
-      return modalDecorator(Builder(builder: (decoratedContext) {
-        return _buildModalContent(decoratedContext);
-      }));
+      return modalDecorator(
+        Builder(
+          builder: (decoratedContext) {
+            return _buildModalContent(decoratedContext);
+          },
+        ),
+      );
     }
 
     return _buildModalContent(context);
@@ -325,8 +331,10 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   Widget _buildModalContent(BuildContext context) {
     final themeData = Theme.of(context).extension<WoltModalSheetThemeData>();
     final defaultThemeData = WoltModalSheetDefaultThemeData(context);
-    final modalType =
-        WoltModalTypeUtils.currentModalType(widget.modalTypeBuilder, context);
+    final modalType = WoltModalTypeUtils.currentModalType(
+      widget.modalTypeBuilder,
+      context,
+    );
 
     Widget modalContent = ValueListenableBuilder(
       valueListenable: widget.pageIndexNotifier,
@@ -342,31 +350,37 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         final pages = _pages;
         final page = pages[currentPageIndex];
 
-        final enableDrag = page.enableDrag ??
+        final enableDrag =
+            page.enableDrag ??
             widget.enableDrag ??
             modalType.isDragToDismissEnabled ??
             themeData?.enableDrag ??
             defaultThemeData.enableDrag;
-        final showDragHandle = widget.showDragHandle ??
+        final showDragHandle =
+            widget.showDragHandle ??
             modalType.showDragHandle ??
             (enableDrag &&
                 (themeData?.showDragHandle ?? defaultThemeData.showDragHandle));
         final shadowColor =
             themeData?.shadowColor ?? defaultThemeData.shadowColor;
-        final pageBackgroundColor = page.backgroundColor ??
+        final pageBackgroundColor =
+            page.backgroundColor ??
             themeData?.backgroundColor ??
             defaultThemeData.backgroundColor;
-        final surfaceTintColor = page.surfaceTintColor ??
+        final surfaceTintColor =
+            page.surfaceTintColor ??
             themeData?.surfaceTintColor ??
             defaultThemeData.surfaceTintColor;
         final modalElevation =
             themeData?.modalElevation ?? defaultThemeData.modalElevation;
         final clipBehavior =
             themeData?.clipBehavior ?? defaultThemeData.clipBehavior;
-        final resizeToAvoidBottomInset = page.resizeToAvoidBottomInset ??
+        final resizeToAvoidBottomInset =
+            page.resizeToAvoidBottomInset ??
             themeData?.resizeToAvoidBottomInset ??
             defaultThemeData.resizeToAvoidBottomInset;
-        final useSafeArea = page.useSafeArea ??
+        final useSafeArea =
+            page.useSafeArea ??
             widget.useSafeArea ??
             themeData?.useSafeArea ??
             defaultThemeData.useSafeArea;
@@ -383,7 +397,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
               shape: modalType.shapeBorder,
               clipBehavior: clipBehavior,
               child: LayoutBuilder(
-                builder: (_, constraints) {
+                builder: (context, constraints) {
                   return modalType.decoratePageContent(
                     context,
                     WoltModalSheetAnimatedSwitcher(
@@ -422,7 +436,8 @@ class WoltModalSheetState extends State<WoltModalSheet> {
             LayoutId(
               id: barrierLayoutId,
               child: WoltAnimatedModalBarrier(
-                animationController: widget.route.animationController ??
+                animationController:
+                    widget.route.animationController ??
                     widget.route.createAnimationController(),
                 barrierDismissible: widget.route.barrierDismissible,
                 onModalDismissedWithBarrierTap:
@@ -440,11 +455,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
         return Scaffold(
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           backgroundColor: Colors.transparent,
-          body: modalType.decorateModal(
-            context,
-            multiChildLayout,
-            useSafeArea,
-          ),
+          body: modalType.decorateModal(context, multiChildLayout, useSafeArea),
         );
       },
     );
@@ -457,7 +468,9 @@ class WoltModalSheetState extends State<WoltModalSheet> {
       setState(() {
         final pages = widget.pageListBuilderNotifier.value(context);
         assert(
-            pages.isNotEmpty, 'pageListBuilder must return a non-empty list.');
+          pages.isNotEmpty,
+          'pageListBuilder must return a non-empty list.',
+        );
         _pages
           ..clear()
           ..addAll(pages);
@@ -676,8 +689,9 @@ class WoltModalSheetState extends State<WoltModalSheet> {
     if (indexToStopRemoving == -1 || indexToStopRemoving == _currentPageIndex) {
       return false;
     }
-    final sublist = List<SliverWoltModalSheetPage>.of(_pages)
-        .sublist(0, indexToStopRemoving + 1);
+    final sublist = List<SliverWoltModalSheetPage>.of(
+      _pages,
+    ).sublist(0, indexToStopRemoving + 1);
     _pages = sublist;
     // Update the indexToStopRemoving if the removed page is before the current page.
     if (indexToStopRemoving < _currentPageIndex) {
@@ -944,8 +958,9 @@ class WoltModalSheetState extends State<WoltModalSheet> {
   bool showPage<T extends SliverWoltModalSheetPage>({
     bool Function(T page)? where,
   }) {
-    final index = _pages
-        .indexWhere(where == null ? (p) => p is T : (p) => p is T && where(p));
+    final index = _pages.indexWhere(
+      where == null ? (p) => p is T : (p) => p is T && where(p),
+    );
     if (index != -1) {
       _currentPageIndex = index;
       return true;

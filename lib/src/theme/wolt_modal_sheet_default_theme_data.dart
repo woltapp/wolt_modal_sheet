@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_breakpoints.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -152,12 +152,12 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
 
   @override
   WoltModalTypeBuilder get modalTypeBuilder => (context) {
-        final width = MediaQuery.sizeOf(context).width;
-        if (width < WoltBreakpoints.small.minValue) {
-          return WoltModalType.bottomSheet();
-        }
-        return WoltModalType.dialog();
-      };
+    final width = MediaQuery.widthOf(context);
+    if (width < WoltBreakpoints.small.minValue) {
+      return WoltModalType.bottomSheet();
+    }
+    return WoltModalType.dialog();
+  };
 
   /// Motion animation styles for both pagination and page scrolling.
   @override

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 /// A widget that wraps another widget and applies a System UI overlay style.
@@ -61,8 +61,9 @@ class SystemUIAnnotationWrapper extends StatelessWidget {
     bool hasBottomNavigationBar,
   ) {
     const inverseBrightness = Brightness.dark;
-    final navigationBarColor =
-        hasBottomNavigationBar ? Colors.white : colorScheme.surface;
+    final navigationBarColor = hasBottomNavigationBar
+        ? Colors.white
+        : colorScheme.surface;
 
     return SystemUiOverlayStyle(
       // Honored in Android. Sets the background color of the navigation bar.

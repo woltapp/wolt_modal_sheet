@@ -76,7 +76,7 @@ class StatefulValueNotifier<T> extends ValueNotifier<ValueState<T>>
   /// If [initialValue] is provided, the initial state is [IdleValueState] with that value.
   /// If [initialValue] is not provided, the initial state is [IdleValueState] with `null` value.
   StatefulValueNotifier._([T? initialValue])
-      : super(ValueState.idle(value: initialValue));
+    : super(ValueState.idle(value: initialValue));
 
   factory StatefulValueNotifier.idle([T? initialValue]) {
     return StatefulValueNotifier._(initialValue);
@@ -112,8 +112,10 @@ class StatefulValueNotifier<T> extends ValueNotifier<ValueState<T>>
   /// If a new [value] is provided and [retainValue] is `false`, the new [value] is used.
   /// If both [retainValue] and [value] are provided, an assertion error is thrown.
   void setError({required Object error, bool retainValue = false, T? value}) {
-    this.value = this
-        .value
-        .setError(error: error, retainValue: retainValue, value: value);
+    this.value = this.value.setError(
+      error: error,
+      retainValue: retainValue,
+      value: value,
+    );
   }
 }
