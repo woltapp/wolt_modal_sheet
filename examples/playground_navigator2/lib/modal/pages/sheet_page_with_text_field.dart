@@ -14,9 +14,11 @@ class SheetPageWithTextField {
   }) {
     ValueNotifier<bool> isButtonEnabledNotifier = ValueNotifier(false);
     final textEditingController = TextEditingController();
-    textEditingController.addListener(() {
-      isButtonEnabledNotifier.value = textEditingController.text.isNotEmpty;
-    });
+    final buttonEnabler = _SubmitButtonEnabler(
+      textEditingController,
+      isButtonEnabledNotifier,
+    );
+    textEditingController.addListener(buttonEnabler.onChanged);
     final cubit = context.read<RouterCubit>();
     return WoltModalSheetPage(
       stickyActionBar: ValueListenableBuilder<bool>(
@@ -72,5 +74,16 @@ This page has a text field and always visible top bar title. We wait for the key
         ),
       ),
     );
+  }
+}
+
+class _SubmitButtonEnabler {
+  const _SubmitButtonEnabler(this._controller, this._isEnabled);
+
+  final TextEditingController _controller;
+  final ValueNotifier<bool> _isEnabled;
+
+  void onChanged() {
+    _isEnabled.value = _controller.text.isNotEmpty;
   }
 }

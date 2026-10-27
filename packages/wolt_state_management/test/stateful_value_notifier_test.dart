@@ -201,9 +201,11 @@ void main() {
         final notifier = StatefulValueNotifier<int>.idle(42);
         final states = <ValueState<int>>[];
 
-        notifier.addListener(() {
+        void onStateChanged() {
           states.add(notifier.value);
-        });
+        }
+
+        notifier.addListener(onStateChanged);
 
         // Act
         notifier.setLoading();
@@ -222,10 +224,12 @@ void main() {
         final notifier = StatefulValueNotifier<int>.idle(42);
         int notificationCount = 0;
 
+        void onNotified() {
+          notificationCount++;
+        }
+
         notifier
-          ..addListener(() {
-            notificationCount++;
-          })
+          ..addListener(onNotified)
           // Act
           ..value = notifier.value; // Setting the same value
 

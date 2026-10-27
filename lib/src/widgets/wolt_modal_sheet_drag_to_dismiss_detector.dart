@@ -89,7 +89,10 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
     final newValue = switch (_dismissDirection) {
       WoltModalDismissDirection.down => _animationController.value - deltaDiff,
       WoltModalDismissDirection.up => _animationController.value + deltaDiff,
-      _ => _animationController.value,
+      WoltModalDismissDirection.startToEnd ||
+      WoltModalDismissDirection.endToStart ||
+      WoltModalDismissDirection.none ||
+      null => _animationController.value,
     };
 
     if (newValue >= 0.01) {
@@ -172,7 +175,10 @@ class WoltModalSheetDragToDismissDetector extends StatelessWidget {
           newValue -= delta;
         }
         break;
-      default:
+      case WoltModalDismissDirection.up:
+      case WoltModalDismissDirection.down:
+      case WoltModalDismissDirection.none:
+      case null:
         break;
     }
 

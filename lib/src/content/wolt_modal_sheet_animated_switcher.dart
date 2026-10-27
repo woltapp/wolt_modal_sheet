@@ -113,6 +113,9 @@ class _WoltModalSheetAnimatedSwitcherState
   }
 
   void _resetScrollControllers() {
+    for (final scrollController in _scrollControllers) {
+      scrollController.removeListener(_onCurrentPageScroll);
+    }
     _scrollControllers.clear();
     _scrollControllers = [
       for (int i = 0; i < _pagesCount; i++)
@@ -121,14 +124,16 @@ class _WoltModalSheetAnimatedSwitcherState
     ];
   }
 
+  void _onCurrentPageScroll() {
+    if (_currentPageScrollController.hasClients) {
+      _currentPageScrollPosition.value =
+          _currentPageScrollController.position.pixels;
+    }
+  }
+
   void _subscribeToCurrentPageScrollPositionChanges() {
     for (final scrollController in _scrollControllers) {
-      scrollController.addListener(() {
-        if (_currentPageScrollController.hasClients) {
-          _currentPageScrollPosition.value =
-              _currentPageScrollController.position.pixels;
-        }
-      });
+      scrollController.addListener(_onCurrentPageScroll);
     }
   }
 
@@ -215,6 +220,7 @@ class _WoltModalSheetAnimatedSwitcherState
   void dispose() {
     _animationController?.dispose();
     for (final element in _scrollControllers) {
+      element.removeListener(_onCurrentPageScroll);
       element.dispose();
     }
     for (final element in _scrollPositions) {

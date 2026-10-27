@@ -47,7 +47,7 @@ void main() {
     );
   }
 
-  Finder sheetPageMaterialFinder([WidgetTester? _]) {
+  Finder sheetPageMaterialFinder(WidgetTester _) {
     return find
         .ancestor(
           of: find.text('Wolt modal sheet page'),

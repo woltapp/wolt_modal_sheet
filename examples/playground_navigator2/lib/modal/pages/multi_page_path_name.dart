@@ -6,11 +6,16 @@ import 'package:playground_navigator2/modal/pages/sheet_page_with_lazy_list.dart
 import 'package:playground_navigator2/modal/pages/sheet_page_with_text_field.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
+const _twoPagePathCount = 2;
+
 enum MultiPagePathName {
-  forcedMaxHeight(pageCount: 2, queryParamName: "forcedMaxHeight"),
-  heroImage(pageCount: 2, queryParamName: "heroImage"),
-  lazyLoadingList(pageCount: 2, queryParamName: "lazyList"),
-  textField(pageCount: 2, queryParamName: "textField"),
+  forcedMaxHeight(
+    pageCount: _twoPagePathCount,
+    queryParamName: "forcedMaxHeight",
+  ),
+  heroImage(pageCount: _twoPagePathCount, queryParamName: "heroImage"),
+  lazyLoadingList(pageCount: _twoPagePathCount, queryParamName: "lazyList"),
+  textField(pageCount: _twoPagePathCount, queryParamName: "textField"),
   allPagesPath(pageCount: 5, queryParamName: "all");
 
   static const defaultPath = MultiPagePathName.allPagesPath;

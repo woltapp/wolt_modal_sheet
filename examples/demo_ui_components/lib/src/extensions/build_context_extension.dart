@@ -11,7 +11,7 @@ extension BuiltContextExtensionForWoltScreenSize on BuildContext {
   /// If the width is less than [WoltScreenWidthAdaptiveWidget.defaultWidthBreakPoint], it returns `WoltScreenSize.small`.
   /// Otherwise, it returns `WoltScreenSize.large`.
   WoltScreenSize get screenSize {
-    var screenWidth = MediaQuery.sizeOf(this).width;
+    var screenWidth = MediaQuery.widthOf(this);
     return screenWidth < WoltScreenWidthAdaptiveWidget.defaultWidthBreakPoint
         ? WoltScreenSize.small
         : WoltScreenSize.large;

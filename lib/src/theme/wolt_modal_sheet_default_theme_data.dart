@@ -152,7 +152,7 @@ class WoltModalSheetDefaultThemeData extends WoltModalSheetThemeData {
 
   @override
   WoltModalTypeBuilder get modalTypeBuilder => (context) {
-    final width = MediaQuery.sizeOf(context).width;
+    final width = MediaQuery.widthOf(context);
     if (width < WoltBreakpoints.small.minValue) {
       return WoltModalType.bottomSheet();
     }

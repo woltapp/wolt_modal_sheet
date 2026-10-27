@@ -245,13 +245,12 @@ class WoltModalSheet<T> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static WoltModalSheetState of(BuildContext context) {
-    // Handles the case where the input context is a navigator element.
-    WoltModalSheetState? woltModalSheetState;
-    if (context is StatefulElement && context.state is WoltModalSheetState) {
-      woltModalSheetState = context.state as WoltModalSheetState;
-    }
-    woltModalSheetState ??= context
-        .findAncestorStateOfType<WoltModalSheetState>();
+    // Handles the case where the input context is the sheet element itself.
+    // findAncestorStateOfType does not include that element.
+    final WoltModalSheetState? woltModalSheetState =
+        context is StatefulElement && context.state is WoltModalSheetState
+        ? context.state as WoltModalSheetState
+        : context.findAncestorStateOfType<WoltModalSheetState>();
 
     assert(() {
       if (woltModalSheetState == null) {
@@ -398,7 +397,7 @@ class WoltModalSheetState extends State<WoltModalSheet> {
               shape: modalType.shapeBorder,
               clipBehavior: clipBehavior,
               child: LayoutBuilder(
-                builder: (_, constraints) {
+                builder: (context, constraints) {
                   return modalType.decoratePageContent(
                     context,
                     WoltModalSheetAnimatedSwitcher(
